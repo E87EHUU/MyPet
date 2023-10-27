@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">TestNotification</string>
-
-    <string name="channel_name">Chanel Name</string>
-    <string name="channel_description">Chanel Description</string>
+    <string name="app_name">Мой питомец</string>
 
     <string name="pet_detail_empty">Питомец не найден</string>
     <string name="pet_detail_age_title">Возраст</string>
