@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="offset_24">24dp</dimen>
+    <dimen name="pet_detail_avatar_padding">1dp</dimen>
+    <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
+    <dimen name="offset_16">16dp</dimen>
+    <dimen name="offset_8">8dp</dimen>
+    <dimen name="pet_detail_avatar_size">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

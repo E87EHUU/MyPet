@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">My Pet</string>
+    <string name="app_name">TestNotification</string>
+
+    <string name="channel_name">Chanel Name</string>
+    <string name="channel_description">Chanel Description</string>
+
+    <string name="pet_detail_empty">Питомец не найден</string>
+    <string name="pet_detail_age_title">Возраст</string>
+    <string name="pet_detail_weigth_title">Вес</string>
+    <string name="pet_detail_breed_name_title">Порода</string>
+
 </resources>
