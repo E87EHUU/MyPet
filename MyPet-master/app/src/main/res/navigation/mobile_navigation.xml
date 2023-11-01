@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/petDetail">
+
+    <fragment
+        android:id="@+id/petDetail"
+        android:name="com.example.mypet.ui.pet.detail.PetDetailFragment"
+        tools:layout="@layout/fragment_pet_detail">
+    </fragment>
+
+</navigation>

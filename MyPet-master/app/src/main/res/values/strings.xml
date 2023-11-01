@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Мой питомец</string>
+
+    <string name="pet_detail_empty">Питомец не найден</string>
+    <string name="pet_detail_age_title">Возраст</string>
+    <string name="pet_detail_weigth_title">Вес</string>
+    <string name="pet_detail_breed_name_title">Порода</string>
+
+</resources>
