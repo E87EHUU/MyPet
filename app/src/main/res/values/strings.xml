@@ -3,7 +3,41 @@
 
     <string name="pet_detail_empty">Питомец не найден</string>
     <string name="pet_detail_age_title">Возраст</string>
-    <string name="pet_detail_weigth_title">Вес</string>
+    <string name="pet_detail_weight_title">Вес</string>
     <string name="pet_detail_breed_name_title">Порода</string>
+
+    <string name="notification_chanel_action_delay">Отложить</string>
+    <string name="notification_chanel_action_stop">Остановить</string>
+
+    <string name="alarm_title">Будильник %s</string>
+
+    <string name="food_detail_alarm_button_ok">Установить</string>
+    <string name="food_detail_alarm_description_title">Описание</string>
+    <string name="food_detail_alarm_repeat_title">Повтор</string>
+    <string name="food_detail_alarm_repeat_description_default">Выбрать</string>
+    <string name="food_detail_alarm_melody_title">Мелодия</string>
+    <string name="food_detail_alarm_melody_description_default">Выбрать</string>
+    <string name="food_detail_alarm_vibration_title">Вибрация</string>
+    <string name="food_detail_alarm_delay_title">Отложить</string>
+
+    <string name="intent_chooser_ringtone_picker_title">Выбор мелодии</string>
+
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+
+    <string name="mondayShort">Пн</string>
+    <string name="tuesdayShort">Вт</string>
+    <string name="wednesdayShort">Ср</string>
+    <string name="thursdayShort">Чт</string>
+    <string name="fridayShort">Пт</string>
+    <string name="saturdayShort">Сб</string>
+    <string name="sundayShort">Вс</string>
+
+    <string name="pet_detail_food_title">Режим питания</string>
 
 </resources>

@@ -9,6 +9,18 @@
         android:id="@+id/petDetail"
         android:name="com.example.mypet.ui.pet.detail.PetDetailFragment"
         tools:layout="@layout/fragment_pet_detail">
+        <action
+            android:id="@+id/action_petDetail_to_navigation_alarm"
+            app:destination="@id/navigation_food_detail_alarm">
+            <argument
+                android:name="petMyId"
+                app:argType="integer" />
+            <argument
+                android:name="petFoodId"
+                app:argType="integer" />
+        </action>
     </fragment>
+
+    <include app:graph="@navigation/navigation_food_detail_alarm" />
 
 </navigation>

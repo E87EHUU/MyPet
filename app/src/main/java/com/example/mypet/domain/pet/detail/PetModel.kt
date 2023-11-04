@@ -9,4 +9,5 @@ data class PetModel(
     val age: String?,
     val weight: String?,
     val breedName: String,
+    val foods: List<PetFoodModel>,
 )

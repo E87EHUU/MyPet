@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Base.Theme.MyPet" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -39,6 +39,6 @@
 
     <style name="Theme.MyPet.ImageCircle">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16%</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>
