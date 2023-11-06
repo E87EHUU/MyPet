@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.model.AlarmModel
 import com.example.mypet.ui.MainActivity
+import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService
 import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmReceiver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
@@ -30,7 +31,8 @@ class AlarmDaoImpl @Inject constructor(
 
         val pendingIntentStartAlarmReceiver =
             let {
-                val intent = Intent(context, FoodDetailAlarmReceiver::class.java)
+                val intent = Intent(context, FoodDetailAlarmOverlayService::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 val bundle = bundleOf(
                     FoodDetailAlarmReceiver.NOTIFICATION_ID to alarmModel.id,
                     FoodDetailAlarmReceiver.TITLE to alarmModel.title,
@@ -40,7 +42,7 @@ class AlarmDaoImpl @Inject constructor(
                     FoodDetailAlarmReceiver.IS_DELAY to alarmModel.isDelay,
                 )
                 intent.putExtras(bundle)
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
             }
 
         val timeInMillis =
@@ -52,7 +54,6 @@ class AlarmDaoImpl @Inject constructor(
                 calendar.set(Calendar.MILLISECOND, 0)
                 calendar.timeInMillis
             }
-
 
         val clockInfo = AlarmManager.AlarmClockInfo(timeInMillis, pendingIntentStartMainActivity)
 

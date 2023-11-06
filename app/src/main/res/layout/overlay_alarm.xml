@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        style="@style/Widget.Material3.CardView.Filled"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/offset_16"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/offset_24">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/offset_16">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageViewAlarmAppIcon"
+                android:layout_width="@dimen/alarm_icon_size"
+                android:layout_height="@dimen/alarm_icon_size"
+                android:padding="1dp"
+                android:src="@mipmap/ic_launcher_round"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/Theme.MyPet.ImageCircle"
+                app:strokeColor="?attr/colorControlNormal"
+                app:strokeWidth="@dimen/pet_detail_avatar_stroke_width" />
+
+            <TextView
+                android:id="@+id/textViewAlarmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_8"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintStart_toEndOf="@+id/imageViewAlarmAppIcon"
+                app:layout_constraintTop_toTopOf="@+id/imageViewAlarmAppIcon"
+                android:text="Будильник 10:00" />
+
+            <TextView
+                android:id="@+id/textViewAlarmMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/offset_8"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                app:layout_constraintStart_toStartOf="@+id/textViewAlarmTitle"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAlarmTitle"
+                android:text="Лолику пора кушать" />
+
+            <Button
+                android:id="@+id/buttonAlarmDelay"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginEnd="@dimen/offset_16"
+                android:text="Отложить"
+                app:layout_constraintEnd_toStartOf="@+id/buttonAlarmStop"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAlarmMessage" />
+
+            <Button
+                android:id="@+id/buttonAlarmStop"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:background="@drawable/alarm_service_shape_button"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Остановить"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmDelay"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

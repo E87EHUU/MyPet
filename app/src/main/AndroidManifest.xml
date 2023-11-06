@@ -6,8 +6,12 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name="com.example.mypet.App"
@@ -18,12 +22,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPet">
 
+        <service
+            android:name="com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
+
         <receiver android:name="com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmReceiver" />
 
         <activity
             android:name="com.example.mypet.ui.MainActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
