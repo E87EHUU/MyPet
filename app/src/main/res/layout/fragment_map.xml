@@ -1,0 +1,16 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mypet.ui.map.MapFragment"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="@dimen/offset_8">
+
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
