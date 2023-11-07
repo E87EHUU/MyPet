@@ -2,9 +2,9 @@ package com.example.mypet.data.local.room.model
 
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
 
 data class LocalPetModel(

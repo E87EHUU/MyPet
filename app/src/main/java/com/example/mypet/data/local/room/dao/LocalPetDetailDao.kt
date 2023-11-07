@@ -2,14 +2,14 @@ package com.example.mypet.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.LocalPetModel
 import com.example.mypet.data.local.room.model.LocalPetModel.Companion.BREED_NAME
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
