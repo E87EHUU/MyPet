@@ -22,6 +22,7 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.yandex.mapkit.Animation
 import com.yandex.mapkit.GeoObject
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
@@ -76,6 +77,8 @@ class MapFragment : Fragment() {
         private const val DEFAULT_ZOOM = 16.0f
         private const val AZIMUTH = 0f
         private const val TILT = 0f
+        private val ANIMATION_SMOOTH = Animation(Animation.Type.SMOOTH, .4f)
+        private const val STEP_ZOOM = 1.0f
 
         fun newInstance() = MapFragment()
     }
@@ -191,6 +194,8 @@ class MapFragment : Fragment() {
         ui.apply {
             buttonSearch.setOnClickListener { viewModel.startSearch() }
             searchBox.setEndIconOnClickListener { viewModel.reset() }
+            zoomInButton.setOnClickListener { changeZoom(STEP_ZOOM) }
+            zoomOutButton.setOnClickListener { changeZoom(-STEP_ZOOM) }
 
             editQueryTextWatcher = editQuery.doAfterTextChanged { text ->
                 if (text.toString() == viewModel.uiState.value.query) return@doAfterTextChanged
@@ -248,6 +253,17 @@ class MapFragment : Fragment() {
                 addTapListener(searchResultPlacemarkTapListener)
                 userData = it.geoObject
             }
+        }
+    }
+
+    private fun changeZoom(value: Float) {
+        with (map.cameraPosition) {
+            map.move(
+                CameraPosition(target, zoom + value, azimuth, tilt),
+                ANIMATION_SMOOTH,
+                null
+            )
+            viewModel.startSearch()
         }
     }
 

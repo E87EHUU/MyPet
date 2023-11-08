@@ -42,4 +42,21 @@
         android:src="@drawable/icon_search"
         android:contentDescription="@string/search_button" />
 
+    <ImageButton
+        android:id="@+id/zoomInButton"
+        style="@style/mapButtonStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_zoom_in"
+        android:contentDescription="@string/zoomIn"/>
+
+    <ImageButton
+        android:id="@+id/zoomOutButton"
+        style="@style/mapButtonStyle"
+        app:layout_constraintTop_toBottomOf="@+id/zoomInButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_zoom_out"
+        android:contentDescription="@string/zoomOut"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

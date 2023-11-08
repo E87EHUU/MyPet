@@ -20,5 +20,7 @@
     <string name="search_button">Search Button</string>
     <string name="default_search_query">ветаптека</string>
     <string name="search_error">Search error, check your network connection</string>
+    <string name="zoomOut">Zoom out</string>
+    <string name="zoomIn">Zoom in</string>
 
 </resources>
