@@ -7,25 +7,40 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.yandex.mapkit.GeoObject
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.CameraUpdateReason
+import com.yandex.mapkit.map.IconStyle
+import com.yandex.mapkit.map.MapObjectTapListener
+import com.yandex.runtime.image.ImageProvider
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MapFragment : Fragment() {
 
     private var _ui: FragmentMapBinding? = null
     private val ui get() = _ui!!
     private val map by lazy { ui.mapView.mapWindow.map }
+    private val viewModel: MapViewModel by viewModels()
+    private lateinit var editQueryTextWatcher: TextWatcher
 
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
@@ -37,6 +52,20 @@ class MapFragment : Fragment() {
         override fun onProviderDisabled(provider: String) {
             view?.snackMessage(getString(R.string.location_disabled))
         }
+    }
+
+    private val cameraListener = CameraListener { _, _, reason, _ ->
+        if (reason == CameraUpdateReason.GESTURES) {
+            viewModel.setVisibleRegion(map.visibleRegion)
+        }
+    }
+
+    private val searchResultPlacemarkTapListener = MapObjectTapListener { mapObject, _ ->
+        val selectedObject = (mapObject.userData as? GeoObject)
+        viewModel.uiState(selectedObject!!).let {
+            detailsDialog(it.first, it.second)
+        }
+        true
     }
 
     companion object {
@@ -126,7 +155,6 @@ class MapFragment : Fragment() {
                         LOCATION_DISTANCE,
                         locationListener
                     )
-
                 }
             } else {
                 val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -158,6 +186,69 @@ class MapFragment : Fragment() {
 
     private fun initMap(location: Point) {
         map.move(CameraPosition(location, DEFAULT_ZOOM, AZIMUTH, TILT))
+        map.addCameraListener(cameraListener)
+        viewModel.setVisibleRegion(map.visibleRegion)
+        ui.apply {
+            buttonSearch.setOnClickListener { viewModel.startSearch() }
+            searchBox.setEndIconOnClickListener { viewModel.reset() }
+
+            editQueryTextWatcher = editQuery.doAfterTextChanged { text ->
+                if (text.toString() == viewModel.uiState.value.query) return@doAfterTextChanged
+                viewModel.setQueryText(text.toString())
+            }
+
+            editQuery.setOnEditorActionListener { _, _, _ ->
+                viewModel.startSearch()
+                true
+            }
+        }
+
+        viewModel.apply {
+            setQueryText(getString(R.string.default_search_query))
+            startSearch()
+        }
+
+        viewModel.uiState
+            .flowWithLifecycle(lifecycle)
+            .onEach {
+                val successSearchState = it.searchState as? SearchState.Success
+                val searchItems = successSearchState?.items ?: emptyList()
+                updateSearchResponsePlacemarks(searchItems)
+
+                if (it.searchState is SearchState.Error) {
+                    view?.snackMessage(getString(R.string.search_error))
+                }
+
+                ui.apply {
+                    editQuery.apply {
+                        if (text.toString() != it.query) {
+                            removeTextChangedListener(editQueryTextWatcher)
+                            setText(it.query)
+                            addTextChangedListener(editQueryTextWatcher)
+                        }
+                    }
+                    editQuery.isEnabled = it.searchState is SearchState.Off
+                }
+            }
+            .launchIn(lifecycleScope)
+
+        viewModel.subscribeForSearch().flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
+    }
+
+    private fun updateSearchResponsePlacemarks(items: List<SearchResponseItem>) {
+        map.mapObjects.clear()
+        val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.icon_point)
+        items.forEach {
+            @Suppress("DEPRECATION")
+            map.mapObjects.addPlacemark(
+                it.point,
+                imageProvider,
+                IconStyle().apply { scale = 0.4f }
+            ).apply {
+                addTapListener(searchResultPlacemarkTapListener)
+                userData = it.geoObject
+            }
+        }
     }
 
     private fun detailsDialog(title: String, message: String) {

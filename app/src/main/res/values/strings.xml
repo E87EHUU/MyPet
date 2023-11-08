@@ -17,5 +17,8 @@
     <string name="need_access_to_location">Access to this device location is needed to find places of interest</string>
     <string name="allow_access">Allow access</string>
     <string name="deny_access">Deny access</string>
+    <string name="search_button">Search Button</string>
+    <string name="default_search_query">ветаптека</string>
+    <string name="search_error">Search error, check your network connection</string>
 
 </resources>

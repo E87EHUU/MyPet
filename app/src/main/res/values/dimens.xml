@@ -11,4 +11,8 @@
     <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
     <dimen name="pet_detail_avatar_size">100dp</dimen>
 
+    <dimen name="mapButtonSize">60dp</dimen>
+    <dimen name="mapMilliMargin">12dp</dimen>
+    <dimen name="mapDecaMargin">16dp</dimen>
+
 </resources>
