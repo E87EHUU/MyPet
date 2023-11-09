@@ -21,8 +21,8 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
 import com.example.mypet.domain.map.MapSearchResponseItem
 import com.example.mypet.domain.map.MapSearchState
+import com.example.mypet.domain.snackMessage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.GeoObject
 import com.yandex.mapkit.MapKitFactory
@@ -79,8 +79,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         private const val TILT = 0f
         private val ANIMATION_SMOOTH = Animation(Animation.Type.SMOOTH, .4f)
         private const val STEP_ZOOM = 1.0f
-
-        fun newInstance() = MapFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -265,10 +263,6 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             .setCancelable(true)
             .setPositiveButton(getString(R.string.ok)) { dialog, _ -> dialog.cancel() }
             .show()
-    }
-
-    private fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
-        Snackbar.make(this, text, length).show()
     }
 
     override fun onStart() {
