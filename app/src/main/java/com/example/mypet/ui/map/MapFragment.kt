@@ -20,6 +20,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
+import com.example.mypet.domain.map.MapSearchResponseItem
+import com.example.mypet.domain.map.MapSearchState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.yandex.mapkit.Animation
@@ -216,11 +218,11 @@ class MapFragment : Fragment() {
         viewModel.uiState
             .flowWithLifecycle(lifecycle)
             .onEach {
-                val successSearchState = it.searchState as? SearchState.Success
-                val searchItems = successSearchState?.items ?: emptyList()
+                val successMapSearchState = it.mapSearchState as? MapSearchState.Success
+                val searchItems = successMapSearchState?.items ?: emptyList()
                 updateSearchResponsePlacemarks(searchItems)
 
-                if (it.searchState is SearchState.Error) {
+                if (it.mapSearchState is MapSearchState.Error) {
                     view?.snackMessage(getString(R.string.search_error))
                 }
 
@@ -232,7 +234,7 @@ class MapFragment : Fragment() {
                             addTextChangedListener(editQueryTextWatcher)
                         }
                     }
-                    editQuery.isEnabled = it.searchState is SearchState.Off
+                    editQuery.isEnabled = it.mapSearchState is MapSearchState.Off
                 }
             }
             .launchIn(lifecycleScope)
@@ -240,7 +242,7 @@ class MapFragment : Fragment() {
         viewModel.subscribeForSearch().flowWithLifecycle(lifecycle).launchIn(lifecycleScope)
     }
 
-    private fun updateSearchResponsePlacemarks(items: List<SearchResponseItem>) {
+    private fun updateSearchResponsePlacemarks(items: List<MapSearchResponseItem>) {
         map.mapObjects.clear()
         val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.icon_point)
         items.forEach {

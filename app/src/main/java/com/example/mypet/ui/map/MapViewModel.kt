@@ -2,6 +2,10 @@ package com.example.mypet.ui.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypet.domain.map.MapSearchResponseItem
+import com.example.mypet.domain.map.MapSearchState
+import com.example.mypet.domain.map.MapTypeSpecificState
+import com.example.mypet.domain.map.MapUiState
 import com.yandex.mapkit.GeoObject
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.map.VisibleRegion
@@ -46,10 +50,10 @@ class MapViewModel : ViewModel() {
     @OptIn(FlowPreview::class)
     private val throttledRegion = region.debounce(1.seconds)
     private val query = MutableStateFlow(EMPTY_VALUE)
-    private val searchState = MutableStateFlow<SearchState>(SearchState.Off)
+    private val mapSearchState = MutableStateFlow<MapSearchState>(MapSearchState.Off)
 
-    val uiState: StateFlow<MapUiState> = combine(query, searchState) { query, searchState ->
-        MapUiState(query = query, searchState = searchState)
+    val uiState: StateFlow<MapUiState> = combine(query, mapSearchState) { query, searchState ->
+        MapUiState(query = query, mapSearchState = searchState)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     fun setQueryText(value: String) {
@@ -72,19 +76,19 @@ class MapViewModel : ViewModel() {
     fun reset() {
         searchSession?.cancel()
         searchSession = null
-        searchState.value = SearchState.Off
+        mapSearchState.value = MapSearchState.Off
         query.value = EMPTY_VALUE
     }
 
     fun subscribeForSearch(): Flow<*> =
         throttledRegion.filter { it != null }
-            .filter { searchState.value is SearchState.Success }
+            .filter { mapSearchState.value is MapSearchState.Success }
             .mapNotNull { it }
             .onEach { region ->
                 searchSession?.let {
                     it.setSearchArea(VisibleRegionUtils.toPolygon(region))
                     it.resubmit(searchSessionListener)
-                    searchState.value = SearchState.Loading
+                    mapSearchState.value = MapSearchState.Loading
                     zoomToSearchResult = false
                 }
             }
@@ -93,10 +97,10 @@ class MapViewModel : ViewModel() {
         override fun onSearchResponse(response: Response) {
             val items = response.collection.children.mapNotNull {
                 val point = it.obj?.geometry?.firstOrNull()?.point ?: return@mapNotNull null
-                SearchResponseItem(point, it.obj)
+                MapSearchResponseItem(point, it.obj)
             }
             val boundingBox = response.metadata.boundingBox ?: return
-            searchState.value = SearchState.Success(
+            mapSearchState.value = MapSearchState.Success(
                 items,
                 zoomToSearchResult,
                 boundingBox,
@@ -104,7 +108,7 @@ class MapViewModel : ViewModel() {
         }
 
         override fun onSearchError(error: Error) {
-            searchState.value = SearchState.Error
+            mapSearchState.value = MapSearchState.Error
         }
     }
 
@@ -118,16 +122,16 @@ class MapViewModel : ViewModel() {
             },
             searchSessionListener
         )
-        searchState.value = SearchState.Loading
+        mapSearchState.value = MapSearchState.Loading
         zoomToSearchResult = true
     }
 
     fun uiState(geoObject: GeoObject): Pair<String, String> {
         val geoObjetTypeUiState = geoObject.metadataContainer.getItem(ToponymObjectMetadata::class.java)?.let {
-                TypeSpecificState.Toponym(address = it.address.formattedAddress)
+                MapTypeSpecificState.Toponym(address = it.address.formattedAddress)
             } ?: geoObject.metadataContainer.getItem(BusinessObjectMetadata::class.java)
                 ?.let { businessObjectMetadata ->
-                    TypeSpecificState.Business(
+                    MapTypeSpecificState.Business(
                         name = businessObjectMetadata.name,
                         workingHours = businessObjectMetadata.workingHours?.text,
                         categories = businessObjectMetadata.categories.map { it.name }
@@ -136,23 +140,23 @@ class MapViewModel : ViewModel() {
                             .takeIfNotEmpty()?.joinToString(STRING_SEPARATOR),
                         link = businessObjectMetadata.links.firstOrNull()?.link?.href,
                     )
-                } ?: TypeSpecificState.Undefined
+                } ?: MapTypeSpecificState.Undefined
 
         val title = geoObject.name ?: NO_TITLE
         val detailsList = mutableListOf<String?>()
         detailsList.add(geoObject.descriptionText ?: NO_DESCRIPTION)
         detailsList.add("${geoObject.geometry.firstOrNull()?.point?.latitude}, ${geoObject.geometry.firstOrNull()?.point?.longitude}\n")
         when (geoObjetTypeUiState) {
-            is TypeSpecificState.Business -> {
+            is MapTypeSpecificState.Business -> {
                 detailsList.add(geoObjetTypeUiState.categories)
                 detailsList.add(geoObjetTypeUiState.workingHours)
                 detailsList.add(geoObjetTypeUiState.phones)
                 detailsList.add(geoObjetTypeUiState.link)
             }
-            is TypeSpecificState.Toponym -> {
+            is MapTypeSpecificState.Toponym -> {
                 detailsList.add(geoObjetTypeUiState.address)
             }
-            is TypeSpecificState.Undefined -> {}
+            is MapTypeSpecificState.Undefined -> {}
         }
 
         return Pair(title, detailsList.formatDetails())
