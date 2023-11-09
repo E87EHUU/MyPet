@@ -8,9 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -18,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
 import com.example.mypet.domain.map.MapSearchResponseItem
@@ -37,11 +36,10 @@ import com.yandex.runtime.image.ImageProvider
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(R.layout.fragment_map) {
 
-    private var _ui: FragmentMapBinding? = null
-    private val ui get() = _ui!!
-    private val map by lazy { ui.mapView.mapWindow.map }
+    private val binding by viewBinding(FragmentMapBinding::bind)
+    private val map by lazy { binding.mapView.mapWindow.map }
     private val viewModel: MapViewModel by viewModels()
     private lateinit var editQueryTextWatcher: TextWatcher
 
@@ -90,11 +88,6 @@ class MapFragment : Fragment() {
         MapKitFactory.initialize(requireContext())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _ui = FragmentMapBinding.inflate(inflater, container, false)
-        return ui.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkLocationPermission()
@@ -111,12 +104,10 @@ class MapFragment : Fragment() {
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun requestPermission() {
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -151,7 +142,6 @@ class MapFragment : Fragment() {
             PackageManager.PERMISSION_GRANTED) {
             val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                @Suppress("deprecation")
                 val providerGps = locationManager.getProvider(LocationManager.GPS_PROVIDER)
                 providerGps?.let {
                     locationManager.requestLocationUpdates(
@@ -193,7 +183,7 @@ class MapFragment : Fragment() {
         map.move(CameraPosition(location, DEFAULT_ZOOM, AZIMUTH, TILT))
         map.addCameraListener(cameraListener)
         viewModel.setVisibleRegion(map.visibleRegion)
-        ui.apply {
+        binding.apply {
             buttonSearch.setOnClickListener { viewModel.startSearch() }
             searchBox.setEndIconOnClickListener { viewModel.reset() }
             zoomInButton.setOnClickListener { changeZoom(STEP_ZOOM) }
@@ -226,7 +216,7 @@ class MapFragment : Fragment() {
                     view?.snackMessage(getString(R.string.search_error))
                 }
 
-                ui.apply {
+                binding.apply {
                     editQuery.apply {
                         if (text.toString() != it.query) {
                             removeTextChangedListener(editQueryTextWatcher)
@@ -246,7 +236,6 @@ class MapFragment : Fragment() {
         map.mapObjects.clear()
         val imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.icon_point)
         items.forEach {
-            @Suppress("DEPRECATION")
             map.mapObjects.addPlacemark(
                 it.point,
                 imageProvider,
@@ -285,17 +274,12 @@ class MapFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        ui.mapView.onStart()
+        binding.mapView.onStart()
     }
 
     override fun onStop() {
-        ui.mapView.onStop()
+        binding.mapView.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
-    }
-
-    override fun onDestroyView() {
-        _ui = null
-        super.onDestroyView()
     }
 }
