@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.onEach
 class MapFragment : Fragment(R.layout.fragment_map) {
 
     private val binding by viewBinding(FragmentMapBinding::bind)
-    private val map by lazy { binding.mapView.mapWindow.map }
+    private val map by lazy { binding.mapViewMap.mapWindow.map }
     private val viewModel: MapViewModel by viewModels()
     private lateinit var editQueryTextWatcher: TextWatcher
 
@@ -48,10 +48,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             initMap(Point(location.latitude, location.longitude))
         }
         override fun onProviderEnabled(provider: String) {
-            view?.snackMessage(getString(R.string.location_enabled))
+            view?.snackMessage(getString(R.string.map_location_enabled))
         }
         override fun onProviderDisabled(provider: String) {
-            view?.snackMessage(getString(R.string.location_disabled))
+            view?.snackMessage(getString(R.string.map_location_disabled))
         }
     }
 
@@ -123,11 +123,11 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                     if (grantResults.size == grantedPermissions) {
                         getLocation()
                     } else {
-                        detailsDialog(getString(R.string.location_not_granted), getString(R.string.allow_location))
+                        detailsDialog(getString(R.string.map_location_not_granted), getString(R.string.map_allow_location))
                         initMap(DEFAULT_LOCATION)
                     }
                 } else {
-                    detailsDialog(getString(R.string.location_not_granted), getString(R.string.allow_location))
+                    detailsDialog(getString(R.string.map_location_not_granted), getString(R.string.map_allow_location))
                     initMap(DEFAULT_LOCATION)
                 }
                 return
@@ -152,11 +152,11 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             } else {
                 val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 if (location == null) {
-                    detailsDialog(getString(R.string.location_is_off), getString(R.string.turn_location_on))
+                    detailsDialog(getString(R.string.map_location_is_off), getString(R.string.map_turn_location_on))
                     initMap(DEFAULT_LOCATION)
                 } else {
                     initMap(Point(location.latitude, location.longitude))
-                    detailsDialog(getString(R.string.location_is_off), getString(R.string.turn_location_on))
+                    detailsDialog(getString(R.string.map_location_is_off), getString(R.string.map_turn_location_on))
                 }
             }
         } else {
@@ -166,10 +166,10 @@ class MapFragment : Fragment(R.layout.fragment_map) {
 
     private fun explanationDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.geolocation_access))
-            .setMessage(getString(R.string.need_access_to_location))
-            .setPositiveButton(getString(R.string.allow_access)) { _, _ -> requestPermission() }
-            .setNegativeButton(getString(R.string.deny_access)) { dialog, _ ->
+            .setTitle(getString(R.string.map_geolocation_access))
+            .setMessage(getString(R.string.map_need_access))
+            .setPositiveButton(getString(R.string.map_allow_access)) { _, _ -> requestPermission() }
+            .setNegativeButton(getString(R.string.map_deny_access)) { dialog, _ ->
                 dialog.cancel()
                 initMap(DEFAULT_LOCATION)
             }
@@ -182,24 +182,24 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         map.addCameraListener(cameraListener)
         viewModel.setVisibleRegion(map.visibleRegion)
         binding.apply {
-            buttonSearch.setOnClickListener { viewModel.startSearch() }
-            searchBox.setEndIconOnClickListener { viewModel.reset() }
-            zoomInButton.setOnClickListener { changeZoom(STEP_ZOOM) }
-            zoomOutButton.setOnClickListener { changeZoom(-STEP_ZOOM) }
+            mapButtonSearch.setOnClickListener { viewModel.startSearch() }
+            mapSearchBox.setEndIconOnClickListener { viewModel.reset() }
+            mapZoomInButton.setOnClickListener { changeZoom(STEP_ZOOM) }
+            mapZoomOutButton.setOnClickListener { changeZoom(-STEP_ZOOM) }
 
-            editQueryTextWatcher = editQuery.doAfterTextChanged { text ->
+            editQueryTextWatcher = mapEditQuery.doAfterTextChanged { text ->
                 if (text.toString() == viewModel.uiState.value.query) return@doAfterTextChanged
                 viewModel.setQueryText(text.toString())
             }
 
-            editQuery.setOnEditorActionListener { _, _, _ ->
+            mapEditQuery.setOnEditorActionListener { _, _, _ ->
                 viewModel.startSearch()
                 true
             }
         }
 
         viewModel.apply {
-            setQueryText(getString(R.string.default_search_query))
+            setQueryText(getString(R.string.map_default_search))
             startSearch()
         }
 
@@ -211,18 +211,18 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                 updateSearchResponsePlacemarks(searchItems)
 
                 if (it.mapSearchState is MapSearchState.Error) {
-                    view?.snackMessage(getString(R.string.search_error))
+                    view?.snackMessage(getString(R.string.map_search_error))
                 }
 
                 binding.apply {
-                    editQuery.apply {
+                    mapEditQuery.apply {
                         if (text.toString() != it.query) {
                             removeTextChangedListener(editQueryTextWatcher)
                             setText(it.query)
                             addTextChangedListener(editQueryTextWatcher)
                         }
                     }
-                    editQuery.isEnabled = it.mapSearchState is MapSearchState.Off
+                    mapEditQuery.isEnabled = it.mapSearchState is MapSearchState.Off
                 }
             }
             .launchIn(lifecycleScope)
@@ -261,18 +261,18 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             .setTitle(title)
             .setMessage(message)
             .setCancelable(true)
-            .setPositiveButton(getString(R.string.ok)) { dialog, _ -> dialog.cancel() }
+            .setPositiveButton(getString(R.string.map_ok)) { dialog, _ -> dialog.cancel() }
             .show()
     }
 
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        binding.mapView.onStart()
+        binding.mapViewMap.onStart()
     }
 
     override fun onStop() {
-        binding.mapView.onStop()
+        binding.mapViewMap.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
     }
