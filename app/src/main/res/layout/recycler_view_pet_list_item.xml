@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/pet_list_item_card_view_margin_end"
+    app:cardCornerRadius="@dimen/pet_list_item_card_view_corner_radius"
+    app:cardElevation="@dimen/pet_list_item_card_view_elevation">
+
+    <com.example.mypet.utils.EquilateralImageView
+        android:id="@+id/equilateralImageViewPetAvatar"
+        android:layout_width="@dimen/pet_list_item_image_view_width"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.cardview.widget.CardView>
