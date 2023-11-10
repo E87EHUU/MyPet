@@ -32,10 +32,6 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         startObservePetDetail()
-
-        binding.mapButton.setOnClickListener {
-            findNavController().navigate(R.id.map)
-        }
     }
 
     private fun startObservePetDetail() {

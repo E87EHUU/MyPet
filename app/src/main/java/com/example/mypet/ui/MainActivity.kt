@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.ActivityMainBinding
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding by viewBinding(ActivityMainBinding::bind)
 
     private val topLevelDestinations = setOf(
+        R.id.map,
         R.id.petDetail,
     )
 
@@ -42,13 +44,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         setNavigationBarView()
+
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     private fun setNavigationBarView() {
         NavigationBarView.OnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.vet_map -> {
-                    // Respond to navigation item 1 click
+                R.id.map -> {
+                    navController.navigate(R.id.map)
                     true
                 }
 
@@ -57,8 +61,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     true
                 }
 
-                R.id.home -> {
-                    // Respond to navigation item 3 click
+                R.id.petDetail -> {
+                    navController.navigate(R.id.petDetail)
                     true
                 }
 
@@ -75,7 +79,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 else -> false
             }
         }
-        binding.bottomNavigation.selectedItemId = R.id.home
     }
 
     override fun onSupportNavigateUp(): Boolean {
