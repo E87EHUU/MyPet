@@ -5,6 +5,9 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
+
+    // Secrets Gradle Plugin to hide API keys
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -22,6 +25,9 @@ android {
         targetSdk = targetSdkVersion.toInt()
         versionCode = 1
         versionName = "1.0"
+
+        // enables access to hidden API key
+        android.buildFeatures.buildConfig = true
    }
 
     buildTypes {
@@ -80,4 +86,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-simplexml:$retrofit2Version")
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
+
+    // yandex maps
+    implementation("com.yandex.android:maps.mobile:4.4.0-full")
 }

@@ -8,13 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetDetailBinding
+import com.example.mypet.domain.pet.detail.PetModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.example.mypet.domain.pet.detail.PetModel
 
 @AndroidEntryPoint
 class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
@@ -31,6 +32,10 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
         super.onViewCreated(view, savedInstanceState)
 
         startObservePetDetail()
+
+        binding.mapButton.setOnClickListener {
+            findNavController().navigate(R.id.map)
+        }
     }
 
     private fun startObservePetDetail() {
