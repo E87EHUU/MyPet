@@ -1,14 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Мой питомец</string>
-
-    <string name="pet_detail_empty">Питомец не найден</string>
-    <string name="pet_detail_age_title">Возраст</string>
-    <string name="pet_detail_weigth_title">Вес</string>
-    <string name="pet_detail_breed_name_title">Порода</string>
     <string name="bottom_navigation_vet_map">Карты</string>
     <string name="bottom_navigation_profile">Профиль</string>
     <string name="bottom_navigation_home">Главная</string>
     <string name="bottom_navigation_reminder">Напоминание</string>
     <string name="bottom_navigation_food">Еда</string>
-
 </resources>
