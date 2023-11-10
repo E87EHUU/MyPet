@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetDetailBinding
@@ -35,6 +36,10 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail), OnAddPetClickL
         setupRecyclerView()
         startObservePetList()
         startObservePetDetail()
+
+        binding.mapButton.setOnClickListener {
+            findNavController().navigate(R.id.map)
+        }
     }
 
     private fun startObservePetDetail() {

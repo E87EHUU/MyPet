@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_8">8dp</dimen>
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_24">24dp</dimen>
@@ -14,5 +15,9 @@
     <dimen name="pet_list_item_card_view_corner_radius">53dp</dimen>
     <dimen name="pet_list_item_card_view_elevation">0dp</dimen>
     <dimen name="pet_list_item_card_view_margin_end">4dp</dimen>
+
+    <dimen name="map_button_size">60dp</dimen>
+    <dimen name="map_milli_margin">12dp</dimen>
+    <dimen name="map_deca_margin">16dp</dimen>
 
 </resources>

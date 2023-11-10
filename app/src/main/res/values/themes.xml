@@ -41,4 +41,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16%</item>
     </style>
+
+    <style name="mapButtonStyle">
+        <item name="android:layout_width">@dimen/map_button_size</item>
+        <item name="android:layout_height">@dimen/map_button_size</item>
+        <item name="android:layout_marginEnd">@dimen/map_milli_margin</item>
+        <item name="android:background">@drawable/square_round_corners</item>
+        <item name="android:elevation">@dimen/offset_4</item>
+    </style>
 </resources>
