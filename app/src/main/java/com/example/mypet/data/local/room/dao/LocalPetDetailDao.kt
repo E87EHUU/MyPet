@@ -28,4 +28,17 @@ interface LocalPetDetailDao {
                 "LIMIT 1"
     )
     fun observeActivePet(): Flow<LocalPetModel?>
+
+    @Query(
+        "SELECT " +
+                "m.id $ID, " +
+                "m.avatar $AVATAR, " +
+                "m.name $NAME, " +
+                "m.age $AGE, " +
+                "m.weight $WEIGHT, " +
+                "b.name $BREED_NAME " +
+                "FROM pet_my m " +
+                "LEFT JOIN pet_breed b ON b.id = m.breed_id"
+    )
+    fun observePetList(): Flow<List<LocalPetModel?>>
 }
