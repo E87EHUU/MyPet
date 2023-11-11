@@ -7,16 +7,19 @@ import com.example.mypet.domain.PetDetailRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object DomainModule {
     @Provides
+    @Singleton
     fun providePetDetailRepository(petDetailRepositoryImpl: PetDetailRepositoryImpl): PetDetailRepository =
         petDetailRepositoryImpl
 
     @Provides
-    fun provideAlarmRepository(alarmRepositoryImpl: FoodDetailAlarmRepositoryImpl): FoodDetailAlarmRepository =
-        alarmRepositoryImpl
+    @Singleton
+    fun provideFoodDetailAlarmRepository(foodDetailAlarmRepositoryImpl: FoodDetailAlarmRepositoryImpl): FoodDetailAlarmRepository =
+        foodDetailAlarmRepositoryImpl
 }

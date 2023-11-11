@@ -6,4 +6,6 @@ import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
 interface FoodDetailAlarmRepository {
     suspend fun getFoodDetailAlarmModel(foodMyId: Int): FoodDetailAlarmModel?
     suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveFoodDetailAlarmAndSetAlarm)
+    suspend fun delayFoodDetailAlarm(alarmId: Int)
+    suspend fun stopFoodDetailAlarm(alarmId: Int)
 }

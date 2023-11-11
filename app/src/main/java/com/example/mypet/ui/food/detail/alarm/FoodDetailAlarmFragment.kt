@@ -147,7 +147,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
 
     private fun updateUIMelodyDescription() {
         val ringtoneTitle =
-            RingtoneManager.getRingtone(requireContext(), viewModel.melodiURI)
+            RingtoneManager.getRingtone(requireContext(), viewModel.ringtoneUri)
                 .getTitle(requireContext())
         binding.textViewAlarmSetMelodyDescription.text = ringtoneTitle
     }
@@ -207,7 +207,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
 
     private val chooserMelodyRegisterForActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            viewModel.melodiURI =
+            viewModel.ringtoneUri =
                 it.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
             updateUIMelodyDescription()
         }

@@ -3,7 +3,7 @@ package com.example.mypet.di
 import android.content.Context
 import androidx.room.Room
 import com.example.mypet.data.alarm.AlarmDao
-import com.example.mypet.data.alarm.impl.AlarmDaoImpl
+import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase
 import dagger.Module
 import dagger.Provides
@@ -38,6 +38,6 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideAlarmDao(alarmDaoImpl: AlarmDaoImpl): AlarmDao =
+    fun provideAlarmDao(alarmDaoImpl: AlarmDao): IAlarmDao =
         alarmDaoImpl
 }

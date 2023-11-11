@@ -36,11 +36,11 @@ class FoodDetailAlarmViewModel @Inject constructor(
     var isSaturdayChecked = false
     var isSundayChecked = false
 
-    var melodiURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+    var ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
 
-    var isVibrationChecked = false
-    var isDelayChecked = false
-    var isActive = true
+    var isVibrationChecked = true
+    var isDelayChecked = true
+    private var isActive = true
 
     private fun Int?.isBadLocalId() =
         this == null || this == 0
@@ -56,22 +56,22 @@ class FoodDetailAlarmViewModel @Inject constructor(
             foodId?.let { foodId ->
                 foodDetailAlarmRepository.getFoodDetailAlarmModel(foodId)
                     ?.let { foodDetailAlarmModel ->
-                        name = foodDetailAlarmModel.name
-                        with(foodDetailAlarmModel) {
-                            alarmId?.let { alarmId = it }
-                            alarmHour?.let { hour = it }
-                            alarmMinute?.let { minute = it }
-                            alarmRepeatMonday?.let { isMondayChecked = it }
-                            alarmRepeatTuesday?.let { isTuesdayChecked = it }
-                            alarmRepeatWednesday?.let { isWednesdayChecked = it }
-                            alarmRepeatThursday?.let { isThursdayChecked = it }
-                            alarmRepeatFriday?.let { isFridayChecked = it }
-                            alarmRepeatSaturday?.let { isSaturdayChecked = it }
-                            alarmRepeatSunday?.let { isSundayChecked = it }
-                            alarmMelodyURI?.let { melodiURI = it }
-                            alarmIsVibration?.let { isVibrationChecked = it }
-                            alarmIsDelay?.let { isDelayChecked = it }
-                            alarmIsActive?.let { isActive = it }
+                        name = foodDetailAlarmModel.title
+                        if (foodDetailAlarmModel.alarmId > 0) {
+                            alarmId = foodDetailAlarmModel.alarmId
+                            hour = foodDetailAlarmModel.hour
+                            minute = foodDetailAlarmModel.minute
+                            isMondayChecked = foodDetailAlarmModel.isRepeatMonday
+                            isTuesdayChecked = foodDetailAlarmModel.isRepeatTuesday
+                            isWednesdayChecked = foodDetailAlarmModel.isRepeatWednesday
+                            isThursdayChecked = foodDetailAlarmModel.isRepeatThursday
+                            isFridayChecked = foodDetailAlarmModel.isRepeatFriday
+                            isSaturdayChecked = foodDetailAlarmModel.isRepeatSaturday
+                            isSundayChecked = foodDetailAlarmModel.isRepeatSunday
+                            ringtoneUri = foodDetailAlarmModel.ringtoneUri
+                            isVibrationChecked = foodDetailAlarmModel.isVibration
+                            isDelayChecked = foodDetailAlarmModel.isDelay
+                            isActive = foodDetailAlarmModel.isActive
                         }
 
                         emit(Unit)
@@ -98,7 +98,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
                 alarmRepeatFriday = isFridayChecked,
                 alarmRepeatSaturday = isSaturdayChecked,
                 alarmRepeatSunday = isSundayChecked,
-                alarmMelodyURI = melodiURI,
+                alarmMelodyURI = ringtoneUri,
                 alarmIsVibration = isVibrationChecked,
                 alarmIsDelay = isDelayChecked,
             )

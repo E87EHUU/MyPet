@@ -1,21 +1,21 @@
 package com.example.mypet.data.local.room.model.pet
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.FOOD_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_URI
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
+import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
     val id: Int,
-    @ColumnInfo(name = AVATAR)
+    @ColumnInfo(name = AVATAR_URI)
     val avatar: String,
     @ColumnInfo(name = NAME)
     val name: String?,
@@ -27,7 +27,7 @@ data class LocalPetModel(
     @ColumnInfo(name = BREED_NAME)
     val breedName: String,
 
-    @ColumnInfo(name = FOOD_ID)
+    @ColumnInfo(name = "${PET_FOOD_TABLE}_${ID}")
     val foodId: Int,
     @ColumnInfo(name = FOOD_NAME)
     val foodName: String,

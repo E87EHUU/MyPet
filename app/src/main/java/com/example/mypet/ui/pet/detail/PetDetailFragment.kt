@@ -48,6 +48,8 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
         }
 
         binding.recyclerViewPetDetailFood.adapter = foodAdapter
+
+        //viewModel.setAlarm()
     }
 
     private fun startObservePetDetail() {
@@ -96,7 +98,6 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
     }
 
     private fun navToFoodAlarmSet(petFoodModel: PetFoodModel? = null) {
-        println(petFoodModel)
         val directions = PetDetailFragmentDirections
             .actionPetDetailToNavigationAlarm(
                 petMyId = viewModel.petMyId,

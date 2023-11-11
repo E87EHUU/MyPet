@@ -3,7 +3,6 @@ package com.example.mypet.data.local.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mypet.data.local.room.LocalDatabase.Companion.BREED_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
@@ -15,11 +14,11 @@ data class LocalPetMyEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
-    @ColumnInfo(name = BREED_ID)
+    @ColumnInfo(name = "${PET_BREED_TABLE}_${ID}")
     val breedId: Int,
 
-    @ColumnInfo(name = AVATAR)
-    val avatar: String,
+    @ColumnInfo(name = AVATAR_URI)
+    val avatarUri: String,
     @ColumnInfo(name = NAME)
     val name: String,
     @ColumnInfo(name = AGE)
@@ -30,7 +29,7 @@ data class LocalPetMyEntity(
     val isActive: Boolean,
 ) {
     companion object {
-        const val AVATAR = "avatar"
+        const val AVATAR_URI = "avatar_uri"
         const val AGE = "age"
         const val WEIGHT = "weight"
         const val IS_ACTIVE = "is_active"

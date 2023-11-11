@@ -2,6 +2,8 @@ package com.example.mypet.ui.pet.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypet.data.alarm.AlarmDao
+import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.domain.PetDetailRepository
 import com.example.mypet.domain.pet.detail.PetFoodModel
 import com.example.mypet.domain.pet.detail.PetModel
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PetDetailViewModel @Inject constructor(
     private val petDetailRepository: PetDetailRepository,
+    private val alarmDao: AlarmDao
 ) : ViewModel() {
     private val _petModel = MutableStateFlow<PetModel?>(null)
     val petModel = _petModel.asStateFlow()
@@ -38,6 +41,11 @@ class PetDetailViewModel @Inject constructor(
                 )
             petDetailRepository.switchPetFoodAlarmState(switchPetFoodAlarmStateModel)
         }
+    }
+
+    fun setAlarm() = viewModelScope.launch(Dispatchers.IO) {
+        val alarmModel = AlarmModel(1, 1, 1)
+        alarmDao.setAlarm(alarmModel)
     }
 
     val petMyId

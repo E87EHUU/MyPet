@@ -3,21 +3,23 @@ package com.example.mypet.domain.food.detail.alarm
 import android.net.Uri
 
 data class FoodDetailAlarmModel(
-    val id: Int,
-    val name: String,
+    val foodId: Int,
+    val title: String,
 
-    var alarmId: Int?,
-    val alarmHour: Int?,
-    val alarmMinute: Int?,
-    val alarmRepeatMonday: Boolean?,
-    val alarmRepeatTuesday: Boolean?,
-    val alarmRepeatWednesday: Boolean?,
-    val alarmRepeatThursday: Boolean?,
-    val alarmRepeatFriday: Boolean?,
-    val alarmRepeatSaturday: Boolean?,
-    val alarmRepeatSunday: Boolean?,
-    val alarmMelodyURI: Uri?,
-    val alarmIsVibration: Boolean?,
-    val alarmIsDelay: Boolean?,
-    val alarmIsActive: Boolean?
+    val iconResId: Int,
+
+    var alarmId: Int,
+    val hour: Int,
+    val minute: Int,
+    val isRepeatMonday: Boolean,
+    val isRepeatTuesday: Boolean,
+    val isRepeatWednesday: Boolean,
+    val isRepeatThursday: Boolean,
+    val isRepeatFriday: Boolean,
+    val isRepeatSaturday: Boolean,
+    val isRepeatSunday: Boolean,
+    val ringtoneUri: Uri?,
+    val isVibration: Boolean,
+    val isDelay: Boolean,
+    val isActive: Boolean
 )

@@ -27,12 +27,10 @@ abstract class LocalDatabase : RoomDatabase() {
 
     companion object {
         const val ID = "id"
-        const val PET_MY_ID ="pet_my_id"
-        const val KIND_ID = "kind_id"
-        const val BREED_ID = "breed_id"
-        const val FOOD_ID = "food_id"
 
         const val NAME = "name"
+        const val TITLE = "title"
+        const val ICON_RES_ID = "icon_res_id"
 
         const val DEFAULT_ID = 0
     }

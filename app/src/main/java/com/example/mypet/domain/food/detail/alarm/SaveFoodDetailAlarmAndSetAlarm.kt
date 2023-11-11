@@ -1,7 +1,7 @@
 package com.example.mypet.domain.food.detail.alarm
 
 import android.net.Uri
-import com.example.mypet.data.alarm.model.AlarmModel
+import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
@@ -31,7 +31,7 @@ data class SaveFoodDetailAlarmAndSetAlarm(
             id = foodId ?: DEFAULT_ID,
             petMyId = petMyId,
             alarmId = alarmId,
-            name = foodName
+            title = foodName
         )
 
     fun toLocalAlarmEntity() =
@@ -46,7 +46,7 @@ data class SaveFoodDetailAlarmAndSetAlarm(
             repeatFriday = alarmRepeatFriday,
             repeatSaturday = alarmRepeatSaturday,
             repeatSunday = alarmRepeatSunday,
-            melodyURI = alarmMelodyURI?.path,
+            ringtoneURI = alarmMelodyURI?.path,
             isVibration = alarmIsVibration,
             isDelay = alarmIsDelay,
             isActive = true
@@ -57,13 +57,8 @@ data class SaveFoodDetailAlarmAndSetAlarm(
 
         return AlarmModel(
             id = alarmId,
-            title = foodName,
-            description = "",
             hour = alarmHour,
             minute = alarmMinute,
-            melody = alarmMelodyURI?.path,
-            isVibration = alarmIsVibration,
-            isDelay = alarmIsDelay
         )
     }
 }

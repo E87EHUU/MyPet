@@ -1,176 +1,205 @@
 package com.example.mypet.ui.food.detail.alarm
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.PixelFormat
-import android.net.Uri
-import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.app.NotificationCompat
+import androidx.core.view.isVisible
 import com.example.mypet.app.R
+import com.example.mypet.data.alarm.AlarmDao
+import com.example.mypet.domain.FoodDetailAlarmRepository
+import com.example.mypet.domain.food.detail.alarm.FoodDetailAlarmModel
 import com.example.mypet.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FoodDetailAlarmOverlayService : Service() {
-    private lateinit var context: Context
+    @Inject
+    lateinit var foodDetailAlarmRepository: FoodDetailAlarmRepository
 
-    private lateinit var wm: WindowManager
+    @Inject
+    lateinit var alarmDao: AlarmDao
+
+    private val windowManager by lazy { getSystemService(Context.WINDOW_SERVICE) as WindowManager }
     private var view: View? = null
     private var params: WindowManager.LayoutParams? = null
 
+    private val buttonDelay
+        get() = view?.findViewById<Button>(R.id.buttonAlarmDelay)
     private val buttonStop
         get() = view?.findViewById<Button>(R.id.buttonAlarmStop)
 
+    private var alarmRingtone: FoodDetailAlarmRingtone? = null
+    private var foodDetailAlarmModel: FoodDetailAlarmModel? = null
+    private lateinit var ownNotification: FoodDetailAlarmOverlayNotification
 
     override fun onBind(intent: Intent) = null
 
-    override fun onCreate() {
-        super.onCreate()
-        context = this
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        println("command")
+
         intent?.let {
-            startForeground(ONGOING_NOTIFY_ID, getForegroundNotification(it))
+            when (intent.action) {
+                ALARM_OVERLAY_ACTION_START -> start(intent)
+                ALARM_OVERLAY_ACTION_STOP -> stop()
+                ALARM_OVERLAY_ACTION_DELAY -> delay()
+                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
+            }
         }
-
-        wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        initView()
-        initOverlayParams()
-        initViewListeners()
-        showOverlay()
 
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun initViewListeners() {
-        view?.let { view ->
-            buttonStop?.setOnClickListener {
-                wm.removeView(view)
+    private fun start(intent: Intent) {
+        println("start")
+        val alarmId = intent.getIntExtra(ALARM_ID, 0)
+        if (alarmId < 0) return
+
+        if (foodDetailAlarmModel == null) {
+            runBlocking {
+                launch(Dispatchers.IO) {
+                    foodDetailAlarmRepository.getFoodDetailAlarmModel(alarmId)
+                        ?.let { foodDetailAlarmModel = it }
+                }
             }
         }
+
+        foodDetailAlarmModel?.foodId?.let {
+            ownNotification = FoodDetailAlarmOverlayNotification(this, foodDetailAlarmModel!!)
+            startForeground(it, ownNotification.getNotification())
+        }
+
+        initView()
+        initOverlayParams()
+        initViewListeners()
+        addOverlay()
+
+        foodDetailAlarmModel?.ringtoneUri?.let {
+            alarmRingtone = FoodDetailAlarmRingtone(this, it)
+            //alarmRingtone?.play()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("destroy")
+    }
+
+    private fun stop() {
+        println("stop")
+        clearUI()
+        foodDetailAlarmModel?.alarmId?.let {
+            stopForeground(it)
+
+            runBlocking {
+                launch(Dispatchers.IO) {
+                    foodDetailAlarmRepository.stopFoodDetailAlarm(it)
+                }
+            }
+        }
+        stopSelf()
+    }
+
+    private fun delay() {
+        println("delay")
+        alarmRingtone?.stop()
+        removeOverlay()
+
+        foodDetailAlarmModel?.alarmId?.let {
+            startForeground(it, ownNotification.getDelayNotification())
+
+            runBlocking {
+                launch(Dispatchers.IO) {
+                    foodDetailAlarmRepository.delayFoodDetailAlarm(it)
+                }
+            }
+        }
+    }
+
+    private fun clearUI() {
+        alarmRingtone?.stop()
+        alarmRingtone = null
+        removeOverlay()
+    }
+
+    private fun stopForegroundService() {
+        foodDetailAlarmModel?.alarmId?.let {
+            stopForeground(it)
+        }
+        stopSelf()
+    }
+
+    private fun navToDetail() {
+        clearUI()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+
+        stopForegroundService()
     }
 
     private fun initView() {
         val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
         val layoutInflater =
             contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = layoutInflater.inflate(R.layout.overlay_alarm, null)
-    }
+        view = layoutInflater.inflate(R.layout.service_food_detail_alarm_overlay, null)
 
+        foodDetailAlarmModel?.isDelay?.let {
+            buttonDelay?.isVisible = it
+        }
+    }
 
     private fun initOverlayParams() {
         params =
             WindowManager.LayoutParams(
-                Resources.getSystem().displayMetrics.widthPixels,
-                500,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                 PixelFormat.TRANSLUCENT
             )
 
-        params?.gravity = Gravity.START or Gravity.TOP
+        params?.gravity = Gravity.TOP
     }
 
-    private fun showOverlay() {
-        wm.addView(view, params)
+    private fun initViewListeners() {
+        view?.let { view ->
+            view.setOnClickListener { navToDetail() }
+            buttonDelay?.setOnClickListener { delay() }
+            buttonStop?.setOnClickListener { stop() }
+        }
     }
 
-    private fun hideOverlay() {
-        wm.removeView(view)
+    private fun addOverlay() {
+        view?.let {
+            windowManager.addView(view, params)
+        }
     }
 
-    fun getForegroundNotification(intent: Intent): Notification? {
-        val chanelId = context.packageName
-        val notificationId = intent.getIntExtra(FoodDetailAlarmReceiver.NOTIFICATION_ID, 0)
-        val title = intent.getStringExtra(FoodDetailAlarmReceiver.TITLE)
-        val description = intent.getStringExtra(FoodDetailAlarmReceiver.DESCRIPTION)
-        val icon = intent.getIntExtra(FoodDetailAlarmReceiver.ICON, R.mipmap.ic_launcher)
-        val isDelay = intent.getBooleanExtra(FoodDetailAlarmReceiver.IS_DELAY, false)
-
-        createNotificationChannel(chanelId, intent)
-
-        /*        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
-            != PackageManager.PERMISSION_GRANTED
-        ) return */
-
-        val pendingIntentStartMainActivity =
-            let {
-                PendingIntent.getActivity(
-                    context,
-                    0,
-                    Intent(context, MainActivity::class.java),
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-            }
-
-        val pendingIntentStartServiceToDelayAlert = pendingIntentStartMainActivity
-        val pendingIntentStartServiceToStopAlert = pendingIntentStartMainActivity
-
-        val notification = NotificationCompat.Builder(context, chanelId)
-            .setContentTitle(title)
-            .setContentText(description)
-            .setSmallIcon(icon)
-            .setAutoCancel(true)
-            .setOngoing(true)
-            .setContentIntent(pendingIntentStartMainActivity)
-            .apply {
-                if (isDelay)
-                    addAction(
-                        R.drawable.baseline_repeat_24,
-                        context.getString(R.string.notification_chanel_action_delay),
-                        pendingIntentStartServiceToDelayAlert
-                    )
-            }
-            .addAction(
-                R.drawable.baseline_close_24,
-                context.getString(R.string.notification_chanel_action_stop),
-                pendingIntentStartServiceToStopAlert
-            )
-            .build()
-
-//        notification.flags = NotificationCompat.FLAG_FOREGROUND_SERVICE
-
-        return notification
-    }
-
-    private fun createNotificationChannel(id: String, intent: Intent) {
-        val name = context.getString(R.string.app_name)
-        val melody = Uri.parse(intent.getStringExtra(FoodDetailAlarmReceiver.MELODY))
-            ?: Settings.System.DEFAULT_ALARM_ALERT_URI
-        val isVibration = intent.getBooleanExtra(FoodDetailAlarmReceiver.IS_VIBRATION, false)
-
-        val channel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_NONE)
-            .apply {
-                enableVibration(isVibration)
-                setSound(melody, audioAttributes)
-                lightColor = Color.BLUE
-                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            }
-
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+    private fun removeOverlay() {
+        view?.let {
+            windowManager.removeView(view)
+        }
     }
 
     companion object {
-        private const val ONGOING_NOTIFY_ID = 7654
+        const val ALARM_OVERLAY_ACTION_START = "alarm_overlay_action_start"
+        const val ALARM_OVERLAY_ACTION_STOP = "alarm_overlay_action_stop"
+        const val ALARM_OVERLAY_ACTION_DELAY = "alarm_overlay_action_delay"
+        const val ALARM_OVERLAY_ACTION_NAV_TO_DETAIL = "alarm_overlay_action_nav_to_detail"
+
+        const val ALARM_ID = "alarm_id"
     }
 }
