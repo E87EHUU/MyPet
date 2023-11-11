@@ -3,7 +3,7 @@
 
     <string name="pet_detail_empty">Питомец не найден</string>
     <string name="pet_detail_age_title">Возраст</string>
-    <string name="pet_detail_weigth_title">Вес</string>
+    <string name="pet_detail_weight_title">Вес</string>
     <string name="pet_detail_breed_name_title">Порода</string>
     <string name="bottom_navigation_map">Карты</string>
     <string name="bottom_navigation_profile">Профиль</string>
@@ -27,5 +27,11 @@
     <string name="map_search_error">Search error, check your network connection</string>
     <string name="map_zoom_out">Zoom out</string>
     <string name="map_zoom_in">Zoom in</string>
+    <string name="choose_photo">Загрузить фотографию</string>
+    <string name="pet_name">Имя питомца</string>
+    <string name="category">Категория питомца</string>
+    <string name="breed">Порода</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="save_new_pet">Сохранить нового питомца</string>
 
 </resources>

@@ -9,6 +9,9 @@
         android:id="@+id/petDetail"
         android:name="com.example.mypet.ui.pet.detail.PetDetailFragment"
         tools:layout="@layout/fragment_pet_detail">
+        <action
+            android:id="@+id/action_petDetail_to_petCreationFragment"
+            app:destination="@id/petCreationFragment" />
     </fragment>
 
     <fragment
@@ -16,5 +19,10 @@
         android:name="com.example.mypet.ui.map.MapFragment"
         tools:layout="@layout/fragment_map">
     </fragment>
+    <fragment
+        android:id="@+id/petCreationFragment"
+        android:name="com.example.mypet.ui.pet.creation.PetCreationFragment"
+        android:label="fragment_pet_creation"
+        tools:layout="@layout/fragment_pet_creation" />
 
 </navigation>

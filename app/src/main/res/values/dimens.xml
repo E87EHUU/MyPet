@@ -19,5 +19,6 @@
     <dimen name="map_button_size">60dp</dimen>
     <dimen name="map_milli_margin">12dp</dimen>
     <dimen name="map_deca_margin">16dp</dimen>
+    <dimen name="spinner_200dp">200dp</dimen>
 
 </resources>

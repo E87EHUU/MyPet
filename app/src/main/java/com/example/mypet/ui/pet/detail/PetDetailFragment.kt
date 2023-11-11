@@ -97,7 +97,7 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail), OnAddPetClickL
     }
 
     override fun onAddPetClick() {
-        // Переход на фрагмент создания нового питомца"
+        findNavController().navigate(R.id.petCreationFragment)
     }
 
     override fun onPetClick(pet: PetModel) {
