@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
+import com.example.mypet.data.local.room.entity.LocalPetKindEntity
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
@@ -41,4 +42,7 @@ interface LocalPetDetailDao {
                 "LEFT JOIN pet_breed b ON b.id = m.breed_id"
     )
     fun observePetList(): Flow<List<LocalPetModel?>>
+
+    @Query("SELECT * FROM PET_KIND")
+    fun observePetKindList(): Flow<List<LocalPetKindEntity>>
 }
