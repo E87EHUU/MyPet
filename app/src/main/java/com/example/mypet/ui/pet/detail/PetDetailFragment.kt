@@ -36,10 +36,6 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail), OnAddPetClickL
         setupRecyclerView()
         startObservePetList()
         startObservePetDetail()
-
-        binding.mapButton.setOnClickListener {
-            findNavController().navigate(R.id.map)
-        }
     }
 
     private fun startObservePetDetail() {

@@ -5,6 +5,11 @@
     <string name="pet_detail_age_title">Возраст</string>
     <string name="pet_detail_weigth_title">Вес</string>
     <string name="pet_detail_breed_name_title">Порода</string>
+    <string name="bottom_navigation_map">Карты</string>
+    <string name="bottom_navigation_profile">Профиль</string>
+    <string name="bottom_navigation_pet_detail">Главная</string>
+    <string name="bottom_navigation_reminder">Напоминание</string>
+    <string name="bottom_navigation_food">Еда</string>
 
     <string name="map_ok">OK</string>
     <string name="map_location_enabled">Location is enabled</string>
