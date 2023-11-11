@@ -12,35 +12,28 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetDetailBinding
-import com.example.mypet.domain.pet.detail.PetFoodModel
-import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.ui.pet.detail.food.PetDetailFoodAdapter
-import com.example.mypet.ui.pet.detail.food.PetDetailFoodAdapterCallback
 import com.example.mypet.domain.pet.detail.PetModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.example.mypet.domain.pet.detail.PetModel
 
 @AndroidEntryPoint
-class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
+class PetDetailFragment : Fragment(R.layout.fragment_pet_detail), OnAddPetClickListener,
+    OnPetClickListener {
     private val binding by viewBinding(FragmentPetDetailBinding::bind)
     private val viewModel by viewModels<PetDetailViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.updatePet()
+    private val petListAdapter: PetListAdapter by lazy {
+        PetListAdapter(this, this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
+        startObservePetList()
         startObservePetDetail()
 
-        binding.mapButton.setOnClickListener {
-            findNavController().navigate(R.id.map)
-        }
         viewModel.updatePetModel()
 
         binding.buttonPetDetailFoodAdd.setOnClickListener {
@@ -59,6 +52,22 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
                         ?: run { onPetEmpty() }
                 }
             }
+        }
+    }
+
+    private fun startObservePetList() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.petList.collectLatest { petList ->
+                    petListAdapter.setPetList(petList.filterNotNull())
+                }
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerViewPetList.apply {
+            adapter = petListAdapter
         }
     }
 
@@ -100,5 +109,13 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
             )
 
         findNavController().navigate(directions)
+    }
+
+    override fun onAddPetClick() {
+        // Переход на фрагмент создания нового питомца"
+    }
+
+    override fun onPetClick(pet: PetModel) {
+        onPetUpdate(pet)
     }
 }

@@ -12,6 +12,11 @@
     <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
     <dimen name="pet_detail_avatar_size">100dp</dimen>
 
+    <dimen name="pet_list_item_image_view_width">44dp</dimen>
+    <dimen name="pet_list_item_card_view_corner_radius">53dp</dimen>
+    <dimen name="pet_list_item_card_view_elevation">0dp</dimen>
+    <dimen name="pet_list_item_card_view_margin_end">4dp</dimen>
+
     <dimen name="map_button_size">60dp</dimen>
     <dimen name="map_milli_margin">12dp</dimen>
     <dimen name="map_deca_margin">16dp</dimen>

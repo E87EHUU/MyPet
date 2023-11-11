@@ -3,9 +3,7 @@ package com.example.mypet.ui.pet.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.PetDetailRepository
-import com.example.mypet.domain.pet.detail.PetFoodModel
 import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.detail.SwitchPetFoodAlarmStateModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,9 +19,23 @@ class PetDetailViewModel @Inject constructor(
     private val _petModel = MutableStateFlow<PetModel?>(null)
     val petModel = _petModel.asStateFlow()
 
+    private val _petList = MutableStateFlow<List<PetModel?>>(emptyList())
+    val petList = _petList.asStateFlow()
+
+    private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
     fun updatePetModel() = viewModelScope.launch(Dispatchers.IO) {
         petDetailRepository.observePetDetail()
             .collectLatest { _petModel.value = it }
+    }
+
+    private fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
+        petDetailRepository.observePetListDetail()
+            .collectLatest { _petList.value = it }
+    }
+
+    init {
+        updatePet()
+        updatePetList()
     }
 
     fun switchPetFoodAlarmState(petFoodModel: PetFoodModel) {

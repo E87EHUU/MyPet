@@ -3,22 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context="com.example.mypet.ui.pet.detail.PetDetailFragment"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.mypet.ui.pet.detail.PetDetailFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPetList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/offset_24"
+        android:layout_marginBottom="@dimen/offset_24"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardViewMain"
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/offset_24"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewPetList">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/offset_24"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_24">
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupPetDetailAge"
@@ -140,15 +151,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/icon_map"
-        android:elevation="@dimen/offset_4"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

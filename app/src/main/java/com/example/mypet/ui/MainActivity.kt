@@ -1,12 +1,7 @@
 package com.example.mypet.ui
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,9 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
     private val binding by viewBinding(ActivityMainBinding::bind)
 
     private val topLevelDestinations = setOf(
+        R.id.map,
         R.id.petDetail,
     )
 
@@ -39,9 +36,47 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
         setSupportActionBar(binding.toolbar)
+
         setupActionBarWithNavController(
             this@MainActivity, navController, mAppBarConfiguration
         )
+
+        setNavigationBarView()
+
+        binding.bottomNavigation.setupWithNavController(navController)
+    }
+
+    private fun setNavigationBarView() {
+        NavigationBarView.OnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.map -> {
+                    navController.navigate(R.id.map)
+                    true
+                }
+
+                R.id.reminder -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+
+                R.id.petDetail -> {
+                    navController.navigate(R.id.petDetail)
+                    true
+                }
+
+                R.id.food -> {
+                    // Respond to navigation item 4 click
+                    true
+                }
+
+                R.id.profile -> {
+                    // Respond to navigation item 5 click
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED

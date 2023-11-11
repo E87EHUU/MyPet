@@ -2,32 +2,13 @@ package com.example.mypet.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_RES_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
-import com.example.mypet.data.local.room.entity.ALARM_TABLE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_FRIDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_MONDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SATURDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SUNDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_THURSDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_TUESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_WEDNESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_URI
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
-import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
-import com.example.mypet.data.local.room.model.pet.LocalFoodDetailAlarmModel
-import com.example.mypet.data.local.room.model.pet.LocalPetModel
-import com.example.mypet.data.local.room.model.pet.LocalPetModel.Companion.BREED_NAME
-import com.example.mypet.data.local.room.model.pet.LocalPetModel.Companion.FOOD_NAME
+import com.example.mypet.data.local.room.model.LocalPetModel
+import com.example.mypet.data.local.room.model.LocalPetModel.Companion.BREED_NAME
 import kotlinx.coroutines.flow.Flow
 
 
