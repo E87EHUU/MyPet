@@ -23,6 +23,8 @@ data class LocalPetModel(
     val age: String?,
     @ColumnInfo(name = WEIGHT)
     val weight: String?,
+    @ColumnInfo(name = IS_ACTIVE)
+    val isActive: Boolean,
 
     @ColumnInfo(name = BREED_NAME)
     val breedName: String,

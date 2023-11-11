@@ -3,7 +3,9 @@ package com.example.mypet.ui.pet.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.PetDetailRepository
+import com.example.mypet.domain.pet.detail.PetFoodModel
 import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.detail.SwitchPetFoodAlarmStateModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,17 +18,8 @@ import javax.inject.Inject
 class PetDetailViewModel @Inject constructor(
     private val petDetailRepository: PetDetailRepository,
 ) : ViewModel() {
-    private val _petModel = MutableStateFlow<PetModel?>(null)
-    val petModel = _petModel.asStateFlow()
-
-    private val _petList = MutableStateFlow<List<PetModel?>>(emptyList())
+    private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
     val petList = _petList.asStateFlow()
-
-    private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
-    fun updatePetModel() = viewModelScope.launch(Dispatchers.IO) {
-        petDetailRepository.observePetDetail()
-            .collectLatest { _petModel.value = it }
-    }
 
     private fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
         petDetailRepository.observePetListDetail()
@@ -34,9 +27,10 @@ class PetDetailViewModel @Inject constructor(
     }
 
     init {
-        updatePet()
         updatePetList()
     }
+
+    var activePetId: Int? = null
 
     fun switchPetFoodAlarmState(petFoodModel: PetFoodModel) {
         petFoodModel.alarmId ?: return
@@ -51,7 +45,4 @@ class PetDetailViewModel @Inject constructor(
             petDetailRepository.switchPetFoodAlarmState(switchPetFoodAlarmStateModel)
         }
     }
-
-    val petMyId
-        get() = petModel.value?.id ?: TODO("Не удалось получить id питомца")
 }

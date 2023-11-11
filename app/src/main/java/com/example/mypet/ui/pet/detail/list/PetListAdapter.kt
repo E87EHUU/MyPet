@@ -83,7 +83,7 @@ class PetListAdapter(
         fun bind(pet: PetModel, onPetClickListener: OnPetClickListener) {
             RecyclerViewPetListItemBinding.bind(itemView).apply {
                 Glide.with(itemView)
-                    .load(pet.avatar)
+                    .load(pet.avatarUri)
                     .into(equilateralImageViewPetAvatar)
                 itemView.setOnClickListener { onPetClickListener.onPetClick(pet) }
             }

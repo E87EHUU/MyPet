@@ -1,11 +1,16 @@
 package com.example.mypet.data
 
 import android.net.Uri
-import kotlinx.coroutines.flow.map
+import com.example.mypet.data.alarm.AlarmDao
+import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.dao.LocalPetDetailDao
-import com.example.mypet.data.local.room.model.LocalPetModel
+import com.example.mypet.data.local.room.model.pet.LocalFoodDetailAlarmModel
+import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import com.example.mypet.domain.PetDetailRepository
+import com.example.mypet.domain.pet.detail.PetFoodModel
 import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.detail.SwitchPetFoodAlarmStateModel
+import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 
@@ -13,14 +18,27 @@ class PetDetailRepositoryImpl @Inject constructor(
     private val localPetDetailDao: LocalPetDetailDao,
     private val alarmDao: AlarmDao,
 ) : PetDetailRepository {
-    override fun observePetDetail() =
-        localPetDetailDao.observeActivePet()
+    override fun observePetListDetail() =
+        localPetDetailDao.observePetList()
             .mapNotNull { localPetModels ->
+                val pets = mutableListOf<PetModel>()
                 val petFoods = mutableListOf<PetFoodModel>()
-                localPetModels.forEach {
-                    petFoods.add(it.toPetFoodModel())
+
+                var petId = localPetModels.first().id
+
+                localPetModels.forEachIndexed { index, localPetModel ->
+                    if (localPetModel.id != petId) {
+                        pets.add(localPetModels.toPetModel(index, petFoods))
+                        petFoods.clear()
+                        petId = localPetModel.id
+                    }
+
+                    petFoods.add(localPetModel.toPetFoodModel())
                 }
-                localPetModels.toPetModel(petFoods)
+
+                pets.add(localPetModels.toPetModel(localPetModels.lastIndex, petFoods))
+
+                pets.toList()
             }
 
     override suspend fun switchPetFoodAlarmState(switchPetFoodAlarmStateModel: SwitchPetFoodAlarmStateModel) {
@@ -36,36 +54,25 @@ class PetDetailRepositoryImpl @Inject constructor(
                     }
             }
 
-    override fun observePetListDetail(): Flow<List<PetModel?>> {
-        return localPetDetailDao.observePetList().map { petList ->
-            petList.map {
-                it?.toPetModel()
-            }
-        }
-    }
-
-    private fun LocalPetModel.toPetModel() =
-        PetModel(
-            id = id,
-            avatar = Uri.parse(avatar),
-            name = name,
-            age = age,
-            weight = weight,
-            breedName = breedName
             alarmDao.removeAlarm(alarmId)
             localPetDetailDao.switchPetFoodAlarmState(alarmId, false)
         }
     }
 
-    private fun List<LocalPetModel>.toPetModel(petFoodModels: MutableList<PetFoodModel>) =
-        first().run {
+
+    private fun List<LocalPetModel>.toPetModel(
+        index: Int,
+        petFoodModels: MutableList<PetFoodModel>
+    ) =
+        this[index].run {
             PetModel(
                 id = id,
-                avatar = Uri.parse(avatar),
+                avatarUri = Uri.parse(avatar),
                 name = name,
                 age = age,
                 weight = weight,
                 breedName = breedName,
+                isActive = isActive,
                 foods = petFoodModels.toList()
             )
         }

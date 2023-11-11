@@ -5,6 +5,14 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/petDetail">
 
+    <action
+        android:id="@+id/action_global_map"
+        app:destination="@id/map" />
+
+    <action
+        android:id="@+id/action_global_petDetail"
+        app:destination="@id/petDetail" />
+
     <fragment
         android:id="@+id/petDetail"
         android:name="com.example.mypet.ui.pet.detail.PetDetailFragment"
@@ -21,10 +29,11 @@
         </action>
     </fragment>
 
+    <include app:graph="@navigation/navigation_food_detail_alarm" />
+
     <fragment
         android:id="@+id/map"
         android:name="com.example.mypet.ui.map.MapFragment"
-        tools:layout="@layout/fragment_map">
-    </fragment>
+        tools:layout="@layout/fragment_map" />
 
 </navigation>
