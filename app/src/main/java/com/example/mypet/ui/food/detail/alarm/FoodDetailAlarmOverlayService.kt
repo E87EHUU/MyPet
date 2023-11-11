@@ -46,8 +46,6 @@ class FoodDetailAlarmOverlayService : Service() {
     override fun onBind(intent: Intent) = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        println("command")
-
         intent?.let {
             when (intent.action) {
                 ALARM_OVERLAY_ACTION_START -> start(intent)
@@ -61,7 +59,6 @@ class FoodDetailAlarmOverlayService : Service() {
     }
 
     private fun start(intent: Intent) {
-        println("start")
         val alarmId = intent.getIntExtra(ALARM_ID, 0)
         if (alarmId < 0) return
 
@@ -86,57 +83,45 @@ class FoodDetailAlarmOverlayService : Service() {
 
         foodDetailAlarmModel?.ringtoneUri?.let {
             alarmRingtone = FoodDetailAlarmRingtone(this, it)
-            //alarmRingtone?.play()
+            alarmRingtone?.play()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        println("destroy")
     }
 
     private fun stop() {
-        println("stop")
         clearUI()
-        foodDetailAlarmModel?.alarmId?.let {
-            stopForeground(it)
 
-            runBlocking {
-                launch(Dispatchers.IO) {
-                    foodDetailAlarmRepository.stopFoodDetailAlarm(it)
+        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+            with(foodDetailAlarmModel) {
+                stopForeground(alarmId)
+
+                if (isRepeatMonday || isRepeatTuesday || isRepeatWednesday
+                    || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
+                ) runBlocking {
+                    launch(Dispatchers.IO) {
+                        foodDetailAlarmRepository.stopFoodDetailAlarm(alarmId)
+                    }
                 }
             }
         }
+
         stopSelf()
     }
 
     private fun delay() {
-        println("delay")
-        alarmRingtone?.stop()
-        removeOverlay()
+        clearUI()
 
-        foodDetailAlarmModel?.alarmId?.let {
-            startForeground(it, ownNotification.getDelayNotification())
+        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+            startForeground(
+                foodDetailAlarmModel.alarmId,
+                ownNotification.getDelayNotification()
+            )
 
             runBlocking {
                 launch(Dispatchers.IO) {
-                    foodDetailAlarmRepository.delayFoodDetailAlarm(it)
+                    alarmDao.setAlarm(foodDetailAlarmModel.toDelayAlarmModel())
                 }
             }
         }
-    }
-
-    private fun clearUI() {
-        alarmRingtone?.stop()
-        alarmRingtone = null
-        removeOverlay()
-    }
-
-    private fun stopForegroundService() {
-        foodDetailAlarmModel?.alarmId?.let {
-            stopForeground(it)
-        }
-        stopSelf()
     }
 
     private fun navToDetail() {
@@ -192,6 +177,19 @@ class FoodDetailAlarmOverlayService : Service() {
         view?.let {
             windowManager.removeView(view)
         }
+    }
+
+    private fun clearUI() {
+        alarmRingtone?.stop()
+        alarmRingtone = null
+        removeOverlay()
+    }
+
+    private fun stopForegroundService() {
+        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+            stopForeground(foodDetailAlarmModel.alarmId)
+        }
+        stopSelf()
     }
 
     companion object {

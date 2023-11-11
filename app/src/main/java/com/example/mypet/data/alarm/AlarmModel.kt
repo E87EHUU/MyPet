@@ -11,5 +11,5 @@ data class AlarmModel(
     val isRepeatFriday: Boolean = false,
     val isRepeatSaturday: Boolean = false,
     val isRepeatSunday: Boolean = false,
-    val delay: Int? = null
+    val delayMinute: Int? = null
 )

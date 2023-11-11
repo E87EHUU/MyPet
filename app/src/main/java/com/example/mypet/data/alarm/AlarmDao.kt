@@ -7,7 +7,6 @@ import android.content.Intent
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService
 import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService.Companion.ALARM_ID
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService.Companion.ALARM_OVERLAY_ACTION_DELAY
 import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
@@ -27,7 +26,7 @@ class AlarmDao @Inject constructor(
 
         alarmManager.setAlarmClock(
             clockInfo,
-            getStartAlarmServicePendingIntent(alarmModel.id, alarmModel.delay)
+            getStartAlarmServicePendingIntent(alarmModel.id)
         )
     }
 
@@ -38,41 +37,42 @@ class AlarmDao @Inject constructor(
     private fun getTimeMillis(alarmModel: AlarmModel) =
         with(alarmModel) {
             val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, hour)
-            calendar.set(Calendar.MINUTE, minute)
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
 
-            alarmModel.delay?.let { calendar.add(Calendar.MINUTE, it) }
+            alarmModel.delayMinute?.let {
+                calendar.add(Calendar.MINUTE, it)
+            } ?: run {
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
 
-            val calendarNow = Calendar.getInstance()
+                val calendarNow = Calendar.getInstance()
+                if (calendarNow.isHourEqualsAndMinuteLast(calendarNow)
+                    || calendarNow.isHourLast(calendarNow)
+                ) calendar.add(Calendar.DATE, 1)
 
-            if (calendarNow.isHourEqualsAndMinuteLast(calendarNow)
-                || calendarNow.isHourLast(calendarNow)
-            ) calendar.add(Calendar.DATE, 1)
-
-            var addDay = 0
-            for (i in 1..7) {
-                if (calendar.hasTodayAlarm(alarmModel)) continue
-                else addDay++
+                if (isRepeatMonday || isRepeatTuesday || isRepeatWednesday
+                    || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
+                ) {
+                    for (i in 1..7) {
+                        if (calendar.hasTodayAlarm(alarmModel)) break
+                        else calendar.add(Calendar.DATE, 1)
+                    }
+                }
             }
-            println(addDay)
-            if (addDay in 1..6)
-                calendar.add(Calendar.DATE, addDay)
 
-            println(calendar.time)
             calendar.timeInMillis
         }
 
     private fun Calendar.hasTodayAlarm(alarmModel: AlarmModel) =
         when (this[Calendar.DAY_OF_WEEK]) {
-            Calendar.MONDAY -> alarmModel.isRepeatMonday
-            Calendar.TUESDAY -> alarmModel.isRepeatTuesday
-            Calendar.WEDNESDAY -> alarmModel.isRepeatWednesday
-            Calendar.THURSDAY -> alarmModel.isRepeatThursday
-            Calendar.FRIDAY -> alarmModel.isRepeatFriday
-            Calendar.SATURDAY -> alarmModel.isRepeatSaturday
-            Calendar.SUNDAY -> alarmModel.isRepeatSunday
+            2 -> alarmModel.isRepeatMonday
+            3 -> alarmModel.isRepeatTuesday
+            4 -> alarmModel.isRepeatWednesday
+            5 -> alarmModel.isRepeatThursday
+            6 -> alarmModel.isRepeatFriday
+            7 -> alarmModel.isRepeatSaturday
+            1 -> alarmModel.isRepeatSunday
             else -> false
         }
 
@@ -95,12 +95,10 @@ class AlarmDao @Inject constructor(
             )
         }
 
-    private fun getStartAlarmServicePendingIntent(id: Int, delay: Int? = null) =
+    private fun getStartAlarmServicePendingIntent(id: Int) =
         let {
             val intent = Intent(context, FoodDetailAlarmOverlayService::class.java)
-            intent.action = delay
-                ?.let { ALARM_OVERLAY_ACTION_DELAY }
-                ?: run { ALARM_OVERLAY_ACTION_START }
+            intent.action = ALARM_OVERLAY_ACTION_START
             intent.putExtra(ALARM_ID, id)
             PendingIntent.getForegroundService(
                 context,

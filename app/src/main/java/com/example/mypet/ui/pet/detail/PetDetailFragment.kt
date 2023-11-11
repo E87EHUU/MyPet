@@ -48,8 +48,6 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
         }
 
         binding.recyclerViewPetDetailFood.adapter = foodAdapter
-
-        //viewModel.setAlarm()
     }
 
     private fun startObservePetDetail() {

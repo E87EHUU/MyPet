@@ -8,7 +8,6 @@ import com.example.mypet.data.local.room.model.pet.LocalFoodDetailAlarmModel
 import com.example.mypet.domain.FoodDetailAlarmRepository
 import com.example.mypet.domain.food.detail.alarm.FoodDetailAlarmModel
 import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
-import java.util.Calendar
 import javax.inject.Inject
 
 class FoodDetailAlarmRepositoryImpl @Inject constructor(
@@ -24,26 +23,11 @@ class FoodDetailAlarmRepositoryImpl @Inject constructor(
             .toAlarmModel()?.let { alarmDao.setAlarm(it) }
     }
 
-    override suspend fun delayFoodDetailAlarm(alarmId: Int) {
-        val calendar = Calendar.getInstance()
-        // TODO настроить время задержки
-        calendar.add(Calendar.MINUTE, 1)
-        val alarmModel =
-            AlarmModel(
-                id = alarmId,
-                hour = calendar[Calendar.HOUR_OF_DAY],
-                minute = calendar[Calendar.MINUTE]
-            )
-        alarmDao.setAlarm(alarmModel)
-    }
-
     override suspend fun stopFoodDetailAlarm(alarmId: Int) {
         localFoodDetailAlarmDao.getLocalFoodDetailAlarmModelByAlarmId(alarmId)
             ?.let { foodAlarmModel ->
                 with(foodAlarmModel) {
-                    if (isRepeatMonday || isRepeatTuesday || isRepeatWednesday
-                        || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
-                    ) alarmDao.setAlarm(toAlarmModel())
+                    alarmDao.setAlarm(toAlarmModel())
                 }
             }
     }
