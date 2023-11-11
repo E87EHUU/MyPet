@@ -19,23 +19,23 @@ data class LocalAlarmEntity(
     @ColumnInfo(name = MINUTE)
     val minute: Int,
 
-    @ColumnInfo(name = REPEAT_MONDAY)
+    @ColumnInfo(name = IS_REPEAT_MONDAY)
     val repeatMonday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_TUESDAY)
+    @ColumnInfo(name = IS_REPEAT_TUESDAY)
     val repeatTuesday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_WEDNESDAY)
+    @ColumnInfo(name = IS_REPEAT_WEDNESDAY)
     val repeatWednesday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_THURSDAY)
+    @ColumnInfo(name = IS_REPEAT_THURSDAY)
     val repeatThursday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_FRIDAY)
+    @ColumnInfo(name = IS_REPEAT_FRIDAY)
     val repeatFriday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_SATURDAY)
+    @ColumnInfo(name = IS_REPEAT_SATURDAY)
     val repeatSaturday: Boolean = REPEAT_DEFAULT,
-    @ColumnInfo(name = REPEAT_SUNDAY)
+    @ColumnInfo(name = IS_REPEAT_SUNDAY)
     val repeatSunday: Boolean = REPEAT_DEFAULT,
 
-    @ColumnInfo(name = MELODY_URI)
-    val melodyURI: String?,
+    @ColumnInfo(name = RINGTONE_PATH)
+    val ringtoneURI: String?,
 
     @ColumnInfo(name = IS_VIBRATION)
     val isVibration: Boolean,
@@ -49,14 +49,14 @@ data class LocalAlarmEntity(
     companion object {
         const val HOUR = "hour"
         const val MINUTE = "minute"
-        const val REPEAT_MONDAY = "repeat_monday"
-        const val REPEAT_TUESDAY = "repeat_tuesday"
-        const val REPEAT_WEDNESDAY = "repeat_wednesday"
-        const val REPEAT_THURSDAY = "repeat_thursday"
-        const val REPEAT_FRIDAY = "repeat_friday"
-        const val REPEAT_SATURDAY = "repeat_saturday"
-        const val REPEAT_SUNDAY = "repeat_sunday"
-        const val MELODY_URI = "melody_uri"
+        const val IS_REPEAT_MONDAY = "repeat_monday"
+        const val IS_REPEAT_TUESDAY = "repeat_tuesday"
+        const val IS_REPEAT_WEDNESDAY = "repeat_wednesday"
+        const val IS_REPEAT_THURSDAY = "repeat_thursday"
+        const val IS_REPEAT_FRIDAY = "repeat_friday"
+        const val IS_REPEAT_SATURDAY = "repeat_saturday"
+        const val IS_REPEAT_SUNDAY = "repeat_sunday"
+        const val RINGTONE_PATH = "ringtone_path"
         const val IS_VIBRATION = "is_vibration"
         const val IS_DELAY = "is_delay"
         const val IS_ACTIVE = "is_active"

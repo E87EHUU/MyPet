@@ -1,7 +1,12 @@
 package com.example.mypet.ui
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -79,10 +84,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 else -> false
             }
         }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        )        requestPermissionForOverlay()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = Navigation.findNavController(this, R.id.navHostMain)
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
+    }
+
+    private fun requestPermissionForOverlay() {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+            startActivityForResult(intent, 0)
+        }
     }
 }
