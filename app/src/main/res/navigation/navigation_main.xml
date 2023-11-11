@@ -21,6 +21,10 @@
         </action>
     </fragment>
 
-    <include app:graph="@navigation/navigation_food_detail_alarm" />
+    <fragment
+        android:id="@+id/map"
+        android:name="com.example.mypet.ui.map.MapFragment"
+        tools:layout="@layout/fragment_map">
+    </fragment>
 
 </navigation>

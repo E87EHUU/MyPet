@@ -16,31 +16,31 @@ import com.example.mypet.domain.pet.detail.PetFoodModel
 import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.ui.pet.detail.food.PetDetailFoodAdapter
 import com.example.mypet.ui.pet.detail.food.PetDetailFoodAdapterCallback
+import com.example.mypet.domain.pet.detail.PetModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.example.mypet.domain.pet.detail.PetModel
 
 @AndroidEntryPoint
 class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
     private val binding by viewBinding(FragmentPetDetailBinding::bind)
     private val viewModel by viewModels<PetDetailViewModel>()
 
-    private val foodAdapterCallback =
-        object : PetDetailFoodAdapterCallback {
-            override fun onItemClick(petFoodModel: PetFoodModel) {
-                navToFoodAlarmSet(petFoodModel)
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-            override fun onSwitchActive(petFoodModel: PetFoodModel) {
-                viewModel.switchPetFoodAlarmState(petFoodModel)
-            }
-        }
-    private val foodAdapter = PetDetailFoodAdapter(foodAdapterCallback)
+        viewModel.updatePet()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         startObservePetDetail()
+
+        binding.mapButton.setOnClickListener {
+            findNavController().navigate(R.id.map)
+        }
         viewModel.updatePetModel()
 
         binding.buttonPetDetailFoodAdd.setOnClickListener {
@@ -53,12 +53,9 @@ class PetDetailFragment : Fragment(R.layout.fragment_pet_detail) {
     private fun startObservePetDetail() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.petModel.collectLatest { petModel ->
+                viewModel.pet.collectLatest { petModel ->
                     petModel
-                        ?.let {
-                            onPetUpdate(it)
-                            foodAdapter.submitList(it.foods)
-                        }
+                        ?.let { onPetUpdate(it) }
                         ?: run { onPetEmpty() }
                 }
             }
