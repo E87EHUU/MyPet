@@ -21,7 +21,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
     private var foodId: Int? = null
     private var alarmId: Int? = null
 
-    private var localDateTime = LocalDateTime.now()
+    private var localDateTime: LocalDateTime = LocalDateTime.now()
 
     var name = ""
 
@@ -54,7 +54,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
 
         return flow {
             foodId?.let { foodId ->
-                foodDetailAlarmRepository.getFoodDetailAlarmModel(foodId)
+                foodDetailAlarmRepository.getFoodAlarmModel(foodId)
                     ?.let { foodDetailAlarmModel ->
                         name = foodDetailAlarmModel.title
                         if (foodDetailAlarmModel.alarmId > 0) {

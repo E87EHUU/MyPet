@@ -4,7 +4,7 @@ import android.net.Uri
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.dao.LocalPetDetailDao
-import com.example.mypet.data.local.room.model.pet.LocalFoodDetailAlarmModel
+import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import com.example.mypet.domain.PetDetailRepository
 import com.example.mypet.domain.pet.detail.PetFoodModel
@@ -87,6 +87,6 @@ class PetDetailRepositoryImpl @Inject constructor(
             alarmIsActive = alarmIsActive
         )
 
-    private fun LocalFoodDetailAlarmModel.toAlarmModel() =
+    private fun LocalFoodAlarmModel.toAlarmModel() =
         AlarmModel(alarmId, hour, minute)
 }

@@ -3,7 +3,7 @@ package com.example.mypet.domain.food.detail.alarm
 import android.net.Uri
 import com.example.mypet.data.alarm.AlarmModel
 
-data class FoodDetailAlarmModel(
+data class FoodAlarmModel(
     val foodId: Int,
     val title: String,
 

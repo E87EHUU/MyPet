@@ -19,7 +19,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VI
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 
-data class LocalFoodDetailAlarmModel(
+data class LocalFoodAlarmModel(
     @ColumnInfo(name = ID)
     val foodId: Int,
     @ColumnInfo(name = TITLE)

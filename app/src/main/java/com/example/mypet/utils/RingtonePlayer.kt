@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.utils
 
 import android.content.Context
 import android.media.AudioAttributes
@@ -6,7 +6,7 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 
-class FoodDetailAlarmRingtone(
+class RingtonePlayer(
     private val context: Context,
     private val ringtoneUri: Uri,
 ) {

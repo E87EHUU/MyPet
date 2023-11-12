@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.ui.food.alarm.service
 
 import android.app.Service
 import android.content.Context
@@ -13,9 +13,10 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import com.example.mypet.app.R
 import com.example.mypet.data.alarm.AlarmDao
-import com.example.mypet.domain.FoodDetailAlarmRepository
-import com.example.mypet.domain.food.detail.alarm.FoodDetailAlarmModel
+import com.example.mypet.domain.FoodAlarmServiceRepository
+import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
+import com.example.mypet.utils.RingtonePlayer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,9 +24,9 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FoodDetailAlarmOverlayService : Service() {
+class FoodAlarmService : Service() {
     @Inject
-    lateinit var foodDetailAlarmRepository: FoodDetailAlarmRepository
+    lateinit var foodDetailAlarmServiceRepository: FoodAlarmServiceRepository
 
     @Inject
     lateinit var alarmDao: AlarmDao
@@ -39,9 +40,9 @@ class FoodDetailAlarmOverlayService : Service() {
     private val buttonStop
         get() = view?.findViewById<Button>(R.id.buttonAlarmStop)
 
-    private var alarmRingtone: FoodDetailAlarmRingtone? = null
-    private var foodDetailAlarmModel: FoodDetailAlarmModel? = null
-    private lateinit var ownNotification: FoodDetailAlarmOverlayNotification
+    private var alarmRingtone: RingtonePlayer? = null
+    private var foodDetailAlarmModel: FoodAlarmModel? = null
+    private lateinit var ownNotification: FoodAlarmServiceNotification
 
     override fun onBind(intent: Intent) = null
 
@@ -65,14 +66,16 @@ class FoodDetailAlarmOverlayService : Service() {
         if (foodDetailAlarmModel == null) {
             runBlocking {
                 launch(Dispatchers.IO) {
-                    foodDetailAlarmRepository.getFoodDetailAlarmModel(alarmId)
+                    foodDetailAlarmServiceRepository.getFoodAlarmModel(alarmId)
                         ?.let { foodDetailAlarmModel = it }
                 }
             }
         }
 
+        println(foodDetailAlarmModel)
+
         foodDetailAlarmModel?.foodId?.let {
-            ownNotification = FoodDetailAlarmOverlayNotification(this, foodDetailAlarmModel!!)
+            ownNotification = FoodAlarmServiceNotification(this, foodDetailAlarmModel!!)
             startForeground(it, ownNotification.getNotification())
         }
 
@@ -82,7 +85,7 @@ class FoodDetailAlarmOverlayService : Service() {
         addOverlay()
 
         foodDetailAlarmModel?.ringtoneUri?.let {
-            alarmRingtone = FoodDetailAlarmRingtone(this, it)
+            alarmRingtone = RingtonePlayer(this, it)
             alarmRingtone?.play()
         }
     }
@@ -98,7 +101,7 @@ class FoodDetailAlarmOverlayService : Service() {
                     || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
                 ) runBlocking {
                     launch(Dispatchers.IO) {
-                        foodDetailAlarmRepository.stopFoodDetailAlarm(alarmId)
+                        foodDetailAlarmServiceRepository.stopFoodAlarm(alarmId)
                     }
                 }
             }
@@ -138,10 +141,10 @@ class FoodDetailAlarmOverlayService : Service() {
         val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
         val layoutInflater =
             contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = layoutInflater.inflate(R.layout.service_food_detail_alarm_overlay, null)
+        view = layoutInflater.inflate(R.layout.service_food_alarm_overlay, null)
 
-        foodDetailAlarmModel?.isDelay?.let {
-            buttonDelay?.isVisible = it
+        foodDetailAlarmModel?.let {
+            buttonDelay?.isVisible = it.isDelay
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.ui.food.alarm.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,18 +9,18 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
-import com.example.mypet.domain.food.detail.alarm.FoodDetailAlarmModel
+import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
 
 
-class FoodDetailAlarmOverlayNotification(
+class FoodAlarmServiceNotification(
     private val context: Context,
-    private val foodDetailAlarmModel: FoodDetailAlarmModel,
+    private val foodDetailAlarmModel: FoodAlarmModel,
 ) {
-    private val intentToService = Intent(context, FoodDetailAlarmOverlayService::class.java)
+    private val intentToService = Intent(context, FoodAlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
         let {
             intentToService.action =
-                FoodDetailAlarmOverlayService.ALARM_OVERLAY_ACTION_NAV_TO_DETAIL
+                FoodAlarmService.ALARM_OVERLAY_ACTION_NAV_TO_DETAIL
             PendingIntent.getService(
                 context,
                 0,
@@ -31,7 +31,7 @@ class FoodDetailAlarmOverlayNotification(
 
     private val pendingIntentStartServiceDelay: PendingIntent =
         let {
-            intentToService.action = FoodDetailAlarmOverlayService.ALARM_OVERLAY_ACTION_DELAY
+            intentToService.action = FoodAlarmService.ALARM_OVERLAY_ACTION_DELAY
             PendingIntent.getService(
                 context,
                 0,
@@ -42,7 +42,7 @@ class FoodDetailAlarmOverlayNotification(
 
     private val pendingIntentStartServiceStop: PendingIntent =
         let {
-            intentToService.action = FoodDetailAlarmOverlayService.ALARM_OVERLAY_ACTION_STOP
+            intentToService.action = FoodAlarmService.ALARM_OVERLAY_ACTION_STOP
             PendingIntent.getService(
                 context,
                 0,

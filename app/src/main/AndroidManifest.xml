@@ -31,7 +31,7 @@
         </receiver>
 
         <service
-            android:name="com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService"
+            android:name="com.example.mypet.ui.food.alarm.service.FoodAlarmService"
             android:enabled="true" />
 
         <activity

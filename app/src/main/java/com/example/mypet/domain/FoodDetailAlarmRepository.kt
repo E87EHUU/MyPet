@@ -1,10 +1,9 @@
 package com.example.mypet.domain
 
-import com.example.mypet.domain.food.detail.alarm.FoodDetailAlarmModel
+import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
 import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
 
 interface FoodDetailAlarmRepository {
-    suspend fun getFoodDetailAlarmModel(foodMyId: Int): FoodDetailAlarmModel?
+    suspend fun getFoodAlarmModel(foodMyId: Int): FoodAlarmModel?
     suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveFoodDetailAlarmAndSetAlarm)
-    suspend fun stopFoodDetailAlarm(alarmId: Int)
 }
