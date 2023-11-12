@@ -2,12 +2,14 @@ package com.example.mypet.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.mypet.data.alarm.AlarmDao
+import com.example.mypet.data.alarm.IAlarmDao
+import com.example.mypet.data.local.room.LocalDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.example.mypet.data.local.room.LocalDatabase
 import javax.inject.Singleton
 
 @Module
@@ -28,4 +30,19 @@ object DataModule {
     @Provides
     fun provideLocalPetDetailDao(db: LocalDatabase) =
         db.localPetDetailDao()
+
+    @Singleton
+    @Provides
+    fun provideLocalFoodDetailAlarmDao(db: LocalDatabase) =
+        db.localFoodDetailAlarmDao()
+
+    @Singleton
+    @Provides
+    fun provideLocalBootCompleteDao(db: LocalDatabase) =
+        db.localBootCompleteDao()
+
+    @Singleton
+    @Provides
+    fun provideAlarmDao(alarmDao: AlarmDao): IAlarmDao =
+        alarmDao
 }

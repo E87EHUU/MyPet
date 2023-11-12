@@ -1,4 +1,4 @@
-package com.example.mypet.domain
+package com.example.mypet.ui
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
