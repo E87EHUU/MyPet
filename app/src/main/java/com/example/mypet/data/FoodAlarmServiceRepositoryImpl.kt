@@ -3,6 +3,7 @@ package com.example.mypet.data
 import android.net.Uri
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.AlarmModel
+import com.example.mypet.data.alarm.isRepeatable
 import com.example.mypet.data.local.room.dao.LocalFoodAlarmServiceDao
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.domain.FoodAlarmServiceRepository
@@ -19,9 +20,13 @@ class FoodAlarmServiceRepositoryImpl @Inject constructor(
 
     override suspend fun stopFoodAlarm(alarmId: Int) {
         localFoodAlarmServiceDao.getLocalFoodAlarmModelByAlarmId(alarmId)
-            ?.let { foodAlarmModel ->
-                with(foodAlarmModel) {
-                    alarmDao.setAlarm(toAlarmModel())
+            ?.let {
+                val alarmModel = it.toAlarmModel()
+                println(alarmId)
+                if (alarmModel.isRepeatable()) alarmDao.setAlarm(alarmModel)
+                else {
+                    println("stop")
+                    localFoodAlarmServiceDao.disableAlarm(alarmId)
                 }
             }
     }

@@ -51,4 +51,7 @@ interface LocalFoodAlarmServiceDao {
                 "LIMIT 1"
     )
     fun getLocalFoodAlarmModelByAlarmId(alarmId: Int): LocalFoodAlarmModel?
+
+    @Query("UPDATE alarm SET is_active = 0 WHERE id = :alarmId")
+    fun disableAlarm(alarmId: Int)
 }

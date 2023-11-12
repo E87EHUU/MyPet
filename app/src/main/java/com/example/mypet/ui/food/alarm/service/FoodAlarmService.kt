@@ -95,9 +95,7 @@ class FoodAlarmService : Service() {
             with(foodDetailAlarmModel) {
                 stopForeground(alarmId)
 
-                if (isRepeatMonday || isRepeatTuesday || isRepeatWednesday
-                    || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
-                ) runBlocking {
+                runBlocking {
                     launch(Dispatchers.IO) {
                         foodDetailAlarmServiceRepository.stopFoodAlarm(alarmId)
                     }
