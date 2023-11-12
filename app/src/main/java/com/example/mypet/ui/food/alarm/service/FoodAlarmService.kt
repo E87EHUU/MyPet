@@ -52,7 +52,7 @@ class FoodAlarmService : Service() {
                 ALARM_OVERLAY_ACTION_START -> start(intent)
                 ALARM_OVERLAY_ACTION_STOP -> stop()
                 ALARM_OVERLAY_ACTION_DELAY -> delay()
-                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
+                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetailAndStop()
             }
         }
 
@@ -123,14 +123,12 @@ class FoodAlarmService : Service() {
         }
     }
 
-    private fun navToDetail() {
-        clearUI()
-
+    private fun navToDetailAndStop() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
 
-        stopForegroundService()
+        stop()
     }
 
     private fun initView() {
@@ -160,7 +158,7 @@ class FoodAlarmService : Service() {
 
     private fun initViewListeners() {
         view?.let { view ->
-            view.setOnClickListener { navToDetail() }
+            view.setOnClickListener { navToDetailAndStop() }
             buttonDelay?.setOnClickListener { delay() }
             buttonStop?.setOnClickListener { stop() }
         }
