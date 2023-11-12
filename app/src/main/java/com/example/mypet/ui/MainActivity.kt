@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        requestPermissionForOverlay()
+
         setSupportActionBar(binding.toolbar)
 
         setupActionBarWithNavController(
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
-        )        requestPermissionForOverlay()
+        ) requestPermissionForOverlay()
 
     }
 
