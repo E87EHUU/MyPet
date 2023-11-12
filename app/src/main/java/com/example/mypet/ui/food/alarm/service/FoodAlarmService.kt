@@ -72,8 +72,6 @@ class FoodAlarmService : Service() {
             }
         }
 
-        println(foodDetailAlarmModel)
-
         foodDetailAlarmModel?.foodId?.let {
             ownNotification = FoodAlarmServiceNotification(this, foodDetailAlarmModel!!)
             startForeground(it, ownNotification.getNotification())

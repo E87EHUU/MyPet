@@ -19,10 +19,7 @@ class FoodDetailAlarmRepositoryImpl @Inject constructor(
 
     override suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveFoodDetailAlarmAndSetAlarm) {
         localFoodDetailAlarmDao.savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm)
-            .toAlarmModel()?.let {
-                println(saveFoodDetailAlarmAndSetAlarm)
-                println(it)
-                alarmDao.setAlarm(it) }
+            .toAlarmModel()?.let { alarmDao.setAlarm(it) }
     }
 
     private fun LocalFoodAlarmModel.toFoodAlarmModel() =
