@@ -21,7 +21,7 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentMapBinding
 import com.example.mypet.domain.map.MapSearchResponseItem
 import com.example.mypet.domain.map.MapSearchState
-import com.example.mypet.domain.snackMessage
+import com.example.mypet.ui.snackMessage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.GeoObject

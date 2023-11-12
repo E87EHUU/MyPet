@@ -1,7 +1,9 @@
 package com.example.mypet.di
 
+import com.example.mypet.data.BootCompleteRepositoryImpl
 import com.example.mypet.data.FoodDetailAlarmRepositoryImpl
 import com.example.mypet.data.PetDetailRepositoryImpl
+import com.example.mypet.domain.BootCompleteRepository
 import com.example.mypet.domain.FoodDetailAlarmRepository
 import com.example.mypet.domain.PetDetailRepository
 import dagger.Module
@@ -22,4 +24,9 @@ object DomainModule {
     @Singleton
     fun provideFoodDetailAlarmRepository(foodDetailAlarmRepositoryImpl: FoodDetailAlarmRepositoryImpl): FoodDetailAlarmRepository =
         foodDetailAlarmRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideBootCompleteRepository(bootCompleteRepositoryImpl: BootCompleteRepositoryImpl): BootCompleteRepository =
+        bootCompleteRepositoryImpl
 }

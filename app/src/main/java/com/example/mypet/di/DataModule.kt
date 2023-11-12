@@ -33,11 +33,16 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideLocalAlarmDao(db: LocalDatabase) =
+    fun provideLocalFoodDetailAlarmDao(db: LocalDatabase) =
         db.localFoodDetailAlarmDao()
 
     @Singleton
     @Provides
-    fun provideAlarmDao(alarmDaoImpl: AlarmDao): IAlarmDao =
-        alarmDaoImpl
+    fun provideLocalBootCompleteDao(db: LocalDatabase) =
+        db.localBootCompleteDao()
+
+    @Singleton
+    @Provides
+    fun provideAlarmDao(alarmDao: AlarmDao): IAlarmDao =
+        alarmDao
 }

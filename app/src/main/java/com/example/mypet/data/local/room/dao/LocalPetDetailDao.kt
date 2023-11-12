@@ -63,13 +63,13 @@ interface LocalPetDetailDao {
                 "a.id ${ALARM_TABLE}_${ID}, " +
                 "a.hour $HOUR, " +
                 "a.minute $MINUTE, " +
-                "a.repeat_monday $IS_REPEAT_MONDAY, " +
-                "a.repeat_tuesday $IS_REPEAT_TUESDAY, " +
-                "a.repeat_wednesday $IS_REPEAT_WEDNESDAY, " +
-                "a.repeat_thursday $IS_REPEAT_THURSDAY, " +
-                "a.repeat_friday $IS_REPEAT_FRIDAY, " +
-                "a.repeat_saturday $IS_REPEAT_SATURDAY, " +
-                "a.repeat_sunday $IS_REPEAT_SUNDAY, " +
+                "a.is_repeat_monday $IS_REPEAT_MONDAY, " +
+                "a.is_repeat_tuesday $IS_REPEAT_TUESDAY, " +
+                "a.is_repeat_wednesday $IS_REPEAT_WEDNESDAY, " +
+                "a.is_repeat_thursday $IS_REPEAT_THURSDAY, " +
+                "a.is_repeat_friday $IS_REPEAT_FRIDAY, " +
+                "a.is_repeat_saturday $IS_REPEAT_SATURDAY, " +
+                "a.is_repeat_sunday $IS_REPEAT_SUNDAY, " +
                 "a.ringtone_path $RINGTONE_PATH, " +
                 "a.is_vibration $IS_VIBRATION, " +
                 "a.is_delay $IS_DELAY, " +

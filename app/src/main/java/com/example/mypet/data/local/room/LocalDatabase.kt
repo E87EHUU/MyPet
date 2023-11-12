@@ -2,6 +2,7 @@ package com.example.mypet.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
 import com.example.mypet.data.local.room.dao.LocalFoodDetailAlarmDao
 import com.example.mypet.data.local.room.dao.LocalPetDetailDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
@@ -24,6 +25,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun localPetDetailDao(): LocalPetDetailDao
     abstract fun localFoodDetailAlarmDao(): LocalFoodDetailAlarmDao
+    abstract fun localBootCompleteDao(): LocalBootCompleteDao
 
     companion object {
         const val ID = "id"
