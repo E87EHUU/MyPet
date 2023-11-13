@@ -1,6 +1,5 @@
 package com.example.mypet.domain.food.detail.alarm
 
-import android.net.Uri
 import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
@@ -22,7 +21,7 @@ data class SaveFoodDetailAlarmAndSetAlarm(
     val alarmRepeatFriday: Boolean,
     val alarmRepeatSaturday: Boolean,
     val alarmRepeatSunday: Boolean,
-    val alarmMelodyURI: Uri?,
+    val alarmRingtonePath: String?,
     val alarmIsVibration: Boolean,
     val alarmIsDelay: Boolean,
 ) {
@@ -46,7 +45,7 @@ data class SaveFoodDetailAlarmAndSetAlarm(
             isRepeatFriday = alarmRepeatFriday,
             isRepeatSaturday = alarmRepeatSaturday,
             isRepeatSunday = alarmRepeatSunday,
-            ringtoneURI = alarmMelodyURI?.path,
+            ringtonePath = alarmRingtonePath,
             isVibration = alarmIsVibration,
             isDelay = alarmIsDelay,
             isActive = true

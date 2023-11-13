@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +42,7 @@ class FoodAlarmService : Service() {
         get() = view?.findViewById<Button>(R.id.buttonAlarmStop)
 
     private var alarmRingtone: RingtonePlayer? = null
-    private var foodDetailAlarmModel: FoodAlarmModel? = null
+    private var foodAlarmModel: FoodAlarmModel? = null
     private lateinit var ownNotification: FoodAlarmServiceNotification
 
     override fun onBind(intent: Intent) = null
@@ -52,7 +53,7 @@ class FoodAlarmService : Service() {
                 ALARM_OVERLAY_ACTION_START -> start(intent)
                 ALARM_OVERLAY_ACTION_STOP -> stop()
                 ALARM_OVERLAY_ACTION_DELAY -> delay()
-                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetailAndStop()
+                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
             }
         }
 
@@ -63,35 +64,35 @@ class FoodAlarmService : Service() {
         val alarmId = intent.getIntExtra(ALARM_ID, 0)
         if (alarmId < 0) return
 
-        if (foodDetailAlarmModel == null) {
+        if (foodAlarmModel == null) {
             runBlocking {
                 launch(Dispatchers.IO) {
                     foodDetailAlarmServiceRepository.getFoodAlarmModel(alarmId)
-                        ?.let { foodDetailAlarmModel = it }
+                        ?.let { foodAlarmModel = it }
                 }
             }
         }
 
-        foodDetailAlarmModel?.foodId?.let {
-            ownNotification = FoodAlarmServiceNotification(this, foodDetailAlarmModel!!)
-            startForeground(it, ownNotification.getNotification())
-        }
+        foodAlarmModel?.let { foodAlarmModel ->
+            ownNotification = FoodAlarmServiceNotification(this, foodAlarmModel)
+            startForeground(foodAlarmModel.alarmId, ownNotification.getNotification())
 
-        initView()
-        initOverlayParams()
-        initViewListeners()
-        addOverlay()
+            initView()
+            initOverlayParams()
+            initViewListeners()
+            addOverlay()
 
-        foodDetailAlarmModel?.ringtoneUri?.let {
-            alarmRingtone = RingtonePlayer(this, it)
-            alarmRingtone?.play()
+            foodAlarmModel.ringtonePath?.let {
+                alarmRingtone = RingtonePlayer(this, Uri.parse(it))
+                alarmRingtone?.play()
+            }
         }
     }
 
     private fun stop() {
         clearUI()
 
-        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+        foodAlarmModel?.let { foodDetailAlarmModel ->
             with(foodDetailAlarmModel) {
                 stopForeground(alarmId)
 
@@ -109,7 +110,7 @@ class FoodAlarmService : Service() {
     private fun delay() {
         clearUI()
 
-        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+        foodAlarmModel?.let { foodDetailAlarmModel ->
             startForeground(
                 foodDetailAlarmModel.alarmId,
                 ownNotification.getDelayNotification()
@@ -123,12 +124,10 @@ class FoodAlarmService : Service() {
         }
     }
 
-    private fun navToDetailAndStop() {
+    private fun navToDetail() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-
-        stop()
     }
 
     private fun initView() {
@@ -137,7 +136,7 @@ class FoodAlarmService : Service() {
             contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         view = layoutInflater.inflate(R.layout.service_food_alarm_overlay, null)
 
-        foodDetailAlarmModel?.let {
+        foodAlarmModel?.let {
             buttonDelay?.isVisible = it.isDelay
         }
     }
@@ -158,7 +157,7 @@ class FoodAlarmService : Service() {
 
     private fun initViewListeners() {
         view?.let { view ->
-            view.setOnClickListener { navToDetailAndStop() }
+            view.setOnClickListener { navToDetail() }
             buttonDelay?.setOnClickListener { delay() }
             buttonStop?.setOnClickListener { stop() }
         }
@@ -183,7 +182,7 @@ class FoodAlarmService : Service() {
     }
 
     private fun stopForegroundService() {
-        foodDetailAlarmModel?.let { foodDetailAlarmModel ->
+        foodAlarmModel?.let { foodDetailAlarmModel ->
             stopForeground(foodDetailAlarmModel.alarmId)
         }
         stopSelf()

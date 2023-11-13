@@ -1,6 +1,5 @@
 package com.example.mypet.data
 
-import android.net.Uri
 import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.dao.LocalFoodDetailAlarmDao
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
@@ -37,7 +36,7 @@ class FoodDetailAlarmRepositoryImpl @Inject constructor(
             isRepeatFriday,
             isRepeatSaturday,
             isRepeatSunday,
-            ringtoneUri = ringtoneUri?.let { Uri.parse(ringtoneUri) },
+            ringtonePath,
             isVibration,
             isDelay,
             isActive

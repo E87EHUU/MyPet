@@ -49,7 +49,7 @@ data class LocalFoodAlarmModel(
     @ColumnInfo(name = IS_REPEAT_SUNDAY)
     val isRepeatSunday: Boolean,
     @ColumnInfo(name = RINGTONE_PATH)
-    val ringtoneUri: String?,
+    val ringtonePath: String?,
     @ColumnInfo(name = IS_VIBRATION)
     val isVibration: Boolean,
     @ColumnInfo(name = IS_DELAY)

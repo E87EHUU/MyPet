@@ -35,7 +35,7 @@ data class LocalAlarmEntity(
     val isRepeatSunday: Boolean = IS_REPEAT_STATE_DEFAULT,
 
     @ColumnInfo(name = RINGTONE_PATH)
-    val ringtoneURI: String?,
+    val ringtonePath: String?,
 
     @ColumnInfo(name = IS_VIBRATION)
     val isVibration: Boolean,

@@ -1,6 +1,5 @@
 package com.example.mypet.data
 
-import android.net.Uri
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.alarm.isRepeatable
@@ -60,7 +59,7 @@ class FoodAlarmServiceRepositoryImpl @Inject constructor(
             isRepeatFriday,
             isRepeatSaturday,
             isRepeatSunday,
-            ringtoneUri = ringtoneUri?.let { Uri.parse(ringtoneUri) },
+            ringtonePath = ringtonePath,
             isVibration,
             isDelay,
             isActive

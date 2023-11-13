@@ -62,7 +62,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
 
     private fun tryUpdateFoodDetailAlarmModel() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.update(args)?.collectLatest { updateUI() } ?: run { updateUI() }
             }
         }
@@ -70,7 +70,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
 
     private fun observePopBackStack() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 findNavController().currentBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
                     savedStateHandle.getStateFlow<Long?>(ALARM_REPEAT_POP_BACK, null)
                         .collectLatest {
@@ -90,7 +90,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
 
         binding.textInputEditTextAlarmSetDescription.setText(viewModel.name)
 
-        updateUIMelodyDescription()
+        updateUIRingtoneDescription()
         updateUIRepeatDescription()
         updateUIDelayChecker()
         updateUIVibrationChecker()
@@ -126,8 +126,8 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
             viewModel.isDelayChecked = isChecked
         }
 
-        binding.LayerAlarmSetMelody.setOnClickListener { launchChooserMelodyIntent() }
-        binding.buttonAlarmSetMelodyNav.setOnClickListener { launchChooserMelodyIntent() }
+        binding.LayerAlarmSetMelody.setOnClickListener { launchChooserRingtoneIntent() }
+        binding.buttonAlarmSetMelodyNav.setOnClickListener { launchChooserRingtoneIntent() }
 
         binding.LayerAlarmSetRepeat.setOnClickListener { navToAlarmRepeat() }
         binding.buttonAlarmSetRepeatNav.setOnClickListener { navToAlarmRepeat() }
@@ -145,11 +145,13 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
         binding.switchAlarmSetVibration.isChecked = viewModel.isVibrationChecked
     }
 
-    private fun updateUIMelodyDescription() {
-        val ringtoneTitle =
-            RingtoneManager.getRingtone(requireContext(), viewModel.ringtoneUri)
-                .getTitle(requireContext())
-        binding.textViewAlarmSetMelodyDescription.text = ringtoneTitle
+    private fun updateUIRingtoneDescription() {
+        viewModel.ringtonePath?.let {
+            val uri = Uri.parse(it)
+            val title = RingtoneManager.getRingtone(requireContext(), uri).getTitle(context)
+
+            binding.textViewAlarmSetMelodyDescription.text = title
+        }
     }
 
     private fun updateUIRepeatDescription() {
@@ -205,14 +207,16 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
             stringBuilder.ifEmpty { getString(R.string.food_detail_alarm_repeat_description_default) }
     }
 
-    private val chooserMelodyRegisterForActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            viewModel.ringtoneUri =
-                it.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            updateUIMelodyDescription()
+    private val chooserRingtoneRegisterForActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            val uri =
+                activityResult.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+            viewModel.ringtonePath = uri?.let { it.toString() }
+
+            updateUIRingtoneDescription()
         }
 
-    private fun launchChooserMelodyIntent() {
+    private fun launchChooserRingtoneIntent() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
         intent.putExtra(
@@ -220,7 +224,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
             R.string.intent_chooser_ringtone_picker_title
         )
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, null as Uri?)
-        chooserMelodyRegisterForActivityResult.launch(intent)
+        chooserRingtoneRegisterForActivityResult.launch(intent)
     }
 
     private fun saveAndPopBack() {
