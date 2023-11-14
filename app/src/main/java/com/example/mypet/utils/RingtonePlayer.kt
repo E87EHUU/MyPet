@@ -8,22 +8,27 @@ import android.net.Uri
 
 class RingtonePlayer(
     private val context: Context,
-    private val ringtoneUri: Uri,
 ) {
     private var ringtone: Ringtone? = null
-    fun play() {
-        if (ringtone != null) stop()
+    private val audioAttributes =
+        AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
 
-        val ringtoneAttributes =
-            AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
+    fun play(ringtoneUri: Uri? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)) {
+        if (ringtone == null) {
+            ringtone = RingtoneManager.getRingtone(context, ringtoneUri)
+            ringtone?.audioAttributes = audioAttributes
+        }
 
-        ringtone = RingtoneManager.getRingtone(context, ringtoneUri)
-        ringtone?.audioAttributes = ringtoneAttributes
-        ringtone?.play()
+        ringtone?.apply {
+            if (!isPlaying) play()
+        }
     }
 
     fun stop() {
         ringtone?.stop()
+    }
+
+    fun onDestroy() {
         ringtone = null
     }
 }

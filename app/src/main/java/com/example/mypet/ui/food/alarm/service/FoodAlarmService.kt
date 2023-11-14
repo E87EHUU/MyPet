@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.net.Uri
+import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.example.mypet.domain.FoodAlarmServiceRepository
 import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
+import com.example.mypet.utils.VibrationPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,9 +43,10 @@ class FoodAlarmService : Service() {
     private val buttonStop
         get() = view?.findViewById<Button>(R.id.buttonAlarmStop)
 
-    private var alarmRingtone: RingtonePlayer? = null
     private var foodAlarmModel: FoodAlarmModel? = null
     private lateinit var ownNotification: FoodAlarmServiceNotification
+    private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
+    private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
 
     override fun onBind(intent: Intent) = null
 
@@ -58,6 +61,17 @@ class FoodAlarmService : Service() {
         }
 
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        ringtonePlayer.onDestroy()
+        vibrationPlayer.onDestroy()
+
+        foodAlarmModel = null
+        params = null
+        view = null
     }
 
     private fun start(intent: Intent) {
@@ -80,11 +94,25 @@ class FoodAlarmService : Service() {
             initView()
             initOverlayParams()
             initViewListeners()
-            addOverlay()
 
-            foodAlarmModel.ringtonePath?.let {
-                alarmRingtone = RingtonePlayer(this, Uri.parse(it))
-                alarmRingtone?.play()
+            playVibration()
+            playRingtone()
+
+            if (Settings.canDrawOverlays(this)) showOverlay()
+            else navToDetail()
+        }
+    }
+
+    private fun playVibration() {
+        foodAlarmModel?.let {
+            if (it.isVibration) vibrationPlayer.play()
+        }
+    }
+
+    private fun playRingtone() {
+        foodAlarmModel?.let { foodAlarmModel ->
+            foodAlarmModel.ringtonePath?.let { ringtonePath ->
+                ringtonePlayer.play(Uri.parse(ringtonePath))
             }
         }
     }
@@ -163,7 +191,7 @@ class FoodAlarmService : Service() {
         }
     }
 
-    private fun addOverlay() {
+    private fun showOverlay() {
         view?.let {
             windowManager.addView(view, params)
         }
@@ -176,8 +204,8 @@ class FoodAlarmService : Service() {
     }
 
     private fun clearUI() {
-        alarmRingtone?.stop()
-        alarmRingtone = null
+        ringtonePlayer?.apply { stop() }
+        vibrationPlayer?.apply { stop() }
         removeOverlay()
     }
 

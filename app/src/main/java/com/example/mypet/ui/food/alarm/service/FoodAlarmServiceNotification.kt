@@ -98,7 +98,6 @@ class FoodAlarmServiceNotification(
             NotificationManager.IMPORTANCE_DEFAULT
         )
             .apply {
-                enableVibration(foodDetailAlarmModel.isVibration)
                 lightColor = Color.BLUE
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             }
