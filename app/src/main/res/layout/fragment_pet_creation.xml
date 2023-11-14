@@ -13,8 +13,8 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/avatar_creation_size"
+            android:layout_height="@dimen/avatar_creation_size"
             android:src="@drawable/profile" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -43,11 +43,12 @@
         android:text="@string/category" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/category_spinner"
+        android:id="@+id/kind_spinner"
         android:layout_width="@dimen/spinner_200dp"
         android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/breed_spinner_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_16"
@@ -88,6 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/offset_16"
-        android:text="@string/save_new_pet"/>
+        android:text="@string/save_new_pet" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

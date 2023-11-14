@@ -1,20 +1,43 @@
 package com.example.mypet.data
 
-import com.example.mypet.data.local.room.dao.LocalPetDetailDao
+import com.example.mypet.data.local.room.dao.PetCreationDao
+import com.example.mypet.data.local.room.entity.LocalPetBreedEntity
+import com.example.mypet.data.local.room.entity.LocalPetKindEntity
+import com.example.mypet.data.local.room.model.LocalPetBreedModel
+import com.example.mypet.data.local.room.model.LocalPetKindModel
 import com.example.mypet.domain.PetCreationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PetCreationRepositoryImpl @Inject constructor(
-    private val localPetDetailDao: LocalPetDetailDao
+    private val petCreationDao: PetCreationDao
 ) : PetCreationRepository {
 
-    override fun getKindList(): Flow<List<String>> {
-        return localPetDetailDao.observePetKindList().map { petKindList ->
+    override fun getKindList(): Flow<List<LocalPetKindModel>> {
+        return petCreationDao.observePetKindList().map { petKindList ->
             petKindList.map {
-                it.name
+                it.toLocalPetKindModel()
             }
         }
     }
+
+    override fun getBreedList(kindId: Int): Flow<List<LocalPetBreedModel>> {
+        return petCreationDao.observePetBreedList(kindId).map { petKindList ->
+            petKindList.map{
+                it.toLocalPetBreedModel()
+            }
+        }
+    }
+
+    private fun LocalPetKindEntity.toLocalPetKindModel() =
+        LocalPetKindModel(
+            id = id,
+            kindName = name
+        )
+
+    private fun LocalPetBreedEntity.toLocalPetBreedModel() =
+        LocalPetBreedModel(
+            breedName = name
+        )
 }

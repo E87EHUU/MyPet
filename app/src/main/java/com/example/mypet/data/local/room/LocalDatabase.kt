@@ -3,6 +3,7 @@ package com.example.mypet.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.mypet.data.local.room.dao.LocalPetDetailDao
+import com.example.mypet.data.local.room.dao.PetCreationDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetBreedEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
@@ -22,6 +23,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 )
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun localPetDetailDao(): LocalPetDetailDao
+    abstract fun localPetCreationDao(): PetCreationDao
 
     companion object {
         const val ID = "id"

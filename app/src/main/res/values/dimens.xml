@@ -20,5 +20,6 @@
     <dimen name="map_milli_margin">12dp</dimen>
     <dimen name="map_deca_margin">16dp</dimen>
     <dimen name="spinner_200dp">200dp</dimen>
+    <dimen name="avatar_creation_size">100dp</dimen>
 
 </resources>

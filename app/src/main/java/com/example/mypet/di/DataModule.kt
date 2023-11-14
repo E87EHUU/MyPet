@@ -28,4 +28,9 @@ object DataModule {
     @Provides
     fun provideLocalPetDetailDao(db: LocalDatabase) =
         db.localPetDetailDao()
+
+    @Singleton
+    @Provides
+    fun provideLocalPetCreationDao(db: LocalDatabase) =
+        db.localPetCreationDao()
 }

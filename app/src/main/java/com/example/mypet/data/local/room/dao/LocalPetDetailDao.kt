@@ -42,7 +42,4 @@ interface LocalPetDetailDao {
                 "LEFT JOIN pet_breed b ON b.id = m.breed_id"
     )
     fun observePetList(): Flow<List<LocalPetModel?>>
-
-    @Query("SELECT * FROM PET_KIND")
-    fun observePetKindList(): Flow<List<LocalPetKindEntity>>
 }
