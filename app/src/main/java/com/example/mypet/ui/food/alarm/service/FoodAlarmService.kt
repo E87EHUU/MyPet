@@ -14,7 +14,6 @@ import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import com.example.mypet.app.R
-import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.domain.FoodAlarmServiceRepository
 import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
@@ -29,10 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FoodAlarmService : Service() {
     @Inject
-    lateinit var foodDetailAlarmServiceRepository: FoodAlarmServiceRepository
-
-    @Inject
-    lateinit var alarmDao: AlarmDao
+    lateinit var foodAlarmServiceRepository: FoodAlarmServiceRepository
 
     private val windowManager by lazy { getSystemService(Context.WINDOW_SERVICE) as WindowManager }
     private var view: View? = null
@@ -81,7 +77,7 @@ class FoodAlarmService : Service() {
         if (foodAlarmModel == null) {
             runBlocking {
                 launch(Dispatchers.IO) {
-                    foodDetailAlarmServiceRepository.getFoodAlarmModel(alarmId)
+                    foodAlarmServiceRepository.getFoodAlarmModel(alarmId)
                         ?.let { foodAlarmModel = it }
                 }
             }
@@ -91,15 +87,15 @@ class FoodAlarmService : Service() {
             ownNotification = FoodAlarmServiceNotification(this, foodAlarmModel)
             startForeground(foodAlarmModel.alarmId, ownNotification.getNotification())
 
-            initView()
-            initOverlayParams()
-            initViewListeners()
-
             playVibration()
             playRingtone()
 
-            if (Settings.canDrawOverlays(this)) showOverlay()
-            else navToDetail()
+            if (Settings.canDrawOverlays(this)) {
+                initView()
+                initOverlayParams()
+                initViewListeners()
+                showOverlay()
+            } else navToDetail()
         }
     }
 
@@ -120,13 +116,13 @@ class FoodAlarmService : Service() {
     private fun stop() {
         clearUI()
 
-        foodAlarmModel?.let { foodDetailAlarmModel ->
-            with(foodDetailAlarmModel) {
+        foodAlarmModel?.let { foodAlarmModel ->
+            with(foodAlarmModel) {
                 stopForeground(alarmId)
 
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        foodDetailAlarmServiceRepository.stopFoodAlarm(alarmId)
+                        foodAlarmServiceRepository.stopFoodAlarm(alarmId)
                     }
                 }
             }
@@ -138,15 +134,15 @@ class FoodAlarmService : Service() {
     private fun delay() {
         clearUI()
 
-        foodAlarmModel?.let { foodDetailAlarmModel ->
+        foodAlarmModel?.let { foodAlarmModel ->
             startForeground(
-                foodDetailAlarmModel.alarmId,
+                foodAlarmModel.alarmId,
                 ownNotification.getDelayNotification()
             )
 
             runBlocking {
                 launch(Dispatchers.IO) {
-                    alarmDao.setAlarm(foodDetailAlarmModel.toDelayAlarmModel())
+                    foodAlarmServiceRepository.setAlarm(foodAlarmModel)
                 }
             }
         }
@@ -204,8 +200,8 @@ class FoodAlarmService : Service() {
     }
 
     private fun clearUI() {
-        ringtonePlayer?.apply { stop() }
-        vibrationPlayer?.apply { stop() }
+        ringtonePlayer.apply { stop() }
+        vibrationPlayer.apply { stop() }
         removeOverlay()
     }
 

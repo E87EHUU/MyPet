@@ -30,6 +30,10 @@ class FoodAlarmServiceRepositoryImpl @Inject constructor(
             }
     }
 
+    override suspend fun setAlarm(foodAlarmModel: FoodAlarmModel) {
+        alarmDao.setAlarm(foodAlarmModel.toDelayAlarmModel())
+    }
+
     private fun LocalFoodAlarmModel.toAlarmModel() =
         AlarmModel(
             alarmId,
