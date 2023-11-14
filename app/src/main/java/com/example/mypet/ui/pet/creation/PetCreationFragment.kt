@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
@@ -32,6 +34,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
 
         startObservePetKindAndBreed()
         chooseDate()
+        saveNewPet()
     }
 
     private fun startObservePetKindAndBreed() {
@@ -72,6 +75,8 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
             ) {
                 val selectedItem = position + 1
                 viewModel.getBreedList(selectedItem)
+                val chosenKindName = parent?.getItemAtPosition(position).toString()
+                viewModel.kind = chosenKindName
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -97,6 +102,22 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                 )
             breedSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             breedSpinner.adapter = breedSpinnerAdapter
+
+            breedSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val chosenBreedName = parent?.getItemAtPosition(position).toString()
+                    viewModel.breed = chosenBreedName
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Действие при отсутствии выбора
+                }
+            }
         }
     }
 
@@ -115,14 +136,32 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                 { _, selectedYear, selectedMonth, selectedDay ->
                     calendar.set(selectedYear, selectedMonth, selectedDay)
                     val selectedDate =
-                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+                        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
                     selectedDateTextView.text = selectedDate
+                    viewModel.dateOfBirth = selectedDateTextView.text.toString()
                 },
                 year,
                 month,
                 day
             )
             datePickerDialog.show()
+        }
+    }
+
+    private fun saveNewPet() {
+        binding.saveNewPet.setOnClickListener {
+            viewModel.name = binding.newPetName.text.toString()
+            viewModel.weight = binding.weightNewPet.text.toString()
+            with(viewModel) {
+                if (name.isEmpty() || kind.isEmpty() || breed.isEmpty() || dateOfBirth.isEmpty() || weight.isEmpty()) {
+                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_LONG).show()
+                } else {
+//                    viewModel.addNewPetToDb()
+                    findNavController().popBackStack()
+                    Toast.makeText(context, "$name, $kind, $breed, $dateOfBirth, $weight", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
         }
     }
 }

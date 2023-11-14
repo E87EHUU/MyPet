@@ -33,5 +33,6 @@
     <string name="breed">Порода</string>
     <string name="date_of_birth">Дата рождения</string>
     <string name="save_new_pet">Сохранить нового питомца</string>
+    <string name="weight">Вес</string>
 
 </resources>
