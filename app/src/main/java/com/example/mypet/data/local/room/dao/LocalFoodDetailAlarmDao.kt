@@ -19,7 +19,7 @@ interface LocalFoodDetailAlarmDao {
         "SELECT " +
                 "f.id ${LocalDatabase.ID}, " +
                 "f.title ${LocalDatabase.TITLE}, " +
-                "b.icon_res_id ${LocalDatabase.ICON_RES_ID}, " +
+                "b.icon_path ${LocalDatabase.ICON_PATH}, " +
                 "a.id ${ALARM_TABLE}_${LocalDatabase.ID}, " +
                 "a.hour ${LocalAlarmEntity.HOUR}, " +
                 "a.minute ${LocalAlarmEntity.MINUTE}, " +

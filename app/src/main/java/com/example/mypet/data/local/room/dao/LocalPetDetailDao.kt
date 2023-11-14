@@ -2,7 +2,7 @@ package com.example.mypet.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_RES_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_PATH
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
@@ -59,7 +59,7 @@ interface LocalPetDetailDao {
         "SELECT " +
                 "f.id $ID, " +
                 "f.title $TITLE, " +
-                "b.icon_res_id $ICON_RES_ID, " +
+                "b.icon_path $ICON_PATH, " +
                 "a.id ${ALARM_TABLE}_${ID}, " +
                 "a.hour $HOUR, " +
                 "a.minute $MINUTE, " +

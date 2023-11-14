@@ -25,6 +25,8 @@ data class LocalPetMyEntity(
     val age: Int?,
     @ColumnInfo(name = WEIGHT)
     val weight: Int?,
+    @ColumnInfo(name = SEX)
+    val sex: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 ) {
@@ -32,6 +34,7 @@ data class LocalPetMyEntity(
         const val AVATAR_URI = "avatar_uri"
         const val AGE = "age"
         const val WEIGHT = "weight"
+        const val SEX = "sex"
         const val IS_ACTIVE = "is_active"
     }
 }

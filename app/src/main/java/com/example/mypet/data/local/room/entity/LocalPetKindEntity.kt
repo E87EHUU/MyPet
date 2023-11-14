@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_RES_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 
@@ -18,7 +17,4 @@ data class LocalPetKindEntity(
 
     @ColumnInfo(name = NAME)
     val name: String,
-
-    @ColumnInfo(name = ICON_RES_ID)
-    val iconResId: Int
 )

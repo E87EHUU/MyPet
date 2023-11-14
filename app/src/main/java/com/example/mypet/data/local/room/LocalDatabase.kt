@@ -34,7 +34,7 @@ abstract class LocalDatabase : RoomDatabase() {
 
         const val NAME = "name"
         const val TITLE = "title"
-        const val ICON_RES_ID = "icon_res_id"
+        const val ICON_PATH = "icon_path"
 
         const val DEFAULT_ID = 0
     }

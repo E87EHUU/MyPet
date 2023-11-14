@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="bottom_navigation_map">Карты</string>
-    <string name="bottom_navigation_profile">Профиль</string>
-    <string name="bottom_navigation_pet_detail">Главная</string>
-    <string name="bottom_navigation_reminder">Напоминание</string>
-    <string name="bottom_navigation_food">Еда</string>
-</resources>

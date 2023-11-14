@@ -11,131 +11,134 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/offset_24"
-        android:layout_marginBottom="@dimen/offset_24"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/recycler_view_pet_list_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewPetDetailAvatar"
+        android:layout_width="@dimen/pet_detail_avatar_size"
+        android:layout_height="@dimen/pet_detail_avatar_size"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="?attr/colorPrimaryContainer"
+        android:padding="@dimen/pet_detail_avatar_padding"
+        android:src="@drawable/ic_pet_kind_mini_pig"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetList"
+        app:shapeAppearance="@style/Theme.MyPet.ImageCircle"
+        app:strokeColor="?attr/colorControlNormal"
+        app:strokeWidth="@dimen/pet_detail_avatar_stroke_width" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="-8dp"
+        android:layout_marginEnd="-16dp"
+        android:src="@drawable/baseline_male_24"
+        android:tint="#03A9F4"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewPetDetailAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPetDetailAvatar" />
+
+    <TextView
+        android:id="@+id/textViewPetDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintBottom_toTopOf="@+id/textViewPetDetailBreedName"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPetDetailAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPetDetailAvatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Бобик" />
+
+    <TextView
+        android:id="@+id/textViewPetDetailBreedName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetDetailAvatar"
+        app:layout_constraintStart_toStartOf="@+id/textViewPetDetailName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPetDetailName"
+        tools:text="Карликовая домашняя свинья" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardViewMain"
+        android:id="@+id/materialCardViewPetWeight"
         style="@style/Widget.Material3.CardView.Elevated"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/offset_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewPetList">
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewPetList"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/materialCardViewPetAge"
+        app:layout_constraintTop_toTopOf="@+id/materialCardViewPetAge">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/offset_24">
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/groupPetDetailAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:constraint_referenced_ids="textViewPetDetailAgeTitle,textViewPetDetailAge"
-                tools:visibility="visible" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/groupPetDetailWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:constraint_referenced_ids="textViewPetDetailWeightTitle,textViewPetDetailWeight"
-                tools:visibility="visible" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/groupPetDetailOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:constraint_referenced_ids="imageViewPetDetailAvatar,textViewPetDetailName,textViewPetDetailBreedNameTitle,textViewPetDetailBreedName"
-                tools:visibility="visible" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewPetDetailAvatar"
-                android:layout_width="@dimen/pet_detail_avatar_size"
-                android:layout_height="@dimen/pet_detail_avatar_size"
-                android:padding="@dimen/pet_detail_avatar_padding"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/Theme.MyPet.ImageCircle"
-                app:strokeColor="?attr/colorControlNormal"
-                app:strokeWidth="@dimen/pet_detail_avatar_stroke_width" />
+            android:layout_margin="@dimen/offset_16"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewPetDetailName"
+                android:id="@+id/textViewPetWeightTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_24"
-                android:layout_marginTop="@dimen/offset_8"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintStart_toEndOf="@+id/imageViewPetDetailAvatar"
-                app:layout_constraintTop_toTopOf="@+id/imageViewPetDetailAvatar"
-                tools:text="Бобик" />
+                android:layout_marginBottom="@dimen/offset_8"
+                android:text="@string/pet_detail_weight_title"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
             <TextView
-                android:id="@+id/textViewPetDetailBreedNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_16"
-                android:text="@string/pet_detail_breed_name_title"
-                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                app:layout_constraintStart_toStartOf="@+id/textViewPetDetailName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPetDetailName" />
-
-            <TextView
-                android:id="@+id/textViewPetDetailBreedName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPetDetailBreedNameTitle"
-                app:layout_constraintStart_toEndOf="@+id/textViewPetDetailBreedNameTitle"
-                tools:text="Йорк" />
-
-            <TextView
-                android:id="@+id/textViewPetDetailAgeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_8"
-                android:text="@string/pet_detail_age_title"
-                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                app:layout_constraintStart_toStartOf="@+id/textViewPetDetailName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPetDetailBreedNameTitle" />
-
-            <TextView
-                android:id="@+id/textViewPetDetailAge"
+                android:id="@+id/textViewPetWeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPetDetailAgeTitle"
-                app:layout_constraintStart_toStartOf="@+id/textViewPetDetailBreedName"
-                tools:text="24 месяца" />
-
-            <TextView
-                android:id="@+id/textViewPetDetailWeightTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_8"
-                android:text="@string/pet_detail_weigth_title"
-                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                app:layout_constraintStart_toStartOf="@+id/textViewPetDetailName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPetDetailAgeTitle" />
-
-            <TextView
-                android:id="@+id/textViewPetDetailWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewPetDetailWeightTitle"
-                app:layout_constraintStart_toStartOf="@+id/textViewPetDetailBreedName"
                 tools:text="1 кг 100 г" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardViewPetAge"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_16"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/materialCardViewPetWeight"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewPetList"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPetDetailAvatar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset_16"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewPetAgeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/offset_8"
+                android:text="@string/pet_detail_age_title"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+
+            <TextView
+                android:id="@+id/textViewPetAgeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                tools:text="24 месяца" />
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -157,10 +160,10 @@
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_24"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardViewMain"
-        app:layout_constraintStart_toStartOf="@+id/materialCardViewMain"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardViewMain">
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewPetList"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewPetList"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardViewPetAge">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -199,15 +202,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabPetDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/icon_map"
-        android:elevation="@dimen/offset_4"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

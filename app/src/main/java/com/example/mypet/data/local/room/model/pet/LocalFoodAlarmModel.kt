@@ -1,7 +1,7 @@
 package com.example.mypet.data.local.room.model.pet
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_RES_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_PATH
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -25,7 +25,7 @@ data class LocalFoodAlarmModel(
     @ColumnInfo(name = TITLE)
     val title: String,
 
-    @ColumnInfo(name = ICON_RES_ID)
+    @ColumnInfo(name = ICON_PATH)
     val iconResId: Int,
 
     @ColumnInfo(name = "${ALARM_TABLE}_${ID}")
