@@ -30,7 +30,7 @@ class FoodAlarmService : Service() {
     @Inject
     lateinit var foodAlarmServiceRepository: FoodAlarmServiceRepository
 
-    private val windowManager by lazy { getSystemService(Context.WINDOW_SERVICE) as WindowManager }
+    private var windowManager: WindowManager? = null
     private var view: View? = null
     private var params: WindowManager.LayoutParams? = null
 
@@ -68,6 +68,7 @@ class FoodAlarmService : Service() {
         foodAlarmModel = null
         params = null
         view = null
+        windowManager = null
     }
 
     private fun start(intent: Intent) {
@@ -155,6 +156,8 @@ class FoodAlarmService : Service() {
     }
 
     private fun initView() {
+        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
         val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
         val layoutInflater =
             contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -188,28 +191,17 @@ class FoodAlarmService : Service() {
     }
 
     private fun showOverlay() {
-        view?.let {
-            windowManager.addView(view, params)
-        }
+        windowManager?.addView(view, params)
     }
 
     private fun removeOverlay() {
-        view?.let {
-            windowManager.removeView(view)
-        }
+        windowManager?.removeView(view)
     }
 
     private fun clearUI() {
         ringtonePlayer.apply { stop() }
         vibrationPlayer.apply { stop() }
         removeOverlay()
-    }
-
-    private fun stopForegroundService() {
-        foodAlarmModel?.let { foodDetailAlarmModel ->
-            stopForeground(foodDetailAlarmModel.alarmId)
-        }
-        stopSelf()
     }
 
     companion object {
