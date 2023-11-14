@@ -60,9 +60,8 @@ class FoodAlarmServiceNotification(
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setContentTitle(foodDetailAlarmModel.title)
-            .setContentText("")
             .setContentIntent(pendingIntentStartServiceNavToDetail)
-            .setContentText("Будильник отложен")
+            .setContentText(context.getString(R.string.alarm_delay_message))
             .addAction(
                 R.drawable.baseline_close_24,
                 context.getString(R.string.notification_chanel_action_stop),

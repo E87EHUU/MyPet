@@ -21,12 +21,8 @@ class FoodAlarmServiceRepositoryImpl @Inject constructor(
         localFoodAlarmServiceDao.getLocalFoodAlarmModelByAlarmId(alarmId)
             ?.let {
                 val alarmModel = it.toAlarmModel()
-                println(alarmId)
                 if (alarmModel.isRepeatable()) alarmDao.setAlarm(alarmModel)
-                else {
-                    println("stop")
-                    localFoodAlarmServiceDao.disableAlarm(alarmId)
-                }
+                else localFoodAlarmServiceDao.disableAlarm(alarmId)
             }
     }
 

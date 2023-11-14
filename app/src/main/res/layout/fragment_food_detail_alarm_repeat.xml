@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
-        android:text="@string/food_detail_alarm_repeat_title"
+        android:text="@string/alarm_repeat_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmRepeatClose"
         app:layout_constraintStart_toEndOf="@+id/buttonAlarmRepeatClose"

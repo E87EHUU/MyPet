@@ -204,14 +204,14 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
         }
 
         binding.textViewAlarmSetRepeatDescription.text =
-            stringBuilder.ifEmpty { getString(R.string.food_detail_alarm_repeat_description_default) }
+            stringBuilder.ifEmpty { getString(R.string.alarm_repeat_description_default) }
     }
 
     private val chooserRingtoneRegisterForActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             val uri =
                 activityResult.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            viewModel.ringtonePath = uri?.let { it.toString() }
+            viewModel.ringtonePath = uri?.toString()
 
             updateUIRingtoneDescription()
         }
