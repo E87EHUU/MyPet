@@ -51,8 +51,9 @@ class AlarmDao @Inject constructor(
                 calendar.set(Calendar.MINUTE, alarmModel.minute)
 
                 val calendarNow = Calendar.getInstance()
-                if (calendarNow.isHourEqualsAndMinuteLast(calendarNow)
-                    || calendarNow.isHourLast(calendarNow)
+
+                if (calendar.isHourEqualsAndMinuteLast(calendarNow)
+                    || calendar.isHourLast(calendarNow)
                 ) calendar.add(Calendar.DATE, 1)
 
                 if (alarmModel.isRepeatable()) {

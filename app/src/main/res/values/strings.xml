@@ -36,7 +36,8 @@
     <string name="alarm_button_ok">Установить</string>
     <string name="alarm_description_title">Описание</string>
     <string name="alarm_repeat_title">Повтор</string>
-    <string name="alarm_repeat_description_default">Выбрать</string>
+    <string name="alarm_repeat_once">Один раз</string>
+    <string name="alarm_repeat_everyday">Ежедневно</string>
     <string name="alarm_melody_title">Мелодия</string>
     <string name="alarm_melody_description_default">Выбрать</string>
     <string name="alarm_vibration_title">Вибрация</string>

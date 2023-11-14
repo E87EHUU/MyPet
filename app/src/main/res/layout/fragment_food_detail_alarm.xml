@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_4"
-                android:text="@string/alarm_repeat_description_default"
+                android:text="@string/alarm_repeat_once"
                 android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
                 app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmSetRepeatNav"
                 app:layout_constraintStart_toStartOf="@+id/textViewAlarmSetRepeatTitle"

@@ -28,13 +28,13 @@ class FoodDetailAlarmViewModel @Inject constructor(
     var hour = localDateTime.hour
     var minute = localDateTime.minute
 
-    var isMondayChecked = false
-    var isTuesdayChecked = false
-    var isWednesdayChecked = false
-    var isThursdayChecked = false
-    var isFridayChecked = false
-    var isSaturdayChecked = false
-    var isSundayChecked = false
+    var isMondayChecked = true
+    var isTuesdayChecked = true
+    var isWednesdayChecked = true
+    var isThursdayChecked = true
+    var isFridayChecked = true
+    var isSaturdayChecked = true
+    var isSundayChecked = true
 
     var ringtonePath: String? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).path
     var isVibrationChecked = true
@@ -81,7 +81,6 @@ class FoodDetailAlarmViewModel @Inject constructor(
 
     fun save() =
         flow {
-            println(" === $ringtonePath")
             val saveAlarmModel = SaveFoodDetailAlarmAndSetAlarm(
                 petMyId = petMyId,
 

@@ -155,56 +155,64 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
     }
 
     private fun updateUIRepeatDescription() {
-        val stringBuilder = StringBuilder()
-        val divider = ", "
+        with(viewModel) {
+            val stringBuilder = StringBuilder()
 
-        if (viewModel.isMondayChecked)
-            stringBuilder.append(getString(R.string.mondayShort))
+            if (isMondayChecked && isTuesdayChecked && isWednesdayChecked
+                && isThursdayChecked && isFridayChecked && isSaturdayChecked && isSundayChecked
+            ) stringBuilder.append(getString(R.string.alarm_repeat_everyday))
+            else {
+                val divider = ", "
 
-        if (viewModel.isTuesdayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
+                if (viewModel.isMondayChecked)
+                    stringBuilder.append(getString(R.string.mondayShort))
 
-            stringBuilder.append(getString(R.string.tuesdayShort))
+                if (viewModel.isTuesdayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.tuesdayShort))
+                }
+
+                if (viewModel.isWednesdayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.wednesdayShort))
+                }
+
+                if (viewModel.isThursdayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.thursdayShort))
+                }
+
+                if (viewModel.isFridayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.fridayShort))
+                }
+
+                if (viewModel.isSaturdayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.saturdayShort))
+                }
+
+                if (viewModel.isSundayChecked) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(getString(R.string.sundayShort))
+                }
+            }
+
+            binding.textViewAlarmSetRepeatDescription.text =
+                stringBuilder.ifEmpty { getString(R.string.alarm_repeat_once) }
         }
-
-        if (viewModel.isWednesdayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
-
-            stringBuilder.append(getString(R.string.wednesdayShort))
-        }
-
-        if (viewModel.isThursdayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
-
-            stringBuilder.append(getString(R.string.thursdayShort))
-        }
-
-        if (viewModel.isFridayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
-
-            stringBuilder.append(getString(R.string.fridayShort))
-        }
-
-        if (viewModel.isSaturdayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
-
-            stringBuilder.append(getString(R.string.saturdayShort))
-        }
-
-        if (viewModel.isSundayChecked) {
-            if (stringBuilder.isNotEmpty())
-                stringBuilder.append(divider)
-
-            stringBuilder.append(getString(R.string.sundayShort))
-        }
-
-        binding.textViewAlarmSetRepeatDescription.text =
-            stringBuilder.ifEmpty { getString(R.string.alarm_repeat_description_default) }
     }
 
     private val chooserRingtoneRegisterForActivityResult =
