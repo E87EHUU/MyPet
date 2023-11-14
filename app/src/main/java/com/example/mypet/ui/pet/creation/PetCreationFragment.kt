@@ -1,5 +1,6 @@
 package com.example.mypet.ui.pet.creation
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -16,6 +17,9 @@ import com.example.mypet.data.local.room.model.LocalPetKindModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
@@ -27,6 +31,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
         super.onViewCreated(view, savedInstanceState)
 
         startObservePetKindAndBreed()
+        chooseDate()
     }
 
     private fun startObservePetKindAndBreed() {
@@ -92,6 +97,32 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                 )
             breedSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             breedSpinner.adapter = breedSpinnerAdapter
+        }
+    }
+
+    private fun chooseDate() {
+        val selectedDateTextView = binding.date
+        val selectDateButton = binding.selectedDate
+
+        val calendar = Calendar.getInstance()
+        selectDateButton.setOnClickListener {
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    calendar.set(selectedYear, selectedMonth, selectedDay)
+                    val selectedDate =
+                        SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+                    selectedDateTextView.text = selectedDate
+                },
+                year,
+                month,
+                day
+            )
+            datePickerDialog.show()
         }
     }
 }
