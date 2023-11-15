@@ -14,6 +14,8 @@ data class LocalPetMyEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
+    @ColumnInfo(name = "${PET_KIND_TABLE}_${ID}")
+    val kindId: Int,
     @ColumnInfo(name = "${PET_BREED_TABLE}_${ID}")
     val breedId: Int,
 
