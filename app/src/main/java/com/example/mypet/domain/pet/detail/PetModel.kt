@@ -8,7 +8,7 @@ data class PetModel(
     val name: String?,
     val age: String?,
     val weight: String?,
-    val breedName: String,
+    val kindName: String,
+    val breedName: String?,
     val isActive: Boolean,
-    val foods: List<PetFoodModel>,
 )

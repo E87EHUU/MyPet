@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_detail_alarm) {
     private val binding by viewBinding(FragmentFoodDetailAlarmBinding::bind)
-    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigation_food_detail_alarm) { defaultViewModelProviderFactory }
+    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
     private val args by navArgs<FoodDetailAlarmFragmentArgs>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -246,7 +246,7 @@ class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food
     }
 
     private fun navToAlarmRepeat() {
-        findNavController().navigate(R.id.action_alarmSet_to_alarmRepeat)
+        findNavController().navigate(R.id.action_foodAlarm_to_alarmRepeat)
     }
 
     companion object {

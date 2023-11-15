@@ -16,7 +16,7 @@ data class LocalPetBreedEntity(
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
     @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
-    val kindId: Int,
+    val petKindId: Int,
 
     @ColumnInfo(name = NAME)
     val name: String,

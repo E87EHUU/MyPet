@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mypet.ui.pet.detail.PetDetailFragment">
+    tools:context="com.example.mypet.ui.pet.PetFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPetList"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/recycler_view_pet_list_item">
+        tools:listitem="@layout/fragment_pet_list_recycler_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -154,53 +154,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardViewFood"
-        style="@style/Widget.Material3.CardView.Elevated"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewPetList"
-        app:layout_constraintStart_toStartOf="@+id/recyclerViewPetList"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardViewPetAge">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/offset_24">
-
-            <TextView
-                android:id="@+id/textViewPetDetailFoodTitle"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:text="@string/pet_detail_food_title"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonPetDetailFoodAdd"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonPetDetailFoodAdd" />
-
-            <Button
-                android:id="@+id/buttonPetDetailFoodAdd"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPetDetailFood"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonPetDetailFoodAdd"
-                tools:listitem="@layout/fragment_pet_detail_food_item" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

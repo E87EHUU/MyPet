@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.detail.food
+package com.example.mypet.ui.food
 
 import java.text.DecimalFormat
 

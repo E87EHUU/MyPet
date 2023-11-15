@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.detail.list
+package com.example.mypet.ui.pet.list
 
 import com.example.mypet.domain.pet.detail.PetModel
 

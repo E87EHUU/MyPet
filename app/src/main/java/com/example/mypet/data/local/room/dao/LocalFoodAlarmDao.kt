@@ -10,11 +10,11 @@ import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
-import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
+import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
 
 
 @Dao
-interface LocalFoodDetailAlarmDao {
+interface LocalFoodAlarmDao {
     @Query(
         "SELECT " +
                 "f.id ${LocalDatabase.ID}, " +
@@ -53,7 +53,7 @@ interface LocalFoodDetailAlarmDao {
     fun updateFood(foodId: Int, foodName: String?, alarmId: Int): Int
 
     @Transaction
-    fun savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm: SaveFoodDetailAlarmAndSetAlarm): SaveFoodDetailAlarmAndSetAlarm {
+    fun savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodAlarmModel): SaveAndSetFoodAlarmModel {
         with(saveFoodDetailAlarmAndSetAlarm) {
             val foodId = foodId ?: saveFood(toLocalPetFoodEntity()).toInt()
             if (foodId > 0) {

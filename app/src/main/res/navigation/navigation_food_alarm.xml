@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_food_detail_alarm"
-    app:startDestination="@id/foodDetailAlarm">
+    android:id="@+id/navigationFoodAlarm"
+    app:startDestination="@id/foodAlarm">
 
     <dialog
-        android:id="@+id/foodDetailAlarm"
+        android:id="@+id/foodAlarm"
         android:name="com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmFragment"
         tools:layout="@layout/fragment_food_detail_alarm">
         <argument
@@ -16,12 +16,12 @@
             android:name="petFoodId"
             app:argType="integer" />
         <action
-            android:id="@+id/action_alarmSet_to_alarmRepeat"
-            app:destination="@id/foodDetailAlarmRepeat" />
+            android:id="@+id/action_foodAlarm_to_alarmRepeat"
+            app:destination="@id/foodAlarmRepeat" />
     </dialog>
 
     <dialog
-        android:id="@+id/foodDetailAlarmRepeat"
+        android:id="@+id/foodAlarmRepeat"
         android:name="com.example.mypet.ui.food.detail.alarm.repeat.FoodDetailAlarmRepeatFragment"
         tools:layout="@layout/fragment_food_detail_alarm_repeat" />
 

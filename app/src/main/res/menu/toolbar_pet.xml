@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/toolbarMore"
+        android:id="@+id/toolbarPetMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_more_vert_24"
-        android:title="еще" />
+        android:title="@string/pet_toolbar_more" />
 </menu>

@@ -21,7 +21,7 @@ import java.time.ZoneOffset
 class FoodDetailAlarmRepeatFragment :
     BottomSheetDialogFragment(R.layout.fragment_food_detail_alarm_repeat) {
     private val binding by viewBinding(FragmentFoodDetailAlarmRepeatBinding::bind)
-    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigation_food_detail_alarm) { defaultViewModelProviderFactory }
+    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

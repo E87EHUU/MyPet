@@ -1,4 +1,4 @@
-package com.example.mypet.domain.food.detail.alarm
+package com.example.mypet.domain.food.alarm
 
 import com.example.mypet.data.alarm.AlarmModel
 

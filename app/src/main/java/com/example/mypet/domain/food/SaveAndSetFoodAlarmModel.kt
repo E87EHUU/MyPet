@@ -1,11 +1,11 @@
-package com.example.mypet.domain.food.detail.alarm
+package com.example.mypet.domain.food
 
 import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
 
-data class SaveFoodDetailAlarmAndSetAlarm(
+data class SaveAndSetFoodAlarmModel(
     val petMyId: Int,
 
     val foodId: Int? = null,

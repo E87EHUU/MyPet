@@ -1,6 +1,6 @@
 package com.example.mypet.domain
 
-import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
 
 interface FoodAlarmServiceRepository {
     suspend fun getFoodAlarmModel(alarmId: Int): FoodAlarmModel?

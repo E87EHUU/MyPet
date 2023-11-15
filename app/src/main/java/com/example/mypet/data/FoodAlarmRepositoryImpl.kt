@@ -1,22 +1,22 @@
 package com.example.mypet.data
 
 import com.example.mypet.data.alarm.IAlarmDao
-import com.example.mypet.data.local.room.dao.LocalFoodDetailAlarmDao
+import com.example.mypet.data.local.room.dao.LocalFoodAlarmDao
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
-import com.example.mypet.domain.FoodDetailAlarmRepository
-import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
-import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
+import com.example.mypet.domain.FoodAlarmRepository
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
+import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
 import javax.inject.Inject
 
-class FoodDetailAlarmRepositoryImpl @Inject constructor(
-    private val localFoodDetailAlarmDao: LocalFoodDetailAlarmDao,
+class FoodAlarmRepositoryImpl @Inject constructor(
+    private val localFoodDetailAlarmDao: LocalFoodAlarmDao,
     private val alarmDao: IAlarmDao,
-) : FoodDetailAlarmRepository {
+) : FoodAlarmRepository {
     override suspend fun getFoodAlarmModel(foodMyId: Int) =
         localFoodDetailAlarmDao.getLocalFoodAlarmModelByFoodId(foodMyId)
             ?.toFoodAlarmModel()
 
-    override suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveFoodDetailAlarmAndSetAlarm) {
+    override suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodAlarmModel) {
         localFoodDetailAlarmDao.savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm)
             .toAlarmModel()?.let { alarmDao.setAlarm(it) }
     }

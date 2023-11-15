@@ -6,7 +6,7 @@ import com.example.mypet.data.alarm.isRepeatable
 import com.example.mypet.data.local.room.dao.LocalFoodAlarmServiceDao
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.domain.FoodAlarmServiceRepository
-import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import javax.inject.Inject
 
 class FoodAlarmServiceRepositoryImpl @Inject constructor(

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.detail.list
+package com.example.mypet.ui.pet.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.RecyclerViewPetListAddItemBinding
-import com.example.mypet.app.databinding.RecyclerViewPetListItemBinding
+import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
+import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
 import com.example.mypet.domain.pet.detail.PetModel
 
 class PetListAdapter(
@@ -30,13 +30,13 @@ class PetListAdapter(
         return when (viewType) {
             ViewType.ADD_PET.ordinal -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.recycler_view_pet_list_add_item, parent, false)
+                    .inflate(R.layout.fragment_pet_list_recycler_add_item, parent, false)
                 AddPetViewHolder(view)
             }
 
             ViewType.PET.ordinal -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.recycler_view_pet_list_item, parent, false)
+                    .inflate(R.layout.fragment_pet_list_recycler_item, parent, false)
                 PetViewHolder(view)
             }
 
@@ -45,11 +45,12 @@ class PetListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder.itemViewType) {
+        when (holder.itemViewType) {
             ViewType.ADD_PET.ordinal -> {
                 val addPetHolder = holder as AddPetViewHolder
                 addPetHolder.bind(onAddPetClickListener)
             }
+
             ViewType.PET.ordinal -> {
                 val petHolder = holder as PetViewHolder
                 if (position > 0 && position <= petList.size) {
@@ -73,7 +74,7 @@ class PetListAdapter(
 
     inner class AddPetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(onAddPetClickListener: OnAddPetClickListener) {
-            RecyclerViewPetListAddItemBinding.bind(itemView).apply {
+            FragmentPetListRecyclerAddItemBinding.bind(itemView).apply {
                 itemView.setOnClickListener { onAddPetClickListener.onAddPetClick() }
             }
         }
@@ -81,10 +82,10 @@ class PetListAdapter(
 
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pet: PetModel, onPetClickListener: OnPetClickListener) {
-            RecyclerViewPetListItemBinding.bind(itemView).apply {
+            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
                 Glide.with(itemView)
                     .load(pet.avatarUri)
-                    .into(equilateralImageViewPetAvatar)
+                    .into(imageViewPetListItem)
                 itemView.setOnClickListener { onPetClickListener.onPetClick(pet) }
             }
         }

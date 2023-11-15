@@ -1,13 +1,15 @@
 package com.example.mypet.di
 
 import com.example.mypet.data.BootCompleteRepositoryImpl
+import com.example.mypet.data.FoodAlarmRepositoryImpl
 import com.example.mypet.data.FoodAlarmServiceRepositoryImpl
-import com.example.mypet.data.FoodDetailAlarmRepositoryImpl
-import com.example.mypet.data.PetDetailRepositoryImpl
+import com.example.mypet.data.FoodRepositoryImpl
+import com.example.mypet.data.PetRepositoryImpl
 import com.example.mypet.domain.BootCompleteRepository
+import com.example.mypet.domain.FoodAlarmRepository
 import com.example.mypet.domain.FoodAlarmServiceRepository
-import com.example.mypet.domain.FoodDetailAlarmRepository
-import com.example.mypet.domain.PetDetailRepository
+import com.example.mypet.domain.FoodRepository
+import com.example.mypet.domain.PetRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,17 +21,22 @@ import javax.inject.Singleton
 object DomainModule {
     @Provides
     @Singleton
-    fun providePetDetailRepository(petDetailRepositoryImpl: PetDetailRepositoryImpl): PetDetailRepository =
-        petDetailRepositoryImpl
+    fun providePetRepository(petRepositoryImpl: PetRepositoryImpl): PetRepository =
+        petRepositoryImpl
 
     @Provides
     @Singleton
-    fun provideFoodDetailAlarmRepository(foodDetailAlarmRepositoryImpl: FoodDetailAlarmRepositoryImpl): FoodDetailAlarmRepository =
-        foodDetailAlarmRepositoryImpl
+    fun provideFoodRepository(foodRepositoryImpl: FoodRepositoryImpl): FoodRepository =
+        foodRepositoryImpl
 
     @Provides
     @Singleton
-    fun provideFoodAlarmRepository(foodAlarmServiceRepositoryImpl: FoodAlarmServiceRepositoryImpl): FoodAlarmServiceRepository =
+    fun provideFoodAlarmRepository(foodAlarmRepositoryImpl: FoodAlarmRepositoryImpl): FoodAlarmRepository =
+        foodAlarmRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideFoodAlarmServiceRepository(foodAlarmServiceRepositoryImpl: FoodAlarmServiceRepositoryImpl): FoodAlarmServiceRepository =
         foodAlarmServiceRepositoryImpl
 
     @Provides

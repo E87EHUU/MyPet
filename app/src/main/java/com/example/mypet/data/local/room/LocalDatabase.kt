@@ -3,9 +3,10 @@ package com.example.mypet.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
+import com.example.mypet.data.local.room.dao.LocalFoodAlarmDao
 import com.example.mypet.data.local.room.dao.LocalFoodAlarmServiceDao
-import com.example.mypet.data.local.room.dao.LocalFoodDetailAlarmDao
-import com.example.mypet.data.local.room.dao.LocalPetDetailDao
+import com.example.mypet.data.local.room.dao.LocalFoodDao
+import com.example.mypet.data.local.room.dao.LocalPetDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetBreedEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
@@ -24,8 +25,9 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity
     exportSchema = false
 )
 abstract class LocalDatabase : RoomDatabase() {
-    abstract fun localPetDetailDao(): LocalPetDetailDao
-    abstract fun localFoodDetailAlarmDao(): LocalFoodDetailAlarmDao
+    abstract fun localPetDao(): LocalPetDao
+    abstract fun localFoodDao(): LocalFoodDao
+    abstract fun localFoodAlarmDao(): LocalFoodAlarmDao
     abstract fun localFoodAlarmServiceDao(): LocalFoodAlarmServiceDao
     abstract fun localBootCompleteDao(): LocalBootCompleteDao
 

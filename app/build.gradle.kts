@@ -70,6 +70,8 @@ dependencies {
     val yandexMapVersion: String by System.getProperties()
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")

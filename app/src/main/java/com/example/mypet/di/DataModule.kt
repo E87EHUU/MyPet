@@ -28,13 +28,18 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideLocalPetDetailDao(db: LocalDatabase) =
-        db.localPetDetailDao()
+    fun provideLocalPetDao(db: LocalDatabase) =
+        db.localPetDao()
 
     @Singleton
     @Provides
-    fun provideLocalFoodDetailAlarmDao(db: LocalDatabase) =
-        db.localFoodDetailAlarmDao()
+    fun provideLocalFoodDao(db: LocalDatabase) =
+        db.localFoodDao()
+
+    @Singleton
+    @Provides
+    fun provideLocalFoodAlarmDao(db: LocalDatabase) =
+        db.localFoodAlarmDao()
 
     @Singleton
     @Provides

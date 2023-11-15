@@ -9,7 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
-import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
 
 
 class FoodAlarmServiceNotification(

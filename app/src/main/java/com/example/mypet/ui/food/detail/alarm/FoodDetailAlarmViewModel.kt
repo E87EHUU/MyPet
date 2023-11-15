@@ -2,8 +2,8 @@ package com.example.mypet.ui.food.detail.alarm
 
 import android.media.RingtoneManager
 import androidx.lifecycle.ViewModel
-import com.example.mypet.domain.FoodDetailAlarmRepository
-import com.example.mypet.domain.food.detail.alarm.SaveFoodDetailAlarmAndSetAlarm
+import com.example.mypet.domain.FoodAlarmRepository
+import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
 
 @HiltViewModel
 class FoodDetailAlarmViewModel @Inject constructor(
-    private val foodDetailAlarmRepository: FoodDetailAlarmRepository,
+    private val foodDetailAlarmRepository: FoodAlarmRepository,
 ) : ViewModel() {
     private var petMyId by Delegates.notNull<Int>()
     private var foodId: Int? = null
@@ -81,7 +81,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
 
     fun save() =
         flow {
-            val saveAlarmModel = SaveFoodDetailAlarmAndSetAlarm(
+            val saveAlarmModel = SaveAndSetFoodAlarmModel(
                 petMyId = petMyId,
 
                 foodId = foodId,

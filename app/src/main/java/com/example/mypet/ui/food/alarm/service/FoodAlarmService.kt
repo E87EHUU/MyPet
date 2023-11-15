@@ -15,7 +15,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import com.example.mypet.app.R
 import com.example.mypet.domain.FoodAlarmServiceRepository
-import com.example.mypet.domain.food.detail.alarm.FoodAlarmModel
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
 import com.example.mypet.utils.VibrationPlayer
