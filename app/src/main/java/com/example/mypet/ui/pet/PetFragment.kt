@@ -12,6 +12,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.kind.getKindIconResId
+import com.example.mypet.domain.pet.kind.getKindNameResId
 import com.example.mypet.ui.pet.list.OnAddPetClickListener
 import com.example.mypet.ui.pet.list.OnPetClickListener
 import com.example.mypet.ui.pet.list.PetListAdapter

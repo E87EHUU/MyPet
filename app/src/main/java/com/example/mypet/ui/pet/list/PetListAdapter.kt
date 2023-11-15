@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
 import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.kind.getKindIconResId
 
 class PetListAdapter(
     private val onPetClickListener: OnPetClickListener,
@@ -83,11 +83,17 @@ class PetListAdapter(
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pet: PetModel, onPetClickListener: OnPetClickListener) {
             FragmentPetListRecyclerItemBinding.bind(itemView).apply {
-                Glide.with(itemView)
-                    .load(pet.avatarUri)
-                    .into(imageViewPetListItem)
+                setImageAvatar(pet, this)
                 itemView.setOnClickListener { onPetClickListener.onPetClick(pet) }
             }
+        }
+
+        private fun setImageAvatar(petModel: PetModel, binding: FragmentPetListRecyclerItemBinding) {
+            if (petModel.avatarUri != null)
+                binding.imageViewPetListItem.setImageURI(petModel.avatarUri)
+            else if (petModel.breedId != null) {
+
+            } else binding.imageViewPetListItem.setImageResource(getKindIconResId(petModel.kindOrdinal))
         }
     }
 }

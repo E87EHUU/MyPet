@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet
+package com.example.mypet.domain.pet.kind
 
 import com.example.mypet.app.R
 
@@ -9,7 +9,7 @@ fun getKindNameResId(petKindOrdinal: Int) =
     PetKind.values()[petKindOrdinal].nameResId
 
 enum class PetKind(val iconResId: Int, val nameResId: Int,) {
-    CAT(R.drawable.cat_icon, R.string.pet_kind_cat),
+    CAT(R.drawable.ic_pet_kind_cat, R.string.pet_kind_cat),
     DOG(R.drawable.ic_pet_kind_dog, R.string.pet_kind_dog),
     RABBIT(R.drawable.ic_pet_kind_rabbit, R.string.pet_kind_rabbit),
     PARROT(R.drawable.ic_pet_kind_parrot, R.string.pet_kind_parrot),
