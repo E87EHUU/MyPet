@@ -24,8 +24,8 @@ interface LocalPetDao {
                 "m.age $AGE, " +
                 "m.weight $WEIGHT, " +
                 "m.is_active $IS_ACTIVE, " +
-                "k.name ${PET_KIND_TABLE}_$NAME, " +
-                "b.name ${PET_BREED_TABLE}_$NAME " +
+                "k.id ${PET_KIND_TABLE}_$ID, " +
+                "b.id ${PET_BREED_TABLE}_$ID " +
                 "FROM pet_my m " +
                 "LEFT JOIN pet_kind k ON k.id = m.pet_kind_id " +
                 "LEFT JOIN pet_breed b ON b.id = m.pet_breed_id "

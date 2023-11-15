@@ -20,7 +20,7 @@ data class LocalPetMyEntity(
     val breedId: Int?,
 
     @ColumnInfo(name = AVATAR_PATH)
-    val avatarPath: String,
+    val avatarPath: String?,
     @ColumnInfo(name = NAME)
     val name: String,
     @ColumnInfo(name = AGE)

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.ui.food.alarm
 
 import android.app.Dialog
 import android.content.Intent
@@ -17,7 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentFoodDetailAlarmBinding
+import com.example.mypet.app.databinding.FragmentFoodAlarmBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +27,10 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class FoodDetailAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_detail_alarm) {
-    private val binding by viewBinding(FragmentFoodDetailAlarmBinding::bind)
-    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
-    private val args by navArgs<FoodDetailAlarmFragmentArgs>()
+class FoodAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_alarm) {
+    private val binding by viewBinding(FragmentFoodAlarmBinding::bind)
+    private val viewModel by navGraphViewModels<FoodAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
+    private val args by navArgs<FoodAlarmFragmentArgs>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

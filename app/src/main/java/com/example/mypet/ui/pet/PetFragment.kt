@@ -60,9 +60,10 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onPetUpdate(petModel: PetModel) {
-        binding.imageViewPetDetailAvatar.setImageURI(petModel.avatarUri)
+        setImageAvatar(petModel)
+
         binding.textViewPetDetailName.text = petModel.name
-        binding.textViewPetDetailBreedName.text = petModel.breedName
+        binding.textViewPetDetailBreedName.text = getString(getKindNameResId(petModel.kindOrdinal))
 
         binding.textViewPetDetailEmpty.isVisible = false
 
@@ -79,6 +80,13 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false
         }
+    }
+
+    private fun setImageAvatar(petModel: PetModel) {
+        if (petModel.avatarUri != null)
+            binding.imageViewPetDetailAvatar.setImageURI(petModel.avatarUri)
+        else if (petModel.breedId != null) {
+        } else binding.imageViewPetDetailAvatar.setImageResource(getKindIconResId(petModel.kindOrdinal))
     }
 
     override fun onAddPetClick() {

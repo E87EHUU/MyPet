@@ -59,7 +59,7 @@ class FoodAlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(foodDetailAlarmModel.title)
+            .setContentTitle(foodDetailAlarmModel.foodTitle)
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .setContentText(context.getString(R.string.alarm_delay_message))
             .addAction(
@@ -72,7 +72,7 @@ class FoodAlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(foodDetailAlarmModel.title)
+            .setContentTitle(foodDetailAlarmModel.foodTitle)
             .setContentText("")
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .apply {

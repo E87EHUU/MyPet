@@ -4,9 +4,10 @@ import com.example.mypet.data.alarm.AlarmModel
 
 data class FoodAlarmModel(
     val foodId: Int,
-    val title: String,
+    val foodTitle: String,
 
-    val iconResId: Int,
+    val petKindId: Int,
+    val petBreedId: Int?,
 
     var alarmId: Int,
     val hour: Int,

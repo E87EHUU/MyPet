@@ -1,7 +1,6 @@
 package com.example.mypet.data.local.room.model.pet
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.ICON_PATH
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -18,17 +17,21 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_RE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
+import com.example.mypet.data.local.room.entity.PET_BREED_TABLE
+import com.example.mypet.data.local.room.entity.PET_KIND_TABLE
 
 data class LocalFoodAlarmModel(
     @ColumnInfo(name = ID)
     val foodId: Int,
     @ColumnInfo(name = TITLE)
-    val title: String,
+    val foodTitle: String,
 
-    @ColumnInfo(name = ICON_PATH)
-    val iconResId: Int,
+    @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
+    val petKindId: Int,
+    @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
+    val petBreedId: Int,
 
-    @ColumnInfo(name = "${ALARM_TABLE}_${ID}")
+    @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
     @ColumnInfo(name = HOUR)
     val hour: Int,

@@ -14,7 +14,7 @@ data class LocalPetModel(
     @ColumnInfo(name = ID)
     val id: Int,
     @ColumnInfo(name = AVATAR_PATH)
-    val avatarPath: String,
+    val avatarPath: String?,
     @ColumnInfo(name = NAME)
     val name: String?,
     @ColumnInfo(name = AGE)
@@ -24,8 +24,8 @@ data class LocalPetModel(
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 
-    @ColumnInfo(name = "${PET_KIND_TABLE}_$NAME")
-    val kindName: String,
-    @ColumnInfo(name = "${PET_BREED_TABLE}_$NAME")
-    val breedName: String?,
+    @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
+    val kindId: Int,
+    @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
+    val breedId: Int?,
 )

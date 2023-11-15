@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.ui.food.alarm
 
 import android.content.Context
 import android.text.format.DateFormat

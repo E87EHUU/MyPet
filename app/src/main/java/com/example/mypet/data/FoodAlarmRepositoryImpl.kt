@@ -4,8 +4,8 @@ import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.dao.LocalFoodAlarmDao
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.domain.FoodAlarmRepository
-import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
+import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import javax.inject.Inject
 
 class FoodAlarmRepositoryImpl @Inject constructor(
@@ -24,8 +24,9 @@ class FoodAlarmRepositoryImpl @Inject constructor(
     private fun LocalFoodAlarmModel.toFoodAlarmModel() =
         FoodAlarmModel(
             foodId,
-            title,
-            iconResId,
+            foodTitle,
+            petKindId,
+            petBreedId,
             alarmId,
             hour,
             minute,

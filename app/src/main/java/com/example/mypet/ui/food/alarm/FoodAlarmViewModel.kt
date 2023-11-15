@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm
+package com.example.mypet.ui.food.alarm
 
 import android.media.RingtoneManager
 import androidx.lifecycle.ViewModel
@@ -14,8 +14,8 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 @HiltViewModel
-class FoodDetailAlarmViewModel @Inject constructor(
-    private val foodDetailAlarmRepository: FoodAlarmRepository,
+class FoodAlarmViewModel @Inject constructor(
+    private val foodAlarmRepository: FoodAlarmRepository,
 ) : ViewModel() {
     private var petMyId by Delegates.notNull<Int>()
     private var foodId: Int? = null
@@ -44,33 +44,33 @@ class FoodDetailAlarmViewModel @Inject constructor(
     private fun Int?.isBadLocalId() =
         this == null || this == 0
 
-    fun update(petDetailAlarmSetFragmentArgs: FoodDetailAlarmFragmentArgs): Flow<Unit>? {
-        if (petDetailAlarmSetFragmentArgs.petMyId.isBadLocalId()) return null
-        petMyId = petDetailAlarmSetFragmentArgs.petMyId
+    fun update(foodAlarmFragmentArgs: FoodAlarmFragmentArgs): Flow<Unit>? {
+        if (foodAlarmFragmentArgs.petMyId.isBadLocalId()) return null
+        petMyId = foodAlarmFragmentArgs.petMyId
 
-        if (petDetailAlarmSetFragmentArgs.petFoodId.isBadLocalId()) return null
-        foodId = petDetailAlarmSetFragmentArgs.petFoodId
+        if (foodAlarmFragmentArgs.petFoodId.isBadLocalId()) return null
+        foodId = foodAlarmFragmentArgs.petFoodId
 
         return flow {
             foodId?.let { foodId ->
-                foodDetailAlarmRepository.getFoodAlarmModel(foodId)
-                    ?.let { foodDetailAlarmModel ->
-                        name = foodDetailAlarmModel.title
-                        if (foodDetailAlarmModel.alarmId > 0) {
-                            alarmId = foodDetailAlarmModel.alarmId
-                            hour = foodDetailAlarmModel.hour
-                            minute = foodDetailAlarmModel.minute
-                            isMondayChecked = foodDetailAlarmModel.isRepeatMonday
-                            isTuesdayChecked = foodDetailAlarmModel.isRepeatTuesday
-                            isWednesdayChecked = foodDetailAlarmModel.isRepeatWednesday
-                            isThursdayChecked = foodDetailAlarmModel.isRepeatThursday
-                            isFridayChecked = foodDetailAlarmModel.isRepeatFriday
-                            isSaturdayChecked = foodDetailAlarmModel.isRepeatSaturday
-                            isSundayChecked = foodDetailAlarmModel.isRepeatSunday
-                            ringtonePath = foodDetailAlarmModel.ringtonePath
-                            isVibrationChecked = foodDetailAlarmModel.isVibration
-                            isDelayChecked = foodDetailAlarmModel.isDelay
-                            isActive = foodDetailAlarmModel.isActive
+                foodAlarmRepository.getFoodAlarmModel(foodId)
+                    ?.let { foodAlarmModel ->
+                        name = foodAlarmModel.foodTitle
+                        if (foodAlarmModel.alarmId > 0) {
+                            alarmId = foodAlarmModel.alarmId
+                            hour = foodAlarmModel.hour
+                            minute = foodAlarmModel.minute
+                            isMondayChecked = foodAlarmModel.isRepeatMonday
+                            isTuesdayChecked = foodAlarmModel.isRepeatTuesday
+                            isWednesdayChecked = foodAlarmModel.isRepeatWednesday
+                            isThursdayChecked = foodAlarmModel.isRepeatThursday
+                            isFridayChecked = foodAlarmModel.isRepeatFriday
+                            isSaturdayChecked = foodAlarmModel.isRepeatSaturday
+                            isSundayChecked = foodAlarmModel.isRepeatSunday
+                            ringtonePath = foodAlarmModel.ringtonePath
+                            isVibrationChecked = foodAlarmModel.isVibration
+                            isDelayChecked = foodAlarmModel.isDelay
+                            isActive = foodAlarmModel.isActive
                         }
 
                         emit(Unit)
@@ -81,7 +81,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
 
     fun save() =
         flow {
-            val saveAlarmModel = SaveAndSetFoodAlarmModel(
+            val saveAndSetFoodAlarmModel = SaveAndSetFoodAlarmModel(
                 petMyId = petMyId,
 
                 foodId = foodId,
@@ -102,7 +102,7 @@ class FoodDetailAlarmViewModel @Inject constructor(
                 alarmIsDelay = isDelayChecked,
             )
 
-            foodDetailAlarmRepository.saveAndSetFoodDetailAlarm(saveAlarmModel)
+            foodAlarmRepository.saveAndSetFoodDetailAlarm(saveAndSetFoodAlarmModel)
 
             emit(Unit)
         }.flowOn(Dispatchers.IO)

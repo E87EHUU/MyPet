@@ -7,8 +7,8 @@
 
     <dialog
         android:id="@+id/foodAlarm"
-        android:name="com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmFragment"
-        tools:layout="@layout/fragment_food_detail_alarm">
+        android:name="com.example.mypet.ui.food.alarm.FoodAlarmFragment"
+        tools:layout="@layout/fragment_food_alarm">
         <argument
             android:name="petMyId"
             app:argType="integer" />
@@ -22,7 +22,7 @@
 
     <dialog
         android:id="@+id/foodAlarmRepeat"
-        android:name="com.example.mypet.ui.food.detail.alarm.repeat.FoodDetailAlarmRepeatFragment"
-        tools:layout="@layout/fragment_food_detail_alarm_repeat" />
+        android:name="com.example.mypet.ui.food.alarm.repeat.FoodAlarmRepeatFragment"
+        tools:layout="@layout/fragment_food_alarm_repeat" />
 
 </navigation>

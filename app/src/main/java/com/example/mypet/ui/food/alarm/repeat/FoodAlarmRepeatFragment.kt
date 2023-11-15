@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.detail.alarm.repeat
+package com.example.mypet.ui.food.alarm.repeat
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,9 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentFoodDetailAlarmRepeatBinding
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmFragment.Companion.ALARM_REPEAT_POP_BACK
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmViewModel
+import com.example.mypet.app.databinding.FragmentFoodAlarmRepeatBinding
+import com.example.mypet.ui.food.alarm.FoodAlarmFragment.Companion.ALARM_REPEAT_POP_BACK
+import com.example.mypet.ui.food.alarm.FoodAlarmViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,10 +18,10 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 @AndroidEntryPoint
-class FoodDetailAlarmRepeatFragment :
-    BottomSheetDialogFragment(R.layout.fragment_food_detail_alarm_repeat) {
-    private val binding by viewBinding(FragmentFoodDetailAlarmRepeatBinding::bind)
-    private val viewModel by navGraphViewModels<FoodDetailAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
+class FoodAlarmRepeatFragment :
+    BottomSheetDialogFragment(R.layout.fragment_food_alarm_repeat) {
+    private val binding by viewBinding(FragmentFoodAlarmRepeatBinding::bind)
+    private val viewModel by navGraphViewModels<FoodAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)

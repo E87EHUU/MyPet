@@ -19,12 +19,12 @@ class PetRepositoryImpl @Inject constructor(
     private fun LocalPetModel.toPetModel() =
         PetModel(
             id = id,
-            avatarUri = Uri.parse(avatarPath),
+            avatarUri = avatarPath?.let { Uri.parse(avatarPath) },
             name = name,
             age = age,
             weight = weight,
-            kindName = kindName,
-            breedName = breedName,
+            kindId = kindId,
+            breedId = breedId,
             isActive = isActive,
         )
 }
