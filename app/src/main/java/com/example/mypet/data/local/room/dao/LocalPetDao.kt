@@ -28,7 +28,12 @@ interface LocalPetDao {
                 "b.id ${PET_BREED_TABLE}_$ID " +
                 "FROM pet_my m " +
                 "LEFT JOIN pet_kind k ON k.id = m.pet_kind_id " +
-                "LEFT JOIN pet_breed b ON b.id = m.pet_breed_id "
+                "LEFT JOIN pet_breed b ON b.id = m.pet_breed_id " +
+                "WHERE " +
+                "CASE " +
+                "WHEN :activePetId IS NULL THEN m.is_active = 1 " +
+                "ELSE m.id = :activePetId " +
+                "END"
     )
-    fun observePetList(): Flow<List<LocalPetModel>>
+    fun observePetList(activePetId: Int?): Flow<List<LocalPetModel>>
 }

@@ -4,5 +4,5 @@ import com.example.mypet.domain.pet.detail.PetModel
 import kotlinx.coroutines.flow.Flow
 
 interface PetRepository {
-    fun observePetList(): Flow<List<PetModel>>
+    fun observePetList(activePetId: Int?): Flow<List<PetModel>>
 }

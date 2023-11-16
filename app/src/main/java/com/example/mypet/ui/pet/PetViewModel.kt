@@ -19,14 +19,8 @@ class PetViewModel @Inject constructor(
     private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
     val petList = _petList.asStateFlow()
 
-    var activePetId: Int? = null
-
-    private fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
-        petDetailRepository.observePetList()
+    fun updatePetList(activePetId: Int?) = viewModelScope.launch(Dispatchers.IO) {
+        petDetailRepository.observePetList(activePetId)
             .collectLatest { _petList.value = it }
-    }
-
-    init {
-        updatePetList()
     }
 }

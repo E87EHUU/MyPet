@@ -8,10 +8,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodBinding
 import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.ui.pet.PetGraphViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FoodFragment : Fragment(R.layout.fragment_food) {
     private val binding by viewBinding(FragmentFoodBinding::bind)
+    private val graphViewModel by navGraphViewModels<PetGraphViewModel>(R.id.navigationPet) { defaultViewModelProviderFactory }
     private val viewModel by viewModels<FoodViewModel>()
 
     private val foodAdapterCallback =
@@ -40,7 +43,7 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
         initView()
         startObserveFoods()
 
-        viewModel.updateFood(1)
+        viewModel.updateFood(graphViewModel.activePetId)
 
         /*        binding.buttonPetDetailFoodAdd.setOnClickListener {
                     navToFoodAlarmSet()
@@ -70,9 +73,19 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private fun onFoodEmpty() {
 
     }
+    override fun onStop() {
+        super.onStop()
+        println("food stop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("food destroy")
+    }
+
 
     private fun navToFoodAlarm(foodModel: FoodModel? = null) {
-        viewModel.petId?.let {
+        graphViewModel.activePetId?.let {
             val directions = FoodFragmentDirections
                 .actionFoodToFoodAlarm(
                     petMyId = it,

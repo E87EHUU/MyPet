@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/navigation_pet"
-    android:id="@+id/navigationMain">
+    android:id="@+id/navigationMain"
+    app:startDestination="@id/navigationPet">
 
     <action
         android:id="@+id/action_global_map"

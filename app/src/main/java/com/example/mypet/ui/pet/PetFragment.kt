@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     OnPetClickListener {
     private val binding by viewBinding(FragmentPetBinding::bind)
+    private val graphViewModel by navGraphViewModels<PetGraphViewModel>(R.id.navigationPet) { defaultViewModelProviderFactory }
     private val viewModel by viewModels<PetViewModel>()
 
     private val petListAdapter: PetListAdapter by lazy {
@@ -34,8 +36,19 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.updatePetList(graphViewModel.activePetId)
         initView()
         startObservePetList()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("pet stop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("pet destroy")
     }
 
     private fun startObservePetList() {
@@ -45,7 +58,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
                     if (petModels.isNotEmpty()) {
                         petListAdapter.setPetList(petModels)
                         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
-                        viewModel.activePetId = activePetModel.id
+                        graphViewModel.activePetId = activePetModel.id
                         onPetUpdate(activePetModel)
                     } else onPetEmpty()
                 }

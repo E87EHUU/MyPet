@@ -39,9 +39,13 @@ interface LocalFoodDao {
                 "FROM pet_my m " +
                 "LEFT JOIN pet_food f ON f.pet_my_id = m.id " +
                 "LEFT JOIN alarm a ON a.id = f.alarm_id " +
-                "WHERE m.id = :petMyId"
+                "WHERE " +
+                "CASE " +
+                "WHEN :activePetId IS NULL THEN m.is_active = 1 " +
+                "ELSE m.id = :activePetId " +
+                "END"
     )
-    fun observeFoodModels(petMyId: Int): Flow<List<LocalFoodModel>>
+    fun observeFoodModels(activePetId: Int?): Flow<List<LocalFoodModel>>
 
     @Query(
         "SELECT " +
