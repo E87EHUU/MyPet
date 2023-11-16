@@ -36,25 +36,15 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.updatePetList(graphViewModel.activePetId)
+        graphViewModel.updatePetList(graphViewModel.activePetId)
         initView()
         startObservePetList()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        println("pet stop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        println("pet destroy")
     }
 
     private fun startObservePetList() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.petList.collectLatest { petModels ->
+                graphViewModel.petList.collectLatest { petModels ->
                     if (petModels.isNotEmpty()) {
                         petListAdapter.setPetList(petModels)
                         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
@@ -67,7 +57,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun initView() {
-        binding.recyclerViewPetList.adapter = petListAdapter
+        binding.includePetList.recyclerViewPetList.adapter = petListAdapter
     }
 
     private fun onPetEmpty() {

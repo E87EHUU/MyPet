@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigationFoodAlarm"
-    app:startDestination="@id/foodAlarm">
+    app:startDestination="@id/foodAlarmFragment">
 
     <dialog
-        android:id="@+id/foodAlarm"
+        android:id="@+id/foodAlarmFragment"
         android:name="com.example.mypet.ui.food.alarm.FoodAlarmFragment"
         tools:layout="@layout/fragment_food_alarm">
         <argument
@@ -16,13 +16,12 @@
             android:name="petFoodId"
             app:argType="integer" />
         <action
-            android:id="@+id/action_foodAlarm_to_alarmRepeat"
-            app:destination="@id/foodAlarmRepeat" />
+            android:id="@+id/action_foodAlarmFragment_to_alarmRepeatFragment"
+            app:destination="@id/foodAlarmRepeatFragment" />
     </dialog>
 
     <dialog
-        android:id="@+id/foodAlarmRepeat"
+        android:id="@+id/foodAlarmRepeatFragment"
         android:name="com.example.mypet.ui.food.alarm.repeat.FoodAlarmRepeatFragment"
         tools:layout="@layout/fragment_food_alarm_repeat" />
-
 </navigation>

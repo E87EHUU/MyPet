@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigationMain"
-    app:startDestination="@id/navigationPet">
+    app:startDestination="@id/navigationPetShared">
 
-    <action
-        android:id="@+id/action_global_map"
-        app:destination="@id/map" />
-
-    <include
-        android:id="@+id/navigationPet"
-        app:graph="@navigation/navigation_pet" />
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.example.mypet.ui.map.MapFragment"
-        tools:layout="@layout/fragment_map" />
+    <include app:graph="@navigation/navigation_pet_shared" />
+    <include app:graph="@navigation/navigation_map" />
 
 </navigation>

@@ -29,7 +29,7 @@ data class LocalFoodAlarmModel(
     @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
     val petKindId: Int,
     @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
-    val petBreedId: Int,
+    val petBreedId: Int?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,

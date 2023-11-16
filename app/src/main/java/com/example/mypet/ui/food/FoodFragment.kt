@@ -13,7 +13,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodBinding
 import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.ui.pet.PetGraphViewModel
+import com.example.mypet.ui.pet.list.OnAddPetClickListener
+import com.example.mypet.ui.pet.list.OnPetClickListener
+import com.example.mypet.ui.pet.list.PetListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,6 +27,18 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private val binding by viewBinding(FragmentFoodBinding::bind)
     private val graphViewModel by navGraphViewModels<PetGraphViewModel>(R.id.navigationPet) { defaultViewModelProviderFactory }
     private val viewModel by viewModels<FoodViewModel>()
+
+    private val onClickAddPetList = object : OnAddPetClickListener {
+        override fun onAddPetClick() {
+        }
+    }
+
+    private val onClickItemPetList = object : OnPetClickListener {
+        override fun onPetClick(pet: PetModel) {
+        }
+    }
+
+    private val petListAdapter = PetListAdapter(onClickItemPetList, onClickAddPetList)
 
     private val foodAdapterCallback =
         object : FoodAdapterCallback {
@@ -40,7 +56,9 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        graphViewModel.updatePetList(graphViewModel.activePetId)
         initView()
+        startObservePetList()
         startObserveFoods()
 
         viewModel.updateFood(graphViewModel.activePetId)
@@ -52,7 +70,18 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     }
 
     private fun initView() {
+        binding.includePetList.recyclerViewPetList.adapter = petListAdapter
         binding.recyclerViewFood.adapter = foodAdapter
+    }
+
+    private fun startObservePetList() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                graphViewModel.petList.collectLatest { petModels ->
+                    if (petModels.isNotEmpty()) onPetListUpdate(petModels) else onPetListEmpty()
+                }
+            }
+        }
     }
 
     private fun startObserveFoods() {
@@ -73,21 +102,20 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private fun onFoodEmpty() {
 
     }
-    override fun onStop() {
-        super.onStop()
-        println("food stop")
+
+    private fun onPetListUpdate(petModels: List<PetModel>) {
+        val activePetModel = petModels.find { it.isActive } ?: petModels.first()
+        graphViewModel.activePetId = activePetModel.id
+        petListAdapter.setPetList(petModels)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        println("food destroy")
+    private fun onPetListEmpty() {
     }
-
 
     private fun navToFoodAlarm(foodModel: FoodModel? = null) {
         graphViewModel.activePetId?.let {
             val directions = FoodFragmentDirections
-                .actionFoodToFoodAlarm(
+                .actionFoodFragmentToNavigationFoodAlarm(
                     petMyId = it,
                     petFoodId = foodModel?.foodId ?: 0
                 )

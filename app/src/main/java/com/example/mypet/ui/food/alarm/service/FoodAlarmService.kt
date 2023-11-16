@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.domain.FoodAlarmServiceRepository
 import com.example.mypet.domain.food.alarm.FoodAlarmModel
@@ -37,12 +38,15 @@ class FoodAlarmService : Service() {
     private val buttonDelay
         get() = view?.findViewById<Button>(R.id.buttonAlarmDelay)
     private val buttonStop
-        get() = view?.findViewById<Button>(R.id.buttonAlarmStop)
+        get() = view?.findViewById<Button>(R.id.buttonViewFoodAlarmOverlayStop)
+    private val recycler
+        get() = view?.findViewById<RecyclerView>(R.id.recyclerViewFoodAlarmOverlay)
 
-    private var foodAlarmModel: FoodAlarmModel? = null
+    private val foodAlarmModels = mutableMapOf<Int, FoodAlarmModel>()
     private lateinit var ownNotification: FoodAlarmServiceNotification
     private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
     private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
+    private val adapter = FoodAlarmServiceAdapter()
 
     override fun onBind(intent: Intent) = null
 
@@ -50,8 +54,8 @@ class FoodAlarmService : Service() {
         intent?.let {
             when (intent.action) {
                 ALARM_OVERLAY_ACTION_START -> start(intent)
-                ALARM_OVERLAY_ACTION_STOP -> stop()
-                ALARM_OVERLAY_ACTION_DELAY -> delay()
+                ALARM_OVERLAY_ACTION_STOP -> stop(intent)
+                ALARM_OVERLAY_ACTION_DELAY -> delay(intent)
                 ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
             }
         }
@@ -65,9 +69,7 @@ class FoodAlarmService : Service() {
         ringtonePlayer.onDestroy()
         vibrationPlayer.onDestroy()
 
-        foodAlarmModel = null
-        params = null
-        view = null
+        foodAlarmModels.clear()
         windowManager = null
     }
 
@@ -75,51 +77,53 @@ class FoodAlarmService : Service() {
         val alarmId = intent.getIntExtra(ALARM_ID, 0)
         if (alarmId < 0) return
 
-        if (foodAlarmModel == null) {
+        println(alarmId)
+        println(foodAlarmModels)
+
+        if (!foodAlarmModels.containsKey(alarmId)) {
             runBlocking {
                 launch(Dispatchers.IO) {
                     foodAlarmServiceRepository.getFoodAlarmModel(alarmId)
-                        ?.let { foodAlarmModel = it }
+                        ?.let { foodAlarmModels[alarmId] = it }
                 }
             }
         }
 
-        foodAlarmModel?.let { foodAlarmModel ->
+        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
             ownNotification = FoodAlarmServiceNotification(this, foodAlarmModel)
             startForeground(foodAlarmModel.alarmId, ownNotification.getNotification())
 
-            playVibration()
-            playRingtone()
+            playVibration(foodAlarmModel)
+            playRingtone(foodAlarmModel)
 
             if (Settings.canDrawOverlays(this)) {
-                initView()
+                initView(foodAlarmModel)
                 initOverlayParams()
-                initViewListeners()
+                initViewListeners(intent)
                 showOverlay()
+                adapter.submitList(foodAlarmModels.map { it.value })
             } else navToDetail()
         }
     }
 
-    private fun playVibration() {
-        foodAlarmModel?.let {
-            if (it.isVibration) vibrationPlayer.play()
+    private fun playVibration(foodAlarmModel: FoodAlarmModel) {
+        if (foodAlarmModel.isVibration) vibrationPlayer.play()
+    }
+
+    private fun playRingtone(foodAlarmModel: FoodAlarmModel) {
+        foodAlarmModel.ringtonePath?.let { ringtonePath ->
+            ringtonePlayer.play(Uri.parse(ringtonePath))
         }
     }
 
-    private fun playRingtone() {
-        foodAlarmModel?.let { foodAlarmModel ->
-            foodAlarmModel.ringtonePath?.let { ringtonePath ->
-                ringtonePlayer.play(Uri.parse(ringtonePath))
-            }
-        }
-    }
+    private fun stop(intent: Intent) {
+        val alarmId = intent.getIntExtra(ALARM_ID, 0)
 
-    private fun stop() {
         clearUI()
 
-        foodAlarmModel?.let { foodAlarmModel ->
+        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
             with(foodAlarmModel) {
-                stopForeground(alarmId)
+                stopForeground(STOP_FOREGROUND_REMOVE)
 
                 runBlocking {
                     launch(Dispatchers.IO) {
@@ -132,10 +136,12 @@ class FoodAlarmService : Service() {
         stopSelf()
     }
 
-    private fun delay() {
+    private fun delay(intent: Intent) {
+        val alarmId = intent.getIntExtra(ALARM_ID, 0)
+
         clearUI()
 
-        foodAlarmModel?.let { foodAlarmModel ->
+        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
             startForeground(
                 foodAlarmModel.alarmId,
                 ownNotification.getDelayNotification()
@@ -155,16 +161,17 @@ class FoodAlarmService : Service() {
         startActivity(intent)
     }
 
-    private fun initView() {
-        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    private fun initView(foodAlarmModel: FoodAlarmModel) {
+        if (view == null) {
+            windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
-        val layoutInflater =
-            contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = layoutInflater.inflate(R.layout.service_food_alarm_overlay, null)
+            val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
+            val layoutInflater =
+                contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = layoutInflater.inflate(R.layout.service_food_alarm_overlay, null)
+            recycler?.adapter = adapter
 
-        foodAlarmModel?.let {
-            buttonDelay?.isVisible = it.isDelay
+            buttonDelay?.isVisible = foodAlarmModel.isDelay
         }
     }
 
@@ -182,20 +189,23 @@ class FoodAlarmService : Service() {
         params?.gravity = Gravity.TOP
     }
 
-    private fun initViewListeners() {
+    private fun initViewListeners(intent: Intent) {
         view?.let { view ->
             view.setOnClickListener { navToDetail() }
-            buttonDelay?.setOnClickListener { delay() }
-            buttonStop?.setOnClickListener { stop() }
+            buttonDelay?.setOnClickListener { delay(intent) }
+            buttonStop?.setOnClickListener { stop(intent) }
         }
     }
 
     private fun showOverlay() {
-        windowManager?.addView(view, params)
+        if (foodAlarmModels.size == 1)
+            windowManager?.addView(view, params)
     }
 
     private fun removeOverlay() {
         windowManager?.removeView(view)
+        params = null
+        view = null
     }
 
     private fun clearUI() {

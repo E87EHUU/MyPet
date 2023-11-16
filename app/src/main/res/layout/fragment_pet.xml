@@ -6,22 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.mypet.ui.pet.PetFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPetList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/offset_24"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <include
+        android:id="@+id/includePetList"
+        layout="@layout/fragment_pet_list_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/fragment_pet_list_recycler_item">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageViewPetDetailAvatar"
@@ -33,7 +23,7 @@
         android:padding="@dimen/pet_detail_avatar_padding"
         android:src="@drawable/ic_pet_kind_mini_pig"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetList"
+        app:layout_constraintTop_toBottomOf="@+id/includePetList"
         app:shapeAppearance="@style/Theme.MyPet.ImageCircle"
         app:strokeColor="?attr/colorControlNormal"
         app:strokeWidth="@dimen/pet_detail_avatar_stroke_width" />
@@ -76,9 +66,11 @@
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewPetList"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/materialCardViewPetAge"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialCardViewPetAge"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/materialCardViewPetAge">
 
         <LinearLayout
@@ -113,8 +105,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_16"
         android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardViewPetWeight"
-        app:layout_constraintStart_toStartOf="@+id/recyclerViewPetList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/materialCardViewPetWeight"
         app:layout_constraintTop_toBottomOf="@+id/imageViewPetDetailAvatar">
 
         <LinearLayout
