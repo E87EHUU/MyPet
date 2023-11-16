@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val topLevelDestinations = setOf(
         R.id.map,
-        R.id.petDetail,
+        R.id.pet,
+        R.id.food
     )
 
     private val mAppBarConfiguration by lazy {
@@ -68,13 +69,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     true
                 }
 
-                R.id.petDetail -> {
-                    navController.navigate(R.id.petDetail)
+                R.id.pet -> {
+                    navController.navigate(R.id.pet)
                     true
                 }
 
                 R.id.food -> {
-                    // Respond to navigation item 4 click
+                    navController.navigate(R.id.food)
                     true
                 }
 

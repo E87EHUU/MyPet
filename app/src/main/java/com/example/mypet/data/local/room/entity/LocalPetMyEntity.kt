@@ -14,24 +14,29 @@ data class LocalPetMyEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
-    @ColumnInfo(name = "${PET_BREED_TABLE}_${ID}")
-    val breedId: Int,
+    @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
+    val kindId: Int,
+    @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
+    val breedId: Int?,
 
-    @ColumnInfo(name = AVATAR_URI)
-    val avatarUri: String,
+    @ColumnInfo(name = AVATAR_PATH)
+    val avatarPath: String?,
     @ColumnInfo(name = NAME)
     val name: String,
     @ColumnInfo(name = AGE)
     val age: Int?,
     @ColumnInfo(name = WEIGHT)
     val weight: Int?,
+    @ColumnInfo(name = SEX)
+    val sex: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 ) {
     companion object {
-        const val AVATAR_URI = "avatar_uri"
+        const val AVATAR_PATH = "avatar_path"
         const val AGE = "age"
         const val WEIGHT = "weight"
+        const val SEX = "sex"
         const val IS_ACTIVE = "is_active"
     }
 }

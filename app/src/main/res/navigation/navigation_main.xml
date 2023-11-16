@@ -2,34 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/petDetail">
+    app:startDestination="@id/navigation_pet"
+    android:id="@+id/navigationMain">
 
     <action
         android:id="@+id/action_global_map"
         app:destination="@id/map" />
 
-    <action
-        android:id="@+id/action_global_petDetail"
-        app:destination="@id/petDetail" />
-
-    <fragment
-        android:id="@+id/petDetail"
-        android:name="com.example.mypet.ui.pet.detail.PetDetailFragment"
-        tools:layout="@layout/fragment_pet_detail">
-        <action
-            android:id="@+id/action_petDetail_to_navigation_alarm"
-            app:destination="@id/navigation_food_detail_alarm">
-            <argument
-                android:name="petMyId"
-                app:argType="integer" />
-            <argument
-                android:name="petFoodId"
-                app:argType="integer" />
-        </action>
-    </fragment>
-
-    <include app:graph="@navigation/navigation_food_detail_alarm" />
+    <include
+        android:id="@+id/navigationPet"
+        app:graph="@navigation/navigation_pet" />
 
     <fragment
         android:id="@+id/map"

@@ -5,12 +5,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.example.mypet.ui.MainActivity
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService.Companion.ALARM_ID
-import com.example.mypet.ui.food.detail.alarm.FoodDetailAlarmOverlayService.Companion.ALARM_OVERLAY_ACTION_START
+import com.example.mypet.ui.food.alarm.service.FoodAlarmService
+import com.example.mypet.ui.food.alarm.service.FoodAlarmService.Companion.ALARM_ID
+import com.example.mypet.ui.food.alarm.service.FoodAlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
+
+fun AlarmModel.isRepeatable() =
+    isRepeatMonday || isRepeatTuesday || isRepeatWednesday
+            || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
 
 class AlarmDao @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -35,7 +39,7 @@ class AlarmDao @Inject constructor(
     }
 
     private fun getTimeMillis(alarmModel: AlarmModel) =
-        with(alarmModel) {
+        let {
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
@@ -43,17 +47,16 @@ class AlarmDao @Inject constructor(
             alarmModel.delayMinute?.let {
                 calendar.add(Calendar.MINUTE, it)
             } ?: run {
-                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                calendar.set(Calendar.MINUTE, minute)
+                calendar.set(Calendar.HOUR_OF_DAY, alarmModel.hour)
+                calendar.set(Calendar.MINUTE, alarmModel.minute)
 
                 val calendarNow = Calendar.getInstance()
-                if (calendarNow.isHourEqualsAndMinuteLast(calendarNow)
-                    || calendarNow.isHourLast(calendarNow)
+
+                if (calendar.isHourEqualsAndMinuteLast(calendarNow)
+                    || calendar.isHourLast(calendarNow)
                 ) calendar.add(Calendar.DATE, 1)
 
-                if (isRepeatMonday || isRepeatTuesday || isRepeatWednesday
-                    || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
-                ) {
+                if (alarmModel.isRepeatable()) {
                     for (i in 1..7) {
                         if (calendar.hasTodayAlarm(alarmModel)) break
                         else calendar.add(Calendar.DATE, 1)
@@ -97,7 +100,7 @@ class AlarmDao @Inject constructor(
 
     private fun getStartAlarmServicePendingIntent(id: Int) =
         let {
-            val intent = Intent(context, FoodDetailAlarmOverlayService::class.java)
+            val intent = Intent(context, FoodAlarmService::class.java)
             intent.action = ALARM_OVERLAY_ACTION_START
             intent.putExtra(ALARM_ID, id)
             PendingIntent.getForegroundService(

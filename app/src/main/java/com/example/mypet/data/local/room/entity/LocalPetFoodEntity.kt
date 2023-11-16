@@ -15,10 +15,10 @@ data class LocalPetFoodEntity(
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
 
-    @ColumnInfo(name = "${PET_MY_TABLE}_${ID}")
+    @ColumnInfo(name = "${PET_MY_TABLE}_$ID")
     val petMyId: Int,
 
-    @ColumnInfo(name = "${ALARM_TABLE}_${ID}")
+    @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int?,
 
     @ColumnInfo(name = TITLE)

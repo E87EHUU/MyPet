@@ -3,7 +3,7 @@
 
     <string name="pet_detail_empty">Питомец не найден</string>
     <string name="pet_detail_age_title">Возраст</string>
-    <string name="pet_detail_weigth_title">Вес</string>
+    <string name="pet_detail_weight_title">Вес</string>
     <string name="pet_detail_breed_name_title">Порода</string>
     <string name="bottom_navigation_map">Карты</string>
     <string name="bottom_navigation_profile">Профиль</string>
@@ -33,14 +33,16 @@
 
     <string name="alarm_title">Будильник %s</string>
 
-    <string name="food_detail_alarm_button_ok">Установить</string>
-    <string name="food_detail_alarm_description_title">Описание</string>
-    <string name="food_detail_alarm_repeat_title">Повтор</string>
-    <string name="food_detail_alarm_repeat_description_default">Выбрать</string>
-    <string name="food_detail_alarm_melody_title">Мелодия</string>
-    <string name="food_detail_alarm_melody_description_default">Выбрать</string>
-    <string name="food_detail_alarm_vibration_title">Вибрация</string>
-    <string name="food_detail_alarm_delay_title">Отложить</string>
+    <string name="alarm_button_ok">Установить</string>
+    <string name="alarm_description_title">Описание</string>
+    <string name="alarm_repeat_title">Повтор</string>
+    <string name="alarm_repeat_once">Один раз</string>
+    <string name="alarm_repeat_everyday">Ежедневно</string>
+    <string name="alarm_melody_title">Мелодия</string>
+    <string name="alarm_melody_description_default">Выбрать</string>
+    <string name="alarm_vibration_title">Вибрация</string>
+    <string name="alarm_delay_title">Отложить</string>
+    <string name="alarm_delay_message">Будильник отложен</string>
 
     <string name="intent_chooser_ringtone_picker_title">Выбор мелодии</string>
 
@@ -61,5 +63,7 @@
     <string name="sundayShort">Вс</string>
 
     <string name="pet_detail_food_title">Режим питания</string>
+    <string name="food_add_alarm_title">Добавить напоминание</string>
+    <string name="pet_toolbar_more">Меню питомца</string>
 
 </resources>

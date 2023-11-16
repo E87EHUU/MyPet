@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/imageViewPetListItem"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:background="?attr/colorPrimaryContainer"
+    android:padding="@dimen/pet_detail_avatar_padding"
+    android:layout_marginEnd="@dimen/offset_8"
+    android:src="@drawable/ic_pet_kind_mini_pig"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetList"
+    app:shapeAppearance="@style/Theme.MyPet.ImageCircle" />
