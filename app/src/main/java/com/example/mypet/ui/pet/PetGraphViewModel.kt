@@ -14,16 +14,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PetGraphViewModel @Inject constructor(
-    private val petDetailRepository: PetRepository,
+    private val petRepository: PetRepository,
 ) : ViewModel() {
     var activePetId: Int? = null
 
     private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
     val petList = _petList.asStateFlow()
 
-    fun updatePetList(myPetId: Int?) = viewModelScope.launch(Dispatchers.IO) {
-        if (activePetId == null || activePetId != myPetId)
-            petDetailRepository.observePetList(activePetId)
+    fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
+        if (_petList.value.isEmpty())
+            petRepository.observePetList()
                 .collectLatest { _petList.value = it }
     }
 }

@@ -8,8 +8,8 @@ data class FoodAlarmModel(
     val foodTitle: String,
 
     val petMyAvatarUri: Uri?,
-    val petKindId: Int,
-    val petBreedId: Int?,
+    val petKindOrdinal: Int,
+    val petBreedOrdinal: Int?,
 
     var alarmId: Int,
     val hour: Int,
@@ -28,9 +28,6 @@ data class FoodAlarmModel(
 
     val delayMinute: Int = 1,
 ) {
-    val kindOrdinal
-        get() = petKindId - 1
-
     fun toDelayAlarmModel() =
         AlarmModel(
             id = alarmId,

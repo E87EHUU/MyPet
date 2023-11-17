@@ -17,8 +17,8 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_RE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
-import com.example.mypet.data.local.room.entity.PET_BREED_TABLE
-import com.example.mypet.data.local.room.entity.PET_KIND_TABLE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 
 data class LocalFoodAlarmModel(
     @ColumnInfo(name = ID)
@@ -26,10 +26,10 @@ data class LocalFoodAlarmModel(
     @ColumnInfo(name = TITLE)
     val foodTitle: String,
 
-    @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
-    val petKindId: Int,
-    @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
-    val petBreedId: Int?,
+    @ColumnInfo(name = KIND_ORDINAL)
+    val petKindOrdinal: Int,
+    @ColumnInfo(name = BREED_ORDINAL)
+    val petBreedOrdinal: Int?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,

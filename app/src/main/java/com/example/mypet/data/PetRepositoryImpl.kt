@@ -12,8 +12,8 @@ import javax.inject.Inject
 class PetRepositoryImpl @Inject constructor(
     private val localPetDao: LocalPetDao,
 ) : PetRepository {
-    override fun observePetList(activePetId: Int?) =
-        localPetDao.observePetList(activePetId)
+    override fun observePetList() =
+        localPetDao.observePetList()
             .mapNotNull { localPetModels -> localPetModels.map { it.toPetModel() } }
 
     private fun LocalPetModel.toPetModel() =
@@ -23,8 +23,8 @@ class PetRepositoryImpl @Inject constructor(
             name = name,
             age = age,
             weight = weight,
-            kindId = kindId,
-            breedId = breedId,
+            kindOrdinal = kindOrdinal,
+            breedOrdinal = breedOrdinal,
             isActive = isActive,
         )
 }

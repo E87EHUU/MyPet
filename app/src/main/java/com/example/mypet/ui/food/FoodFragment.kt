@@ -56,7 +56,7 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        graphViewModel.updatePetList(graphViewModel.activePetId)
+        graphViewModel.updatePetList()
         initView()
         startObservePetList()
         startObserveFoods()

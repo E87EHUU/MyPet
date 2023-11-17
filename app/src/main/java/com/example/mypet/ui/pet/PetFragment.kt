@@ -13,8 +13,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.kind.getKindIconResId
-import com.example.mypet.domain.pet.kind.getKindNameResId
+import com.example.mypet.ui.getPetIcon
+import com.example.mypet.ui.getPetName
 import com.example.mypet.ui.pet.list.OnAddPetClickListener
 import com.example.mypet.ui.pet.list.OnPetClickListener
 import com.example.mypet.ui.pet.list.PetListAdapter
@@ -36,7 +36,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        graphViewModel.updatePetList(graphViewModel.activePetId)
+        graphViewModel.updatePetList()
         initView()
         startObservePetList()
     }
@@ -65,10 +65,16 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onPetUpdate(petModel: PetModel) {
-        setImageAvatar(petModel)
+        if (petModel.avatarUri != null)
+            binding.imageViewPetDetailAvatar.setImageURI(petModel.avatarUri)
+        else
+            binding.imageViewPetDetailAvatar.setImageResource(
+                getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
+            )
 
         binding.textViewPetDetailName.text = petModel.name
-        binding.textViewPetDetailBreedName.text = getString(getKindNameResId(petModel.kindOrdinal))
+        binding.textViewPetDetailBreedName.text =
+            getString(getPetName(petModel.kindOrdinal, petModel.breedOrdinal))
 
         binding.textViewPetDetailEmpty.isVisible = false
 
@@ -85,13 +91,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false
         }
-    }
-
-    private fun setImageAvatar(petModel: PetModel) {
-        if (petModel.avatarUri != null)
-            binding.imageViewPetDetailAvatar.setImageURI(petModel.avatarUri)
-        else if (petModel.breedId != null) {
-        } else binding.imageViewPetDetailAvatar.setImageResource(getKindIconResId(petModel.kindOrdinal))
     }
 
     override fun onAddPetClick() {

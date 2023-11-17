@@ -37,7 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/offset_24"
         android:background="@drawable/alarm_service_shape_button"
         android:text="@string/alarm_service_overlay_stop"
         android:textColor="?attr/colorOnPrimaryContainer"

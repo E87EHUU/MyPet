@@ -8,10 +8,7 @@ data class PetModel(
     val name: String?,
     val age: String?,
     val weight: String?,
-    val kindId: Int,
-    val breedId: Int?,
+    val kindOrdinal: Int,
+    val breedOrdinal: Int?,
     val isActive: Boolean,
-) {
-    val kindOrdinal
-        get() = kindId - 1
-}
+)
