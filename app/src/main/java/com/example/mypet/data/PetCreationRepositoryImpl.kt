@@ -3,6 +3,7 @@ package com.example.mypet.data
 import com.example.mypet.data.local.room.dao.PetCreationDao
 import com.example.mypet.data.local.room.entity.LocalPetBreedEntity
 import com.example.mypet.data.local.room.entity.LocalPetKindEntity
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 import com.example.mypet.data.local.room.model.LocalPetBreedModel
 import com.example.mypet.data.local.room.model.LocalPetKindModel
 import com.example.mypet.domain.PetCreationRepository
@@ -24,10 +25,30 @@ class PetCreationRepositoryImpl @Inject constructor(
 
     override fun getBreedList(kindId: Int): Flow<List<LocalPetBreedModel>> {
         return petCreationDao.observePetBreedList(kindId).map { petKindList ->
-            petKindList.map{
+            petKindList.map {
                 it.toLocalPetBreedModel()
             }
         }
+    }
+
+    override suspend fun addNewPetToDb(
+        name: String,
+        kindId: Int,
+        breedId: Int,
+        dateOfBirth: String,
+        weight: Int
+    ) {
+        petCreationDao.addNewPetToDb(
+            LocalPetMyEntity(
+                avatar = "",
+                id = generateUniqueId(),
+                breedId = breedId,
+                name = name,
+                age = 1,
+                weight = weight,
+                isActive = true
+            )
+        )
     }
 
     private fun LocalPetKindEntity.toLocalPetKindModel() =
@@ -40,4 +61,12 @@ class PetCreationRepositoryImpl @Inject constructor(
         LocalPetBreedModel(
             breedName = name
         )
+
+    companion object {
+        private var counter = 0
+
+        fun generateUniqueId(): Int {
+            return counter++
+        }
+    }
 }

@@ -33,7 +33,6 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
         super.onViewCreated(view, savedInstanceState)
 
         startObservePetKindAndBreed()
-        chooseDate()
         saveNewPet()
     }
 
@@ -76,7 +75,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                 val selectedItem = position + 1
                 viewModel.getBreedList(selectedItem)
                 val chosenKindName = parent?.getItemAtPosition(position).toString()
-                viewModel.kind = chosenKindName
+                viewModel.kind = position + 1
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -111,7 +110,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                     id: Long
                 ) {
                     val chosenBreedName = parent?.getItemAtPosition(position).toString()
-                    viewModel.breed = chosenBreedName
+                    viewModel.breed = position + 1
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -149,16 +148,21 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun saveNewPet() {
+        chooseDate()
         binding.saveNewPet.setOnClickListener {
             viewModel.name = binding.newPetName.text.toString()
-            viewModel.weight = binding.weightNewPet.text.toString()
+            viewModel.weight = binding.weightNewPet.text.toString().toInt()
             with(viewModel) {
-                if (name.isEmpty() || kind.isEmpty() || breed.isEmpty() || dateOfBirth.isEmpty() || weight.isEmpty()) {
+                if (name.isEmpty() || kind == 0 || breed == 0 || dateOfBirth.isEmpty() || weight == 0) {
                     Toast.makeText(context, "Заполните все поля", Toast.LENGTH_LONG).show()
                 } else {
-//                    viewModel.addNewPetToDb()
+                    viewModel.addNewPetToDb()
                     findNavController().popBackStack()
-                    Toast.makeText(context, "$name, $kind, $breed, $dateOfBirth, $weight", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        context,
+                        "$name, $kind, $breed, $dateOfBirth, $weight",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }

@@ -6,7 +6,6 @@ import com.example.mypet.data.local.room.model.LocalPetKindModel
 import com.example.mypet.domain.PetCreationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -20,9 +19,9 @@ class PetCreationViewModel @Inject constructor(
 
     var dateOfBirth: String = ""
     var name: String = ""
-    var breed: String = ""
-    var kind: String = ""
-    var weight: String = ""
+    var breed: Int = 0
+    var kind: Int = 0
+    var weight: Int = 0
 
     private val _kindList = MutableStateFlow<List<LocalPetKindModel>>(emptyList())
     val kindList = _kindList.asStateFlow()
@@ -37,12 +36,18 @@ class PetCreationViewModel @Inject constructor(
 
     fun getBreedList(kindId: Int) = viewModelScope.launch(Dispatchers.IO) {
         petCreationRepository.getBreedList(kindId)
-            .collectLatest { _breedList.value = it.map { it.breedName } }
+            .collectLatest {
+                _breedList.value = it.map { breed ->
+                    breed.breedName
+                }
+            }
     }
 
-//    fun addNewPetToDb() {
-//            petCreationRepository.addNewPetToDb(name, kind, breed, dateOfBirth, weight)
-//    }
+    fun addNewPetToDb() {
+        viewModelScope.launch(Dispatchers.IO) {
+            petCreationRepository.addNewPetToDb(name, kind, breed, dateOfBirth, weight)
+        }
+    }
 
     init {
         getKindList()
