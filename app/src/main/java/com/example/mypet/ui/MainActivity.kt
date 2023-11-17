@@ -1,7 +1,12 @@
 package com.example.mypet.ui
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -21,7 +26,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val topLevelDestinations = setOf(
         R.id.map,
-        R.id.petDetail,
+        R.id.pet,
+        R.id.food
     )
 
     private val mAppBarConfiguration by lazy {
@@ -36,6 +42,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestPermissionForOverlay()
 
         setSupportActionBar(binding.toolbar)
 
@@ -61,13 +69,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     true
                 }
 
-                R.id.petDetail -> {
-                    navController.navigate(R.id.petDetail)
+                R.id.pet -> {
+                    navController.navigate(R.id.pet)
                     true
                 }
 
                 R.id.food -> {
-                    // Respond to navigation item 4 click
+                    navController.navigate(R.id.food)
                     true
                 }
 
@@ -79,10 +87,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 else -> false
             }
         }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) requestPermissionForOverlay()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = Navigation.findNavController(this, R.id.navHostMain)
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
+    }
+
+    private fun requestPermissionForOverlay() {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+            startActivityForResult(intent, 0)
+        }
     }
 }

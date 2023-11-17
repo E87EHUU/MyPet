@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/offset_16"
+    android:paddingTop="@dimen/offset_16">
+
+    <Button
+        android:id="@+id/buttonAlarmRepeatClose"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAlarmRepeatTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:text="@string/alarm_repeat_title"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmRepeatClose"
+        app:layout_constraintStart_toEndOf="@+id/buttonAlarmRepeatClose"
+        app:layout_constraintTop_toTopOf="@+id/buttonAlarmRepeatClose" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero"
+        android:layout_marginTop="@dimen/offset_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAlarmRepeatClose">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/offset_24">
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatMonday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="checkBoxAlarmRepeatMonday,textViewAlarmRepeatMonday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatMonday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/monday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatMonday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/checkBoxAlarmRepeatMonday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatMonday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatTuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatTuesday,checkBoxAlarmRepeatTuesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatMonday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatTuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/tuesday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatTuesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatMonday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatTuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatMonday"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatWednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatWednesday,checkBoxAlarmRepeatWednesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatTuesday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatWednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/wednesday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatWednesday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatTuesday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatWednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatTuesday"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatThursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatThursday,checkBoxAlarmRepeatThursday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatWednesday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatThursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/thursday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatThursday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatWednesday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatThursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatWednesday"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatFriday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatFriday,checkBoxAlarmRepeatFriday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatThursday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatFriday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/friday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatFriday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatThursday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatFriday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatThursday"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatSaturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatSaturday,checkBoxAlarmRepeatSaturday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatFriday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatSaturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/saturday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatSaturday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatFriday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatSaturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatFriday"
+                app:useMaterialThemeColors="true" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layerAlarmRepeatSunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/offset_24"
+                app:constraint_referenced_ids="textViewAlarmRepeatSunday,checkBoxAlarmRepeatSunday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRepeatSaturday" />
+
+            <TextView
+                android:id="@+id/textViewAlarmRepeatSunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_24"
+                android:text="@string/sunday"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBoxAlarmRepeatSunday"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatSaturday" />
+
+            <CheckBox
+                android:id="@+id/checkBoxAlarmRepeatSunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxAlarmRepeatSaturday"
+                app:useMaterialThemeColors="true" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

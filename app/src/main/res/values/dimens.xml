@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="zero">0dp</dimen>
     <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_8">8dp</dimen>
     <dimen name="offset_16">16dp</dimen>
@@ -9,10 +10,10 @@
 
     <dimen name="pet_detail_avatar_padding">1dp</dimen>
     <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
-    <dimen name="pet_detail_avatar_size">100dp</dimen>
+    <dimen name="pet_detail_avatar_size">64dp</dimen>
 
     <dimen name="pet_list_item_image_view_width">44dp</dimen>
-    <dimen name="pet_list_item_card_view_corner_radius">53dp</dimen>
+    <dimen name="pet_list_item_card_view_corner_radius">200dp</dimen>
     <dimen name="pet_list_item_card_view_elevation">0dp</dimen>
     <dimen name="pet_list_item_card_view_margin_end">4dp</dimen>
 
@@ -23,5 +24,7 @@
     <dimen name="avatar_creation_size">100dp</dimen>
     <dimen name="_70dp">70dp</dimen>
     <dimen name="_25dp">25dp</dimen>
+
+    <dimen name="alarm_icon_size">64dp</dimen>
 
 </resources>

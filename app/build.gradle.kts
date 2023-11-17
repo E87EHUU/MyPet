@@ -5,8 +5,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
-
-    // Secrets Gradle Plugin to hide API keys
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -26,7 +24,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        // enables access to hidden API key
         android.buildFeatures.buildConfig = true
    }
 
@@ -70,7 +67,11 @@ dependencies {
 
     val glideVersion: String by System.getProperties()
 
+    val yandexMapVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")
@@ -92,6 +93,5 @@ dependencies {
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
 
-    // yandex maps
-    implementation("com.yandex.android:maps.mobile:4.4.0-full")
+    implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
 }
