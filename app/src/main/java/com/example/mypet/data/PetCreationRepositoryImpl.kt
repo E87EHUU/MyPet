@@ -40,12 +40,14 @@ class PetCreationRepositoryImpl @Inject constructor(
     ) {
         petCreationDao.addNewPetToDb(
             LocalPetMyEntity(
-                avatar = "",
                 id = generateUniqueId(),
+                kindId = kindId,
                 breedId = breedId,
+                avatarPath = null,
                 name = name,
                 age = 1,
                 weight = weight,
+                sex = 1,
                 isActive = true
             )
         )
@@ -54,12 +56,12 @@ class PetCreationRepositoryImpl @Inject constructor(
     private fun LocalPetKindEntity.toLocalPetKindModel() =
         LocalPetKindModel(
             id = id,
-            kindName = name
+            kindName = "name"
         )
 
     private fun LocalPetBreedEntity.toLocalPetBreedModel() =
         LocalPetBreedModel(
-            breedName = name
+            breedName = "name"
         )
 
     companion object {
