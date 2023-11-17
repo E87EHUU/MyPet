@@ -13,10 +13,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 
 @Database(
     entities = [
-        LocalPetMyEntity::class,
-        LocalPetKindEntity::class,
-        LocalPetBreedEntity::class,
-        LocalPetFoodEntity::class,
+
         LocalAlarmEntity::class,
     ],
     version = 1,
