@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_pet_to_food"
             app:destination="@id/food" />
+        <action
+            android:id="@+id/action_pet_to_petCreationFragment"
+            app:destination="@id/petCreationFragment" />
     </fragment>
 
     <fragment
@@ -33,4 +36,9 @@
     <include
         android:id="@+id/navigationFoodAlarm"
         app:graph="@navigation/navigation_food_alarm" />
+    <fragment
+        android:id="@+id/petCreationFragment"
+        android:name="com.example.mypet.ui.pet.creation.PetCreationFragment"
+        android:label="fragment_pet_creation"
+        tools:layout="@layout/fragment_pet_creation" />
 </navigation>
