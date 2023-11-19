@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
         ) requestPermissionForOverlay()
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

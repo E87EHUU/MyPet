@@ -14,6 +14,7 @@ import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.food.PetFoodModel
+import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
 import com.example.mypet.ui.pet.care.PetCareAdapter
@@ -62,6 +63,11 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         startObservePetList()
         startObservePetFoodList()
         startObservePetCareList()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        getActionBar()?.show()
     }
 
     private fun startObservePetList() {
@@ -125,6 +131,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun initView() {
+        getActionBar()?.hide()
         binding.recyclerViewPetList.adapter = petListAdapter
         binding.recyclerViewPetFoodList.adapter = petFoodAdapter
         binding.recyclerViewPetCareList.adapter = petCareAdapter

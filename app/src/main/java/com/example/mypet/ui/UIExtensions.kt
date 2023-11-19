@@ -1,6 +1,7 @@
 package com.example.mypet.ui
 
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.mypet.domain.pet.breed.PetBreedCat
 import com.example.mypet.domain.pet.breed.PetBreedChameleon
 import com.example.mypet.domain.pet.breed.PetBreedDog
@@ -52,3 +53,6 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
             null
         }
     }
+
+fun Fragment.getActionBar() =
+    (requireActivity() as? MainActivity)?.supportActionBar
