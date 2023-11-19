@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val topLevelDestinations = setOf(
         R.id.navigationMap,
-        R.id.navigationPet,
-        R.id.navigationFood
+        R.id.navigationPet
     )
 
     private val mAppBarConfiguration by lazy {

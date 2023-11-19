@@ -17,11 +17,6 @@
         android:icon="@drawable/home"
         android:title="@string/bottom_navigation_pet_detail" />
     <item
-        android:id="@+id/navigationFood"
-        android:enabled="true"
-        android:icon="@drawable/feed"
-        android:title="@string/bottom_navigation_food" />
-    <item
         android:id="@+id/profile"
         android:enabled="true"
         android:icon="@drawable/profile"
