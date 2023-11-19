@@ -25,8 +25,9 @@ class FoodAlarmRepositoryImpl @Inject constructor(
         FoodAlarmModel(
             foodId,
             foodTitle,
-            petKindId,
-            petBreedId,
+            null,
+            petKindOrdinal,
+            petBreedOrdinal,
             alarmId,
             hour,
             minute,

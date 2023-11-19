@@ -65,5 +65,12 @@
     <string name="pet_detail_food_title">Режим питания</string>
     <string name="food_add_alarm_title">Добавить напоминание</string>
     <string name="pet_toolbar_more">Меню питомца</string>
+    <string name="alarm_service_overlay_delay">Отложить</string>
+    <string name="alarm_service_overlay_stop">Остановить</string>
+    <string name="pet_list_title">Мои питомцы</string>
+    <string name="pet_food_title">Кормление</string>
+    <string name="pet_food_forward_title">все</string>
+    <string name="pet_care_title">Уход</string>
+    <string name="pet_care_forward_title">все</string>
 
 </resources>

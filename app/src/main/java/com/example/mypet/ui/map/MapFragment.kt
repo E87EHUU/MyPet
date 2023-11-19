@@ -275,5 +275,12 @@ class MapFragment : Fragment(R.layout.fragment_map) {
         binding.mapViewMap.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
+        println("map stop")
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("map destroy")
     }
 }

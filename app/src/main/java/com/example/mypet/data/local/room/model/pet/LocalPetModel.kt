@@ -5,10 +5,10 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
-import com.example.mypet.data.local.room.entity.PET_BREED_TABLE
-import com.example.mypet.data.local.room.entity.PET_KIND_TABLE
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
@@ -21,11 +21,10 @@ data class LocalPetModel(
     val age: String?,
     @ColumnInfo(name = WEIGHT)
     val weight: String?,
+    @ColumnInfo(name = KIND_ORDINAL)
+    val kindOrdinal: Int,
+    @ColumnInfo(name = BREED_ORDINAL)
+    val breedOrdinal: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
-
-    @ColumnInfo(name = "${PET_KIND_TABLE}_$ID")
-    val kindId: Int,
-    @ColumnInfo(name = "${PET_BREED_TABLE}_$ID")
-    val breedId: Int?,
 )
