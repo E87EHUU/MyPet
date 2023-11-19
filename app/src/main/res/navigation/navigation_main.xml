@@ -2,9 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigationMain"
-    app:startDestination="@id/navigationPetShared">
+    app:startDestination="@id/navigationPet">
 
-    <include app:graph="@navigation/navigation_pet_shared" />
+    <include app:graph="@navigation/navigation_pet" />
     <include app:graph="@navigation/navigation_map" />
+    <include app:graph="@navigation/navigation_food" />
 
 </navigation>
