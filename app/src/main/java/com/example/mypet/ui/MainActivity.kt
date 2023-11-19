@@ -16,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,9 +24,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val binding by viewBinding(ActivityMainBinding::bind)
 
     private val topLevelDestinations = setOf(
-        R.id.map,
-        R.id.pet,
-        R.id.food
+        R.id.navigationMap,
+        R.id.navigationPet,
+        R.id.navigationFood
     )
 
     private val mAppBarConfiguration by lazy {
@@ -51,42 +50,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             this@MainActivity, navController, mAppBarConfiguration
         )
 
-        setNavigationBarView()
 
         binding.bottomNavigation.setupWithNavController(navController)
-    }
-
-    private fun setNavigationBarView() {
-        NavigationBarView.OnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.map -> {
-                    navController.navigate(R.id.map)
-                    true
-                }
-
-                R.id.reminder -> {
-                    // Respond to navigation item 2 click
-                    true
-                }
-
-                R.id.pet -> {
-                    navController.navigate(R.id.pet)
-                    true
-                }
-
-                R.id.food -> {
-                    navController.navigate(R.id.food)
-                    true
-                }
-
-                R.id.profile -> {
-                    // Respond to navigation item 5 click
-                    true
-                }
-
-                else -> false
-            }
-        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED

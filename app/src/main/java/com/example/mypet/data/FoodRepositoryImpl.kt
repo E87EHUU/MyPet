@@ -19,7 +19,7 @@ class FoodRepositoryImpl @Inject constructor(
     private fun LocalFoodAlarmModel.toAlarmModel() =
         AlarmModel(alarmId, hour, minute)
 
-    override suspend fun observeFoodModels(petMyId: Int) =
+    override suspend fun observeFoodModels(petMyId: Int?) =
         localFoodDao.observeFoodModels(petMyId)
             .map { localFoodModels -> localFoodModels.map { it.toFoodModel() } }
 

@@ -23,8 +23,8 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VI
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
-import com.example.mypet.data.local.room.entity.PET_BREED_TABLE
-import com.example.mypet.data.local.room.entity.PET_KIND_TABLE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
 
@@ -35,8 +35,8 @@ interface LocalFoodAlarmDao {
         "SELECT " +
                 "f.id $ID, " +
                 "f.title $TITLE, " +
-                "k.id ${PET_KIND_TABLE}_$ID, " +
-                "b.id ${PET_BREED_TABLE}_$ID, " +
+                "m.kind_ordinal $KIND_ORDINAL, " +
+                "m.breed_ordinal $BREED_ORDINAL, " +
                 "a.id ${ALARM_TABLE}_${ID}, " +
                 "a.hour $HOUR, " +
                 "a.minute $MINUTE, " +
@@ -54,8 +54,6 @@ interface LocalFoodAlarmDao {
                 "FROM pet_food f " +
                 "LEFT JOIN alarm a ON a.id = f.alarm_id " +
                 "LEFT JOIN pet_my m ON m.id = f.pet_my_id " +
-                "LEFT JOIN pet_kind k ON k.id = m.pet_kind_id " +
-                "LEFT JOIN pet_breed b ON b.id = m.pet_breed_id " +
                 "WHERE f.id = :foodId " +
                 "LIMIT 1"
     )

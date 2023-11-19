@@ -1,13 +1,15 @@
 package com.example.mypet.domain.food.alarm
 
+import android.net.Uri
 import com.example.mypet.data.alarm.AlarmModel
 
 data class FoodAlarmModel(
     val foodId: Int,
     val foodTitle: String,
 
-    val petKindId: Int,
-    val petBreedId: Int?,
+    val petMyAvatarUri: Uri?,
+    val petKindOrdinal: Int,
+    val petBreedOrdinal: Int?,
 
     var alarmId: Int,
     val hour: Int,

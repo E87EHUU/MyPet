@@ -6,10 +6,10 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
-import com.example.mypet.data.local.room.entity.PET_BREED_TABLE
-import com.example.mypet.data.local.room.entity.PET_KIND_TABLE
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
 
@@ -23,12 +23,10 @@ interface LocalPetDao {
                 "m.name $NAME, " +
                 "m.age $AGE, " +
                 "m.weight $WEIGHT, " +
-                "m.is_active $IS_ACTIVE, " +
-                "k.id ${PET_KIND_TABLE}_$ID, " +
-                "b.id ${PET_BREED_TABLE}_$ID " +
-                "FROM pet_my m " +
-                "LEFT JOIN pet_kind k ON k.id = m.pet_kind_id " +
-                "LEFT JOIN pet_breed b ON b.id = m.pet_breed_id "
+                "m.kind_ordinal $KIND_ORDINAL, " +
+                "m.breed_ordinal $BREED_ORDINAL, " +
+                "m.is_active $IS_ACTIVE " +
+                "FROM pet_my m"
     )
     fun observePetList(): Flow<List<LocalPetModel>>
 }
