@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context="com.example.mypet.ui.pet.PetFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="horizontal"
+            android:overScrollMode="never"
             android:paddingHorizontal="@dimen/offset_24"
             android:paddingVertical="@dimen/offset_16"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -222,6 +224,7 @@
                 android:layout_marginTop="@dimen/offset_16"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
+                android:overScrollMode="never"
                 android:paddingHorizontal="@dimen/offset_24"
                 android:paddingVertical="@dimen/offset_4"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -275,6 +278,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_16"
                 android:clipToPadding="false"
+                android:overScrollMode="never"
                 android:paddingVertical="@dimen/offset_4"
                 android:paddingStart="@dimen/offset_24"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

@@ -28,5 +28,6 @@
     <dimen name="pet_sex_male_offset_top">-8dp</dimen>
     <dimen name="pet_sex_male_offset_end">-16dp</dimen>
     <dimen name="pet_care_recycler_item_icon">64dp</dimen>
+    <dimen name="bottom_navigation_height">80dp</dimen>
 
 </resources>
