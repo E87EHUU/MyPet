@@ -65,6 +65,11 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         startObservePetCareList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getActionBar()?.hide()
+    }
+
     override fun onStop() {
         super.onStop()
         getActionBar()?.show()
