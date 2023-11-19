@@ -5,23 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/includePetList"
-        layout="@layout/fragment_pet_list_recycler"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFood"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/offset_24"
         android:paddingBottom="@dimen/offset_16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/includePetList"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/fragment_food_recycler_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
