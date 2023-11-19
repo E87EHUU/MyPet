@@ -194,7 +194,7 @@
                 style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_24"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="@dimen/offset_16"
                 android:text="@string/pet_food_title"
                 app:layout_constraintStart_toStartOf="parent"

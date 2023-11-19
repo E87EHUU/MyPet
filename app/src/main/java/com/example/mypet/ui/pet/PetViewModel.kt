@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PetViewModel @Inject constructor(
     private val petRepository: PetRepository,
 ) : ViewModel() {
-    var activePetId: Int? = null
+    var activePetMyId: Int? = null
 
     private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
     val petList = _petList.asStateFlow()

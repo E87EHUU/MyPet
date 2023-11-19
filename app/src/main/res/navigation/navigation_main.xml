@@ -6,6 +6,5 @@
 
     <include app:graph="@navigation/navigation_pet" />
     <include app:graph="@navigation/navigation_map" />
-    <include app:graph="@navigation/navigation_food" />
 
 </navigation>

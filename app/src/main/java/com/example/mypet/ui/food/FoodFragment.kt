@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodBinding
@@ -19,6 +20,8 @@ import kotlinx.coroutines.launch
 class FoodFragment : Fragment(R.layout.fragment_food) {
     private val binding by viewBinding(FragmentFoodBinding::bind)
     private val viewModel by viewModels<FoodViewModel>()
+    private val args by navArgs<FoodFragmentArgs>()
+
 
     private val foodAdapterCallback =
         object : FoodAdapterCallback {
