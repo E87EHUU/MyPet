@@ -16,6 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
 import com.example.mypet.data.local.room.model.LocalPetKindModel
+import com.example.mypet.domain.pet.kind.getKindNameResId
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
             ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                listKindModel.map { it.kindName })
+                listKindModel.map { getString(getKindNameResId(it.id - 1)) })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         kindSpinner.adapter = adapter
 

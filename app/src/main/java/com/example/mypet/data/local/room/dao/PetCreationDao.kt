@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PetCreationDao {
 
-    @Query("SELECT * FROM pet_breed")
+    @Query("SELECT * FROM pet_kind")
     fun observePetKindList(): Flow<List<LocalPetKindEntity>>
 
     @Query("SELECT * FROM pet_breed WHERE pet_kind_id = :kindId")
