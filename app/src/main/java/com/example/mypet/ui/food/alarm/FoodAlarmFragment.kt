@@ -246,7 +246,7 @@ class FoodAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_alarm
     }
 
     private fun navToAlarmRepeat() {
-        findNavController().navigate(R.id.action_foodAlarm_to_alarmRepeat)
+        findNavController().navigate(R.id.action_foodAlarmFragment_to_alarmRepeatFragment)
     }
 
     companion object {

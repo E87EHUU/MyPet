@@ -20,17 +20,9 @@ class FoodViewModel @Inject constructor(
     private val _food = MutableStateFlow<List<FoodModel>>(emptyList())
     val food = _food.asStateFlow()
 
-    var petId: Int? = null
-        private set
-
-    fun updateFood(activePetId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        petId = null
-
-        foodRepository.observeFoodModels(activePetId).collectLatest {
-            petId = activePetId
-
-            _food.value = it
-        }
+    fun updateFood(activePetId: Int?) = viewModelScope.launch(Dispatchers.IO) {
+        foodRepository.observeFoodModels(activePetId)
+            .collectLatest { _food.value = it }
     }
 
     fun switchAlarmState(foodModel: FoodModel) {

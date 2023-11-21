@@ -27,7 +27,7 @@ class FoodAdapter(
         override fun areItemsTheSame(
             oldItem: FoodModel,
             newItem: FoodModel
-        ) = oldItem.alarmId == newItem.alarmId
+        ) = oldItem.foodId == newItem.foodId
 
         override fun areContentsTheSame(
             oldItem: FoodModel,

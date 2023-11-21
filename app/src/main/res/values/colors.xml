@@ -61,4 +61,9 @@
     <color name="md_theme_dark_surfaceTint">#FFB779</color>
     <color name="md_theme_dark_outlineVariant">#51443B</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="pet_sex_male_background">#03A9F4</color>
+    <color name="pet_care_recycler_item_background">#C8E6C9</color>
+    <color name="pet_care_recycler_item_progress_background">#EF5350</color>
+    <color name="pet_care_recycler_item_progress_line">#8BC34A</color>
+    <color name="pet_sex_female_background">#E13CFF</color>
 </resources>

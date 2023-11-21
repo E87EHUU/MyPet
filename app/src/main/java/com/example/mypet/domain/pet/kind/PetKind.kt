@@ -3,12 +3,7 @@ package com.example.mypet.domain.pet.kind
 import com.example.mypet.app.R
 
 
-fun getKindIconResId(petKindOrdinal: Int) =
-    PetKind.values()[petKindOrdinal].iconResId
-fun getKindNameResId(petKindOrdinal: Int) =
-    PetKind.values()[petKindOrdinal].nameResId
-
-enum class PetKind(val iconResId: Int, val nameResId: Int,) {
+enum class PetKind(val iconResId: Int, val nameResId: Int) {
     CAT(R.drawable.ic_pet_kind_cat, R.string.pet_kind_cat),
     DOG(R.drawable.ic_pet_kind_dog, R.string.pet_kind_dog),
     RABBIT(R.drawable.ic_pet_kind_rabbit, R.string.pet_kind_rabbit),

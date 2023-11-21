@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
-import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
 import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.kind.getKindIconResId
 
 class PetListAdapter(
     private val onPetClickListener: OnPetClickListener,
@@ -81,19 +79,17 @@ class PetListAdapter(
     }
 
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(pet: PetModel, onPetClickListener: OnPetClickListener) {
-            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
-                setImageAvatar(pet, this)
-                itemView.setOnClickListener { onPetClickListener.onPetClick(pet) }
-            }
-        }
+        fun bind(petModel: PetModel, onPetClickListener: OnPetClickListener) {
+/*            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
+                if (petModel.avatarUri != null)
+                    imageViewPetListItem.setImageURI(petModel.avatarUri)
+                else
+                    imageViewPetListItem.setImageResource(
+                        getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
+                    )
 
-        private fun setImageAvatar(petModel: PetModel, binding: FragmentPetListRecyclerItemBinding) {
-            if (petModel.avatarUri != null)
-                binding.imageViewPetListItem.setImageURI(petModel.avatarUri)
-            else if (petModel.breedId != null) {
-
-            } else binding.imageViewPetListItem.setImageResource(getKindIconResId(petModel.kindOrdinal))
+                itemView.setOnClickListener { onPetClickListener.onPetClick(petModel) }
+            }*/
         }
     }
 }
