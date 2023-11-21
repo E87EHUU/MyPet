@@ -8,18 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
-import com.example.mypet.data.local.room.model.LocalPetKindModel
-import com.example.mypet.domain.pet.kind.getKindNameResId
+import com.example.mypet.domain.pet.kind.PetKind
+import com.example.mypet.ui.getPetBreedList
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,36 +28,18 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startObservePetKindAndBreed()
+        onKindUpdate()
         saveNewPet()
     }
 
-    private fun startObservePetKindAndBreed() {
-
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.kindList.collectLatest { listPetKindModel ->
-                    onKindUpdate(listPetKindModel)
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.breedList.collectLatest { breedNameList ->
-                    onBreedUpdate(breedNameList)
-                }
-            }
-        }
-    }
-
-    private fun onKindUpdate(listKindModel: List<LocalPetKindModel>) {
+    private fun onKindUpdate() {
         val kindSpinner = binding.kindSpinner
         val adapter =
             ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                listKindModel.map { getString(getKindNameResId(it.id - 1)) })
+                PetKind.values().map { getString(it.nameResId) }
+            )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         kindSpinner.adapter = adapter
 
@@ -73,10 +50,8 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = position + 1
-                viewModel.getBreedList(selectedItem)
-                val chosenKindName = parent?.getItemAtPosition(position).toString()
-                viewModel.kind = position + 1
+                onBreedUpdate(position)
+                viewModel.kind = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -85,8 +60,8 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun onBreedUpdate(listBreedName: List<String>) {
-        if (listBreedName.isEmpty()) {
+    private fun onBreedUpdate(kindId: Int) {
+        if (getPetBreedList(kindId) == null) {
             binding.breedSpinner.visibility = View.GONE
             binding.breedSpinnerTittle.visibility = View.GONE
         } else {
@@ -95,12 +70,14 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
 
             val breedSpinner = binding.breedSpinner
             val breedSpinnerAdapter =
-                ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    listBreedName
-                )
-            breedSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                getPetBreedList(kindId)?.let { listBreedNameId ->
+                    ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        listBreedNameId.map { getString(it) }
+                    )
+                }
+            breedSpinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             breedSpinner.adapter = breedSpinnerAdapter
 
             breedSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -110,8 +87,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                     position: Int,
                     id: Long
                 ) {
-                    val chosenBreedName = parent?.getItemAtPosition(position).toString()
-                    viewModel.breed = position + 1
+                    viewModel.breed = position
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -138,7 +114,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                     val selectedDate =
                         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
                     selectedDateTextView.text = selectedDate
-                    viewModel.dateOfBirth = selectedDateTextView.text.toString()
+                    viewModel.dateOfBirth = calendar.timeInMillis
                 },
                 year,
                 month,
@@ -154,17 +130,14 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
             viewModel.name = binding.newPetName.text.toString()
             viewModel.weight = binding.weightNewPet.text.toString().toInt()
             with(viewModel) {
-                if (name.isEmpty() || kind == 0 || breed == 0 || dateOfBirth.isEmpty() || weight == 0) {
-                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_LONG).show()
+                if (name.isEmpty() || dateOfBirth == 0.toLong() || weight == 0) {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.fill_up_all_fields), Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     viewModel.addNewPetToDb()
                     findNavController().popBackStack()
-                    Toast.makeText(
-                        context,
-                        "$name, $kind, $breed, $dateOfBirth, $weight",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
                 }
             }
         }

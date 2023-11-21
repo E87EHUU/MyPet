@@ -21,8 +21,7 @@
         <action
             android:id="@+id/action_petFragment_to_careDetailFragment"
             app:destination="@id/careDetailFragment" />
-            android:id="@+id/action_pet_to_food"
-            app:destination="@id/food" />
+
         <action
             android:id="@+id/action_pet_to_petCreationFragment"
             app:destination="@id/petCreationFragment" />
