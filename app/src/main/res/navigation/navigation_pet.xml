@@ -33,16 +33,6 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/action_foodFragment_to_navigationFoodAlarm"
-            app:destination="@id/navigationFoodAlarm">
-            <argument
-                android:name="petMyId"
-                app:argType="integer" />
-            <argument
-                android:name="petFoodId"
-                app:argType="integer" />
-        </action>
-        <action
             android:id="@+id/action_foodFragment_to_foodDetailFragment"
             app:destination="@id/foodDetailFragment" />
     </fragment>
@@ -67,8 +57,16 @@
             android:name="pet_care_id"
             app:argType="integer" />
         <action
-            android:id="@+id/action_careDetailFragment_to_alarmRepeatChooserFragment"
-            app:destination="@id/alarmRepeatChooserFragment" />
+            android:id="@+id/action_careDetailFragment_to_navigationAlarm"
+            app:destination="@id/navigationAlarm">
+            <argument
+                android:name="food_id"
+                app:argType="integer" />
+            <argument
+                android:name="care_id"
+                app:argType="integer" />
+
+        </action>
     </fragment>
 
     <fragment
@@ -79,17 +77,16 @@
             android:name="pet_food_id"
             app:argType="integer" />
         <action
-            android:id="@+id/action_foodDetailFragment_to_alarmRepeatChooserFragment"
-            app:destination="@id/alarmRepeatChooserFragment" />
+            android:id="@+id/action_foodDetailFragment_to_navigationAlarm"
+            app:destination="@id/navigationAlarm">
+            <argument
+                android:name="food_id"
+                app:argType="integer" />
+            <argument
+                android:name="care_id"
+                app:argType="integer" />
+        </action>
     </fragment>
-
-    <dialog
-        android:id="@+id/alarmRepeatChooserFragment"
-        android:name="com.example.mypet.ui.alarm.repeat.AlarmRepeatChooserFragment"
-        tools:layout="@layout/fragment_alarm_repeat_chooser" >
-        <argument
-            android:name="alarm_id"
-            app:argType="integer" />
-    </dialog>
+    <include app:graph="@navigation/navigation_alarm" />
 
 </navigation>

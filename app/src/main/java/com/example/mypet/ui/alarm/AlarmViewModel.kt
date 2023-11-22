@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.repeat
+package com.example.mypet.ui.alarm
 
 import androidx.lifecycle.ViewModel
 

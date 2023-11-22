@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.repeat.service
+package com.example.mypet.ui.alarm.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,12 +9,12 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
-import com.example.mypet.domain.food.alarm.FoodAlarmModel
+import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
 
 
 class AlarmServiceNotification(
     private val context: Context,
-    private val foodDetailAlarmModel: FoodAlarmModel,
+    private val alarmModel: LocalAlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
@@ -59,7 +59,7 @@ class AlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(foodDetailAlarmModel.foodTitle)
+            .setContentTitle(alarmModel.anyTitle)
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .setContentText(context.getString(R.string.alarm_delay_message))
             .addAction(
@@ -72,11 +72,11 @@ class AlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(foodDetailAlarmModel.foodTitle)
+            .setContentTitle(alarmModel.anyTitle)
             .setContentText("")
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .apply {
-                if (foodDetailAlarmModel.isDelay)
+                if (alarmModel.alarmIsDelay)
                     addAction(
                         R.drawable.baseline_repeat_24,
                         context.getString(R.string.notification_chanel_action_delay),

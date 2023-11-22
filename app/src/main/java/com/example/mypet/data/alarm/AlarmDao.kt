@@ -5,9 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.example.mypet.ui.MainActivity
-import com.example.mypet.ui.alarm.repeat.service.AlarmService
-import com.example.mypet.ui.alarm.repeat.service.AlarmService.Companion.ALARM_ID
-import com.example.mypet.ui.alarm.repeat.service.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
+import com.example.mypet.ui.alarm.service.AlarmService
+import com.example.mypet.ui.alarm.service.AlarmService.Companion.ALARM_ID
+import com.example.mypet.ui.alarm.service.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject

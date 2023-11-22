@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.repeat.service
+package com.example.mypet.ui.alarm.service
 
 import android.app.Service
 import android.content.Context

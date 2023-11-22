@@ -1,14 +1,11 @@
-package com.example.mypet.ui.alarm.repeat
+package com.example.mypet.ui.alarm
 
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,17 +13,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentAlarmBinding
-import com.example.mypet.ui.food.alarm.FoodAlarmFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class AlarmFragment : Fragment(R.layout.fragment_alarm) {
     private val binding by viewBinding(FragmentAlarmBinding::bind)
-    private val viewModel by viewModels<AlarmViewModel>()
+    private val viewModel by navGraphViewModels<AlarmViewModel>(R.id.navigationAlarm) { defaultViewModelProviderFactory }
     private val args by navArgs<AlarmFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

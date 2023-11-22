@@ -8,16 +8,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentFoodAlarmRepeatWeekBinding
+import com.example.mypet.app.databinding.FragmentAlarmBinding
+import com.example.mypet.app.databinding.FragmentAlarmRepeatWeekBinding
+import com.example.mypet.ui.alarm.AlarmViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FoodAlarmRepeatFragment :
+class AlarmRepeatWeekFragment :
     BottomSheetDialogFragment(R.layout.fragment_alarm_repeat_week) {
-    private val binding by viewBinding(FragmentFoodAlarmRepeatWeekBinding::bind)
-    private val viewModel by navGraphViewModels<FoodAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
+    private val binding by viewBinding(FragmentAlarmRepeatWeekBinding::bind)
+    private val viewModel by navGraphViewModels<AlarmViewModel>(R.id.navigationAlarm) { defaultViewModelProviderFactory }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
