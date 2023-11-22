@@ -19,12 +19,16 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_RE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 
 data class LocalAlarmServiceModel(
     @ColumnInfo(name = ID)
     val anyId: Int,
+
+    @ColumnInfo(name = AVATAR_PATH)
+    val anyAvatarPath: String?,
     @ColumnInfo(name = TITLE)
     val anyTitle: String,
     @ColumnInfo(name = DESCRIPTION)

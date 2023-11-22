@@ -14,7 +14,7 @@
         android:padding="@dimen/offset_16">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageViewAlarmAppIcon"
+            android:id="@+id/image_view_alarm_icon"
             android:layout_width="@dimen/alarm_icon_size"
             android:layout_height="@dimen/alarm_icon_size"
             android:padding="1dp"
@@ -33,7 +33,7 @@
             android:text="Будильник 10:00"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintBottom_toTopOf="@+id/textViewAlarmMessage"
-            app:layout_constraintStart_toEndOf="@+id/imageViewAlarmAppIcon"
+            app:layout_constraintStart_toEndOf="@+id/image_view_alarm_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

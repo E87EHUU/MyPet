@@ -13,6 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodBinding
 import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.ui.getFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -51,9 +52,9 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     }
 
     private fun initListeners() {
-        /*        binding.buttonPetDetailFoodAdd.setOnClickListener {
-                    navToFoodAlarmSet()
-                }*/
+        getFloatingActionButton()?.setOnClickListener {
+            navToFoodDetail()
+        }
     }
 
     private fun startObserveFoods() {

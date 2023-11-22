@@ -15,8 +15,8 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
+import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
 import com.example.mypet.domain.AlarmServiceRepository
-import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
 import com.example.mypet.utils.VibrationPlayer
@@ -27,9 +27,9 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FoodAlarmService : Service() {
+class AlarmService : Service() {
     @Inject
-    lateinit var foodAlarmServiceRepository: AlarmServiceRepository
+    lateinit var alarmServiceRepository: AlarmServiceRepository
 
     private var windowManager: WindowManager? = null
     private var view: View? = null
@@ -38,15 +38,15 @@ class FoodAlarmService : Service() {
     private val buttonDelay
         get() = view?.findViewById<Button>(R.id.buttonAlarmDelay)
     private val buttonStop
-        get() = view?.findViewById<Button>(R.id.buttonViewFoodAlarmOverlayStop)
+        get() = view?.findViewById<Button>(R.id.buttonViewAlarmOverlayStop)
     private val recycler
-        get() = view?.findViewById<RecyclerView>(R.id.recyclerViewFoodAlarmOverlay)
+        get() = view?.findViewById<RecyclerView>(R.id.recyclerViewAlarmOverlay)
 
-    private val foodAlarmModels = mutableMapOf<Int, FoodAlarmModel>()
-    private lateinit var ownNotification: FoodAlarmServiceNotification
+    private val alarmModels = mutableMapOf<Int, LocalAlarmServiceModel>()
+    private lateinit var notification: AlarmServiceNotification
     private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
     private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
-    private val adapter = FoodAlarmServiceAdapter()
+    private val adapter = AlarmServiceAdapter()
 
     override fun onBind(intent: Intent) = null
 
@@ -69,65 +69,61 @@ class FoodAlarmService : Service() {
         ringtonePlayer.onDestroy()
         vibrationPlayer.onDestroy()
 
-        foodAlarmModels.clear()
+        alarmModels.clear()
         windowManager = null
     }
 
     private fun start(intent: Intent) {
-        val alarmId = intent.getIntExtra(ALARM_ID, 0)
-        if (alarmId < 0) return
-
-        println(alarmId)
-        println(foodAlarmModels)
-
-        if (!foodAlarmModels.containsKey(alarmId)) {
-            runBlocking {
-                launch(Dispatchers.IO) {
-                    foodAlarmServiceRepository.getFoodAlarmModel(alarmId)
-                        ?.let { foodAlarmModels[alarmId] = it }
+        intent.getAnyId()?.let { anyId ->
+            if (!alarmModels.containsKey(anyId)) {
+                runBlocking {
+                    launch(Dispatchers.IO) {
+                        alarmServiceRepository.getAlarmServiceModelByFoodId(anyId)
+                            ?.let { alarmModels[anyId] = it }
+                    }
                 }
             }
-        }
 
-        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
-            ownNotification = FoodAlarmServiceNotification(this, foodAlarmModel)
-            startForeground(foodAlarmModel.alarmId, ownNotification.getNotification())
+            alarmModels[anyId]?.let { alarmModel ->
+                notification = AlarmServiceNotification(this, alarmModel)
+                startForeground(alarmModel.alarmId, notification.getNotification())
 
-            playVibration(foodAlarmModel)
-            playRingtone(foodAlarmModel)
+                playVibration(alarmModel)
+                playRingtone(alarmModel)
 
-            if (Settings.canDrawOverlays(this)) {
-                initView(foodAlarmModel)
-                initOverlayParams()
-                initViewListeners(intent)
-                showOverlay()
-                adapter.submitList(foodAlarmModels.map { it.value })
-            } else navToDetail()
-        }
+                if (Settings.canDrawOverlays(this)) {
+                    initView(alarmModel)
+                    initOverlayParams()
+                    initViewListeners(intent)
+                    showOverlay()
+                    adapter.submitList(alarmModels.map { it.value })
+                } else navToDetail()
+            }
+        } ?: stop(intent)
     }
 
-    private fun playVibration(foodAlarmModel: FoodAlarmModel) {
-        if (foodAlarmModel.isVibration) vibrationPlayer.play()
+    private fun playVibration(localAlarmServiceModel: LocalAlarmServiceModel) {
+        if (localAlarmServiceModel.alarmIsVibration) vibrationPlayer.play()
     }
 
-    private fun playRingtone(foodAlarmModel: FoodAlarmModel) {
-        foodAlarmModel.ringtonePath?.let { ringtonePath ->
+    private fun playRingtone(localAlarmServiceModel: LocalAlarmServiceModel) {
+        localAlarmServiceModel.alarmRingtonePath?.let { ringtonePath ->
             ringtonePlayer.play(Uri.parse(ringtonePath))
         }
     }
 
     private fun stop(intent: Intent) {
-        val alarmId = intent.getIntExtra(ALARM_ID, 0)
-
         clearUI()
 
-        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
-            with(foodAlarmModel) {
-                stopForeground(STOP_FOREGROUND_REMOVE)
+        intent.getAnyId()?.let { anyId ->
+            alarmModels[anyId]?.let { alarmModel ->
+                with(alarmModel) {
+                    stopForeground(STOP_FOREGROUND_REMOVE)
 
-                runBlocking {
-                    launch(Dispatchers.IO) {
-                        foodAlarmServiceRepository.stopFoodAlarm(alarmId)
+                    runBlocking {
+                        launch(Dispatchers.IO) {
+                            alarmServiceRepository.stopAlarm(alarmModel)
+                        }
                     }
                 }
             }
@@ -137,22 +133,32 @@ class FoodAlarmService : Service() {
     }
 
     private fun delay(intent: Intent) {
-        val alarmId = intent.getIntExtra(ALARM_ID, 0)
+        intent.getAnyId()?.let { anyId ->
+            clearUI()
 
-        clearUI()
+            alarmModels[anyId]?.let { alarmModel ->
+                startForeground(
+                    alarmModel.alarmId,
+                    notification.getDelayNotification()
+                )
 
-        foodAlarmModels[alarmId]?.let { foodAlarmModel ->
-            startForeground(
-                foodAlarmModel.alarmId,
-                ownNotification.getDelayNotification()
-            )
-
-            runBlocking {
-                launch(Dispatchers.IO) {
-                    foodAlarmServiceRepository.setDelayAlarm(foodAlarmModel)
+                runBlocking {
+                    launch(Dispatchers.IO) {
+                        alarmServiceRepository.setDelayAlarm(alarmModel)
+                    }
                 }
             }
-        }
+        } ?: stop(intent)
+    }
+
+    private fun Intent.getAnyId(): Int? {
+        val foodId = getIntExtra(FOOD_ID, 0)
+        if (foodId > 0) return foodId
+
+        val careId = getIntExtra(CARE_ID, 0)
+        if (careId > 0) return careId
+
+        return null
     }
 
     private fun navToDetail() {
@@ -161,7 +167,7 @@ class FoodAlarmService : Service() {
         startActivity(intent)
     }
 
-    private fun initView(foodAlarmModel: FoodAlarmModel) {
+    private fun initView(localAlarmServiceModel: LocalAlarmServiceModel) {
         if (view == null) {
             windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
@@ -171,7 +177,7 @@ class FoodAlarmService : Service() {
             view = layoutInflater.inflate(R.layout.service_alarm_overlay, null)
             recycler?.adapter = adapter
 
-            buttonDelay?.isVisible = foodAlarmModel.isDelay
+            buttonDelay?.isVisible = localAlarmServiceModel.alarmIsDelay
         }
     }
 
@@ -198,7 +204,7 @@ class FoodAlarmService : Service() {
     }
 
     private fun showOverlay() {
-        if (foodAlarmModels.size == 1)
+        if (alarmModels.size == 1)
             windowManager?.addView(view, params)
     }
 
@@ -220,6 +226,7 @@ class FoodAlarmService : Service() {
         const val ALARM_OVERLAY_ACTION_DELAY = "alarm_overlay_action_delay"
         const val ALARM_OVERLAY_ACTION_NAV_TO_DETAIL = "alarm_overlay_action_nav_to_detail"
 
-        const val ALARM_ID = "alarm_id"
+        const val FOOD_ID = "food_id"
+        const val CARE_ID = "care_id"
     }
 }

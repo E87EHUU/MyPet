@@ -12,15 +12,15 @@ import com.example.mypet.app.R
 import com.example.mypet.domain.food.alarm.FoodAlarmModel
 
 
-class FoodAlarmServiceNotification(
+class AlarmServiceNotification(
     private val context: Context,
     private val foodDetailAlarmModel: FoodAlarmModel,
 ) {
-    private val intentToService = Intent(context, FoodAlarmService::class.java)
+    private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
         let {
             intentToService.action =
-                FoodAlarmService.ALARM_OVERLAY_ACTION_NAV_TO_DETAIL
+                AlarmService.ALARM_OVERLAY_ACTION_NAV_TO_DETAIL
             PendingIntent.getService(
                 context,
                 0,
@@ -31,7 +31,7 @@ class FoodAlarmServiceNotification(
 
     private val pendingIntentStartServiceDelay: PendingIntent =
         let {
-            intentToService.action = FoodAlarmService.ALARM_OVERLAY_ACTION_DELAY
+            intentToService.action = AlarmService.ALARM_OVERLAY_ACTION_DELAY
             PendingIntent.getService(
                 context,
                 0,
@@ -42,7 +42,7 @@ class FoodAlarmServiceNotification(
 
     private val pendingIntentStartServiceStop: PendingIntent =
         let {
-            intentToService.action = FoodAlarmService.ALARM_OVERLAY_ACTION_STOP
+            intentToService.action = AlarmService.ALARM_OVERLAY_ACTION_STOP
             PendingIntent.getService(
                 context,
                 0,

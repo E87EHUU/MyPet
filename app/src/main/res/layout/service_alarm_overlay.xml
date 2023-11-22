@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFoodAlarmOverlay"
+        android:id="@+id/recyclerViewAlarmOverlay"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/offset_24"
@@ -28,11 +28,11 @@
         android:layout_marginEnd="@dimen/offset_8"
         android:text="@string/alarm_service_overlay_delay"
         android:textColor="?attr/colorOnPrimaryContainer"
-        app:layout_constraintEnd_toStartOf="@+id/buttonViewFoodAlarmOverlayStop"
-        app:layout_constraintTop_toTopOf="@+id/buttonViewFoodAlarmOverlayStop" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonViewAlarmOverlayStop"
+        app:layout_constraintTop_toTopOf="@+id/buttonViewAlarmOverlayStop" />
 
     <Button
-        android:id="@+id/buttonViewFoodAlarmOverlayStop"
+        android:id="@+id/buttonViewAlarmOverlayStop"
         style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:background="@drawable/alarm_service_shape_button"
         android:text="@string/alarm_service_overlay_stop"
         android:textColor="?attr/colorOnPrimaryContainer"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewFoodAlarmOverlay"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFoodAlarmOverlay" />
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewAlarmOverlay"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewAlarmOverlay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

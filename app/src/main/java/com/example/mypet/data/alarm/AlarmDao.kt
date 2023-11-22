@@ -5,9 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.example.mypet.ui.MainActivity
-import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService
-import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService.Companion.ALARM_ID
-import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService.Companion.ALARM_OVERLAY_ACTION_START
+import com.example.mypet.ui.alarm.repeat.service.AlarmService
+import com.example.mypet.ui.alarm.repeat.service.AlarmService.Companion.ALARM_ID
+import com.example.mypet.ui.alarm.repeat.service.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
@@ -96,7 +96,7 @@ class AlarmDao @Inject constructor(
 
     private fun getStartAlarmServicePendingIntent(id: Int) =
         let {
-            val intent = Intent(context, FoodAlarmService::class.java)
+            val intent = Intent(context, AlarmService::class.java)
             intent.action = ALARM_OVERLAY_ACTION_START
             intent.putExtra(ALARM_ID, id)
             PendingIntent.getForegroundService(

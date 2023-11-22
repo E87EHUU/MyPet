@@ -31,8 +31,9 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        init
+        observePopBackStack()
+        initView()
+        initListeners()
     }
 
     private fun observePopBackStack() {
@@ -48,7 +49,11 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
         }
     }
 
-    private fun prepListeners() {
+    private fun initView() {
+
+    }
+
+    private fun initListeners() {
         binding.includeFoodDetailTopBar.buttonBottomSheetAppBarClose.setOnClickListener {
             findNavController().popBackStack()
         }

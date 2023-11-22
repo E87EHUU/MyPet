@@ -4,12 +4,14 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.mypet.app.R
 import com.example.mypet.domain.pet.breed.PetBreedCat
 import com.example.mypet.domain.pet.breed.PetBreedChameleon
 import com.example.mypet.domain.pet.breed.PetBreedDog
 import com.example.mypet.domain.pet.breed.PetBreedSnake
 import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
@@ -58,6 +60,9 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
 
 fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
+
+fun Fragment.getFloatingActionButton() =
+    (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)
 
 val Context.is24HourFormat
     get() = DateFormat.is24HourFormat(this)

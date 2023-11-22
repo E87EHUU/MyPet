@@ -32,7 +32,7 @@
         </receiver>
 
         <service
-            android:name="com.example.mypet.ui.alarm.repeat.service.FoodAlarmService"
+            android:name="com.example.mypet.ui.alarm.repeat.service.AlarmService"
             android:enabled="true" />
 
         <activity
