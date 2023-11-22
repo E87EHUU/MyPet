@@ -74,17 +74,17 @@ class AlarmService : Service() {
     }
 
     private fun start(intent: Intent) {
-        intent.getAnyId()?.let { anyId ->
-            if (!alarmModels.containsKey(anyId)) {
+        intent.getId()?.let { id ->
+            if (!alarmModels.containsKey(id)) {
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        alarmServiceRepository.getAlarmServiceModelByFoodId(anyId)
-                            ?.let { alarmModels[anyId] = it }
+                        alarmServiceRepository.getAlarmServiceModelByFoodId(id)
+                            ?.let { alarmModels[id] = it }
                     }
                 }
             }
 
-            alarmModels[anyId]?.let { alarmModel ->
+            alarmModels[id]?.let { alarmModel ->
                 notification = AlarmServiceNotification(this, alarmModel)
                 startForeground(alarmModel.alarmId, notification.getNotification())
 
@@ -115,8 +115,8 @@ class AlarmService : Service() {
     private fun stop(intent: Intent) {
         clearUI()
 
-        intent.getAnyId()?.let { anyId ->
-            alarmModels[anyId]?.let { alarmModel ->
+        intent.getId()?.let { id ->
+            alarmModels[id]?.let { alarmModel ->
                 with(alarmModel) {
                     stopForeground(STOP_FOREGROUND_REMOVE)
 
@@ -133,10 +133,10 @@ class AlarmService : Service() {
     }
 
     private fun delay(intent: Intent) {
-        intent.getAnyId()?.let { anyId ->
+        intent.getId()?.let { id ->
             clearUI()
 
-            alarmModels[anyId]?.let { alarmModel ->
+            alarmModels[id]?.let { alarmModel ->
                 startForeground(
                     alarmModel.alarmId,
                     notification.getDelayNotification()
@@ -151,12 +151,9 @@ class AlarmService : Service() {
         } ?: stop(intent)
     }
 
-    private fun Intent.getAnyId(): Int? {
-        val foodId = getIntExtra(FOOD_ID, 0)
+    private fun Intent.getId(): Int? {
+        val foodId = getIntExtra(ALARM_ID, 0)
         if (foodId > 0) return foodId
-
-        val careId = getIntExtra(CARE_ID, 0)
-        if (careId > 0) return careId
 
         return null
     }
@@ -226,7 +223,6 @@ class AlarmService : Service() {
         const val ALARM_OVERLAY_ACTION_DELAY = "alarm_overlay_action_delay"
         const val ALARM_OVERLAY_ACTION_NAV_TO_DETAIL = "alarm_overlay_action_nav_to_detail"
 
-        const val FOOD_ID = "food_id"
-        const val CARE_ID = "care_id"
+        const val ALARM_ID = "alarm_id"
     }
 }

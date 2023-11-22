@@ -112,7 +112,7 @@
             tools:text="Карликовая домашняя свинья" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardViewPetWeight"
+            android:id="@+id/materialCardViewAlarmAccess"
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
             android:layout_marginStart="@dimen/offset_16"
             android:layout_marginTop="@dimen/offset_16"
             android:minWidth="@dimen/pet_card_detail_min_width"
-            app:layout_constraintStart_toEndOf="@+id/materialCardViewPetWeight"
+            app:layout_constraintStart_toEndOf="@+id/materialCardViewAlarmAccess"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPetAvatar">
 
             <LinearLayout
@@ -187,7 +187,7 @@
             android:layout_height="@dimen/zero"
             android:layout_marginTop="@dimen/offset_32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardViewPetWeight">
+            app:layout_constraintTop_toBottomOf="@+id/materialCardViewAlarmAccess">
 
             <TextView
                 android:id="@+id/textViewPetFoodTitle"

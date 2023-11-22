@@ -1,6 +1,5 @@
 package com.example.mypet.ui.food.detail
 
-import android.media.RingtoneManager
 import androidx.lifecycle.ViewModel
 import com.example.mypet.domain.FoodDetailRepository
 import com.example.mypet.domain.food.detail.FoodDetailModel
@@ -25,17 +24,7 @@ class FoodDetailViewModel @Inject constructor(
     var hour = localDateTime.hour
     var minute = localDateTime.minute
 
-    var isRepeatMonday = true
-    var isRepeatTuesday = true
-    var isRepeatWednesday = true
-    var isRepeatThursday = true
-    var isRepeatFriday = true
-    var isRepeatSaturday = true
-    var isRepeatSunday = true
 
-    var ringtonePath: String? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).path
-    var isVibration = true
-    var isDelay = true
     private var isActive = true
 
     fun update(petFoodId: Int): Flow<Unit>? {
@@ -48,7 +37,7 @@ class FoodDetailViewModel @Inject constructor(
                     title = itFoodDetailModel.foodTitle
                     itFoodDetailModel.alarmHour?.let { hour = it }
                     itFoodDetailModel.alarmMinute?.let { minute = it }
-                    itFoodDetailModel.alarmIsRepeatMonday?.let { isRepeatMonday = it }
+/*                    itFoodDetailModel.alarmIsRepeatMonday?.let { isRepeatMonday = it }
                     itFoodDetailModel.alarmIsRepeatTuesday?.let { isRepeatTuesday = it }
                     itFoodDetailModel.alarmIsRepeatWednesday?.let { isRepeatWednesday = it }
                     itFoodDetailModel.alarmIsRepeatThursday?.let { isRepeatThursday = it }
@@ -57,7 +46,7 @@ class FoodDetailViewModel @Inject constructor(
                     itFoodDetailModel.alarmIsRepeatSunday?.let { isRepeatSunday = it }
                     itFoodDetailModel.alarmRingtonePath?.let { ringtonePath = it }
                     itFoodDetailModel.alarmIsVibration?.let { isVibration = it }
-                    itFoodDetailModel.alarmIsDelay?.let { isDelay = it }
+                    itFoodDetailModel.alarmIsDelay?.let { isDelay = it }*/
                     itFoodDetailModel.alarmIsActive?.let { isActive = it }
 
                     emit(Unit)
@@ -72,7 +61,7 @@ class FoodDetailViewModel @Inject constructor(
                     foodTitle = title,
                     alarmHour = hour,
                     alarmMinute = minute,
-                    alarmIsRepeatMonday = isRepeatMonday,
+/*                    alarmIsRepeatMonday = isRepeatMonday,
                     alarmIsRepeatTuesday = isRepeatTuesday,
                     alarmIsRepeatWednesday = isRepeatWednesday,
                     alarmIsRepeatThursday = isRepeatThursday,
@@ -81,7 +70,7 @@ class FoodDetailViewModel @Inject constructor(
                     alarmIsRepeatSunday = isRepeatSunday,
                     alarmRingtonePath = ringtonePath,
                     alarmIsVibration = isVibration,
-                    alarmIsDelay = isDelay,
+                    alarmIsDelay = isDelay,*/
                 )
             foodDetailRepository.saveAndSetFoodDetailModel(copyFoodDetailModel)
             emit(Unit)

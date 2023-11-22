@@ -47,13 +47,13 @@ interface LocalAlarmServiceDao {
                 "a.is_vibration ${ALARM_TABLE}_$IS_VIBRATION, " +
                 "a.is_delay ${ALARM_TABLE}_$IS_DELAY, " +
                 "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
-                "FROM pet_food f " +
+                "FROM alarm a " +
                 "LEFT JOIN pet_my m ON m.id = f.pet_my_id " +
-                "LEFT JOIN alarm a ON a.id = f.alarm_id " +
-                "WHERE f.id = :foodId " +
+                "LEFT JOIN pet_food f ON a.id = f.alarm_id " +
+                "WHERE a.id = :alarmId " +
                 "LIMIT 1"
     )
-    fun getLocalAlarmServiceModelByFoodId(foodId: Int): LocalAlarmServiceModel?
+    fun getLocalAlarmServiceModel(alarmId: Int): LocalAlarmServiceModel?
 
     @Query("UPDATE alarm SET is_active = 0 WHERE id = :alarmId")
     fun disableAlarm(alarmId: Int)

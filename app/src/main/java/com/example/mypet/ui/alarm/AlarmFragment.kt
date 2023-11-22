@@ -1,106 +1,96 @@
 package com.example.mypet.ui.alarm
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentAlarmBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+
 
 class AlarmFragment : Fragment(R.layout.fragment_alarm) {
     private val binding by viewBinding(FragmentAlarmBinding::bind)
-    private val viewModel by navGraphViewModels<AlarmViewModel>(R.id.navigationAlarm) { defaultViewModelProviderFactory }
+    private val viewModel by viewModels<AlarmViewModel>()
     private val args by navArgs<AlarmFragmentArgs>()
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.update(args)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        findNavController().previousBackStackEntry?.savedStateHandle?.let {
+            it[BACK_ALARM_MODEL] = viewModel.alarmModel
+        }
+        findNavController().popBackStack()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observePopBackStack()
+
         initView()
         initListeners()
     }
 
-    private fun observePopBackStack() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                findNavController().currentBackStackEntry?.savedStateHandle?.let { savedStateHandle ->
-                    savedStateHandle.getStateFlow<Long?>(ALARM_REPEAT_POP_BACK, null)
-                        .collectLatest {
-                            it?.let { updateUIRepeatDescription() }
-                        }
-                }
-            }
-        }
-    }
-
     private fun initView() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            binding.materialCardViewAlarmAccess.isVisible = false
+            binding.layerAlarmDelay.isVisible = true
+            binding.layerAlarmRingtone.isVisible = true
+            binding.layerAlarmVibration.isVisible = true
 
+            binding.switchAlarmDelay.isChecked = viewModel.isDelay
+            binding.switchAlarmVibration.isChecked = viewModel.isVibration
+        } else {
+            binding.materialCardViewAlarmAccess.isVisible = true
+            binding.layerAlarmDelay.isVisible = false
+            binding.layerAlarmRingtone.isVisible = false
+            binding.layerAlarmVibration.isVisible = false
+        }
     }
 
     private fun initListeners() {
-        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarClose.setOnClickListener {
-            findNavController().popBackStack()
+        binding.buttonAlarmAccess.setOnClickListener {
+            requestPermissionForOverlay()
         }
 
-        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarOk.setOnClickListener {
-            saveAndPopBack()
+        binding.layerAlarmVibration.setOnClickListener {
+            viewModel.isVibration = !viewModel.isVibration
         }
 
-        binding.timePickerFoodDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
-            viewModel.hour = hourOfDay
-            viewModel.minute = minute
+        binding.switchAlarmVibration.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.isVibration = isChecked
         }
 
-        binding.imageViewFoodDetailRepeat.setOnClickListener {
-
+        binding.layerAlarmDelay.setOnClickListener {
+            viewModel.isDelay = !viewModel.isDelay
         }
 
-        /*        binding.LayerAlarmSetVibration.setOnClickListener {
-                    viewModel.isVibrationChecked = !viewModel.isVibrationChecked
-                }
+        binding.switchAlarmDelay.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.isDelay = isChecked
+        }
 
-                binding.switchAlarmSetVibration.setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.isVibrationChecked = isChecked
-                }
-
-                binding.LayerAlarmSetDelay.setOnClickListener {
-                    viewModel.isDelayChecked = !viewModel.isDelayChecked
-                }
-
-                binding.switchAlarmSetDelay.setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.isDelayChecked = isChecked
-                }
-
-                binding.LayerAlarmSetMelody.setOnClickListener { launchChooserRingtoneIntent() }
-                binding.buttonAlarmSetMelodyNav.setOnClickListener { launchChooserRingtoneIntent() }
-
-                binding.LayerAlarmSetRepeat.setOnClickListener { navToAlarmRepeat() }
-                binding.buttonAlarmSetRepeatNav.setOnClickListener { navToAlarmRepeat() }
-
-                binding.textInputEditTextAlarmSetDescription.doAfterTextChanged {
-                    viewModel.name = it.toString()
-                }*/
-    }
-
-    private fun updateUIDelayChecker() {
-        binding.switchAlarmSetDelay.isChecked = viewModel.isDelayChecked
-    }
-
-    private fun updateUIVibrationChecker() {
-        binding.switchAlarmSetVibration.isChecked = viewModel.isVibrationChecked
+        binding.layerAlarmRingtone.setOnClickListener { launchChooserRingtoneIntent() }
+        binding.buttonAlarmRingtoneNav.setOnClickListener { launchChooserRingtoneIntent() }
     }
 
     private fun updateUIRingtoneDescription() {
@@ -108,68 +98,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
             val uri = Uri.parse(it)
             val title = RingtoneManager.getRingtone(requireContext(), uri).getTitle(context)
 
-            binding.textViewAlarmSetMelodyDescription.text = title
-        }
-    }
-
-    private fun updateUIRepeatDescription() {
-        with(viewModel) {
-            val stringBuilder = StringBuilder()
-
-            if (isMondayChecked && isTuesdayChecked && isWednesdayChecked
-                && isThursdayChecked && isFridayChecked && isSaturdayChecked && isSundayChecked
-            ) stringBuilder.append(getString(R.string.alarm_repeat_everyday))
-            else {
-                val divider = ", "
-
-                if (viewModel.isMondayChecked)
-                    stringBuilder.append(getString(R.string.mondayShort))
-
-                if (viewModel.isTuesdayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.tuesdayShort))
-                }
-
-                if (viewModel.isWednesdayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.wednesdayShort))
-                }
-
-                if (viewModel.isThursdayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.thursdayShort))
-                }
-
-                if (viewModel.isFridayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.fridayShort))
-                }
-
-                if (viewModel.isSaturdayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.saturdayShort))
-                }
-
-                if (viewModel.isSundayChecked) {
-                    if (stringBuilder.isNotEmpty())
-                        stringBuilder.append(divider)
-
-                    stringBuilder.append(getString(R.string.sundayShort))
-                }
-            }
-
-            binding.textViewAlarmSetRepeatDescription.text =
-                stringBuilder.ifEmpty { getString(R.string.alarm_repeat_once) }
+            binding.textViewAlarmRingtoneDescription.text = title
         }
     }
 
@@ -193,22 +122,14 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
         chooserRingtoneRegisterForActivityResult.launch(intent)
     }
 
-    private fun saveAndPopBack() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.save().collectLatest {
-                launch(Dispatchers.Main) {
-                    findNavController().popBackStack()
-                }
-            }
+    private fun requestPermissionForOverlay() {
+        if (!Settings.canDrawOverlays(requireContext())) {
+            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+            startActivityForResult(intent, 0)
         }
     }
 
-    private fun navToAlarmRepeat() {
-        findNavController().navigate(R.id.action_foodAlarmFragment_to_alarmRepeatFragment)
-    }
-
     companion object {
-        const val ALARM_REPEAT_POP_BACK = "alarm_repeat_pop_back"
+        const val BACK_ALARM_MODEL = "back_alarm_model"
     }
-
 }

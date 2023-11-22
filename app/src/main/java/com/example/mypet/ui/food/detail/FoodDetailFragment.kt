@@ -30,9 +30,7 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
 
         initView()
         tryUpdateFoodDetailModel()
-
-
-        prepListeners()
+        initListeners()
     }
 
     private fun tryUpdateFoodDetailModel() {
@@ -62,7 +60,7 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
         updateUIVibrationChecker()*/
     }
 
-    private fun prepListeners() {
+    private fun initListeners() {
         binding.includeFoodDetailTopBar.buttonBottomSheetAppBarClose.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -76,8 +74,8 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
             viewModel.minute = minute
         }
 
-        binding.imageViewFoodDetailRepeat.setOnClickListener {
-            navToAlarmRepeatChooser(1)
+        binding.includeFoodDetailRepeat.root.setOnClickListener {
+
         }
     }
 
@@ -89,11 +87,5 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
                 }
             }
         }
-    }
-
-    private fun navToAlarmRepeatChooser(alarmId: Int) {
-        val directions =
-            FoodDetailFragmentDirections.actionFoodDetailFragmentToAlarmRepeatChooserFragment(alarmId)
-        findNavController().navigate(directions)
     }
 }

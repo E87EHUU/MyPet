@@ -85,5 +85,10 @@
     <string name="alarm_repeat_chooser_every_year">Ежегодно</string>
     <string name="alarm_repeat_chooser_custom">Настроить</string>
     <string name="fab_content_description">Добавить</string>
+    <string name="alarm_information">Для включения будильника необходимо разрешить приложению работу поверх всех окон.</string>
+    <string name="alarm_access">Разрешить</string>
+    <string name="alert_title">Оповещение</string>
+    <string name="snippet_alert_notification">Уведомления</string>
+    <string name="snippet_alert_alarm">Будильник</string>
 
 </resources>

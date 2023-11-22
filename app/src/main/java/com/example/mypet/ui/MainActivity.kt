@@ -1,8 +1,6 @@
 package com.example.mypet.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,8 +45,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        requestPermissionForOverlay()
-
         setSupportActionBar(binding.toolbar)
 
         setupActionBarWithNavController(
@@ -57,22 +53,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         binding.bottomNavigation.setupWithNavController(navController)
         observeNavigation()
-
-        /*        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED
-                ) requestPermissionForOverlay()*/
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = Navigation.findNavController(this, R.id.navHostMain)
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
-    }
-
-    private fun requestPermissionForOverlay() {
-        if (!Settings.canDrawOverlays(this)) {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            startActivityForResult(intent, 0)
-        }
     }
 
     private fun observeNavigation() {

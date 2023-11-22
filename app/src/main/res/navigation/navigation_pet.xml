@@ -57,16 +57,8 @@
             android:name="pet_care_id"
             app:argType="integer" />
         <action
-            android:id="@+id/action_careDetailFragment_to_navigationAlarm"
-            app:destination="@id/navigationAlarm">
-            <argument
-                android:name="food_id"
-                app:argType="integer" />
-            <argument
-                android:name="care_id"
-                app:argType="integer" />
-
-        </action>
+            android:id="@+id/action_careDetailFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
     </fragment>
 
     <fragment
@@ -77,16 +69,17 @@
             android:name="pet_food_id"
             app:argType="integer" />
         <action
-            android:id="@+id/action_foodDetailFragment_to_navigationAlarm"
-            app:destination="@id/navigationAlarm">
-            <argument
-                android:name="food_id"
-                app:argType="integer" />
-            <argument
-                android:name="care_id"
-                app:argType="integer" />
-        </action>
+            android:id="@+id/action_foodDetailFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
     </fragment>
-    <include app:graph="@navigation/navigation_alarm" />
+
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.example.mypet.ui.alarm.AlarmFragment"
+        tools:layout="@layout/fragment_alarm" >
+        <argument
+            android:name="alarm_model"
+            app:argType="com.example.mypet.domain.alarm.AlarmModel" />
+    </fragment>
 
 </navigation>

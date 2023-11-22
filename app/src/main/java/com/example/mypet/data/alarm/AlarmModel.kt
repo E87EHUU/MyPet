@@ -1,5 +1,6 @@
 package com.example.mypet.data.alarm
 
+
 data class AlarmModel(
     val id: Int,
     val hour: Int,
@@ -12,7 +13,7 @@ data class AlarmModel(
     val isRepeatSaturday: Boolean = false,
     val isRepeatSunday: Boolean = false,
     val delayTime: Int? = null
-) {
+)  {
     fun isRepeatable() =
         isRepeatMonday || isRepeatTuesday || isRepeatWednesday
                 || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday

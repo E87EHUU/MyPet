@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/offset_16">
@@ -9,13 +8,13 @@
     <include
         android:id="@+id/include"
         layout="@layout/fragment_bottom_sheet_top_bar"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/offset_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
@@ -25,144 +24,140 @@
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/offset_24">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardViewAlarmAccess"
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/offset_24">
+
+                    <TextView
+                        android:id="@+id/textViewAlarmAccessText"
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:text="@string/alarm_information"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/buttonAlarmAccess"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/offset_16"
+                        android:text="@string/alarm_access"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewAlarmAccessText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/LayerAlarmSetRepeat"
+                android:id="@+id/layerAlarmRingtone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/offset_24"
-                app:constraint_referenced_ids="textViewAlarmSetRepeatTitle,textViewAlarmSetRepeatDescription,buttonAlarmSetRepeatNav"
+                app:constraint_referenced_ids="textViewAlarmRingtoneTitle,textViewAlarmRingtoneDescription,buttonAlarmRingtoneNav"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/materialCardViewAlarmAccess" />
 
             <TextView
-                android:id="@+id/textViewAlarmSetRepeatTitle"
+                android:id="@+id/textViewAlarmRingtoneTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_24"
-                android:text="@string/alarm_repeat_title"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAlarmSetRepeatDescription"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buttonAlarmSetRepeatNav"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <TextView
-                android:id="@+id/textViewAlarmSetRepeatDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_4"
-                android:text="@string/alarm_repeat_once"
-                android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmSetRepeatNav"
-                app:layout_constraintStart_toStartOf="@+id/textViewAlarmSetRepeatTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAlarmSetRepeatTitle" />
-
-            <Button
-                android:id="@+id/buttonAlarmSetRepeatNav"
-                style="@style/Widget.Material3.Button.IconButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/offset_24"
-                app:icon="@drawable/baseline_arrow_forward_ios_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/LayerAlarmSetMelody"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/offset_24"
-                app:constraint_referenced_ids="textViewAlarmSetMelodyTitle,textViewAlarmSetMelodyDescription,button_alarm_set_melody_nav"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/LayerAlarmSetRepeat" />
-
-            <TextView
-                android:id="@+id/textViewAlarmSetMelodyTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/offset_24"
                 android:text="@string/alarm_melody_title"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toTopOf="@+id/textViewAlarmSetMelodyDescription"
-                app:layout_constraintStart_toStartOf="@+id/textViewAlarmSetRepeatTitle"
-                app:layout_constraintTop_toTopOf="@+id/button_alarm_set_melody_nav"
+                app:layout_constraintBottom_toTopOf="@+id/textViewAlarmRingtoneDescription"
+                app:layout_constraintStart_toStartOf="@+id/layerAlarmRingtone"
+                app:layout_constraintTop_toTopOf="@+id/buttonAlarmRingtoneNav"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/textViewAlarmSetMelodyDescription"
+                android:id="@+id/textViewAlarmRingtoneDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/alarm_melody_description_default"
                 android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/button_alarm_set_melody_nav"
-                app:layout_constraintStart_toStartOf="@+id/textViewAlarmSetRepeatTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAlarmSetMelodyTitle" />
+                app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmRingtoneNav"
+                app:layout_constraintStart_toStartOf="@+id/textViewAlarmRingtoneTitle"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAlarmRingtoneTitle" />
 
             <Button
-                android:id="@+id/button_alarm_set_melody_nav"
+                android:id="@+id/buttonAlarmRingtoneNav"
                 style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_24"
+                android:layout_marginEnd="@dimen/offset_24"
                 app:icon="@drawable/baseline_arrow_forward_ios_24"
-                app:layout_constraintEnd_toEndOf="@+id/buttonAlarmSetRepeatNav"
-                app:layout_constraintTop_toBottomOf="@+id/buttonAlarmSetRepeatNav" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardViewAlarmAccess" />
 
             <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/LayerAlarmSetVibration"
+                android:id="@+id/layerAlarmVibration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/offset_24"
-                app:constraint_referenced_ids="textViewAlarmSetVibrationTitle,switchAlarmSetVibration"
+                app:constraint_referenced_ids="textViewAlarmVibrationTitle,switchAlarmVibration"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/LayerAlarmSetMelody" />
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmRingtone" />
 
             <TextView
-                android:id="@+id/textViewAlarmSetVibrationTitle"
+                android:id="@+id/textViewAlarmVibrationTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/alarm_vibration_title"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/switchAlarmSetVibration"
-                app:layout_constraintStart_toStartOf="@+id/textViewAlarmSetRepeatTitle"
-                app:layout_constraintTop_toTopOf="@+id/switchAlarmSetVibration" />
+                app:layout_constraintBottom_toBottomOf="@+id/switchAlarmVibration"
+                app:layout_constraintStart_toStartOf="@+id/textViewAlarmRingtoneTitle"
+                app:layout_constraintTop_toTopOf="@+id/switchAlarmVibration" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchAlarmSetVibration"
+                android:id="@+id/switchAlarmVibration"
                 style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_16"
-                app:layout_constraintEnd_toEndOf="@+id/buttonAlarmSetRepeatNav"
-                app:layout_constraintTop_toBottomOf="@+id/button_alarm_set_melody_nav" />
+                app:layout_constraintEnd_toEndOf="@+id/buttonAlarmRingtoneNav"
+                app:layout_constraintTop_toBottomOf="@+id/buttonAlarmRingtoneNav" />
 
             <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/LayerAlarmSetDelay"
+                android:id="@+id/layerAlarmDelay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/offset_24"
-                app:constraint_referenced_ids="textViewAlarmSetDelayTitle,switchAlarmSetDelay"
+                app:constraint_referenced_ids="textViewAlarmDelayTitle,switchAlarmDelay"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/LayerAlarmSetVibration" />
+                app:layout_constraintTop_toBottomOf="@+id/layerAlarmVibration" />
 
             <TextView
-                android:id="@+id/textViewAlarmSetDelayTitle"
+                android:id="@+id/textViewAlarmDelayTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_24"
                 android:text="@string/alarm_delay_title"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/switchAlarmSetDelay"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/switchAlarmSetDelay" />
+                app:layout_constraintBottom_toBottomOf="@+id/switchAlarmDelay"
+                app:layout_constraintStart_toStartOf="@+id/textViewAlarmRingtoneTitle"
+                app:layout_constraintTop_toTopOf="@+id/switchAlarmDelay" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchAlarmSetDelay"
+                android:id="@+id/switchAlarmDelay"
                 style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_16"
-                app:layout_constraintEnd_toEndOf="@+id/buttonAlarmSetRepeatNav"
-                app:layout_constraintTop_toBottomOf="@+id/switchAlarmSetVibration" />
+                app:layout_constraintEnd_toEndOf="@+id/buttonAlarmRingtoneNav"
+                app:layout_constraintTop_toBottomOf="@+id/switchAlarmVibration" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

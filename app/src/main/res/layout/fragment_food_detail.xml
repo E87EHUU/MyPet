@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/offset_16">
@@ -33,45 +32,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.helper.widget.Layer
-                android:id="@+id/imageViewFoodDetailRepeat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/offset_8"
-                app:constraint_referenced_ids="textViewFoodDetailRepeatTitle,textViewFoodDetailRepeatText,imageViewFoodDetailRepeatIcon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timePickerFoodDetail" />
-
-            <ImageView
-                android:id="@+id/imageViewFoodDetailRepeatIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_16"
-                android:layout_marginTop="@dimen/offset_24"
-                android:src="@drawable/baseline_repeat_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timePickerFoodDetail" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewFoodDetailRepeatTitle"
-                android:layout_width="0dp"
+            <include
+                android:id="@+id/includeFoodDetailRepeat"
+                layout="@layout/snippet_repeat"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_8"
-                android:layout_marginEnd="16dp"
-                android:text="@string/food_detail_repeat_title"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewFoodDetailRepeatIcon"
+                android:layout_marginTop="@dimen/offset_24"
+                android:layout_marginEnd="@dimen/offset_8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewFoodDetailRepeatIcon" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timePickerFoodDetail" />
 
-            <TextView
-                android:id="@+id/textViewFoodDetailRepeatText"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/includeFoodDetailAlert"
+                layout="@layout/snippet_alert"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_8"
-                android:text="@string/food_detail_repeat_disable"
-                app:layout_constraintStart_toStartOf="@+id/textViewFoodDetailRepeatTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFoodDetailRepeatTitle" />
+                android:layout_marginStart="@dimen/offset_8"
+                android:layout_marginTop="@dimen/offset_24"
+                android:layout_marginEnd="@dimen/offset_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/includeFoodDetailRepeat" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutFoodDetailTitle"
@@ -82,7 +65,7 @@
                 android:layout_marginTop="@dimen/offset_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFoodDetailRepeatText"
+                app:layout_constraintTop_toBottomOf="@+id/includeFoodDetailAlert"
                 app:startIconDrawable="@drawable/baseline_edit_24">
 
                 <com.google.android.material.textfield.TextInputEditText
