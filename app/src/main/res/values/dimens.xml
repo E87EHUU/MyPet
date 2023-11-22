@@ -30,5 +30,6 @@
     <dimen name="pet_care_recycler_item_icon">64dp</dimen>
     <dimen name="bottom_navigation_height">80dp</dimen>
     <dimen name="pet_card_detail_min_width">96dp</dimen>
+    <dimen name="fab_offset_bottom">104dp</dimen>
 
 </resources>

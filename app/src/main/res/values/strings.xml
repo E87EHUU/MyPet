@@ -84,5 +84,6 @@
     <string name="alarm_repeat_chooser_every_month">Ежемесячно</string>
     <string name="alarm_repeat_chooser_every_year">Ежегодно</string>
     <string name="alarm_repeat_chooser_custom">Настроить</string>
+    <string name="fab_content_description">Добавить</string>
 
 </resources>
