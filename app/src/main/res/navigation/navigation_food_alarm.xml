@@ -22,6 +22,6 @@
 
     <dialog
         android:id="@+id/foodAlarmRepeatFragment"
-        android:name="com.example.mypet.ui.food.alarm.repeat.FoodAlarmRepeatFragment"
-        tools:layout="@layout/fragment_food_alarm_repeat" />
+        android:name="com.example.mypet.ui.alarm.repeat.FoodAlarmRepeatFragment"
+        tools:layout="@layout/fragment_alarm_repeat_week" />
 </navigation>

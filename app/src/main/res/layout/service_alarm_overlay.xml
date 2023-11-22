@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
-        tools:listitem="@layout/service_food_alarm_overlay_recycler_item">
+        tools:listitem="@layout/service_alarm_overlay_recycler_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 

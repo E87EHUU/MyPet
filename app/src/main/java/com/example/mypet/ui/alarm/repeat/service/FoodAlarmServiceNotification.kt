@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.alarm.service
+package com.example.mypet.ui.alarm.repeat.service
 
 import android.app.Notification
 import android.app.NotificationChannel

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.alarm.service
+package com.example.mypet.ui.alarm.repeat.service
 
 import android.app.Service
 import android.content.Context
@@ -15,7 +15,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
-import com.example.mypet.domain.FoodAlarmServiceRepository
+import com.example.mypet.domain.AlarmServiceRepository
 import com.example.mypet.domain.food.alarm.FoodAlarmModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
@@ -29,7 +29,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FoodAlarmService : Service() {
     @Inject
-    lateinit var foodAlarmServiceRepository: FoodAlarmServiceRepository
+    lateinit var foodAlarmServiceRepository: AlarmServiceRepository
 
     private var windowManager: WindowManager? = null
     private var view: View? = null
@@ -149,7 +149,7 @@ class FoodAlarmService : Service() {
 
             runBlocking {
                 launch(Dispatchers.IO) {
-                    foodAlarmServiceRepository.setAlarm(foodAlarmModel)
+                    foodAlarmServiceRepository.setDelayAlarm(foodAlarmModel)
                 }
             }
         }
@@ -168,7 +168,7 @@ class FoodAlarmService : Service() {
             val contextThemeWrapped = ContextThemeWrapper(this, R.style.Theme_MyPet)
             val layoutInflater =
                 contextThemeWrapped.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = layoutInflater.inflate(R.layout.service_food_alarm_overlay, null)
+            view = layoutInflater.inflate(R.layout.service_alarm_overlay, null)
             recycler?.adapter = adapter
 
             buttonDelay?.isVisible = foodAlarmModel.isDelay

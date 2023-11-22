@@ -23,4 +23,11 @@ data class LocalPetFoodEntity(
 
     @ColumnInfo(name = TITLE)
     val title: String,
-)
+
+    @ColumnInfo(name = RATION)
+    val ration: String,
+) {
+    companion object {
+        const val RATION = "ration"
+    }
+}

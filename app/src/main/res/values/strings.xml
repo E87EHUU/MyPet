@@ -28,13 +28,15 @@
     <string name="map_zoom_out">Zoom out</string>
     <string name="map_zoom_in">Zoom in</string>
 
+
     <string name="notification_chanel_action_delay">Отложить</string>
     <string name="notification_chanel_action_stop">Остановить</string>
 
-    <string name="alarm_title">Будильник %s</string>
+    <string name="bottom_sheet_app_bar_button_ok">Установить</string>
 
-    <string name="alarm_button_ok">Установить</string>
-    <string name="alarm_description_title">Описание</string>
+    <string name="food_detail_title_default">Название</string>
+    <string name="food_detail_description_default">Рацион</string>
+
     <string name="alarm_repeat_title">Повтор</string>
     <string name="alarm_repeat_once">Один раз</string>
     <string name="alarm_repeat_everyday">Ежедневно</string>
@@ -72,5 +74,15 @@
     <string name="pet_food_forward_title">все</string>
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
+    <string name="food_detail_repeat_title">Повтор</string>
+    <string name="food_detail_title_hint">Напоминание</string>
+    <string name="food_detail_ration_hint">Рацион</string>
+    <string name="food_detail_repeat_disable">Отключен</string>
+    <string name="alarm_repeat_chooser_none">Не повторять</string>
+    <string name="alarm_repeat_chooser_everyday">Ежедневно</string>
+    <string name="alarm_repeat_chooser_every_week">Еженедельно</string>
+    <string name="alarm_repeat_chooser_every_month">Ежемесячно</string>
+    <string name="alarm_repeat_chooser_every_year">Ежегодно</string>
+    <string name="alarm_repeat_chooser_custom">Настроить</string>
 
 </resources>

@@ -28,6 +28,10 @@
         android:name="com.example.mypet.ui.food.FoodFragment"
         android:layout="@layout/fragment_food">
 
+        <argument
+            android:name="pet_my_id"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_foodFragment_to_navigationFoodAlarm"
             app:destination="@id/navigationFoodAlarm">
@@ -38,9 +42,6 @@
                 android:name="petFoodId"
                 app:argType="integer" />
         </action>
-        <argument
-            android:name="pet_my_id"
-            app:argType="integer" />
         <action
             android:id="@+id/action_foodFragment_to_foodDetailFragment"
             app:destination="@id/foodDetailFragment" />
@@ -49,7 +50,7 @@
     <fragment
         android:id="@+id/careFragment"
         android:name="com.example.mypet.ui.care.CareFragment"
-        tools:layout="@layout/fragment_care" >
+        tools:layout="@layout/fragment_care">
         <argument
             android:name="pet_my_id"
             app:argType="integer" />
@@ -61,21 +62,34 @@
     <fragment
         android:id="@+id/careDetailFragment"
         android:name="com.example.mypet.ui.care.detail.CareDetailFragment"
-        android:label="fragment_care_detail"
-        tools:layout="@layout/fragment_care_detail" >
+        tools:layout="@layout/fragment_care_detail">
         <argument
             android:name="pet_care_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_careDetailFragment_to_alarmRepeatChooserFragment"
+            app:destination="@id/alarmRepeatChooserFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/foodDetailFragment"
         android:name="com.example.mypet.ui.food.detail.FoodDetailFragment"
-        android:label="fragment_food_detail"
-        tools:layout="@layout/fragment_food_detail" >
+        tools:layout="@layout/fragment_food_detail">
         <argument
             android:name="pet_food_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_foodDetailFragment_to_alarmRepeatChooserFragment"
+            app:destination="@id/alarmRepeatChooserFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/alarmRepeatChooserFragment"
+        android:name="com.example.mypet.ui.alarm.repeat.AlarmRepeatChooserFragment"
+        tools:layout="@layout/fragment_alarm_repeat_chooser" >
+        <argument
+            android:name="alarm_id"
+            app:argType="integer" />
+    </dialog>
 
 </navigation>

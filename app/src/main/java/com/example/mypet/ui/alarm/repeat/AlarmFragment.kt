@@ -1,71 +1,38 @@
-package com.example.mypet.ui.food.alarm
+package com.example.mypet.ui.alarm.repeat
 
-import android.app.Dialog
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.updateLayoutParams
-import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentFoodAlarmBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.mypet.app.databinding.FragmentAlarmBinding
+import com.example.mypet.ui.food.alarm.FoodAlarmFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
-@AndroidEntryPoint
-class FoodAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_alarm) {
-    private val binding by viewBinding(FragmentFoodAlarmBinding::bind)
-    private val viewModel by navGraphViewModels<FoodAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
-    private val args by navArgs<FoodAlarmFragmentArgs>()
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setOnShowListener {
-            dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                ?.let {
-                    val behavior = BottomSheetBehavior.from(it)
-                    it.updateLayoutParams {
-                        val displayHeight = requireActivity().resources.displayMetrics.heightPixels
-                        height = displayHeight
-                    }
-                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                    behavior.isDraggable = false
-                }
-        }
-
-        return dialog
-    }
+class AlarmFragment : Fragment(R.layout.fragment_alarm) {
+    private val binding by viewBinding(FragmentAlarmBinding::bind)
+    private val viewModel by viewModels<AlarmViewModel>()
+    private val args by navArgs<AlarmFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tryUpdateFoodDetailAlarmModel()
-
-        observePopBackStack()
-
-        prepListeners()
-    }
-
-    private fun tryUpdateFoodDetailAlarmModel() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.update(args)?.collectLatest { updateUI() } ?: run { updateUI() }
-            }
-        }
+        init
     }
 
     private fun observePopBackStack() {
@@ -81,60 +48,49 @@ class FoodAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_alarm
         }
     }
 
-    private fun updateUI() {
-        binding.timePickerAlarmSetTime.setIs24HourView(requireContext().is24HourFormat)
-        binding.timePickerAlarmSetTime.apply {
-            hour = viewModel.hour
-            minute = viewModel.minute
-        }
-
-        binding.textInputEditTextAlarmSetDescription.setText(viewModel.name)
-
-        updateUIRingtoneDescription()
-        updateUIRepeatDescription()
-        updateUIDelayChecker()
-        updateUIVibrationChecker()
-    }
-
     private fun prepListeners() {
-        binding.buttonAlarmSetClose.setOnClickListener {
-            dismiss()
+        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarClose.setOnClickListener {
+            findNavController().popBackStack()
         }
 
-        binding.buttonAlarmSetOk.setOnClickListener {
+        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarOk.setOnClickListener {
             saveAndPopBack()
         }
 
-        binding.timePickerAlarmSetTime.setOnTimeChangedListener { _, hourOfDay, minute ->
+        binding.timePickerFoodDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
             viewModel.hour = hourOfDay
             viewModel.minute = minute
         }
 
-        binding.LayerAlarmSetVibration.setOnClickListener {
-            viewModel.isVibrationChecked = !viewModel.isVibrationChecked
+        binding.imageViewFoodDetailRepeat.setOnClickListener {
+
         }
 
-        binding.switchAlarmSetVibration.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.isVibrationChecked = isChecked
-        }
+        /*        binding.LayerAlarmSetVibration.setOnClickListener {
+                    viewModel.isVibrationChecked = !viewModel.isVibrationChecked
+                }
 
-        binding.LayerAlarmSetDelay.setOnClickListener {
-            viewModel.isDelayChecked = !viewModel.isDelayChecked
-        }
+                binding.switchAlarmSetVibration.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.isVibrationChecked = isChecked
+                }
 
-        binding.switchAlarmSetDelay.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.isDelayChecked = isChecked
-        }
+                binding.LayerAlarmSetDelay.setOnClickListener {
+                    viewModel.isDelayChecked = !viewModel.isDelayChecked
+                }
 
-        binding.LayerAlarmSetMelody.setOnClickListener { launchChooserRingtoneIntent() }
-        binding.buttonAlarmSetMelodyNav.setOnClickListener { launchChooserRingtoneIntent() }
+                binding.switchAlarmSetDelay.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.isDelayChecked = isChecked
+                }
 
-        binding.LayerAlarmSetRepeat.setOnClickListener { navToAlarmRepeat() }
-        binding.buttonAlarmSetRepeatNav.setOnClickListener { navToAlarmRepeat() }
+                binding.LayerAlarmSetMelody.setOnClickListener { launchChooserRingtoneIntent() }
+                binding.buttonAlarmSetMelodyNav.setOnClickListener { launchChooserRingtoneIntent() }
 
-        binding.textInputEditTextAlarmSetDescription.doAfterTextChanged {
-            viewModel.name = it.toString()
-        }
+                binding.LayerAlarmSetRepeat.setOnClickListener { navToAlarmRepeat() }
+                binding.buttonAlarmSetRepeatNav.setOnClickListener { navToAlarmRepeat() }
+
+                binding.textInputEditTextAlarmSetDescription.doAfterTextChanged {
+                    viewModel.name = it.toString()
+                }*/
     }
 
     private fun updateUIDelayChecker() {
@@ -252,4 +208,5 @@ class FoodAlarmFragment : BottomSheetDialogFragment(R.layout.fragment_food_alarm
     companion object {
         const val ALARM_REPEAT_POP_BACK = "alarm_repeat_pop_back"
     }
+
 }

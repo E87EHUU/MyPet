@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
@@ -22,11 +23,10 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private val viewModel by viewModels<FoodViewModel>()
     private val args by navArgs<FoodFragmentArgs>()
 
-
     private val foodAdapterCallback =
         object : FoodAdapterCallback {
             override fun onItemClick(foodModel: FoodModel) {
-                navToFoodAlarm(foodModel)
+                navToFoodDetail(foodModel)
             }
 
             override fun onSwitchActive(foodModel: FoodModel) {
@@ -40,19 +40,20 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        initListeners()
         startObserveFoods()
 
-        viewModel.updateFood(1)
-
-        /*        binding.buttonPetDetailFoodAdd.setOnClickListener {
-                    navToFoodAlarmSet()
-                }*/
-
+        viewModel.updateFood(args.petMyId)
     }
 
     private fun initView() {
-//        binding.recyclerViewPetList.adapter = petListAdapter
         binding.recyclerViewFood.adapter = foodAdapter
+    }
+
+    private fun initListeners() {
+        /*        binding.buttonPetDetailFoodAdd.setOnClickListener {
+                    navToFoodAlarmSet()
+                }*/
     }
 
     private fun startObserveFoods() {
@@ -74,8 +75,8 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
 
     }
 
-    private fun navToFoodAlarm(foodModel: FoodModel? = null) {
-/*        graphViewModel.activePetId?.let {
+    private fun navToFoodDetail(foodModel: FoodModel? = null) {
+        viewModel.petMyId?.let {
             val directions = FoodFragmentDirections
                 .actionFoodFragmentToNavigationFoodAlarm(
                     petMyId = it,
@@ -83,6 +84,6 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
                 )
 
             findNavController().navigate(directions)
-        }*/
+        }
     }
 }

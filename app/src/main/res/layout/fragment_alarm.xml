@@ -1,73 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/offset_16">
 
-    <Button
-        android:id="@+id/buttonAlarmSetClose"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/baseline_close_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonAlarmSetOk"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/alarm_button_ok"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/fragment_bottom_sheet_top_bar"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero"
-        android:layout_marginTop="@dimen/offset_16"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAlarmSetClose">
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/offset_24">
-
-            <TimePicker
-                android:id="@+id/timePickerAlarmSetTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:timePickerMode="spinner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutAlarmSetDescription"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/offset_8"
-                android:layout_marginTop="@dimen/offset_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/timePickerAlarmSetTime">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextAlarmSetDescription"
-                    style="@style/Widget.Material3.TextInputEditText.FilledBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
-                    android:hint="@string/alarm_description_title"
-                    android:inputType="text"
-                    android:maxEms="20"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/LayerAlarmSetRepeat"
@@ -76,7 +32,7 @@
                 android:paddingHorizontal="@dimen/offset_24"
                 app:constraint_referenced_ids="textViewAlarmSetRepeatTitle,textViewAlarmSetRepeatDescription,buttonAlarmSetRepeatNav"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAlarmSetDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewAlarmSetRepeatTitle"
@@ -106,11 +62,10 @@
                 style="@style/Widget.Material3.Button.IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_24"
                 android:layout_marginEnd="@dimen/offset_24"
                 app:icon="@drawable/baseline_arrow_forward_ios_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAlarmSetDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.helper.widget.Layer
                 android:id="@+id/LayerAlarmSetMelody"

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.alarm.service
+package com.example.mypet.ui.alarm.repeat.service
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.ServiceFoodAlarmOverlayRecyclerItemBinding

@@ -1,5 +1,7 @@
 package com.example.mypet.ui
 
+import android.content.Context
+import android.text.format.DateFormat
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.mypet.domain.pet.breed.PetBreedCat
@@ -56,3 +58,6 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
 
 fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
+
+val Context.is24HourFormat
+    get() = DateFormat.is24HourFormat(this)

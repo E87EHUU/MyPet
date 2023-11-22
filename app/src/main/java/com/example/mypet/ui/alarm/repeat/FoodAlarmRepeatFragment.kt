@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food.alarm.repeat
+package com.example.mypet.ui.alarm.repeat
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,19 +8,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentFoodAlarmRepeatBinding
-import com.example.mypet.ui.food.alarm.FoodAlarmFragment.Companion.ALARM_REPEAT_POP_BACK
-import com.example.mypet.ui.food.alarm.FoodAlarmViewModel
+import com.example.mypet.app.databinding.FragmentFoodAlarmRepeatWeekBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 @AndroidEntryPoint
 class FoodAlarmRepeatFragment :
-    BottomSheetDialogFragment(R.layout.fragment_food_alarm_repeat) {
-    private val binding by viewBinding(FragmentFoodAlarmRepeatBinding::bind)
+    BottomSheetDialogFragment(R.layout.fragment_alarm_repeat_week) {
+    private val binding by viewBinding(FragmentFoodAlarmRepeatWeekBinding::bind)
     private val viewModel by navGraphViewModels<FoodAlarmViewModel>(R.id.navigationFoodAlarm) { defaultViewModelProviderFactory }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -163,7 +159,7 @@ class FoodAlarmRepeatFragment :
 
     private fun navToPopBackStack() {
         findNavController().previousBackStackEntry?.savedStateHandle?.let {
-            it[ALARM_REPEAT_POP_BACK] = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+            //it[ALARM_REPEAT_POP_BACK] = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
         }
         findNavController().popBackStack()
     }

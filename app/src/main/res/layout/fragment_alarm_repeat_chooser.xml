@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/alarmRepeatChooser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserNone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_none" />
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserEveryDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_everyday" />
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserEveryWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_every_week" />
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserEveryMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_every_month" />
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserEveryYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_every_year" />
+
+        <RadioButton
+            android:id="@+id/alarmRepeatChooserCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_repeat_chooser_custom" />
+
+    </RadioGroup>
+
+</ScrollView>

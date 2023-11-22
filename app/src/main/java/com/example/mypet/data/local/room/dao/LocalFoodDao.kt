@@ -6,22 +6,9 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_FRIDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_MONDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SATURDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SUNDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_THURSDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_TUESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_WEDNESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
-import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
 import com.example.mypet.data.local.room.model.pet.LocalFoodModel
 import kotlinx.coroutines.flow.Flow
 
@@ -36,18 +23,13 @@ interface LocalFoodDao {
                 "a.hour ${ALARM_TABLE}_$HOUR, " +
                 "a.minute ${ALARM_TABLE}_$MINUTE, " +
                 "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
-                "FROM pet_my m " +
-                "LEFT JOIN pet_food f ON f.pet_my_id = m.id " +
+                "FROM pet_food f " +
                 "LEFT JOIN alarm a ON a.id = f.alarm_id " +
-                "WHERE " +
-                "CASE " +
-                "WHEN :activePetId IS NULL THEN m.is_active = 1 " +
-                "ELSE m.id = :activePetId " +
-                "END"
+                "WHERE f.pet_my_id = :petMyId"
     )
-    fun observeFoodModels(activePetId: Int?): Flow<List<LocalFoodModel>>
+    fun observeFoodModels(petMyId: Int): Flow<List<LocalFoodModel>>
 
-    @Query(
+/*    @Query(
         "SELECT " +
                 "f.id $ID, " +
                 "f.title $TITLE, " +
@@ -73,8 +55,7 @@ interface LocalFoodDao {
                 "WHERE a.id = :alarmId " +
                 "LIMIT 1"
     )
-    fun getLocalFoodAlarmModel(alarmId: Int): LocalFoodAlarmModel?
+    fun getLocalFoodAlarmModel(alarmId: Int): LocalAlarmServiceModel?
 
-    @Query("UPDATE alarm SET is_active = :alarmIsActive WHERE id = :alarmId")
-    fun switchAlarmState(alarmId: Int, alarmIsActive: Boolean): Int
+*/
 }

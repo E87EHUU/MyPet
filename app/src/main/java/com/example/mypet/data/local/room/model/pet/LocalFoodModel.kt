@@ -8,6 +8,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
+import com.example.mypet.domain.food.FoodModel
 
 data class LocalFoodModel(
     @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
@@ -23,4 +24,14 @@ data class LocalFoodModel(
     val alarmMinute: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_ACTIVE")
     val alarmIsActive: Boolean?
-)
+) {
+    fun toFoodModel() =
+        FoodModel(
+            foodId = foodId,
+            foodTitle = foodTitle,
+            alarmId = alarmId,
+            alarmHour = alarmHour,
+            alarmMinute = alarmMinute,
+            alarmIsActive = alarmIsActive
+        )
+}

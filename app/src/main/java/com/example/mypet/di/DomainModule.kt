@@ -1,14 +1,8 @@
 package com.example.mypet.di
 
 import com.example.mypet.data.BootCompleteRepositoryImpl
-import com.example.mypet.data.FoodAlarmRepositoryImpl
-import com.example.mypet.data.FoodAlarmServiceRepositoryImpl
-import com.example.mypet.data.FoodRepositoryImpl
 import com.example.mypet.data.PetRepositoryImpl
 import com.example.mypet.domain.BootCompleteRepository
-import com.example.mypet.domain.FoodAlarmRepository
-import com.example.mypet.domain.FoodAlarmServiceRepository
-import com.example.mypet.domain.FoodRepository
 import com.example.mypet.domain.PetRepository
 import dagger.Module
 import dagger.Provides
@@ -24,6 +18,7 @@ object DomainModule {
     fun providePetRepository(petRepositoryImpl: PetRepositoryImpl): PetRepository =
         petRepositoryImpl
 
+/*
     @Provides
     @Singleton
     fun provideFoodRepository(foodRepositoryImpl: FoodRepositoryImpl): FoodRepository =
@@ -38,6 +33,7 @@ object DomainModule {
     @Singleton
     fun provideFoodAlarmServiceRepository(foodAlarmServiceRepositoryImpl: FoodAlarmServiceRepositoryImpl): FoodAlarmServiceRepository =
         foodAlarmServiceRepositoryImpl
+*/
 
     @Provides
     @Singleton

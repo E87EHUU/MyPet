@@ -11,5 +11,9 @@ data class AlarmModel(
     val isRepeatFriday: Boolean = false,
     val isRepeatSaturday: Boolean = false,
     val isRepeatSunday: Boolean = false,
-    val delayMinute: Int? = null
-)
+    val delayTime: Int? = null
+) {
+    fun isRepeatable() =
+        isRepeatMonday || isRepeatTuesday || isRepeatWednesday
+                || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
+}

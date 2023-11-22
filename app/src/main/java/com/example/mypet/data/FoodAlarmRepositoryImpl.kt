@@ -1,13 +1,6 @@
 package com.example.mypet.data
 
-import com.example.mypet.data.alarm.IAlarmDao
-import com.example.mypet.data.local.room.dao.LocalFoodAlarmDao
-import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
-import com.example.mypet.domain.FoodAlarmRepository
-import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
-import com.example.mypet.domain.food.alarm.FoodAlarmModel
-import javax.inject.Inject
-
+/*
 class FoodAlarmRepositoryImpl @Inject constructor(
     private val localFoodDetailAlarmDao: LocalFoodAlarmDao,
     private val alarmDao: IAlarmDao,
@@ -16,7 +9,7 @@ class FoodAlarmRepositoryImpl @Inject constructor(
         localFoodDetailAlarmDao.getLocalFoodAlarmModelByFoodId(foodMyId)
             ?.toFoodAlarmModel()
 
-    override suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodAlarmModel) {
+    override suspend fun saveAndSetFoodDetailAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodDetailModel) {
         localFoodDetailAlarmDao.savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm)
             .toAlarmModel()?.let { alarmDao.setAlarm(it) }
     }
@@ -44,3 +37,4 @@ class FoodAlarmRepositoryImpl @Inject constructor(
             isActive
         )
 }
+*/

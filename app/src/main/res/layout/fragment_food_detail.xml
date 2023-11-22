@@ -1,13 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mypet.ui.food.detail.FoodDetailFragment">
+    android:padding="@dimen/offset_16">
 
-    <TextView
+    <include
+        android:id="@+id/includeFoodDetailTopBar"
+        layout="@layout/fragment_bottom_sheet_top_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="детали кормежки" />
+        android:layout_height="@dimen/zero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeFoodDetailTopBar">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/offset_24">
+
+            <TimePicker
+                android:id="@+id/timePickerFoodDetail"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/imageViewFoodDetailRepeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/offset_8"
+                app:constraint_referenced_ids="textViewFoodDetailRepeatTitle,textViewFoodDetailRepeatText,imageViewFoodDetailRepeatIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timePickerFoodDetail" />
+
+            <ImageView
+                android:id="@+id/imageViewFoodDetailRepeatIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_16"
+                android:layout_marginTop="@dimen/offset_24"
+                android:src="@drawable/baseline_repeat_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timePickerFoodDetail" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewFoodDetailRepeatTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_8"
+                android:layout_marginEnd="16dp"
+                android:text="@string/food_detail_repeat_title"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewFoodDetailRepeatIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageViewFoodDetailRepeatIcon" />
+
+            <TextView
+                android:id="@+id/textViewFoodDetailRepeatText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/offset_8"
+                android:text="@string/food_detail_repeat_disable"
+                app:layout_constraintStart_toStartOf="@+id/textViewFoodDetailRepeatTitle"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFoodDetailRepeatTitle" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutFoodDetailTitle"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/offset_8"
+                android:layout_marginTop="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFoodDetailRepeatText"
+                app:startIconDrawable="@drawable/baseline_edit_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextFoodDetailTitle"
+                    style="@style/Widget.Material3.TextInputEditText.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/food_detail_title_hint"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutFoodDetailRation"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/offset_8"
+                android:layout_marginTop="@dimen/offset_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFoodDetailTitle"
+                app:startIconDrawable="@drawable/baseline_edit_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextFoodDetailRation"
+                    style="@style/Widget.Material3.TextInputEditText.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/food_detail_ration_hint"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

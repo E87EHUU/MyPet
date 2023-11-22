@@ -25,12 +25,12 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGT
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.model.pet.LocalFoodAlarmModel
-import com.example.mypet.domain.food.SaveAndSetFoodAlarmModel
+import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.food.detail.SaveAndSetFoodDetailModel
 
 
 @Dao
-interface LocalFoodAlarmDao {
+interface LocalFoodDetailDao {
     @Query(
         "SELECT " +
                 "f.id $ID, " +
@@ -57,7 +57,7 @@ interface LocalFoodAlarmDao {
                 "WHERE f.id = :foodId " +
                 "LIMIT 1"
     )
-    fun getLocalFoodAlarmModelByFoodId(foodId: Int): LocalFoodAlarmModel?
+    fun getLocalFoodAlarmModelByFoodId(foodId: Int): LocalAlarmServiceModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveFood(localPetFoodEntity: LocalPetFoodEntity): Long
@@ -69,8 +69,8 @@ interface LocalFoodAlarmDao {
     fun updateFood(foodId: Int, foodName: String?, alarmId: Int): Int
 
     @Transaction
-    fun savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodAlarmModel): SaveAndSetFoodAlarmModel {
-        with(saveFoodDetailAlarmAndSetAlarm) {
+    fun savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodDetailModel): SaveAndSetFoodDetailModel {
+/*        with(saveFoodDetailAlarmAndSetAlarm) {
             val foodId = foodId ?: saveFood(toLocalPetFoodEntity()).toInt()
             if (foodId > 0) {
                 val alarmId = saveAlarm(toLocalAlarmEntity()).toInt()
@@ -82,6 +82,7 @@ interface LocalFoodAlarmDao {
                         TODO("Не удалось обновить petFood в room $saveFoodDetailAlarmAndSetAlarm")
                 } else TODO("Не удалось записать alarm в room $saveFoodDetailAlarmAndSetAlarm")
             } else TODO("Не удалось записать petFood в room $saveFoodDetailAlarmAndSetAlarm")
-        }
+        }*/
+        return saveFoodDetailAlarmAndSetAlarm
     }
 }

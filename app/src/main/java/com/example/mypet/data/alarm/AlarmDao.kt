@@ -5,16 +5,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.example.mypet.ui.MainActivity
-import com.example.mypet.ui.food.alarm.service.FoodAlarmService
-import com.example.mypet.ui.food.alarm.service.FoodAlarmService.Companion.ALARM_ID
-import com.example.mypet.ui.food.alarm.service.FoodAlarmService.Companion.ALARM_OVERLAY_ACTION_START
+import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService
+import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService.Companion.ALARM_ID
+import com.example.mypet.ui.alarm.repeat.service.FoodAlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
-
-fun AlarmModel.isRepeatable() =
-    isRepeatMonday || isRepeatTuesday || isRepeatWednesday
-            || isRepeatThursday || isRepeatFriday || isRepeatSaturday || isRepeatSunday
 
 class AlarmDao @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -44,7 +40,7 @@ class AlarmDao @Inject constructor(
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
 
-            alarmModel.delayMinute?.let {
+            alarmModel.delayTime?.let {
                 calendar.add(Calendar.MINUTE, it)
             } ?: run {
                 calendar.set(Calendar.HOUR_OF_DAY, alarmModel.hour)

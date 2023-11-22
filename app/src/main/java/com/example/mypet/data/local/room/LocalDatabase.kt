@@ -2,9 +2,9 @@ package com.example.mypet.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
 import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
-import com.example.mypet.data.local.room.dao.LocalFoodAlarmDao
-import com.example.mypet.data.local.room.dao.LocalFoodAlarmServiceDao
+import com.example.mypet.data.local.room.dao.LocalAlarmDao
 import com.example.mypet.data.local.room.dao.LocalFoodDao
 import com.example.mypet.data.local.room.dao.LocalPetDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
@@ -27,8 +27,8 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun localPetDao(): LocalPetDao
     abstract fun localFoodDao(): LocalFoodDao
-    abstract fun localFoodAlarmDao(): LocalFoodAlarmDao
-    abstract fun localFoodAlarmServiceDao(): LocalFoodAlarmServiceDao
+    abstract fun localFoodAlarmDao(): LocalAlarmDao
+    abstract fun localFoodAlarmServiceDao(): LocalAlarmServiceDao
     abstract fun localBootCompleteDao(): LocalBootCompleteDao
 
     companion object {
@@ -36,7 +36,7 @@ abstract class LocalDatabase : RoomDatabase() {
 
         const val NAME = "name"
         const val TITLE = "title"
-        const val ICON_PATH = "icon_path"
+        const val DESCRIPTION = "description"
 
         const val DEFAULT_ID = 0
     }
