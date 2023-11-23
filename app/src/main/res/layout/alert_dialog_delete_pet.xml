@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/delete_pet_dialog_width"
+    android:layout_height="@dimen/delete_pet_dialog_height"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewDeletePetDialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/offset_16"
+        android:text="@string/delete_pet_dialog_message"
+        android:textSize="@dimen/delete_pet_dialog_message_text_size" />
+
+    <ImageView
+        android:id="@+id/imageViewDeletePetDialog"
+        android:layout_width="@dimen/delete_pet_dialog_image_view_width"
+        android:layout_height="@dimen/delete_pet_dialog_image_view_height"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/offset_4"
+        android:layout_marginBottom="@dimen/offset_8"
+        android:src="@drawable/ic_pet_kind_chinchilla" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/offset_8"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonAcceptDeletePetDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/delete_pet_dialog_button_accept_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/delete_pet_dialog_button_text_size" />
+
+        <Space
+            android:layout_width="@dimen/offset_32"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/buttonCancelDeletePetDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/delete_pet_dialog_button_cancel_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/delete_pet_dialog_button_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -111,6 +111,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewPetName"
             tools:text="Карликовая домашняя свинья" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPopupMenuPetAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_8"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:src="@drawable/ic_pet_action_menu"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayoutPetListShadow"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardViewPetWeight"
             style="@style/Widget.Material3.CardView.Elevated"

@@ -13,8 +13,12 @@ class PetRepositoryImpl @Inject constructor(
     private val localPetDao: LocalPetDao,
 ) : PetRepository {
     override fun observePetList() =
-        localPetDao.observePetList()
+        localPetDao.getPetList()
             .mapNotNull { localPetModels -> localPetModels.map { it.toPetModel() } }
+
+    override suspend fun observeDeletePet(petId: Int) {
+        localPetDao.deletePet(petId)
+    }
 
     private fun LocalPetModel.toPetModel() =
         PetModel(

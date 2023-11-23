@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pet_menu_item_edit_pet"
+        android:title="@string/title_pet_menu_item_edit_pet"
+        android:gravity="center"/>
+    <item
+        android:id="@+id/pet_menu_item_delete_pet"
+        android:title="@string/title_pet_menu_item_delete_pet"
+        android:gravity="center"/>
+</menu>
