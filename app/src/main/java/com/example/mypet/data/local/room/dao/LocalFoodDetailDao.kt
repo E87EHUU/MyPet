@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -24,9 +23,11 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VI
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
+import com.example.mypet.data.local.room.entity.LocalPetFoodEntity.Companion.RATION
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.data.local.room.model.alarm.LocalFoodDetailModel
 import com.example.mypet.domain.food.detail.SaveAndSetFoodDetailModel
 
 
@@ -35,8 +36,9 @@ interface LocalFoodDetailDao {
     @Query(
         "SELECT " +
                 "f.id $ID, " +
+                "m.avatar_path $AVATAR_PATH, " +
                 "f.title $TITLE, " +
-                "f.ration $DESCRIPTION, " +
+                "f.ration $RATION, " +
                 "m.kind_ordinal $KIND_ORDINAL, " +
                 "m.breed_ordinal $BREED_ORDINAL, " +
                 "a.id ${ALARM_TABLE}_$ID, " +
@@ -59,7 +61,7 @@ interface LocalFoodDetailDao {
                 "WHERE f.id = :foodId " +
                 "LIMIT 1"
     )
-    fun getLocalFoodAlarmModelByFoodId(foodId: Int): LocalAlarmServiceModel?
+    fun getLocalFoodDetailModel(foodId: Int): LocalFoodDetailModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveFood(localPetFoodEntity: LocalPetFoodEntity): Long
