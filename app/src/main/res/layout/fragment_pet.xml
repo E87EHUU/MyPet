@@ -116,9 +116,7 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/offset_24"
             android:minWidth="@dimen/pet_card_detail_min_width"
-            app:layout_constraintEnd_toStartOf="@+id/materialCardViewPetAge"
             app:layout_constraintStart_toStartOf="@+id/textViewPetBreedName"
             app:layout_constraintTop_toTopOf="@+id/materialCardViewPetAge">
 
@@ -151,10 +149,10 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/offset_16"
             android:minWidth="@dimen/pet_card_detail_min_width"
-            app:layout_constraintStart_toEndOf="@+id/materialCardViewAlarmAccess"
+            app:layout_constraintStart_toEndOf="@+id/materialCardViewPetWeight"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPetAvatar">
 
             <LinearLayout
@@ -194,7 +192,7 @@
                 style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/offset_16"
                 android:layout_marginTop="@dimen/offset_16"
                 android:text="@string/pet_food_title"
                 app:layout_constraintStart_toStartOf="parent"
