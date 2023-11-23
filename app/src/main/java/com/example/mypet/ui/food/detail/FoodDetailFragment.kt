@@ -61,14 +61,6 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
     }
 
     private fun initListeners() {
-        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarClose.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding.includeFoodDetailTopBar.buttonBottomSheetAppBarOk.setOnClickListener {
-            saveAndPopBack()
-        }
-
         binding.timePickerFoodDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
             viewModel.hour = hourOfDay
             viewModel.minute = minute
