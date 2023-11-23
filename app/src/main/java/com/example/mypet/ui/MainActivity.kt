@@ -37,6 +37,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navHost.navController
     }
 
+    private val toolbarOnDestinations = mapOf(
+        R.id.foodDetailFragment to R.menu.toolbar_pet_detail,
+    )
+
     private val fabDestinations = setOf(
         R.id.foodDetailFragment,
         R.id.careDetailFragment,
@@ -64,10 +68,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 navController.currentBackStack.collectLatest {
-                    if (fabDestinations.contains(it.last().destination.id))
+                    val lastId = it.last().destination.id
+                    if (fabDestinations.contains(lastId))
                         binding.floatingActionButton.hide()
                     else
                         binding.floatingActionButton.show()
+
+                    toolbarOnDestinations[lastId]?.let { menuId ->
+                        binding.toolbar.menu.clear()
+                        binding.toolbar.inflateMenu(menuId)
+                    } ?: run {
+                        binding.toolbar.menu.clear()
+                        binding.toolbar.inflateMenu(R.menu.toolbar_empty)
+                    }
                 }
             }
         }

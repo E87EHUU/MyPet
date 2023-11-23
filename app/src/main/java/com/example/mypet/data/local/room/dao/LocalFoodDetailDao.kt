@@ -73,20 +73,19 @@ interface LocalFoodDetailDao {
     fun updateFood(foodId: Int, foodName: String?, alarmId: Int): Int
 
     @Transaction
-    fun savePetFoodAndAlarm(saveFoodDetailAlarmAndSetAlarm: SaveAndSetFoodDetailModel): SaveAndSetFoodDetailModel {
-/*        with(saveFoodDetailAlarmAndSetAlarm) {
+    fun savePetFoodAndAlarm(saveAndSetFoodDetailModel: SaveAndSetFoodDetailModel): SaveAndSetFoodDetailModel {
+        with(saveAndSetFoodDetailModel) {
             val foodId = foodId ?: saveFood(toLocalPetFoodEntity()).toInt()
             if (foodId > 0) {
                 val alarmId = saveAlarm(toLocalAlarmEntity()).toInt()
 
                 if (alarmId > 0) {
-                    if (updateFood(foodId, foodName, alarmId) == 1)
+                    if (updateFood(foodId, foodTitle, alarmId) == 1)
                         return copy(foodId = foodId, alarmId = alarmId)
                     else
-                        TODO("Не удалось обновить petFood в room $saveFoodDetailAlarmAndSetAlarm")
-                } else TODO("Не удалось записать alarm в room $saveFoodDetailAlarmAndSetAlarm")
-            } else TODO("Не удалось записать petFood в room $saveFoodDetailAlarmAndSetAlarm")
-        }*/
-        return saveFoodDetailAlarmAndSetAlarm
+                        TODO("Не удалось обновить petFood в room $saveAndSetFoodDetailModel")
+                } else TODO("Не удалось записать alarm в room $saveAndSetFoodDetailModel")
+            } else TODO("Не удалось записать petFood в room $saveAndSetFoodDetailModel")
+        }
     }
 }

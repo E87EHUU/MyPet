@@ -3,6 +3,7 @@ package com.example.mypet.ui
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.mypet.app.R
 import com.example.mypet.domain.pet.breed.PetBreedCat
@@ -60,6 +61,9 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
 
 fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
+
+fun Fragment.getToolbar() =
+    (requireActivity() as? MainActivity)?.findViewById<Toolbar>(R.id.toolbar)
 
 fun Fragment.getFloatingActionButton() =
     (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodDetailBinding
+import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +44,17 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
 
     private fun initView() {
         binding.timePickerFoodDetail.setIs24HourView(requireContext().is24HourFormat)
+
+        getToolbar()?.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.toolbarSave -> {
+                    trySave()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun updateUI() {
@@ -54,10 +66,10 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
         binding.textInputEditTextFoodDetailTitle.setText(viewModel.title)
 //        binding.textInputEditTextFoodDetailRation.setText(viewModel.)
 
-/*        updateUIRingtoneDescription()
-        updateUIRepeatDescription()
-        updateUIDelayChecker()
-        updateUIVibrationChecker()*/
+        /*        updateUIRingtoneDescription()
+                updateUIRepeatDescription()
+                updateUIDelayChecker()
+                updateUIVibrationChecker()*/
     }
 
     private fun initListeners() {
@@ -71,7 +83,7 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
         }
     }
 
-    private fun saveAndPopBack() {
+    private fun trySave() {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.save().collectLatest {
                 launch(Dispatchers.Main) {

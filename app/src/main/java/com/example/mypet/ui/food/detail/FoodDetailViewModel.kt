@@ -3,6 +3,7 @@ package com.example.mypet.ui.food.detail
 import androidx.lifecycle.ViewModel
 import com.example.mypet.domain.FoodDetailRepository
 import com.example.mypet.domain.food.detail.FoodDetailModel
+import com.example.mypet.domain.food.detail.SaveAndSetFoodDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -54,14 +55,15 @@ class FoodDetailViewModel @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    fun save() = flow {
+    fun save(myId: Int) = flow {
         foodDetailModel?.let {
-            val copyFoodDetailModel =
-                it.copy(
+            val saveAndSetFoodDetailModel =
+                SaveAndSetFoodDetailModel(
+                    myId = myId,
                     foodTitle = title,
                     alarmHour = hour,
                     alarmMinute = minute,
-/*                    alarmIsRepeatMonday = isRepeatMonday,
+                    alarmIsRepeatMonday = isRepeatMonday,
                     alarmIsRepeatTuesday = isRepeatTuesday,
                     alarmIsRepeatWednesday = isRepeatWednesday,
                     alarmIsRepeatThursday = isRepeatThursday,
@@ -70,7 +72,7 @@ class FoodDetailViewModel @Inject constructor(
                     alarmIsRepeatSunday = isRepeatSunday,
                     alarmRingtonePath = ringtonePath,
                     alarmIsVibration = isVibration,
-                    alarmIsDelay = isDelay,*/
+                    alarmIsDelay = isDelay,
                 )
             foodDetailRepository.saveAndSetFoodDetailModel(copyFoodDetailModel)
             emit(Unit)

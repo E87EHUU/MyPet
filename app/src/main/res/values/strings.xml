@@ -90,5 +90,6 @@
     <string name="alert_title">Оповещение</string>
     <string name="snippet_alert_notification">Уведомления</string>
     <string name="snippet_alert_alarm">Будильник</string>
+    <string name="save">Сохранить</string>
 
 </resources>
