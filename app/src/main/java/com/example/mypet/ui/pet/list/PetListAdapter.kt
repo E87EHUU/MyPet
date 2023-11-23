@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
+import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
 import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.ui.getPetIcon
 
 class PetListAdapter(
     private val onPetClickListener: OnPetClickListener,
@@ -80,16 +82,16 @@ class PetListAdapter(
 
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(petModel: PetModel, onPetClickListener: OnPetClickListener) {
-/*            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
+            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
                 if (petModel.avatarUri != null)
-                    imageViewPetListItem.setImageURI(petModel.avatarUri)
+                    imageViewPetListItemIcon.setImageURI(petModel.avatarUri)
                 else
-                    imageViewPetListItem.setImageResource(
+                    imageViewPetListItemIcon.setImageResource(
                         getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
                     )
 
                 itemView.setOnClickListener { onPetClickListener.onPetClick(petModel) }
-            }*/
+            }
         }
     }
 }
