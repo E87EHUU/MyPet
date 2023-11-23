@@ -2,8 +2,11 @@ package com.example.mypet.data
 
 import com.example.mypet.domain.FoodDetailRepository
 import com.example.mypet.domain.food.detail.FoodDetailModel
+import javax.inject.Inject
 
-class FoodDetailRepositoryImpl : FoodDetailRepository {
+class FoodDetailRepositoryImpl @Inject constructor(
+
+) : FoodDetailRepository {
     override suspend fun getFoodDetailModel(petFoodId: Int): FoodDetailModel? {
         TODO("Not yet implemented")
     }

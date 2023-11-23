@@ -78,7 +78,7 @@ class AlarmService : Service() {
             if (!alarmModels.containsKey(id)) {
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        alarmServiceRepository.getAlarmServiceModelByFoodId(id)
+                        alarmServiceRepository.getAlarmServiceModel(id)
                             ?.let { alarmModels[id] = it }
                     }
                 }

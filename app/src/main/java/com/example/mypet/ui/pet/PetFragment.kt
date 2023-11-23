@@ -192,9 +192,11 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun navToFoodDetail(petFoodModel: PetFoodModel) {
-        val directions =
-            PetFragmentDirections.actionPetFragmentToFoodDetailFragment(petFoodModel.id)
-        findNavController().navigate(directions)
+        viewModel.activePetMyId?.let {
+            val directions =
+                PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.id)
+            findNavController().navigate(directions)
+        }
     }
 
     private fun navToCare() {

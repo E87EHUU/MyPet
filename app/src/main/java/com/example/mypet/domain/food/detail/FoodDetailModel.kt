@@ -1,7 +1,7 @@
 package com.example.mypet.domain.food.detail
 
 import android.net.Uri
-import com.example.mypet.domain.alarm.AlarmModel
+import com.example.mypet.data.alarm.AlarmModel
 
 data class FoodDetailModel(
     val foodId: Int,

@@ -79,7 +79,7 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private fun navToFoodDetail(foodModel: FoodModel? = null) {
         viewModel.petMyId?.let {
             val directions = FoodFragmentDirections
-                .actionFoodFragmentToNavigationFoodAlarm(
+                .actionFoodFragmentToFoodDetailFragment(
                     petMyId = it,
                     petFoodId = foodModel?.foodId ?: 0
                 )

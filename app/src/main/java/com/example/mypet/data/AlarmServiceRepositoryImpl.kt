@@ -10,8 +10,8 @@ class AlarmServiceRepositoryImpl @Inject constructor(
     private val localAlarmServiceDao: LocalAlarmServiceDao,
     private val alarmDao: AlarmDao
 ) : AlarmServiceRepository {
-    override suspend fun getAlarmServiceModelByFoodId(foodId: Int) =
-        localAlarmServiceDao.getLocalAlarmServiceModelByFoodId(foodId)
+    override suspend fun getAlarmServiceModel(alarmId: Int) =
+        localAlarmServiceDao.getLocalAlarmServiceModel(alarmId)
 
     override suspend fun stopAlarm(localAlarmServiceModel: LocalAlarmServiceModel) {
         val alarmModel = localAlarmServiceModel.toAlarmModel()

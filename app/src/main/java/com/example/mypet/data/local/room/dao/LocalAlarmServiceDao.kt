@@ -48,8 +48,8 @@ interface LocalAlarmServiceDao {
                 "a.is_delay ${ALARM_TABLE}_$IS_DELAY, " +
                 "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
                 "FROM alarm a " +
+                "LEFT JOIN pet_food f ON f.alarm_id = a.id " +
                 "LEFT JOIN pet_my m ON m.id = f.pet_my_id " +
-                "LEFT JOIN pet_food f ON a.id = f.alarm_id " +
                 "WHERE a.id = :alarmId " +
                 "LIMIT 1"
     )

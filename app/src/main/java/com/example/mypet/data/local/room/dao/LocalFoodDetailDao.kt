@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -35,22 +36,23 @@ interface LocalFoodDetailDao {
         "SELECT " +
                 "f.id $ID, " +
                 "f.title $TITLE, " +
+                "f.ration $DESCRIPTION, " +
                 "m.kind_ordinal $KIND_ORDINAL, " +
                 "m.breed_ordinal $BREED_ORDINAL, " +
-                "a.id ${ALARM_TABLE}_${ID}, " +
-                "a.hour $HOUR, " +
-                "a.minute $MINUTE, " +
-                "a.is_repeat_monday $IS_REPEAT_MONDAY, " +
-                "a.is_repeat_tuesday $IS_REPEAT_TUESDAY, " +
-                "a.is_repeat_wednesday $IS_REPEAT_WEDNESDAY, " +
-                "a.is_repeat_thursday $IS_REPEAT_THURSDAY, " +
-                "a.is_repeat_friday $IS_REPEAT_FRIDAY, " +
-                "a.is_repeat_saturday $IS_REPEAT_SATURDAY, " +
-                "a.is_repeat_sunday $IS_REPEAT_SUNDAY, " +
-                "a.ringtone_path $RINGTONE_PATH, " +
-                "a.is_vibration $IS_VIBRATION, " +
-                "a.is_delay $IS_DELAY, " +
-                "a.is_active $IS_ACTIVE " +
+                "a.id ${ALARM_TABLE}_$ID, " +
+                "a.hour ${ALARM_TABLE}_$HOUR, " +
+                "a.minute ${ALARM_TABLE}_$MINUTE, " +
+                "a.is_repeat_monday ${ALARM_TABLE}_$IS_REPEAT_MONDAY, " +
+                "a.is_repeat_tuesday ${ALARM_TABLE}_$IS_REPEAT_TUESDAY, " +
+                "a.is_repeat_wednesday ${ALARM_TABLE}_$IS_REPEAT_WEDNESDAY, " +
+                "a.is_repeat_thursday ${ALARM_TABLE}_$IS_REPEAT_THURSDAY, " +
+                "a.is_repeat_friday ${ALARM_TABLE}_$IS_REPEAT_FRIDAY, " +
+                "a.is_repeat_saturday ${ALARM_TABLE}_$IS_REPEAT_SATURDAY, " +
+                "a.is_repeat_sunday ${ALARM_TABLE}_$IS_REPEAT_SUNDAY, " +
+                "a.ringtone_path ${ALARM_TABLE}_$RINGTONE_PATH, " +
+                "a.is_vibration ${ALARM_TABLE}_$IS_VIBRATION, " +
+                "a.is_delay ${ALARM_TABLE}_$IS_DELAY, " +
+                "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
                 "FROM pet_food f " +
                 "LEFT JOIN alarm a ON a.id = f.alarm_id " +
                 "LEFT JOIN pet_my m ON m.id = f.pet_my_id " +

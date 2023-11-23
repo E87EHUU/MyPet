@@ -16,7 +16,7 @@ class FoodAdapterViewHolder(
             callback.onItemClick(foodModel)
         }
 
-        binding.switchPetDetailFoodItemActive.setOnClickListener {
+        binding.switchFoodItemActive.setOnClickListener {
             callback.onSwitchActive(foodModel)
         }
     }
@@ -24,12 +24,12 @@ class FoodAdapterViewHolder(
     fun bind(foodModel: FoodModel) {
         this.foodModel = foodModel
 
-        binding.textViewPetDetailFoodItemTitle.text = foodModel.foodTitle
+        with(foodModel) {
+            binding.textViewFoodItemText.text = foodTitle
+            binding.textViewFoodItemTime.text = toAppTime(alarmHour, alarmMinute)
 
-        binding.textViewPetDetailFoodItemTime.text =
-            toAppTime(foodModel.alarmHour, foodModel.alarmMinute)
-        binding.switchPetDetailFoodItemActive.isChecked = foodModel.alarmIsActive ?: false
-
-        binding.switchPetDetailFoodItemActive.isVisible = foodModel.alarmId != null
+            binding.switchFoodItemActive.isVisible = alarmId != null
+            binding.switchFoodItemActive.isChecked = alarmIsActive ?: false
+        }
     }
 }

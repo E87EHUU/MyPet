@@ -1,7 +1,7 @@
 package com.example.mypet.data
 
 import com.example.mypet.data.alarm.AlarmDao
-import com.example.mypet.domain.alarm.AlarmModel
+import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.domain.BootCompleteRepository
