@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 navController.currentBackStack.collectLatest {
                     if (fabDestinations.contains(it.last().destination.id))
-                        binding.floatingActionButton.show()
-                    else
                         binding.floatingActionButton.hide()
+                    else
+                        binding.floatingActionButton.show()
                 }
             }
         }
