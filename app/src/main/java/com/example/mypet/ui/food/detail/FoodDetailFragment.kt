@@ -2,6 +2,7 @@ package com.example.mypet.ui.food.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -64,18 +65,21 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
         }
 
         binding.textInputEditTextFoodDetailTitle.setText(viewModel.title)
-//        binding.textInputEditTextFoodDetailRation.setText(viewModel.)
-
-        /*        updateUIRingtoneDescription()
-                updateUIRepeatDescription()
-                updateUIDelayChecker()
-                updateUIVibrationChecker()*/
+        binding.textInputEditTextFoodDetailRation.setText(viewModel.ration)
     }
 
     private fun initListeners() {
         binding.timePickerFoodDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
             viewModel.hour = hourOfDay
             viewModel.minute = minute
+        }
+
+        binding.textInputEditTextFoodDetailTitle.doAfterTextChanged {
+            viewModel.title = it.toString()
+        }
+
+        binding.textInputEditTextFoodDetailRation.doAfterTextChanged {
+            viewModel.ration = it.toString()
         }
 
         binding.includeFoodDetailRepeat.root.setOnClickListener {

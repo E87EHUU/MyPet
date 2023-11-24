@@ -1,6 +1,7 @@
 package com.example.mypet.domain.food.detail
 
 import androidx.room.ColumnInfo
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -40,70 +41,74 @@ data class FoodDetailModel(
     @ColumnInfo(name = "${PET_MY_TABLE}_$ID")
     val petId: Int,
     @ColumnInfo(name = "${PET_MY_TABLE}_$AVATAR_PATH")
-    val petAvatarPath: String?,
+    val petAvatarPath: String? = null,
     @ColumnInfo(name = "${PET_MY_TABLE}_$KIND_ORDINAL")
     val petKindOrdinal: Int,
     @ColumnInfo(name = "${PET_MY_TABLE}_$BREED_ORDINAL")
-    val petBreedOrdinal: Int?,
+    val petBreedOrdinal: Int? = null,
 
     @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
-    val foodId: Int,
+    val foodId: Int? = null,
     @ColumnInfo(name = "${PET_FOOD_TABLE}_$TITLE")
-    val foodTitle: String,
+    val foodTitle: String? = null,
     @ColumnInfo(name = "${PET_FOOD_TABLE}_$RATION")
-    val foodRation: String?,
+    val foodRation: String? = null,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
-    val alarmId: Int,
+    val alarmId: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$HOUR")
-    val alarmHour: Int,
+    val alarmHour: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$MINUTE")
-    val alarmMinute: Int,
+    val alarmMinute: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$DAY")
-    val alarmDay: Int?,
+    val alarmDay: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$MONTH")
-    val alarmMonth: Int?,
+    val alarmMonth: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$YEAR")
-    val alarmYear: Int?,
+    val alarmYear: Int? = null,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$RINGTONE_PATH")
-    val alarmRingtonePath: String?,
+    val alarmRingtonePath: String? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_VIBRATION")
-    val alarmIsVibration: Boolean?,
+    val alarmIsVibration: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_DELAY")
-    val alarmIsDelay: Boolean?,
+    val alarmIsDelay: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_ACTIVE")
-    val alarmIsActive: Boolean,
+    val alarmIsActive: Boolean? = true,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$REPEAT_TYPE_ORDINAL")
-    val alarmRepeatTypeOrdinal: Int?,
+    val alarmRepeatTypeOrdinal: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$REPEAT_INTERVAL")
-    val alarmRepeatInterval: Int?,
+    val alarmRepeatInterval: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_MONDAY")
-    val alarmIsRepeatMonday: Boolean?,
+    val alarmIsRepeatMonday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_TUESDAY")
-    val alarmIsRepeatTuesday: Boolean?,
+    val alarmIsRepeatTuesday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_WEDNESDAY")
-    val alarmIsRepeatWednesday: Boolean?,
+    val alarmIsRepeatWednesday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_THURSDAY")
-    val alarmIsRepeatThursday: Boolean?,
+    val alarmIsRepeatThursday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_FRIDAY")
-    val alarmIsRepeatFriday: Boolean?,
+    val alarmIsRepeatFriday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_SATURDAY")
-    val alarmIsRepeatSaturday: Boolean?,
+    val alarmIsRepeatSaturday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_SUNDAY")
-    val alarmIsRepeatSunday: Boolean?,
+    val alarmIsRepeatSunday: Boolean? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_DAY")
-    val alarmEndDay: Int?,
+    val alarmEndDay: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_MONTH")
-    val alarmEndMonth: Int?,
+    val alarmEndMonth: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_YEAR")
-    val alarmEndYear: Int?,
+    val alarmEndYear: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_COUNT")
-    val alarmEndCount: Int?,
+    val alarmEndCount: Int? = null,
 ) {
-    fun toAlarmModel() =
-        AlarmModel(
+    fun toAlarmModel(): AlarmModel? {
+        val alarmId = alarmId ?: return null
+        val alarmHour = alarmHour ?: return null
+        val alarmMinute = alarmMinute ?: return null
+
+        return AlarmModel(
             id = alarmId,
             hour = alarmHour,
             minute = alarmMinute,
@@ -128,18 +133,27 @@ data class FoodDetailModel(
             endYear = alarmEndYear,
             endCount = alarmEndCount,
         )
+    }
 
-    fun toLocalPetFoodEntity() =
-        LocalPetFoodEntity(
+    fun toLocalPetFoodEntity(): LocalPetFoodEntity? {
+        val alarmId = alarmId ?: return null
+        val foodTitle = foodTitle ?: return null
+
+        return LocalPetFoodEntity(
+            id = foodId ?: DEFAULT_ID,
             petMyId = petId,
             alarmId = alarmId,
             title = foodTitle,
             ration = foodRation
         )
+    }
 
-    fun toLocalAlarmEntity() =
-        LocalAlarmEntity(
-            id = alarmId,
+    fun toLocalAlarmEntity(): LocalAlarmEntity? {
+        val alarmHour = alarmHour ?: return null
+        val alarmMinute = alarmMinute ?: return null
+
+        return LocalAlarmEntity(
+            id = alarmId ?: DEFAULT_ID,
             hour = alarmHour,
             minute = alarmMinute,
             day = alarmDay,
@@ -162,4 +176,5 @@ data class FoodDetailModel(
             endYear = alarmEndYear,
             endCount = alarmEndCount,
         )
+    }
 }

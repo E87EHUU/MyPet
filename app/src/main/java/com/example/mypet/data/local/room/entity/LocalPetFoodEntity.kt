@@ -19,7 +19,7 @@ data class LocalPetFoodEntity(
     val petMyId: Int,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
-    val alarmId: Int?,
+    val alarmId: Int,
 
     @ColumnInfo(name = TITLE)
     val title: String,

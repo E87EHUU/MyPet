@@ -20,6 +20,7 @@ class FoodDetailViewModel @Inject constructor(
     private var localDateTime: LocalDateTime = LocalDateTime.now()
 
     var title = ""
+    var ration = ""
 
     var hour = localDateTime.hour
     var minute = localDateTime.minute
@@ -35,10 +36,11 @@ class FoodDetailViewModel @Inject constructor(
                     foodDetailModel = itFoodDetailModel
 
                     with(itFoodDetailModel) {
-                        title = foodTitle
-                        hour = alarmHour
-                        minute = alarmMinute
-                        isActive = alarmIsActive
+                        foodTitle?.let { title = it }
+                        foodRation?.let { ration = it }
+                        alarmHour?.let { hour = it }
+                        alarmMinute?.let { minute = it }
+                        alarmIsActive?.let { isActive = it }
                     }
 
                     emit(Unit)
@@ -48,13 +50,13 @@ class FoodDetailViewModel @Inject constructor(
 
     fun save() = flow {
         foodDetailModel?.let {
-            val saveFoodDetailModel =
-                it.copy(
-                    foodTitle = title,
-                    foodRation = null,
-                    alarmHour = hour,
-                    alarmMinute = minute,
-                )
+            val saveFoodDetailModel = it.copy(
+                foodTitle = title,
+                foodRation = ration,
+                alarmHour = hour,
+                alarmMinute = minute,
+            )
+
             foodDetailRepository.saveAndSetFoodDetailModel(saveFoodDetailModel)
             emit(Unit)
         }

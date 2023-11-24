@@ -14,7 +14,6 @@ class FoodDetailRepositoryImpl @Inject constructor(
         localFoodDetailDao.getLocalFoodDetailModel(foodId)
 
     override suspend fun saveAndSetFoodDetailModel(foodDetailModel: FoodDetailModel) {
-        println(foodDetailModel)
         localFoodDetailDao.saveFoodDetailModel(foodDetailModel)
             ?.toAlarmModel()?.let { alarmDao.setAlarm(it) }
     }
