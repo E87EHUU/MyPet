@@ -1,10 +1,9 @@
 package com.example.mypet.data.local.room.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
@@ -83,11 +82,11 @@ interface LocalFoodDetailDao {
     )
     fun getLocalFoodDetailModel(foodId: Int): FoodDetailModel?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveFood(localPetFoodEntity: LocalPetFoodEntity): Long
+    @Update
+    fun saveFood(localPetFoodEntity: LocalPetFoodEntity): Int
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAlarm(localAlarmEntity: LocalAlarmEntity): Long
+    @Update
+    fun saveAlarm(localAlarmEntity: LocalAlarmEntity): Int
 
     @Transaction
     fun saveFoodDetailModel(foodDetailModel: FoodDetailModel): FoodDetailModel? {

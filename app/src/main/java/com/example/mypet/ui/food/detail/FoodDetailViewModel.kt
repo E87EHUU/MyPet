@@ -52,6 +52,8 @@ class FoodDetailViewModel @Inject constructor(
                 it.copy(
                     foodTitle = title,
                     foodRation = null,
+                    alarmHour = hour,
+                    alarmMinute = minute,
                 )
             foodDetailRepository.saveAndSetFoodDetailModel(saveFoodDetailModel)
             emit(Unit)
