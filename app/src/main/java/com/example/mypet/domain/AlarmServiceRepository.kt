@@ -1,9 +1,9 @@
 package com.example.mypet.domain
 
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 interface AlarmServiceRepository {
-    suspend fun getAlarmServiceModel(alarmId: Int): LocalAlarmServiceModel?
-    suspend fun stopAlarm(localAlarmServiceModel: LocalAlarmServiceModel)
-    suspend fun setDelayAlarm(localAlarmServiceModel: LocalAlarmServiceModel)
+    suspend fun getAlarmServiceModel(alarmId: Int): AlarmServiceModel?
+    suspend fun stopAlarm(localAlarmServiceModel: AlarmServiceModel)
+    suspend fun setDelayAlarm(localAlarmServiceModel: AlarmServiceModel)
 }

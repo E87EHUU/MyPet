@@ -1,9 +1,9 @@
 package com.example.mypet.data
 
 import com.example.mypet.data.alarm.AlarmDao
-import com.example.mypet.data.alarm.AlarmModel
 import com.example.mypet.data.local.room.dao.LocalAlarmDao
 import com.example.mypet.domain.AlarmRepository
+import com.example.mypet.domain.alarm.AlarmModel
 import com.example.mypet.domain.alarm.AlarmSwitchModel
 import javax.inject.Inject
 

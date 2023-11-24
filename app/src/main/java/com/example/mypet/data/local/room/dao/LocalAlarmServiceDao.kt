@@ -21,7 +21,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUT
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 
 @Dao
@@ -53,7 +53,7 @@ interface LocalAlarmServiceDao {
                 "WHERE a.id = :alarmId " +
                 "LIMIT 1"
     )
-    fun getLocalAlarmServiceModel(alarmId: Int): LocalAlarmServiceModel?
+    fun getLocalAlarmServiceModel(alarmId: Int): AlarmServiceModel?
 
     @Query("UPDATE alarm SET is_active = 0 WHERE id = :alarmId")
     fun disableAlarm(alarmId: Int)

@@ -1,10 +1,10 @@
-package com.example.mypet.domain.food.detail
+package com.example.mypet.domain.alarm.service
 
 import androidx.room.ColumnInfo
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_COUNT
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_DAY
@@ -27,31 +27,26 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEA
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
-import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
-import com.example.mypet.data.local.room.entity.LocalPetFoodEntity.Companion.RATION
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
-import com.example.mypet.data.local.room.entity.PET_MY_TABLE
 import com.example.mypet.domain.alarm.AlarmModel
 
-data class FoodDetailModel(
-    @ColumnInfo(name = "${PET_MY_TABLE}_$ID")
-    val petId: Int,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$AVATAR_PATH")
-    val petAvatarPath: String?,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$KIND_ORDINAL")
-    val petKindOrdinal: Int,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$BREED_ORDINAL")
-    val petBreedOrdinal: Int?,
+data class AlarmServiceModel(
+    @ColumnInfo(name = ID)
+    val anyId: Int,
 
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
-    val foodId: Int,
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$TITLE")
-    val foodTitle: String,
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$RATION")
-    val foodRation: String?,
+    @ColumnInfo(name = AVATAR_PATH)
+    val anyAvatarPath: String?,
+    @ColumnInfo(name = TITLE)
+    val anyTitle: String,
+    @ColumnInfo(name = DESCRIPTION)
+    val anyDescription: String,
+
+    @ColumnInfo(name = KIND_ORDINAL)
+    val kindOrdinal: Int,
+    @ColumnInfo(name = BREED_ORDINAL)
+    val breedOrdinal: Int?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
@@ -65,13 +60,12 @@ data class FoodDetailModel(
     val alarmMonth: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$YEAR")
     val alarmYear: Int?,
-
     @ColumnInfo(name = "${ALARM_TABLE}_$RINGTONE_PATH")
     val alarmRingtonePath: String?,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_VIBRATION")
-    val alarmIsVibration: Boolean?,
+    val alarmIsVibration: Boolean,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_DELAY")
-    val alarmIsDelay: Boolean?,
+    val alarmIsDelay: Boolean,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_ACTIVE")
     val alarmIsActive: Boolean,
 
@@ -102,7 +96,7 @@ data class FoodDetailModel(
     @ColumnInfo(name = "${ALARM_TABLE}_$END_COUNT")
     val alarmEndCount: Int?,
 ) {
-    fun toAlarmModel() =
+    fun toAlarmModel(delayTime: Int? = null) =
         AlarmModel(
             id = alarmId,
             hour = alarmHour,
@@ -113,41 +107,7 @@ data class FoodDetailModel(
             ringtonePath = alarmRingtonePath,
             isVibration = alarmIsVibration,
             isDelay = alarmIsDelay,
-            delayTime = null,
-            repeatTypeOrdinal = alarmRepeatTypeOrdinal,
-            repeatInterval = alarmRepeatInterval,
-            isRepeatMonday = alarmIsRepeatMonday,
-            isRepeatTuesday = alarmIsRepeatTuesday,
-            isRepeatWednesday = alarmIsRepeatWednesday,
-            isRepeatThursday = alarmIsRepeatThursday,
-            isRepeatFriday = alarmIsRepeatFriday,
-            isRepeatSaturday = alarmIsRepeatSaturday,
-            isRepeatSunday = alarmIsRepeatSunday,
-            endDay = alarmEndDay,
-            endMonth = alarmEndMonth,
-            endYear = alarmEndYear,
-            endCount = alarmEndCount,
-        )
-
-    fun toLocalPetFoodEntity() =
-        LocalPetFoodEntity(
-            petMyId = petId,
-            alarmId = alarmId,
-            title = foodTitle,
-            ration = foodRation
-        )
-
-    fun toLocalAlarmEntity() =
-        LocalAlarmEntity(
-            id = alarmId,
-            hour = alarmHour,
-            minute = alarmMinute,
-            day = alarmDay,
-            month = alarmMonth,
-            year = alarmYear,
-            ringtonePath = alarmRingtonePath,
-            isVibration = alarmIsVibration,
-            isDelay = alarmIsDelay,
+            delayTime = delayTime,
             repeatTypeOrdinal = alarmRepeatTypeOrdinal,
             repeatInterval = alarmRepeatInterval,
             isRepeatMonday = alarmIsRepeatMonday,

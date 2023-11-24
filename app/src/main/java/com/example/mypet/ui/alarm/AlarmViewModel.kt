@@ -10,15 +10,18 @@ import javax.inject.Inject
 class AlarmViewModel @Inject constructor(
 
 ) : ViewModel() {
+    var alarmModel: AlarmModel? = null
+        private set
+
     var ringtonePath: String? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).path
     var isVibration: Boolean = true
     var isDelay: Boolean = true
-    val alarmModel
-        get() = AlarmModel(ringtonePath, isVibration, isDelay)
 
-    fun update(alarmFragmentArgs: AlarmFragmentArgs) {
-        ringtonePath = alarmFragmentArgs.alarmModel.ringtonePath
-        isVibration = alarmFragmentArgs.alarmModel.isVibration
-        isDelay = alarmFragmentArgs.alarmModel.isDelay
+    fun update(alarmModel: AlarmModel) {
+        this.alarmModel = alarmModel
+
+        ringtonePath = alarmModel.ringtonePath
+        alarmModel.isVibration?.let { isVibration = it }
+        alarmModel.isDelay?.let { isDelay = it }
     }
 }

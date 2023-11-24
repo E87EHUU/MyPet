@@ -2,8 +2,8 @@ package com.example.mypet.data
 
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
 import com.example.mypet.domain.AlarmServiceRepository
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 import javax.inject.Inject
 
 class AlarmServiceRepositoryImpl @Inject constructor(
@@ -13,13 +13,13 @@ class AlarmServiceRepositoryImpl @Inject constructor(
     override suspend fun getAlarmServiceModel(alarmId: Int) =
         localAlarmServiceDao.getLocalAlarmServiceModel(alarmId)
 
-    override suspend fun stopAlarm(localAlarmServiceModel: LocalAlarmServiceModel) {
+    override suspend fun stopAlarm(localAlarmServiceModel: AlarmServiceModel) {
         val alarmModel = localAlarmServiceModel.toAlarmModel()
         if (alarmModel.isRepeatable()) alarmDao.setAlarm(alarmModel)
         else localAlarmServiceDao.disableAlarm(localAlarmServiceModel.alarmId)
     }
 
-    override suspend fun setDelayAlarm(localAlarmServiceModel: LocalAlarmServiceModel) {
+    override suspend fun setDelayAlarm(localAlarmServiceModel: AlarmServiceModel) {
         alarmDao.setAlarm(localAlarmServiceModel.toAlarmModel(1))
     }
 }

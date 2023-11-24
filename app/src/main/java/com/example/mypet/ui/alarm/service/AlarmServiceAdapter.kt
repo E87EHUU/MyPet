@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.mypet.app.databinding.ServiceAlarmOverlayRecyclerItemBinding
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 class AlarmServiceAdapter(
-) : ListAdapter<LocalAlarmServiceModel, AlarmServiceAdapterViewHolder>(DiffCallback()) {
+) : ListAdapter<AlarmServiceModel, AlarmServiceAdapterViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -22,15 +22,15 @@ class AlarmServiceAdapter(
         holder.bind(getItem(position))
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<LocalAlarmServiceModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<AlarmServiceModel>() {
         override fun areItemsTheSame(
-            oldItem: LocalAlarmServiceModel,
-            newItem: LocalAlarmServiceModel
+            oldItem: AlarmServiceModel,
+            newItem: AlarmServiceModel
         ) = oldItem.alarmId == newItem.alarmId
 
         override fun areContentsTheSame(
-            oldItem: LocalAlarmServiceModel,
-            newItem: LocalAlarmServiceModel
+            oldItem: AlarmServiceModel,
+            newItem: AlarmServiceModel
         ) = oldItem == newItem
     }
 }

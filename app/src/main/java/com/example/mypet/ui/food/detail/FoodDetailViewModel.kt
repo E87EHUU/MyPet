@@ -3,7 +3,6 @@ package com.example.mypet.ui.food.detail
 import androidx.lifecycle.ViewModel
 import com.example.mypet.domain.FoodDetailRepository
 import com.example.mypet.domain.food.detail.FoodDetailModel
-import com.example.mypet.domain.food.detail.SaveAndSetFoodDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +24,6 @@ class FoodDetailViewModel @Inject constructor(
     var hour = localDateTime.hour
     var minute = localDateTime.minute
 
-
     private var isActive = true
 
     fun update(petFoodId: Int): Flow<Unit>? {
@@ -35,46 +33,27 @@ class FoodDetailViewModel @Inject constructor(
             foodDetailRepository.getFoodDetailModel(petFoodId)
                 ?.let { itFoodDetailModel ->
                     foodDetailModel = itFoodDetailModel
-                    title = itFoodDetailModel.foodTitle
-                    itFoodDetailModel.alarmHour?.let { hour = it }
-                    itFoodDetailModel.alarmMinute?.let { minute = it }
-/*                    itFoodDetailModel.alarmIsRepeatMonday?.let { isRepeatMonday = it }
-                    itFoodDetailModel.alarmIsRepeatTuesday?.let { isRepeatTuesday = it }
-                    itFoodDetailModel.alarmIsRepeatWednesday?.let { isRepeatWednesday = it }
-                    itFoodDetailModel.alarmIsRepeatThursday?.let { isRepeatThursday = it }
-                    itFoodDetailModel.alarmIsRepeatFriday?.let { isRepeatFriday = it }
-                    itFoodDetailModel.alarmIsRepeatSaturday?.let { isRepeatSaturday = it }
-                    itFoodDetailModel.alarmIsRepeatSunday?.let { isRepeatSunday = it }
-                    itFoodDetailModel.alarmRingtonePath?.let { ringtonePath = it }
-                    itFoodDetailModel.alarmIsVibration?.let { isVibration = it }
-                    itFoodDetailModel.alarmIsDelay?.let { isDelay = it }*/
-                    itFoodDetailModel.alarmIsActive?.let { isActive = it }
+
+                    with(itFoodDetailModel) {
+                        title = foodTitle
+                        hour = alarmHour
+                        minute = alarmMinute
+                        isActive = alarmIsActive
+                    }
 
                     emit(Unit)
                 }
         }.flowOn(Dispatchers.IO)
     }
 
-    fun save(myId: Int) = flow {
+    fun save() = flow {
         foodDetailModel?.let {
-            val saveAndSetFoodDetailModel =
-                SaveAndSetFoodDetailModel(
-                    myId = myId,
+            val saveFoodDetailModel =
+                it.copy(
                     foodTitle = title,
-                    alarmHour = hour,
-                    alarmMinute = minute,
-                    alarmIsRepeatMonday = isRepeatMonday,
-                    alarmIsRepeatTuesday = isRepeatTuesday,
-                    alarmIsRepeatWednesday = isRepeatWednesday,
-                    alarmIsRepeatThursday = isRepeatThursday,
-                    alarmIsRepeatFriday = isRepeatFriday,
-                    alarmIsRepeatSaturday = isRepeatSaturday,
-                    alarmIsRepeatSunday = isRepeatSunday,
-                    alarmRingtonePath = ringtonePath,
-                    alarmIsVibration = isVibration,
-                    alarmIsDelay = isDelay,
+                    foodRation = null,
                 )
-            foodDetailRepository.saveAndSetFoodDetailModel(copyFoodDetailModel)
+            foodDetailRepository.saveAndSetFoodDetailModel(saveFoodDetailModel)
             emit(Unit)
         }
     }.flowOn(Dispatchers.IO)

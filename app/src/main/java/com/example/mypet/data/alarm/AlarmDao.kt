@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.example.mypet.domain.alarm.AlarmModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.ui.alarm.service.AlarmService
 import com.example.mypet.ui.alarm.service.AlarmService.Companion.ALARM_ID
@@ -54,7 +55,7 @@ class AlarmDao @Inject constructor(
 
                 if (alarmModel.isRepeatable()) {
                     for (i in 1..7) {
-                        if (calendar.hasTodayAlarm(alarmModel)) break
+                        if (calendar.hasTodayAlarm(alarmModel) != null) break
                         else calendar.add(Calendar.DATE, 1)
                     }
                 }

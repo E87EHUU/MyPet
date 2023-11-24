@@ -15,7 +15,7 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 import com.example.mypet.domain.AlarmServiceRepository
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
@@ -42,7 +42,7 @@ class AlarmService : Service() {
     private val recycler
         get() = view?.findViewById<RecyclerView>(R.id.recyclerViewAlarmOverlay)
 
-    private val alarmModels = mutableMapOf<Int, LocalAlarmServiceModel>()
+    private val alarmModels = mutableMapOf<Int, AlarmServiceModel>()
     private lateinit var notification: AlarmServiceNotification
     private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
     private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
@@ -102,11 +102,11 @@ class AlarmService : Service() {
         } ?: stop(intent)
     }
 
-    private fun playVibration(localAlarmServiceModel: LocalAlarmServiceModel) {
+    private fun playVibration(localAlarmServiceModel: AlarmServiceModel) {
         if (localAlarmServiceModel.alarmIsVibration) vibrationPlayer.play()
     }
 
-    private fun playRingtone(localAlarmServiceModel: LocalAlarmServiceModel) {
+    private fun playRingtone(localAlarmServiceModel: AlarmServiceModel) {
         localAlarmServiceModel.alarmRingtonePath?.let { ringtonePath ->
             ringtonePlayer.play(Uri.parse(ringtonePath))
         }
@@ -164,7 +164,7 @@ class AlarmService : Service() {
         startActivity(intent)
     }
 
-    private fun initView(localAlarmServiceModel: LocalAlarmServiceModel) {
+    private fun initView(localAlarmServiceModel: AlarmServiceModel) {
         if (view == null) {
             windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 

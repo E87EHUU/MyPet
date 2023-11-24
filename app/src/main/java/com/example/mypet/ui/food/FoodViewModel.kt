@@ -27,7 +27,7 @@ class FoodViewModel @Inject constructor(
         this.petMyId = petMyId
 
         viewModelScope.launch(Dispatchers.IO) {
-            foodRepository.observeFoodModels(petMyId)
+            foodRepository.getFoodModels(petMyId)
                 .collectLatest { _food.value = it }
         }
     }

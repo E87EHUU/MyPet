@@ -9,12 +9,12 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
-import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 
 class AlarmServiceNotification(
     private val context: Context,
-    private val alarmModel: LocalAlarmServiceModel,
+    private val alarmModel: AlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =

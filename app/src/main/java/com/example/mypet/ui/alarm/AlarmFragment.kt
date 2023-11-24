@@ -27,7 +27,7 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.update(args)
+        viewModel.update(args.alarmModel)
     }
 
     override fun onStop() {
