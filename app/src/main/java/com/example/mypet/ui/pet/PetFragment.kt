@@ -259,9 +259,9 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
                 if (activePetId != null) {
                     viewModel.deletePet(activePetId)
                     alertDialog.dismiss()
-                    view?.snackMessage(getString(R.string.delete_pet_alert_dialog_delete_accept))
+                    view?.snackMessage(getString(R.string.alert_dialog_delete_pet_successful))
                 } else {
-                    view?.snackMessage(getString(R.string.delete_pet_alert_dialog_delete_error))
+                    view?.snackMessage(getString(R.string.alert_dialog_delete_pet_error))
                 }
             }
 

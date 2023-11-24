@@ -73,14 +73,14 @@
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
 
-    <string name="title_pet_menu_item_edit_pet">Изменить</string>
-    <string name="title_pet_menu_item_delete_pet">Удалить</string>
-    <string name="delete_pet_dialog_title">Удаление питомца</string>
-    <string name="delete_pet_dialog_message">Вы уверены, что хотите удалить питомца?</string>
-    <string name="delete_pet_dialog_button_accept_text">Да</string>
-    <string name="delete_pet_dialog_button_cancel_text">Нет</string>
+    <string name="pet_action_menu_item_edit_pet">Изменить</string>
+    <string name="pet_action_menu_item_delete_pet">Удалить</string>
+    <string name="alert_dialog_delete_pet_title">Удаление питомца</string>
+    <string name="alert_dialog_delete_pet_message">Вы уверены, что хотите удалить питомца?</string>
+    <string name="alert_dialog_delete_pet_button_accept_text">Да</string>
+    <string name="alert_dialog_delete_pet_button_cancel_text">Нет</string>
 
-    <string name="delete_pet_alert_dialog_delete_error">Ошибка удаления питомца</string>
-    <string name="delete_pet_alert_dialog_delete_accept">Питомец удален</string>
+    <string name="alert_dialog_delete_pet_error">Ошибка удаления питомца</string>
+    <string name="alert_dialog_delete_pet_successful">Питомец удален</string>
 
 </resources>

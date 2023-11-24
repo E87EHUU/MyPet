@@ -16,7 +16,7 @@ class PetRepositoryImpl @Inject constructor(
         localPetDao.getPetList()
             .mapNotNull { localPetModels -> localPetModels.map { it.toPetModel() } }
 
-    override suspend fun observeDeletePet(petId: Int) {
+    override suspend fun deletePet(petId: Int) {
         localPetDao.deletePet(petId)
     }
 

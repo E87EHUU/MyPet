@@ -57,6 +57,6 @@ class PetViewModel @Inject constructor(
     }
 
     fun deletePet(petId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.observeDeletePet(petId)
+        petRepository.deletePet(petId)
     }
 }

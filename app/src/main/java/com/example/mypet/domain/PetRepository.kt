@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface PetRepository {
     fun observePetList(): Flow<List<PetModel>>
 
-    suspend fun observeDeletePet(petId: Int)
+    suspend fun deletePet(petId: Int)
 }
