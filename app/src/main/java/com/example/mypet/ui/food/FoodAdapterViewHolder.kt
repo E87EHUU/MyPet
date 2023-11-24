@@ -25,7 +25,8 @@ class FoodAdapterViewHolder(
         this.foodModel = foodModel
 
         with(foodModel) {
-            binding.textViewFoodItemText.text = foodTitle
+            binding.textViewFoodItemTitle.text = foodTitle
+            binding.textViewFoodItemRation.text = foodRation
             binding.textViewFoodItemTime.text = toAppTime(alarmHour, alarmMinute)
 
             binding.switchFoodItemActive.isVisible = alarmId != null

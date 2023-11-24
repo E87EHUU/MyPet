@@ -16,7 +16,6 @@
             android:id="@+id/textViewFoodItemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_8"
             android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,22 +23,30 @@
             tools:text="10:00" />
 
         <TextView
-            android:id="@+id/textViewFoodItemText"
+            android:id="@+id/textViewFoodItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewFoodItemTime"
             app:layout_constraintTop_toBottomOf="@+id/textViewFoodItemTime"
             tools:text="Утро понедельника" />
+
+        <TextView
+            android:id="@+id/textViewFoodItemRation"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_8"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            app:layout_constraintEnd_toEndOf="@+id/switchFoodItemActive"
+            app:layout_constraintStart_toStartOf="@+id/textViewFoodItemTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFoodItemTitle"
+            tools:text="Влажный корм 100 грамм" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchFoodItemActive"
             style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewFoodItemText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewFoodItemTime" />
 
