@@ -80,6 +80,9 @@
     <string name="user_settings">Settings</string>
     <string name="user_button">Button</string>
 
-    <string name="settings_dark_mode">Use dark mode</string>
+    <string name="settings_theme">Application theme</string>
+    <string name="settings_light_theme">Light</string>
+    <string name="settings_dark_theme">Dark</string>
+    <string name="settings_system_theme">System</string>
 
 </resources>
