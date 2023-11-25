@@ -8,11 +8,13 @@ import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
 import com.example.mypet.data.local.room.dao.LocalFoodDao
 import com.example.mypet.data.local.room.dao.LocalFoodDetailDao
 import com.example.mypet.data.local.room.dao.LocalPetDao
+import com.example.mypet.data.local.room.dao.PetCreationDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalPetBreedEntity
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
 import com.example.mypet.data.local.room.entity.LocalPetKindEntity
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity
+
 
 @Database(
     entities = [
@@ -32,6 +34,7 @@ abstract class LocalDatabase : RoomDatabase() {
     abstract fun localAlarmDao(): LocalAlarmDao
     abstract fun localAlarmServiceDao(): LocalAlarmServiceDao
     abstract fun localBootCompleteDao(): LocalBootCompleteDao
+    abstract fun localPetCreationDao(): PetCreationDao
 
     companion object {
         const val ID = "id"

@@ -28,5 +28,8 @@ interface LocalPetDao {
                 "m.is_active $IS_ACTIVE " +
                 "FROM pet_my m"
     )
-    fun observePetList(): Flow<List<LocalPetModel>>
+    fun getPetList(): Flow<List<LocalPetModel>>
+
+    @Query("DELETE FROM pet_my WHERE id = :petId")
+    suspend fun deletePet(petId: Int)
 }

@@ -16,11 +16,11 @@ data class LocalPetModel(
     @ColumnInfo(name = AVATAR_PATH)
     val avatarPath: String?,
     @ColumnInfo(name = NAME)
-    val name: String?,
+    val name: String,
     @ColumnInfo(name = AGE)
-    val age: String?,
+    val age: Int?,
     @ColumnInfo(name = WEIGHT)
-    val weight: String?,
+    val weight: Int?,
     @ColumnInfo(name = KIND_ORDINAL)
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)

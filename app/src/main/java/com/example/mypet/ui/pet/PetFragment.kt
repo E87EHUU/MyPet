@@ -2,6 +2,8 @@ package com.example.mypet.ui.pet
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +27,8 @@ import com.example.mypet.ui.pet.food.PetFoodAdapterCallback
 import com.example.mypet.ui.pet.list.OnAddPetClickListener
 import com.example.mypet.ui.pet.list.OnPetClickListener
 import com.example.mypet.ui.pet.list.PetListAdapter
+import com.example.mypet.ui.snackMessage
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -73,6 +77,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         startObservePetList()
         startObservePetFoodList()
         startObservePetCareList()
+        initMenuPetAction()
         initListeners()
     }
 
@@ -88,7 +93,9 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.petList.collectLatest { petModels ->
                     if (petModels.isNotEmpty()) onNotEmptyPetModels(petModels)
-                    else onEmptyPetModels()
+                    else {
+                        onEmptyPetModels()
+                    }
                 }
             }
         }
@@ -102,6 +109,8 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onEmptyPetModels() {
+        petListAdapter.setPetList(emptyList())
+        viewModel.activePetMyId = null
         binding.textViewPetEmpty.isVisible = true
     }
 
@@ -149,6 +158,8 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onPetUpdate(petModel: PetModel) {
+        viewModel.activePetMyId = petModel.id
+
         if (petModel.avatarUri != null)
             binding.imageViewPetAvatarIcon.setImageURI(petModel.avatarUri)
         else
@@ -162,14 +173,14 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         binding.textViewPetEmpty.isVisible = false
 
         petModel.age?.let {
-            binding.textViewPetAgeText.text = petModel.age
+            binding.textViewPetAgeText.text = petModel.age.toString()
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
         }
 
         petModel.weight?.let {
-            binding.textViewPetWeightText.text = petModel.weight
+            binding.textViewPetWeightText.text = petModel.weight.toString()
             binding.materialCardViewPetWeight.isVisible = true
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false
@@ -177,7 +188,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     override fun onAddPetClick() {
-        // Переход на фрагмент создания нового питомца"
+        findNavController().navigate(R.id.petCreationFragment)
     }
 
     override fun onPetClick(pet: PetModel) {
@@ -210,5 +221,57 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         val directions =
             PetFragmentDirections.actionPetFragmentToCareDetailFragment(petCareModel.id)
         findNavController().navigate(directions)
+    }
+
+    private fun initMenuPetAction() {
+        binding.imageViewPopupMenuPetAction.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), it)
+            popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.pet_menu_item_edit_pet -> {
+                        // Add Edit pet
+                        true
+                    }
+
+                    R.id.pet_menu_item_delete_pet -> {
+                        showDeletePetDialog()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
+    }
+
+    private fun showDeletePetDialog() {
+        val deletePetAlertDialog = layoutInflater.inflate(R.layout.alert_dialog_delete_pet, null)
+
+        val alertDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(deletePetAlertDialog)
+            .create()
+
+        deletePetAlertDialog.findViewById<Button>(R.id.buttonAcceptDeletePetDialog)
+            .setOnClickListener {
+                val activePetId = viewModel.activePetMyId
+
+                if (activePetId != null) {
+                    viewModel.deletePet(activePetId)
+                    alertDialog.dismiss()
+                    view?.snackMessage(getString(R.string.alert_dialog_delete_pet_successful))
+                } else {
+                    view?.snackMessage(getString(R.string.alert_dialog_delete_pet_error))
+                }
+            }
+
+        deletePetAlertDialog.findViewById<Button>(R.id.buttonCancelDeletePetDialog)
+            .setOnClickListener {
+                alertDialog.dismiss()
+            }
+
+        alertDialog.show()
     }
 }
