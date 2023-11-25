@@ -55,4 +55,9 @@ object DataModule {
     @Provides
     fun provideAlarmDao(alarmDao: AlarmDao): IAlarmDao =
         alarmDao
+
+    @Singleton
+    @Provides
+    fun provideLocalPetCreationDao(db: LocalDatabase) =
+        db.localPetCreationDao()
 }

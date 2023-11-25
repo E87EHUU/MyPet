@@ -82,7 +82,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
 
     implementation("androidx.room:room-runtime:$androidxRoomVersion")
-    ksp("androidx.room:room-compiler:$androidxRoomVersion")
+    kapt("androidx.room:room-compiler:$androidxRoomVersion")
     implementation("androidx.room:room-ktx:$androidxRoomVersion")
 
     implementation("com.squareup.retrofit2:retrofit:$retrofit2Version")
