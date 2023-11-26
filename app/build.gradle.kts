@@ -69,6 +69,8 @@ dependencies {
 
     val yandexMapVersion: String by System.getProperties()
 
+    val dataStoreVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
@@ -94,4 +96,6 @@ dependencies {
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
 
     implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
+
+    implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
 }

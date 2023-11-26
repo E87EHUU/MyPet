@@ -117,4 +117,9 @@
     <string name="user_button">Button</string>
     <string name="fill_up_all_fields">Заполните все поля</string>
 
+    <string name="settings_theme">Application theme</string>
+    <string name="settings_light_theme">Light</string>
+    <string name="settings_dark_theme">Dark</string>
+    <string name="settings_system_theme">System</string>
+
 </resources>

@@ -11,13 +11,13 @@
         android:name="com.example.mypet.ui.user.UserFragment"
         tools:layout="@layout/fragment_user">
         <action
-            android:id="@+id/action_userFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_userFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.mypet.ui.settings.SettingsFragment"
-        tools:layout="@layout/fragment_settings"/>
+        android:id="@+id/preferencesFragment"
+        android:name="com.example.mypet.ui.preferences.PreferencesFragment"
+        tools:layout="@layout/fragment_preferences"/>
 
 </navigation>
