@@ -2,6 +2,8 @@ package com.example.mypet.ui.food.detail
 
 import androidx.lifecycle.ViewModel
 import com.example.mypet.domain.FoodDetailRepository
+import com.example.mypet.domain.alarm.AlarmAlertType
+import com.example.mypet.domain.alarm.AlarmModel
 import com.example.mypet.domain.food.detail.FoodDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +26,14 @@ class FoodDetailViewModel @Inject constructor(
 
     var hour = localDateTime.hour
     var minute = localDateTime.minute
+
+    var alarmModel: AlarmModel? = null
+        get() {
+            return if (field == null) foodDetailModel?.toAlarmModel() ?: AlarmModel()
+            else field
+        }
+
+    var alarmAlertTypeOrdinal = AlarmAlertType.ONLY_NOTIFICATION.ordinal
 
     private var isActive = true
 

@@ -1,6 +1,8 @@
 package com.example.mypet.ui.food.detail
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -13,8 +15,11 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodDetailBinding
+import com.example.mypet.domain.alarm.AlarmAlertType
+import com.example.mypet.domain.alarm.AlarmModel
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -83,7 +88,26 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
         }
 
         binding.includeFoodDetailRepeat.root.setOnClickListener {
+            navToAlarmRepeat(viewModel.alarmModel)
+        }
 
+        binding.includeFoodDetailAlert.chipSnippetAlertAlarm.setOnClickListener {
+        }
+
+        binding.includeFoodDetailAlert.chipGroupSnippetAlert.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isEmpty())
+                viewModel.alarmAlertTypeOrdinal = AlarmAlertType.NONE.ordinal
+            else
+                when (checkedIds.first()) {
+                    R.id.chipSnippetAlertAlarm -> {
+                        if (!Settings.canDrawOverlays(requireContext())) showAlarmDialog()
+                        else viewModel.alarmAlertTypeOrdinal = AlarmAlertType.ALL.ordinal
+                    }
+
+                    else -> {
+                        viewModel.alarmAlertTypeOrdinal = AlarmAlertType.ONLY_NOTIFICATION.ordinal
+                    }
+                }
         }
     }
 
@@ -95,5 +119,29 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
                 }
             }
         }
+    }
+
+    private fun navToAlarmRepeat(alarmModel: AlarmModel?) {
+        alarmModel?.let {
+            val directions =
+                FoodDetailFragmentDirections.actionFoodDetailFragmentToAlarmFragment(alarmModel)
+            findNavController().navigate(directions)
+        }
+    }
+
+    private fun showAlarmDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Разрешение \"Поверх всех окон\"")
+            .setMessage("Для работы будильника необходимо предоставить приложению \"Мой питомец\" разрешение")
+            .setNegativeButton("Отказать") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Предоставить") { dialog, _ ->
+                dialog.dismiss()
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                startActivityForResult(intent, 0)
+            }
+            .create()
+            .show()
     }
 }

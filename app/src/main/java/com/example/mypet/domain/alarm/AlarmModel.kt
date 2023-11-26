@@ -4,6 +4,7 @@ import android.media.RingtoneManager
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.ColumnInfo
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_COUNT
@@ -29,11 +30,11 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
 
 data class AlarmModel(
     @ColumnInfo(name = ID)
-    val id: Int,
+    val id: Int = DEFAULT_ID,
     @ColumnInfo(name = HOUR)
-    val hour: Int,
+    val hour: Int = 0,
     @ColumnInfo(name = MINUTE)
-    val minute: Int,
+    val minute: Int = 0,
     @ColumnInfo(name = DAY)
     val day: Int? = null,
     @ColumnInfo(name = MONTH)

@@ -1,16 +1,11 @@
 package com.example.mypet.ui.alarm
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,32 +42,11 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
     }
 
     private fun initView() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            binding.materialCardViewAlarmAccess.isVisible = false
-            binding.layerAlarmDelay.isVisible = true
-            binding.layerAlarmRingtone.isVisible = true
-            binding.layerAlarmVibration.isVisible = true
-
-            binding.switchAlarmDelay.isChecked = viewModel.isDelay
-            binding.switchAlarmVibration.isChecked = viewModel.isVibration
-        } else {
-            binding.materialCardViewAlarmAccess.isVisible = true
-            binding.layerAlarmDelay.isVisible = false
-            binding.layerAlarmRingtone.isVisible = false
-            binding.layerAlarmVibration.isVisible = false
-        }
+        binding.switchAlarmDelay.isChecked = viewModel.isDelay
+        binding.switchAlarmVibration.isChecked = viewModel.isVibration
     }
 
     private fun initListeners() {
-        binding.buttonAlarmAccess.setOnClickListener {
-            requestPermissionForOverlay()
-        }
-
         binding.layerAlarmVibration.setOnClickListener {
             viewModel.isVibration = !viewModel.isVibration
         }
@@ -120,13 +94,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
         )
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, null as Uri?)
         chooserRingtoneRegisterForActivityResult.launch(intent)
-    }
-
-    private fun requestPermissionForOverlay() {
-        if (!Settings.canDrawOverlays(requireContext())) {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            startActivityForResult(intent, 0)
-        }
     }
 
     companion object {

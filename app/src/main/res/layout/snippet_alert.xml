@@ -24,23 +24,23 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonSnippetAlertSettings"
         app:layout_constraintStart_toEndOf="@+id/imageViewSnippetAlertIcon" />
 
-    <Button
-        android:id="@+id/buttonSnippetAlertSettings"
-        style="@style/Widget.Material3.Button.IconButton"
+    <ImageView
+        android:id="@+id/imageViewSnippetAlertSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/baseline_settings_24"
+        android:src="@drawable/baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewSnippetAlertIcon" />
+        app:layout_constraintTop_toTopOf="@+id/imageViewSnippetAlertIcon"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroupSnippetAlert"
         style="@style/Widget.Material3.ChipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:checkedChip="@id/chipSnippetAlertNotification"
         app:layout_constraintStart_toStartOf="@+id/textViewSnippetAlertTitle"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSnippetAlertSettings"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSnippetAlertIcon"
         app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
@@ -56,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/snippet_alert_alarm" />
+
     </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

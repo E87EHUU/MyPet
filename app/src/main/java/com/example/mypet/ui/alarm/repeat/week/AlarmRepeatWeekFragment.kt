@@ -11,7 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentAlarmRepeatWeekBinding
 import com.example.mypet.ui.alarm.AlarmViewModel
-import com.example.mypet.ui.alarm.repeat.custom.AlarmRepeatCustomFragment.Companion.ALARM_REPEAT_POP_BACK
+import com.example.mypet.ui.alarm.repeat.AlarmRepeatCustomFragment.Companion.ALARM_REPEAT_POP_BACK
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

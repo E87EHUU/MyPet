@@ -1,5 +1,4 @@
-/*
-package com.example.mypet.ui.alarm.repeat.custom
+package com.example.mypet.ui.alarm.repeat
 
 import android.content.Intent
 import android.media.RingtoneManager
@@ -21,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AlarmRepeatCustomFragment : Fragment(R.layout.fragment_alarm) {
+class AlarmRepeatCustomFragment : Fragment(R.layout.fragment_alarm_repeat) {
     private val binding by viewBinding(FragmentAlarmBinding::bind)
     private val viewModel by navGraphViewModels<AlarmViewModel>(R.id.navigationAlarm) { defaultViewModelProviderFactory }
 
@@ -145,4 +144,4 @@ class AlarmRepeatCustomFragment : Fragment(R.layout.fragment_alarm) {
     companion object {
         const val ALARM_REPEAT_POP_BACK = "alarm_repeat_pop_back"
     }
-}*/
+}
