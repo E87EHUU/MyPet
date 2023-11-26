@@ -27,8 +27,8 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             profilePrivacy.lineImage.setImageResource(R.drawable.icon_privacy)
             profilePrivacy.lineText.text = getString(R.string.user_privacy)
 
-            profileSettings.lineImage.setImageResource(R.drawable.icon_settings)
-            profileSettings.lineText.text = getString(R.string.user_settings)
+            profilePreferences.lineImage.setImageResource(R.drawable.icon_settings)
+            profilePreferences.lineText.text = getString(R.string.user_settings)
 
             profileAbout.lineBlock.setOnClickListener {
                 dialog(getString(R.string.user_about), getString(R.string.user_app_description))
@@ -36,8 +36,8 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             profilePrivacy.lineBlock.setOnClickListener {
                 dialog(getString(R.string.user_privacy), getString(R.string.user_privacy_description))
             }
-            profileSettings.lineBlock.setOnClickListener {
-                findNavController().navigate(UserFragmentDirections.actionUserFragmentToSettingsFragment())
+            profilePreferences.lineBlock.setOnClickListener {
+                findNavController().navigate(UserFragmentDirections.actionUserFragmentToPreferencesFragment())
             }
         }
     }

@@ -24,7 +24,7 @@
 
             <include
                 layout="@layout/line_with_image"
-                android:id="@+id/profileSettings"/>
+                android:id="@+id/profile_preferences"/>
 
         </LinearLayout>
 
