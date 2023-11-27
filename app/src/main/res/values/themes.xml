@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <style name="Base.Theme.MyPet" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -26,7 +27,7 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
-        
+
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/baseline_close_24</item>
 
@@ -39,6 +40,63 @@
 
     <style name="Theme.MyPet.ImageCircle">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16%</item>
+        <item name="cornerSize">50%</item>
     </style>
+
+    <style name="mapButtonStyle">
+        <item name="android:layout_width">@dimen/map_button_size</item>
+        <item name="android:layout_height">@dimen/map_button_size</item>
+        <item name="android:layout_marginEnd">@dimen/map_milli_margin</item>
+        <item name="android:background">@drawable/square_round_corners</item>
+        <item name="android:elevation">@dimen/offset_4</item>
+    </style>
+
+    <style name="Theme.MyPet.CareContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/offset_16</item>
+    </style>
+
+    <style name="Theme.MyPet.CareHeaderIcon">
+        <item name="android:layout_width">@dimen/care_header_icon_size</item>
+        <item name="android:layout_height">@dimen/care_header_icon_size</item>
+        <item name="android:layout_marginStart">@dimen/offset_16</item>
+    </style>
+
+    <style name="Theme.MyPet.CareHeaderTitle">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/offset_16</item>
+        <item name="android:layout_marginStart">@dimen/offset_8</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
+    </style>
+
+    <style name="Theme.MyPet.CareEndRadio">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/care_end_radio_height</item>
+    </style>
+
+    <style name="Theme.MyPet.CareTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/item_height_default</item>
+        <item name="android:layout_marginTop">@dimen/offset_8</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">@dimen/offset_16</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleMedium</item>
+    </style>
+
+    <style name="Theme.MyPet.CareTextView.Date">
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="Theme.MyPet.CareTextView.Time">
+        <item name="android:letterSpacing">0.2</item>
+    </style>
+
+    <style name="Theme.MyPet.CareBottomDivider">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/offset_8</item>
+    </style>
+
 </resources>

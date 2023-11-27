@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.MyPet.CareContainer">
+
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerFoodIcon"
+        style="@style/Theme.MyPet.CareHeaderIcon"
+        android:contentDescription="@string/care_food_title"
+        android:src="@drawable/feed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerFoodTitle"
+        style="@style/Theme.MyPet.CareHeaderTitle"
+        android:text="@string/care_food_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerFoodIcon"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerFoodIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerFoodIcon" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutsCareRecyclerEndTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_8"
+        android:maxEms="2"
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerFoodIcon">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextCareRecyclerEndTimes"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            android:text="1"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFoodRecyclerRepeatIcon"
+            tools:text="10" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewCareRecyclerFoodTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_8"
+        android:text="@string/care_food_times"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerEndTimes"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerEndTimes"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRecyclerEndTimes" />
+
+    <com.google.android.material.divider.MaterialDivider
+        style="@style/Theme.MyPet.CareBottomDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerEndTimes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,62 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mypet.ui.map.MapFragment"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="@dimen/offset_8">
+
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/mapViewMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mapSearchBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mapButtonSearch"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/icon_cancel"
+        app:endIconCheckable="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mapEditQuery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:imeOptions="actionSearch"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/mapButtonSearch"
+        style="@style/mapButtonStyle"
+        app:layout_constraintBottom_toBottomOf="@id/mapSearchBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_search"
+        android:contentDescription="@string/map_search_button" />
+
+    <ImageButton
+        android:id="@+id/mapZoomInButton"
+        style="@style/mapButtonStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_zoom_in"
+        android:contentDescription="@string/map_zoom_in"/>
+
+    <ImageButton
+        android:id="@+id/mapZoomOutButton"
+        style="@style/mapButtonStyle"
+        app:layout_constraintTop_toBottomOf="@+id/mapZoomInButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_zoom_out"
+        android:contentDescription="@string/map_zoom_out"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAlarmOverlay"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/offset_24"
+        android:layout_marginTop="@dimen/offset_16"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="3"
+        tools:listitem="@layout/service_alarm_overlay_recycler_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/buttonAlarmDelay"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/offset_8"
+        android:text="@string/alarm_service_overlay_delay"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        app:layout_constraintEnd_toStartOf="@+id/buttonViewAlarmOverlayStop"
+        app:layout_constraintTop_toTopOf="@+id/buttonViewAlarmOverlayStop" />
+
+    <Button
+        android:id="@+id/buttonViewAlarmOverlayStop"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/alarm_service_shape_button"
+        android:text="@string/alarm_service_overlay_stop"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewAlarmOverlay"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewAlarmOverlay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

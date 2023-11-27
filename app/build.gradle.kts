@@ -5,6 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -22,6 +23,8 @@ android {
         targetSdk = targetSdkVersion.toInt()
         versionCode = 1
         versionName = "1.0"
+
+        android.buildFeatures.buildConfig = true
    }
 
     buildTypes {
@@ -62,7 +65,15 @@ dependencies {
 
     val retrofit2Version: String by System.getProperties()
 
+    val glideVersion: String by System.getProperties()
+
+    val yandexMapVersion: String by System.getProperties()
+
+    val dataStoreVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")
@@ -73,11 +84,18 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
 
     implementation("androidx.room:room-runtime:$androidxRoomVersion")
-    ksp("androidx.room:room-compiler:$androidxRoomVersion")
+    kapt("androidx.room:room-compiler:$androidxRoomVersion")
     implementation("androidx.room:room-ktx:$androidxRoomVersion")
 
     implementation("com.squareup.retrofit2:retrofit:$retrofit2Version")
     implementation("com.squareup.retrofit2:converter-simplexml:$retrofit2Version")
 
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
+
+    implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
+
+    implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
 }
