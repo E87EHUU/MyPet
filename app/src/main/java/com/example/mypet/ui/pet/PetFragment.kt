@@ -173,14 +173,14 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         binding.textViewPetEmpty.isVisible = false
 
         petModel.age?.let {
-            binding.textViewPetAgeText.text = petModel.age.toString()
+            binding.textViewPetAgeText.text = petModel.age
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
         }
 
         petModel.weight?.let {
-            binding.textViewPetWeightText.text = petModel.weight.toString()
+            binding.textViewPetWeightText.text = petModel.weight
             binding.materialCardViewPetWeight.isVisible = true
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false

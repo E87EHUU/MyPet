@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/offset_24"
-            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
             android:text="@string/pet_list_title"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             android:orientation="horizontal"
             android:overScrollMode="never"
             android:paddingHorizontal="@dimen/offset_24"
-            android:paddingVertical="@dimen/offset_16"
+            android:paddingVertical="@dimen/creation_fragment_margin_top_for_view"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
             android:layout_width="@dimen/pet_avatar_size"
             android:layout_height="@dimen/pet_avatar_size"
             android:layout_marginStart="@dimen/offset_24"
-            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
             android:background="@drawable/pet_active_avatar_round_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frameLayoutPetListShadow">
@@ -91,7 +91,7 @@
             android:id="@+id/textViewPetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginStart="@dimen/creation_fragment_margin_top_for_view"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintBottom_toTopOf="@+id/textViewPetBreedName"
             app:layout_constraintStart_toEndOf="@+id/imageViewPetAvatar"
@@ -115,7 +115,7 @@
             android:id="@+id/imageViewPopupMenuPetAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
             android:layout_marginEnd="@dimen/offset_8"
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
@@ -137,7 +137,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/offset_16"
+                android:layout_margin="@dimen/creation_fragment_margin_top_for_view"
                 android:orientation="vertical">
 
                 <TextView
@@ -163,8 +163,8 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_16"
-            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginStart="@dimen/creation_fragment_margin_top_for_view"
+            android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
             android:minWidth="@dimen/pet_card_detail_min_width"
             app:layout_constraintStart_toEndOf="@+id/materialCardViewPetWeight"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPetAvatar">
@@ -172,7 +172,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/offset_16"
+                android:layout_margin="@dimen/creation_fragment_margin_top_for_view"
                 android:orientation="vertical">
 
                 <TextView
@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
                 android:text="@string/pet_food_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -235,7 +235,7 @@
                 android:id="@+id/recyclerViewPetFoodList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
@@ -262,7 +262,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_24"
-                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
                 android:text="@string/pet_care_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -290,7 +290,7 @@
                 android:id="@+id/recyclerViewPetCareList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/offset_16"
+                android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
                 android:paddingVertical="@dimen/offset_4"

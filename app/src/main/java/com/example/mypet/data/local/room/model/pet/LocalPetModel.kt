@@ -18,9 +18,9 @@ data class LocalPetModel(
     @ColumnInfo(name = NAME)
     val name: String,
     @ColumnInfo(name = AGE)
-    val age: Int?,
+    val age: String?,
     @ColumnInfo(name = WEIGHT)
-    val weight: Int?,
+    val weight: String?,
     @ColumnInfo(name = KIND_ORDINAL)
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)

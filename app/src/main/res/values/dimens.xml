@@ -3,7 +3,7 @@
     <dimen name="zero">0dp</dimen>
     <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_8">8dp</dimen>
-    <dimen name="offset_16">16dp</dimen>
+    <dimen name="creation_fragment_margin_top_for_view">16dp</dimen>
     <dimen name="offset_24">24dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
@@ -22,7 +22,7 @@
     <dimen name="map_deca_margin">16dp</dimen>
     <dimen name="spinner_200dp">200dp</dimen>
     <dimen name="avatar_creation_size">100dp</dimen>
-    <dimen name="_70dp">70dp</dimen>
+    <dimen name="pet_creation_edit_text_width_of_weight">70dp</dimen>
     <dimen name="_25dp">25dp</dimen>
 
     <dimen name="alarm_icon_size">64dp</dimen>
@@ -47,5 +47,7 @@
     <dimen name="user_margin">20dp</dimen>
 
     <dimen name="preferences_chip_spacing">20dp</dimen>
+    <dimen name="pet_creation_spinner_height">50dp</dimen>
+    <dimen name="pet_creation_fragment_margin">16dp</dimen>
 
 </resources>
