@@ -41,11 +41,11 @@ class PetViewModel @Inject constructor(
 
         _petCareList.value =
             listOf(
-                PetCareModel(1, R.drawable.ic_pet_kind_hamster, "Ванна", "10:00", 30),
-                PetCareModel(2, R.drawable.ic_pet_kind_owl, "Чистка", "20|10|23", 50),
-                PetCareModel(3, R.drawable.ic_pet_kind_snail, "Вакцинация", "10|02|24", 80),
-                PetCareModel(4, R.drawable.ic_pet_kind_madagascar_hissing_cockroach, "Прогулка", "20:00", 70),
-                PetCareModel(5, R.drawable.ic_pet_kind_turtle, "Вычесывание шерсти", "10|05|20", 10),
+                PetCareModel(1, R.drawable.ic_care_bath, "Ванна", "10:00", 30),
+                PetCareModel(2, R.drawable.ic_care_brushing, "Вычесывание", "20|10|23", 50),
+                PetCareModel(3, R.drawable.ic_care_against_fleas_and_ticks, "От блох и клещей", "10|02|24", 80),
+                PetCareModel(4, R.drawable.ic_care_against_worms, "От глистов", "20:00", 70),
+                PetCareModel(5, R.drawable.ic_pet_kind_turtle, "Прогулка", "10|05|20", 10),
                 PetCareModel(6, R.drawable.ic_pet_kind_frog, "Четоеще", "00:00", 0),
             )
     }
