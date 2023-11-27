@@ -5,8 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,12 +18,15 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.ActivityMainBinding
+import com.example.mypet.ui.preferences.PreferencesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding by viewBinding(ActivityMainBinding::bind)
+    private val preferences: PreferencesViewModel by viewModels()
 
     private val topLevelDestinations = setOf(
         R.id.navigationMap,
@@ -42,6 +47,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        applyPreferences()
+
         requestPermissionForOverlay()
 
         setSupportActionBar(binding.toolbar)
@@ -49,7 +56,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setupActionBarWithNavController(
             this@MainActivity, navController, mAppBarConfiguration
         )
-
 
         binding.bottomNavigation.setupWithNavController(navController)
 
@@ -67,6 +73,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (!Settings.canDrawOverlays(this)) {
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
             startActivityForResult(intent, 0)
+        }
+    }
+
+    private fun applyPreferences() {
+        lifecycleScope.launch {
+            if (!preferences.appIsRunning) {
+                preferences.run {
+                    appIsRunning = true
+                    applyThemeMode()
+                }
+            }
         }
     }
 }

@@ -4,11 +4,13 @@ import com.example.mypet.data.BootCompleteRepositoryImpl
 import com.example.mypet.data.FoodAlarmRepositoryImpl
 import com.example.mypet.data.FoodAlarmServiceRepositoryImpl
 import com.example.mypet.data.FoodRepositoryImpl
+import com.example.mypet.data.PetCreationRepositoryImpl
 import com.example.mypet.data.PetRepositoryImpl
 import com.example.mypet.domain.BootCompleteRepository
 import com.example.mypet.domain.FoodAlarmRepository
 import com.example.mypet.domain.FoodAlarmServiceRepository
 import com.example.mypet.domain.FoodRepository
+import com.example.mypet.domain.PetCreationRepository
 import com.example.mypet.domain.PetRepository
 import dagger.Module
 import dagger.Provides
@@ -43,4 +45,8 @@ object DomainModule {
     @Singleton
     fun provideBootCompleteRepository(bootCompleteRepositoryImpl: BootCompleteRepositoryImpl): BootCompleteRepository =
         bootCompleteRepositoryImpl
+
+    @Provides
+    fun providePetCreationRepository(petCreationRepositoryImpl: PetCreationRepositoryImpl): PetCreationRepository =
+        petCreationRepositoryImpl
 }
