@@ -12,19 +12,19 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGH
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
-    val id: Int,
+    val petId: Int,
     @ColumnInfo(name = AVATAR_PATH)
-    val avatarPath: String?,
+    val petAvatarPath: String?,
     @ColumnInfo(name = NAME)
-    val name: String,
+    val petName: String,
     @ColumnInfo(name = AGE)
-    val age: Int?,
+    val petAge: Int?,
     @ColumnInfo(name = WEIGHT)
-    val weight: Int?,
+    val petWeight: Int?,
     @ColumnInfo(name = KIND_ORDINAL)
-    val kindOrdinal: Int,
+    val petKindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)
-    val breedOrdinal: Int?,
+    val petBreedOrdinal: Int?,
     @ColumnInfo(name = IS_ACTIVE)
-    val isActive: Boolean,
+    val petIsActive: Boolean,
 )
