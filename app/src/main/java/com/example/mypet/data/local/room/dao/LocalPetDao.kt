@@ -26,9 +26,10 @@ interface LocalPetDao {
                 "m.kind_ordinal $KIND_ORDINAL, " +
                 "m.breed_ordinal $BREED_ORDINAL, " +
                 "m.is_active $IS_ACTIVE " +
-                "FROM pet_my m"
+                "FROM pet_my m "
+//                "LEFT JOIN alarm a ON a.id = m " +
     )
-    fun getPetList(): Flow<List<LocalPetModel>>
+    fun getLocalPetModels(): Flow<List<LocalPetModel>>
 
     @Query("DELETE FROM pet_my WHERE id = :petId")
     suspend fun deletePet(petId: Int)

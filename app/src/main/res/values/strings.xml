@@ -81,7 +81,6 @@
     <string name="pet_food_forward_title">все</string>
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
-    <string name="food_detail_repeat_title">Повтор</string>
     <string name="food_detail_title_hint">Напоминание</string>
     <string name="food_detail_ration_hint">Рацион</string>
     <string name="food_detail_repeat_disable">Отключен</string>
@@ -121,5 +120,31 @@
     <string name="settings_light_theme">Light</string>
     <string name="settings_dark_theme">Dark</string>
     <string name="settings_system_theme">System</string>
+    <string name="care_repeat_title">Повторяется</string>
+    <string name="care_repeat_description_none">Без повтора</string>
+    <string name="care_food_title">Кормежка</string>
+    <string name="care_food_times">раз(а)</string>
+    <string name="care_end_title">Окончание</string>
+    <string name="care_end_in">В</string>
+    <string name="care_end_after">После</string>
+    <string name="care_end_none">Никогда</string>
+    <string name="care_start_title">Начало</string>
+    <string name="care_time_default">10:10</string>
+    <string name="care_date_default">10.10.2020</string>
+    <string name="care_alarm_title">Уведомления</string>
+
+
+    <string-array name="repeats">
+        <item>каждый день</item>
+        <item>каждую неделю</item>
+        <item>каждый месяц</item>
+        <item>каждый год</item>
+    </string-array>
+
+    <string-array name="food_interval">
+        <item>раз(а) в день</item>
+        <item>через день</item>
+        <item>раза в меясяц</item>
+    </string-array>
 
 </resources>

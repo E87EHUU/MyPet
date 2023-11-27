@@ -1,4 +1,4 @@
-package com.example.mypet.domain.pet.detail
+package com.example.mypet.domain.pet
 
 import android.net.Uri
 
@@ -11,4 +11,5 @@ data class PetModel(
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
     val isActive: Boolean,
+    //val foods: List<PetFoodModel>
 )

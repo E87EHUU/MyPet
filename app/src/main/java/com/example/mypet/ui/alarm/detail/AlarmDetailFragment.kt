@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm
+package com.example.mypet.ui.alarm.detail
 
 import android.content.Intent
 import android.media.RingtoneManager
@@ -12,17 +12,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentAlarmBinding
+import com.example.mypet.app.databinding.FragmentAlarmDetailBinding
 
 
-class AlarmFragment : Fragment(R.layout.fragment_alarm) {
-    private val binding by viewBinding(FragmentAlarmBinding::bind)
-    private val viewModel by viewModels<AlarmViewModel>()
-    private val args by navArgs<AlarmFragmentArgs>()
+class AlarmDetailFragment : Fragment(R.layout.fragment_alarm_detail) {
+    private val binding by viewBinding(FragmentAlarmDetailBinding::bind)
+    private val viewModel by viewModels<AlarmDetailViewModel>()
+    private val args by navArgs<AlarmDetailFragmentArgs>()
 
     override fun onStart() {
         super.onStart()
-        viewModel.update(args.alarmModel)
+        viewModel.update(args.alarmId)
     }
 
     override fun onStop() {
@@ -31,7 +31,6 @@ class AlarmFragment : Fragment(R.layout.fragment_alarm) {
         findNavController().previousBackStackEntry?.savedStateHandle?.let {
             it[BACK_ALARM_MODEL] = viewModel.alarmModel
         }
-        findNavController().popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

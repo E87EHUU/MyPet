@@ -12,7 +12,8 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentFoodBinding
-import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.domain.food.CareAlarmModel
+import com.example.mypet.domain.food.CareModel
 import com.example.mypet.ui.getFloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -24,18 +25,33 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
     private val viewModel by viewModels<FoodViewModel>()
     private val args by navArgs<FoodFragmentArgs>()
 
-    private val foodAdapterCallback =
-        object : FoodAdapterCallback {
-            override fun onItemClick(foodModel: FoodModel) {
-                navToFoodDetail(foodModel)
-            }
-
-            override fun onSwitchActive(foodModel: FoodModel) {
-                viewModel.switchAlarmState(foodModel)
+    private val careFoodCallback =
+        object : CareFoodCallback {
+            override fun onItemClick() {
+                TODO("Not yet implemented")
             }
         }
 
-    private val foodAdapter = FoodAdapter(foodAdapterCallback)
+    private val careRepeatCallback =
+        object : CareRepeatCallback {
+            override fun onItemClick() {
+                navToRepeat()
+            }
+        }
+
+    private val careAlarmCallback =
+        object : CareAlarmCallback {
+            override fun onItemClick(careAlarmModel: CareAlarmModel) {
+                navToAlarmDetail(careAlarmModel)
+            }
+
+            override fun onSwitchActive(careAlarmModel: CareAlarmModel) {
+                viewModel.switchAlarmState(careAlarmModel)
+            }
+
+        }
+
+    private val foodAdapter = CareAdapter(careFoodCallback, careRepeatCallback, careAlarmCallback)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,7 +84,7 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
         }
     }
 
-    private fun onFoodUpdated(foodModels: List<FoodModel>) {
+    private fun onFoodUpdated(foodModels: List<CareModel>) {
         foodAdapter.submitList(foodModels)
     }
 
@@ -76,15 +92,29 @@ class FoodFragment : Fragment(R.layout.fragment_food) {
 
     }
 
-    private fun navToFoodDetail(foodModel: FoodModel? = null) {
-        viewModel.petMyId?.let {
-            val directions = FoodFragmentDirections
-                .actionFoodFragmentToFoodDetailFragment(
-                    petMyId = it,
-                    petFoodId = foodModel?.foodId ?: 0
-                )
+    private fun navToRepeat() {
+        val directions = FoodFragmentDirections.actionFoodFragmentToRepeatFragment()
+        findNavController().navigate(directions)
+    }
 
+    private fun navToAlarmDetail(careAlarmModel: CareAlarmModel) {
+        careAlarmModel.alarmId?.let {
+            val directions =
+                FoodFragmentDirections.actionFoodFragmentToAlarmDetailFragment(careAlarmModel.alarmId)
             findNavController().navigate(directions)
         }
+    }
+
+
+    private fun navToFoodDetail(foodModel: CareModel? = null) {
+        /*        viewModel.petMyId?.let {
+                    val directions = FoodFragmentDirections
+                        .actionFoodFragmentToFoodDetailFragment(
+                            petMyId = it,
+                            petFoodId = foodModel?.foodId ?: 0
+                        )
+
+                    findNavController().navigate(directions)
+                }*/
     }
 }

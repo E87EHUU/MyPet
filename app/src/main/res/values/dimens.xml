@@ -48,5 +48,9 @@
     <dimen name="user_margin">20dp</dimen>
 
     <dimen name="preferences_chip_spacing">20dp</dimen>
+    <dimen name="care_header_icon_size">24dp</dimen>
+    <dimen name="care_end_radio_height">56dp</dimen>
+    <dimen name="app_compat_spinner_height">56dp</dimen>
+    <dimen name="item_height_default">48dp</dimen>
 
 </resources>

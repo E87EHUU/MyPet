@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.mypet.app.databinding.FragmentPetFoodRecyclerItemBinding
-import com.example.mypet.domain.pet.food.PetFoodModel
+import com.example.mypet.domain.pet.PetFoodModel
 
 class PetFoodAdapter(
     private val callback: PetFoodAdapterCallback,

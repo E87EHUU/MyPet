@@ -122,11 +122,11 @@ class FoodDetailFragment : Fragment(R.layout.fragment_food_detail) {
     }
 
     private fun navToAlarmRepeat(alarmModel: AlarmModel?) {
-        alarmModel?.let {
+/*        alarmModel?.let {
             val directions =
                 FoodDetailFragmentDirections.actionFoodDetailFragmentToAlarmFragment(alarmModel)
             findNavController().navigate(directions)
-        }
+        }*/
     }
 
     private fun showAlarmDialog() {

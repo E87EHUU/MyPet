@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.MyPet.CareContainer">
+
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerEndIcon"
+        style="@style/Theme.MyPet.CareHeaderIcon"
+        android:contentDescription="@string/care_end_title"
+        android:src="@drawable/baseline_repeat_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerEndTitle"
+        style="@style/Theme.MyPet.CareHeaderTitle"
+        android:text="@string/care_end_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerEndIcon"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerEndIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerEndIcon" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupCareRecyclerEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/offset_16"
+        android:checkedButton="@id/radioButtonCareRecyclerEndNone"
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerEndTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndTitle">
+
+        <RadioButton
+            android:id="@+id/radioButtonCareRecyclerEndNone"
+            style="@style/Theme.MyPet.CareEndRadio"
+            android:text="@string/care_end_none" />
+
+        <RadioButton
+            android:id="@+id/radioButtonCareRecyclerEndAfter"
+            style="@style/Theme.MyPet.CareEndRadio"
+            android:text="@string/care_end_after" />
+
+        <RadioButton
+            android:id="@+id/radioButtonCareRecyclerEndIn"
+            style="@style/Theme.MyPet.CareEndRadio"
+            android:text="@string/care_end_in" />
+
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutsCareRecyclerEndTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginBottom="@dimen/offset_4"
+        android:maxEms="2"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCareRecyclerEndDate"
+        app:layout_constraintStart_toEndOf="@+id/radioGroupCareRecyclerEnd">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextCareRecyclerEndTimes"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            android:text="1"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFoodRecyclerRepeatIcon"
+            tools:text="10" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/appCompatSpinnerCareRecyclerEndTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/app_compat_spinner_height"
+        android:layout_marginStart="@dimen/offset_16"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/repeats"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerEndTimes"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerEndTimes" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerEndDate"
+        style="@style/Theme.MyPet.CareTextView.Date"
+        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginBottom="@dimen/offset_4"
+        android:text="@string/care_date_default"
+        app:layout_constraintBottom_toBottomOf="@+id/radioGroupCareRecyclerEnd"
+        app:layout_constraintStart_toEndOf="@+id/radioGroupCareRecyclerEnd" />
+
+    <com.google.android.material.divider.MaterialDivider
+        style="@style/Theme.MyPet.CareBottomDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupCareRecyclerEnd" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

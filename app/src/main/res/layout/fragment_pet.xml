@@ -210,16 +210,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewPetFoodForwardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/offset_8"
-                android:text="@string/pet_food_forward_title"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewPetFoodForwardIcon"
-                app:layout_constraintEnd_toStartOf="@+id/imageViewPetFoodForwardIcon"
-                app:layout_constraintTop_toTopOf="@+id/imageViewPetFoodForwardIcon" />
-
             <ImageView
                 android:id="@+id/imageViewPetFoodForwardIcon"
                 android:layout_width="wrap_content"

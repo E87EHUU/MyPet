@@ -38,22 +38,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewPetFoodRecyclerItemIcon"
             tools:text="10:00" />
 
-        <TextView
-            android:id="@+id/textViewPetFoodRecyclerItemTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:ems="8"
-            android:gravity="center"
-            android:lines="2"
-            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPetFoodRecyclerItemTime"
-            tools:text="Утренний прием пищи" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

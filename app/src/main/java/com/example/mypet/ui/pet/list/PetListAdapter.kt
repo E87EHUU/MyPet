@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.ui.getPetIcon
 
 class PetListAdapter(

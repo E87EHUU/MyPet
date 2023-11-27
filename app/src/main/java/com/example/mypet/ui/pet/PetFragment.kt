@@ -14,9 +14,9 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.domain.pet.PetFoodModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -75,7 +75,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         viewModel.updatePetList()
         initView()
         startObservePetList()
-        startObservePetFoodList()
         startObservePetCareList()
         initMenuPetAction()
         initListeners()
@@ -103,8 +102,13 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
     private fun onNotEmptyPetModels(petModels: List<PetModel>) {
         petListAdapter.setPetList(petModels)
+
         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
         viewModel.activePetMyId = activePetModel.id
+
+/*        if (activePetModel.foods.isNotEmpty()) onNotEmptyPetFoodModels(activePetModel.foods)
+        else onEmptyPetFoodModels()*/
+
         onPetUpdate(activePetModel)
     }
 
@@ -112,17 +116,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         petListAdapter.setPetList(emptyList())
         viewModel.activePetMyId = null
         binding.textViewPetEmpty.isVisible = true
-    }
-
-    private fun startObservePetFoodList() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.petFoodList.collectLatest { petFoodModels ->
-                    if (petFoodModels.isNotEmpty()) onNotEmptyPetFoodModels(petFoodModels)
-                    else onEmptyPetFoodModels()
-                }
-            }
-        }
     }
 
     private fun onNotEmptyPetFoodModels(petFoodModels: List<PetFoodModel>) {

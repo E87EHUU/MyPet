@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.app.R
 import com.example.mypet.domain.PetRepository
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.food.PetFoodModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,21 +23,10 @@ class PetViewModel @Inject constructor(
     private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
     val petList = _petList.asStateFlow()
 
-    private val _petFoodList = MutableStateFlow<List<PetFoodModel>>(emptyList())
-    val petFoodList = _petFoodList.asStateFlow()
-
     private val _petCareList = MutableStateFlow<List<PetCareModel>>(emptyList())
     val petCareList = _petCareList.asStateFlow()
 
     init {
-        _petFoodList.value =
-            listOf(
-                PetFoodModel(1, "Утро 1", "08:05", false),
-                PetFoodModel(2, "Утро 2", "08:35", true),
-                PetFoodModel(3, "Обедчик", "12:25", false),
-                PetFoodModel(4, "Супердлинныйвечерпослетяжелогодня", "20:13", true),
-            )
-
         _petCareList.value =
             listOf(
                 PetCareModel(1, R.drawable.ic_pet_kind_hamster, "Ванна", "10:00", 30),
@@ -52,7 +40,7 @@ class PetViewModel @Inject constructor(
 
     fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
         if (_petList.value.isEmpty())
-            petRepository.observePetList()
+            petRepository.getPets()
                 .collectLatest { _petList.value = it }
     }
 

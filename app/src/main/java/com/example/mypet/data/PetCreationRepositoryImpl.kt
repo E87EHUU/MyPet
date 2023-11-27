@@ -3,7 +3,7 @@ package com.example.mypet.data
 import com.example.mypet.data.local.room.dao.PetCreationDao
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 import com.example.mypet.domain.PetCreationRepository
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.PetModel
 import javax.inject.Inject
 
 class PetCreationRepositoryImpl @Inject constructor(

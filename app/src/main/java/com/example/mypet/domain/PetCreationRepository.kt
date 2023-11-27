@@ -1,6 +1,6 @@
 package com.example.mypet.domain
 
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.PetModel
 
 interface PetCreationRepository {
 

@@ -3,7 +3,7 @@ package com.example.mypet.ui.pet.creation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.PetCreationRepository
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.PetModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

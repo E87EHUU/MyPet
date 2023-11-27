@@ -10,7 +10,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUT
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity.Companion.RATION
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
-import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.data.local.room.model.food.LocalFoodAlarmModel
 import kotlinx.coroutines.flow.Flow
 
 
@@ -29,5 +29,5 @@ interface LocalFoodDao {
                 "LEFT JOIN alarm a ON a.id = f.alarm_id " +
                 "WHERE f.pet_my_id = :petMyId"
     )
-    fun observeFoodModels(petMyId: Int): Flow<List<FoodModel>>
+    fun observeFoodModels(petMyId: Int): Flow<List<LocalFoodAlarmModel>>
 }

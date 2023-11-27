@@ -4,7 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.AlarmRepository
 import com.example.mypet.domain.FoodRepository
-import com.example.mypet.domain.food.FoodModel
+import com.example.mypet.domain.food.CareAlarmHeaderModel
+import com.example.mypet.domain.food.CareEndModel
+import com.example.mypet.domain.food.CareFoodModel
+import com.example.mypet.domain.food.CareModel
+import com.example.mypet.domain.food.CareRepeatModel
+import com.example.mypet.domain.food.CareStartModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +23,7 @@ class FoodViewModel @Inject constructor(
     private val foodRepository: FoodRepository,
     private val alarmRepository: AlarmRepository,
 ) : ViewModel() {
-    private val _food = MutableStateFlow<List<FoodModel>>(emptyList())
+    private val _food = MutableStateFlow<List<CareModel>>(emptyList())
     val food = _food.asStateFlow()
 
     var petMyId: Int? = null
@@ -28,15 +33,27 @@ class FoodViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             foodRepository.getFoodModels(petMyId)
-                .collectLatest { _food.value = it }
+                .collectLatest {
+                    val mutableFoodModels = mutableListOf(
+                        CareFoodModel(""),
+                        CareStartModel(""),
+                        CareRepeatModel(""),
+                        CareEndModel("")
+                    )
+                    if (it.isNotEmpty()) {
+                        mutableFoodModels.add(CareAlarmHeaderModel(""))
+                        mutableFoodModels.addAll(it)
+                    }
+                    _food.value = mutableFoodModels
+                }
         }
     }
 
-    fun switchAlarmState(foodModel: FoodModel) {
-        foodModel.toAlarmSwitchModel()?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                alarmRepository.switch(it)
-            }
-        }
+    fun switchAlarmState(foodModel: CareModel) {
+        /*        foodModel.toAlarmSwitchModel()?.let {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        alarmRepository.switch(it)
+                    }
+                }*/
     }
 }

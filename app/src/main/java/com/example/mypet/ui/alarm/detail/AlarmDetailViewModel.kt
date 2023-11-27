@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm
+package com.example.mypet.ui.alarm.detail
 
 import android.media.RingtoneManager
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AlarmViewModel @Inject constructor(
+class AlarmDetailViewModel @Inject constructor(
 
 ) : ViewModel() {
     var alarmModel: AlarmModel? = null
@@ -17,11 +17,11 @@ class AlarmViewModel @Inject constructor(
     var isVibration: Boolean = true
     var isDelay: Boolean = true
 
-    fun update(alarmModel: AlarmModel) {
-        this.alarmModel = alarmModel
+    fun update(alarmId: Int) {
+/*        this.alarmModel = alarmModel
 
         ringtonePath = alarmModel.ringtonePath
         alarmModel.isVibration?.let { isVibration = it }
-        alarmModel.isDelay?.let { isDelay = it }
+        alarmModel.isDelay?.let { isDelay = it }*/
     }
 }

@@ -39,6 +39,12 @@
         <action
             android:id="@+id/action_foodFragment_to_foodDetailFragment"
             app:destination="@id/foodDetailFragment" />
+        <action
+            android:id="@+id/action_foodFragment_to_repeatFragment"
+            app:destination="@id/repeatFragment" />
+        <action
+            android:id="@+id/action_foodFragment_to_alarmDetailFragment"
+            app:destination="@id/alarmDetailFragment" />
     </fragment>
 
     <fragment
@@ -65,9 +71,6 @@
         <argument
             android:name="pet_care_id"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_careDetailFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment" />
     </fragment>
 
     <fragment
@@ -77,21 +80,23 @@
         <argument
             android:name="pet_food_id"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_foodDetailFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment" />
         <argument
             android:name="pet_my_id"
             app:argType="integer" />
     </fragment>
 
     <fragment
-        android:id="@+id/alarmFragment"
-        android:name="com.example.mypet.ui.alarm.AlarmFragment"
-        tools:layout="@layout/fragment_alarm" >
+        android:id="@+id/alarmDetailFragment"
+        android:name="com.example.mypet.ui.alarm.detail.AlarmDetailFragment"
+        tools:layout="@layout/fragment_alarm_detail" >
         <argument
-            android:name="alarm_model"
-            app:argType="com.example.mypet.domain.alarm.AlarmModel" />
+            android:name="alarm_id"
+            app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/repeatFragment"
+        android:name="com.example.mypet.ui.repeat.RepeatFragment"
+        tools:layout="@layout/fragment_repeat" />
 
 </navigation>
