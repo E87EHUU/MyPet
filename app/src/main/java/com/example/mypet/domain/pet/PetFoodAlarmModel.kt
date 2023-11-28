@@ -1,7 +1,7 @@
 package com.example.mypet.domain.pet
 
-data class PetFoodModel(
-    val id: Int,
+data class PetFoodAlarmModel(
+    val alarmId: Int,
     val time: String,
     val isActive: Boolean,
 )

@@ -3,7 +3,6 @@ package com.example.mypet.domain.alarm.service
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_COUNT
@@ -38,10 +37,6 @@ data class AlarmServiceModel(
 
     @ColumnInfo(name = AVATAR_PATH)
     val anyAvatarPath: String?,
-    @ColumnInfo(name = TITLE)
-    val anyTitle: String,
-    @ColumnInfo(name = DESCRIPTION)
-    val anyDescription: String,
 
     @ColumnInfo(name = KIND_ORDINAL)
     val kindOrdinal: Int,
@@ -50,6 +45,8 @@ data class AlarmServiceModel(
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
+    @ColumnInfo(name = "${ALARM_TABLE}_$DESCRIPTION")
+    val alarmDescription: String?,
     @ColumnInfo(name = "${ALARM_TABLE}_$HOUR")
     val alarmHour: Int,
     @ColumnInfo(name = "${ALARM_TABLE}_$MINUTE")

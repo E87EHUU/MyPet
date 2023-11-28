@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
@@ -29,11 +28,10 @@ interface LocalAlarmServiceDao {
     @Query(
         "SELECT " +
                 "f.id $ID, " +
-                "f.title $TITLE, " +
-                "f.ration $DESCRIPTION, " +
                 "m.kind_ordinal $KIND_ORDINAL, " +
                 "m.breed_ordinal $BREED_ORDINAL, " +
                 "a.id ${ALARM_TABLE}_$ID, " +
+                "a.description ${ALARM_TABLE}_$DESCRIPTION, " +
                 "a.hour ${ALARM_TABLE}_$HOUR, " +
                 "a.minute ${ALARM_TABLE}_$MINUTE, " +
                 "a.is_repeat_monday ${ALARM_TABLE}_$IS_REPEAT_MONDAY, " +

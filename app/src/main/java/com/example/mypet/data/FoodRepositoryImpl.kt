@@ -17,9 +17,6 @@ class FoodRepositoryImpl @Inject constructor(
 
     private fun LocalFoodAlarmModel.toFoodAlarmModel() =
         CareAlarmModel(
-            foodId,
-            foodTitle,
-            foodRation,
             alarmId,
             alarmHour,
             alarmMinute,

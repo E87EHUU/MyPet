@@ -2,8 +2,8 @@ package com.example.mypet.domain.food.detail
 
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
@@ -29,7 +29,6 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEA
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
-import com.example.mypet.data.local.room.entity.LocalPetFoodEntity.Companion.RATION
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
@@ -49,13 +48,11 @@ data class FoodDetailModel(
 
     @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
     val foodId: Int? = null,
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$TITLE")
-    val foodTitle: String? = null,
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$RATION")
-    val foodRation: String? = null,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int? = null,
+    @ColumnInfo(name = "${ALARM_TABLE}_$DESCRIPTION")
+    val alarmDescription: String? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$HOUR")
     val alarmHour: Int? = null,
     @ColumnInfo(name = "${ALARM_TABLE}_$MINUTE")
@@ -137,14 +134,11 @@ data class FoodDetailModel(
 
     fun toLocalPetFoodEntity(): LocalPetFoodEntity? {
         val alarmId = alarmId ?: return null
-        val foodTitle = foodTitle ?: return null
 
         return LocalPetFoodEntity(
             id = foodId ?: DEFAULT_ID,
-            petMyId = petId,
+            petId = petId,
             alarmId = alarmId,
-            title = foodTitle,
-            ration = foodRation
         )
     }
 
@@ -154,6 +148,7 @@ data class FoodDetailModel(
 
         return LocalAlarmEntity(
             id = alarmId ?: DEFAULT_ID,
+            description = alarmDescription,
             hour = alarmHour,
             minute = alarmMinute,
             day = alarmDay,

@@ -27,7 +27,7 @@ class CareAlarmViewHolder(
 
         // TODO добавить ограничение на вводимые данные в поле количества раз до разумного. Больше 0 и меньше 10 ???
         with(careAlarmModel) {
-            binding.textViewCareRecyclerAlarmDescription.text = foodRation
+           // binding.textViewCareRecyclerAlarmDescription.text = a
             binding.textViewCareRecyclerAlarmTime.text = toAppTime(alarmHour, alarmMinute)
 
 //            binding.switchFoodItemActive.isVisible = alarmId != null

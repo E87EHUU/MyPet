@@ -16,7 +16,7 @@ class AlarmServiceAdapterViewHolder(
             else
                 binding.imageViewAlarmIcon.setImageResource(getPetIcon(kindOrdinal, breedOrdinal))
 
-            binding.textViewAlarmTitle.text = anyTitle
+            //binding.textViewAlarmTitle.text = anyTitle
         }
     }
 }

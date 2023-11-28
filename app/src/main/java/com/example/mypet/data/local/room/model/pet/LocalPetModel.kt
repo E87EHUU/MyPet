@@ -1,5 +1,6 @@
 package com.example.mypet.data.local.room.model.pet
 
+import android.net.Uri
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
@@ -9,6 +10,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
+import com.example.mypet.domain.pet.PetModel
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
@@ -27,4 +29,16 @@ data class LocalPetModel(
     val petBreedOrdinal: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val petIsActive: Boolean,
-)
+) {
+    fun toPetModel() =
+        PetModel(
+            id = petId,
+            avatarUri = petAvatarPath?.let { Uri.parse(petAvatarPath) },
+            name = petName,
+            age = petAge,
+            weight = petWeight,
+            kindOrdinal = petKindOrdinal,
+            breedOrdinal = petBreedOrdinal,
+            isActive = petIsActive,
+        )
+}

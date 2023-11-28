@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
-import com.example.mypet.domain.pet.PetFoodModel
+import com.example.mypet.domain.pet.PetFoodAlarmModel
 import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.ui.getActionBar
@@ -45,7 +45,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
     private val petFoodAdapterCallback =
         object : PetFoodAdapterCallback {
-            override fun onItemClick(petFoodModel: PetFoodModel) {
+            override fun onItemClick(petFoodModel: PetFoodAlarmModel) {
                 navToFoodDetail(petFoodModel)
             }
         }
@@ -74,6 +74,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
         viewModel.updatePetList()
         initView()
+        initObservePetFoodModels()
         startObservePetList()
         startObservePetCareList()
         initMenuPetAction()
@@ -100,30 +101,42 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         }
     }
 
+    private fun initObservePetFoodModels() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.petFoodAlarmModels.collectLatest {
+                    if (it.isNotEmpty()) onUpdatePetFoodModels(it)
+                    else onEmptyPetFoodModels()
+                }
+            }
+        }
+    }
+
     private fun onNotEmptyPetModels(petModels: List<PetModel>) {
         petListAdapter.setPetList(petModels)
 
         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
-        viewModel.activePetMyId = activePetModel.id
+        viewModel.activePetId = activePetModel.id
 
-/*        if (activePetModel.foods.isNotEmpty()) onNotEmptyPetFoodModels(activePetModel.foods)
-        else onEmptyPetFoodModels()*/
+        /*        if (activePetModel.foods.isNotEmpty()) onNotEmptyPetFoodModels(activePetModel.foods)
+                else onEmptyPetFoodModels()*/
 
         onPetUpdate(activePetModel)
     }
 
     private fun onEmptyPetModels() {
         petListAdapter.setPetList(emptyList())
-        viewModel.activePetMyId = null
+        viewModel.activePetId = null
         binding.textViewPetEmpty.isVisible = true
     }
 
-    private fun onNotEmptyPetFoodModels(petFoodModels: List<PetFoodModel>) {
+    private fun onUpdatePetFoodModels(petFoodModels: List<PetFoodAlarmModel>) {
         petFoodAdapter.submitList(petFoodModels)
+        binding.recyclerViewPetFoodList.isVisible = true
     }
 
     private fun onEmptyPetFoodModels() {
-
+        binding.recyclerViewPetFoodList.isVisible = false
     }
 
     private fun startObservePetCareList() {
@@ -151,7 +164,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onPetUpdate(petModel: PetModel) {
-        viewModel.activePetMyId = petModel.id
+        viewModel.activePetId = petModel.id
 
         if (petModel.avatarUri != null)
             binding.imageViewPetAvatarIcon.setImageURI(petModel.avatarUri)
@@ -189,22 +202,22 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun navToFood() {
-        viewModel.activePetMyId?.let {
+        viewModel.activePetId?.let {
             val directions = PetFragmentDirections.actionPetFragmentToFoodFragment(it)
             findNavController().navigate(directions)
         }
     }
 
-    private fun navToFoodDetail(petFoodModel: PetFoodModel) {
-        viewModel.activePetMyId?.let {
+    private fun navToFoodDetail(petFoodModel: PetFoodAlarmModel) {
+/*        viewModel.activePetId?.let {
             val directions =
-                PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.id)
+                PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.f)
             findNavController().navigate(directions)
-        }
+        }*/
     }
 
     private fun navToCare() {
-        viewModel.activePetMyId?.let {
+        viewModel.activePetId?.let {
             val directions = PetFragmentDirections.actionPetFragmentToCareFragment(it)
             findNavController().navigate(directions)
         }
@@ -249,7 +262,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
         deletePetAlertDialog.findViewById<Button>(R.id.buttonAcceptDeletePetDialog)
             .setOnClickListener {
-                val activePetId = viewModel.activePetMyId
+                val activePetId = viewModel.activePetId
 
                 if (activePetId != null) {
                     viewModel.deletePet(activePetId)

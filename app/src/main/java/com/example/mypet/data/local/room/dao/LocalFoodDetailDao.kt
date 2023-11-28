@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
@@ -32,7 +32,6 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEA
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
 import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
-import com.example.mypet.data.local.room.entity.LocalPetFoodEntity.Companion.RATION
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
@@ -50,9 +49,8 @@ interface LocalFoodDetailDao {
                 "m.kind_ordinal ${PET_MY_TABLE}_$KIND_ORDINAL, " +
                 "m.breed_ordinal ${PET_MY_TABLE}_$BREED_ORDINAL, " +
                 "f.id ${PET_FOOD_TABLE}_$ID, " +
-                "f.title ${PET_FOOD_TABLE}_$TITLE, " +
-                "f.ration ${PET_FOOD_TABLE}_$RATION, " +
                 "a.id ${ALARM_TABLE}_$ID, " +
+                "a.description ${ALARM_TABLE}_$DESCRIPTION, " +
                 "a.hour ${ALARM_TABLE}_$HOUR, " +
                 "a.minute ${ALARM_TABLE}_$MINUTE, " +
                 "a.day ${ALARM_TABLE}_$DAY, " +

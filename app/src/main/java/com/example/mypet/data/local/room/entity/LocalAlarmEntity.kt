@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 
 const val ALARM_TABLE = "alarm"
@@ -13,6 +14,9 @@ data class LocalAlarmEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
+
+    @ColumnInfo(name = DESCRIPTION)
+    val description: String?,
 
     @ColumnInfo(name = HOUR)
     val hour: Int,

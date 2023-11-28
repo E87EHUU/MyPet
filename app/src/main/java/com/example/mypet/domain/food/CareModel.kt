@@ -32,14 +32,11 @@ data class CareAlarmHeaderModel(
 ) : CareModel(ALARM_HEADER_KEY)
 
 data class CareAlarmModel(
-    val foodId: Int,
-    val foodTitle: String,
-    val foodRation: String?,
     val alarmId: Int?,
     val alarmHour: Int?,
     val alarmMinute: Int?,
     val alarmIsActive: Boolean?
-) : CareModel("$ALARM_KEY-$foodId") {
+) : CareModel("$ALARM_KEY-$alarmId") {
     fun toAlarmSwitchModel(): AlarmSwitchModel? {
         alarmId ?: return null
         alarmIsActive ?: return null
@@ -47,8 +44,6 @@ data class CareAlarmModel(
         alarmMinute ?: return null
 
         return AlarmSwitchModel(
-            foodId = foodId,
-            careId = null,
             alarmId = alarmId,
             alarmHour = alarmHour,
             alarmMinute = alarmMinute,

@@ -59,7 +59,7 @@ class AlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(alarmModel.anyTitle)
+            //.setContentTitle(alarmModel.anyTitle)
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .setContentText(context.getString(R.string.alarm_delay_message))
             .addAction(
@@ -72,7 +72,7 @@ class AlarmServiceNotification(
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(alarmModel.anyTitle)
+           // .setContentTitle(alarmModel.anyTitle)
             .setContentText("")
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .apply {

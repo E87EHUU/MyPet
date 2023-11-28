@@ -11,5 +11,4 @@ data class PetModel(
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
     val isActive: Boolean,
-    //val foods: List<PetFoodModel>
 )

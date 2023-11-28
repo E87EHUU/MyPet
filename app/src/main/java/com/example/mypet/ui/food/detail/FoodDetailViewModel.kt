@@ -46,8 +46,6 @@ class FoodDetailViewModel @Inject constructor(
                     foodDetailModel = itFoodDetailModel
 
                     with(itFoodDetailModel) {
-                        foodTitle?.let { title = it }
-                        foodRation?.let { ration = it }
                         alarmHour?.let { hour = it }
                         alarmMinute?.let { minute = it }
                         alarmIsActive?.let { isActive = it }
@@ -61,8 +59,6 @@ class FoodDetailViewModel @Inject constructor(
     fun save() = flow {
         foodDetailModel?.let {
             val saveFoodDetailModel = it.copy(
-                foodTitle = title,
-                foodRation = ration,
                 alarmHour = hour,
                 alarmMinute = minute,
             )
