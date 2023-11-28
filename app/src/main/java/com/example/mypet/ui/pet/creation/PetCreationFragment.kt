@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -170,7 +169,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
             Glide.with(this)
                 .load(imageUri)
                 .circleCrop()
-                .placeholder(R.drawable.add_pet_icon)
+                .placeholder(R.drawable.baseline_add_24)
                 .into(binding.appCompatImageViewPetCreationAvatar)
             viewModel.avatarUri = imageUri.toString()
         }

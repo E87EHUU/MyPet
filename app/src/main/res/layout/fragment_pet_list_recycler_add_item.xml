@@ -6,7 +6,7 @@
     android:layout_height="@dimen/pet_avatar_size"
     android:padding="@dimen/pet_detail_avatar_padding"
     android:layout_marginEnd="@dimen/offset_16"
-    android:src="@drawable/add_pet_icon"
+    android:src="@drawable/baseline_add_24"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetList"
     app:shapeAppearance="@style/Theme.MyPet.ImageCircle" />

@@ -3,7 +3,6 @@ package com.example.mypet.ui.pet
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,8 +18,6 @@ import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.pet.PetFoodAlarmModel
 import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.detail.PetModel
-import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -80,9 +77,8 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         initView()
         initObservePetFoodModels()
         startObservePetList()
-        startObservePetFoodList()
         startObservePetCareList()
-        initMenuPetAction()
+        //initMenuPetAction()
         initListeners()
     }
 
@@ -118,9 +114,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onNotEmptyPetModels(petModels: List<PetModel>) {
-        binding.constraintLayoutPetEmpty.isVisible = false
-        binding.constraintLayoutPetDetail.isVisible = true
-
         petListAdapter.setPetList(petModels)
 
         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
@@ -133,9 +126,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onEmptyPetModels() {
-        binding.constraintLayoutPetDetail.isVisible = false
-        binding.constraintLayoutPetEmpty.isVisible = true
-
         petListAdapter.setPetList(emptyList())
         viewModel.activePetId = null
         binding.textViewPetEmpty.isVisible = true
@@ -244,7 +234,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         findNavController().navigate(directions)*/
     }
 
-    private fun initMenuPetAction() {
+/*    private fun initMenuPetAction() {
         binding.cardViewPopupMenuPetAction.setOnClickListener {
             val popupMenu = PopupMenu(requireContext(), it)
             popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
@@ -266,7 +256,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
             }
             popupMenu.show()
         }
-    }
+    }*/
 
     private fun showDeletePetDialog() {
         val deletePetAlertDialog = layoutInflater.inflate(R.layout.alert_dialog_delete_pet, null)

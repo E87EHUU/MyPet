@@ -41,7 +41,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         android:text="@string/pet_creation_kind" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -53,7 +53,7 @@
         android:id="@+id/app_compat_text_view_pet_creation_breed_list_spinner_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         android:text="@string/pet_creation_breed" />
 
     <androidx.appcompat.widget.AppCompatSpinner
@@ -64,7 +64,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         android:text="@string/pet_creation_date_of_birth" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -89,7 +89,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         android:hint="@string/pet_creation_weight">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -104,6 +104,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_margin="@dimen/offset_16"
         android:text="@string/pet_creation_save" />
 </androidx.appcompat.widget.LinearLayoutCompat>

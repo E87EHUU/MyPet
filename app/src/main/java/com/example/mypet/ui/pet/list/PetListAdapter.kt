@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.ui.getPetIcon
 
 class PetListAdapter(
@@ -87,9 +88,9 @@ class PetListAdapter(
                     Glide.with(itemView)
                         .load(petModel.avatarUri)
                         .circleCrop()
-                        .into(imageViewPetListItem)
+                        .into(imageViewPetListItemIcon)
                 } else
-                    imageViewPetListItem.setImageResource(
+                    imageViewPetListItemIcon.setImageResource(
                         getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
                     )
 
