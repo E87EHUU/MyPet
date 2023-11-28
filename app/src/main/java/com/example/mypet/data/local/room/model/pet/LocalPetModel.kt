@@ -1,32 +1,30 @@
 package com.example.mypet.data.local.room.model.pet
 
-import android.net.Uri
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
-    val petId: Int,
+    val id: Int,
     @ColumnInfo(name = AVATAR_PATH)
-    val petAvatarPath: String?,
+    val avatarPath: String?,
     @ColumnInfo(name = NAME)
-    val petName: String,
+    val name: String,
     @ColumnInfo(name = AGE)
-    val petAge: Int?,
+    val age: String?,
     @ColumnInfo(name = WEIGHT)
-    val petWeight: Int?,
+    val weight: String?,
     @ColumnInfo(name = KIND_ORDINAL)
-    val petKindOrdinal: Int,
+    val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)
-    val petBreedOrdinal: Int?,
+    val breedOrdinal: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val petIsActive: Boolean,
 ) {

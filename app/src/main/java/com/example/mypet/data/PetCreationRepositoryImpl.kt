@@ -1,9 +1,9 @@
 package com.example.mypet.data
 
 import com.example.mypet.data.local.room.dao.PetCreationDao
-import com.example.mypet.data.local.room.entity.LocalPetEntity
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 import com.example.mypet.domain.PetCreationRepository
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.creation.PetCreationModel
 import javax.inject.Inject
 
 class PetCreationRepositoryImpl @Inject constructor(
@@ -11,27 +11,22 @@ class PetCreationRepositoryImpl @Inject constructor(
 ) : PetCreationRepository {
 
 
-    override suspend fun addNewPetToDb(newPet: PetModel) {
+    override suspend fun addNewPetToDb(petCreationModel: PetCreationModel) {
         petCreationDao.addNewPetToDb(
-            LocalPetEntity(
-                id = generateUniqueId(),
-                kindOrdinal = newPet.kindOrdinal,
-                breedOrdinal = newPet.breedOrdinal,
-                avatarPath = null,
-                name = newPet.name,
-                age = newPet.age,
-                weight = newPet.weight,
-                sex = 1,
-                isActive = true
-            )
+            petCreationModel.toLocalPetMyEntity()
         )
     }
 
-    companion object {
-        private var counter = 0
-
-        fun generateUniqueId(): Int {
-            return counter++
-        }
-    }
+    private fun PetCreationModel.toLocalPetMyEntity() =
+        LocalPetMyEntity(
+            id = id,
+            kindOrdinal = kindOrdinal,
+            breedOrdinal = breedOrdinal,
+            avatarPath = avatarUri.toString(),
+            name = name,
+            dateOfBirthTimeMillis = dateOfBirthTimeMillis,
+            weight = weight,
+            sex = sex,
+            isActive = isActive
+        )
 }

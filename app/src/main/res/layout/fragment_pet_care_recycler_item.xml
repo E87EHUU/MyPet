@@ -5,8 +5,8 @@
     android:id="@+id/materialCardViewPetCareRecyclerItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/offset_16"
-    android:layout_marginBottom="@dimen/offset_16"
+    android:layout_marginEnd="@dimen/creation_fragment_margin_top_for_view"
+    android:layout_marginBottom="@dimen/creation_fragment_margin_top_for_view"
     app:cardBackgroundColor="?attr/colorSurfaceInverse">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
             android:id="@+id/textViewPetCareRecyclerItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:textColor="?attr/colorOnSurfaceInverse"
             app:layout_constraintEnd_toEndOf="parent"

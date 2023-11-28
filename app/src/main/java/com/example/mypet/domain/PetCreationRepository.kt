@@ -1,8 +1,8 @@
 package com.example.mypet.domain
 
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.creation.PetCreationModel
 
 interface PetCreationRepository {
 
-    suspend fun addNewPetToDb(newPet: PetModel)
+    suspend fun addNewPetToDb(petCreationModel: PetCreationModel)
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.ui.getPetIcon
 
 class PetListAdapter(
@@ -82,11 +82,14 @@ class PetListAdapter(
 
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(petModel: PetModel, onPetClickListener: OnPetClickListener) {
-             FragmentPetListRecyclerItemBinding.bind(itemView).apply {
-                if (petModel.avatarUri != null)
-                    imageViewPetListItemIcon.setImageURI(petModel.avatarUri)
-                else
-                    imageViewPetListItemIcon.setImageResource(
+            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
+                if (petModel.avatarUri != null) {
+                    Glide.with(itemView)
+                        .load(petModel.avatarUri)
+                        .circleCrop()
+                        .into(imageViewPetListItem)
+                } else
+                    imageViewPetListItem.setImageResource(
                         getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
                     )
 

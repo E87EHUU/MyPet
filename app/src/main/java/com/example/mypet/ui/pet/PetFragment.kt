@@ -12,12 +12,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.pet.PetFoodAlarmModel
 import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
+import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -77,6 +80,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         initView()
         initObservePetFoodModels()
         startObservePetList()
+        startObservePetFoodList()
         startObservePetCareList()
         initMenuPetAction()
         initListeners()
@@ -114,6 +118,9 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onNotEmptyPetModels(petModels: List<PetModel>) {
+        binding.constraintLayoutPetEmpty.isVisible = false
+        binding.constraintLayoutPetDetail.isVisible = true
+
         petListAdapter.setPetList(petModels)
 
         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
@@ -126,6 +133,9 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onEmptyPetModels() {
+        binding.constraintLayoutPetDetail.isVisible = false
+        binding.constraintLayoutPetEmpty.isVisible = true
+
         petListAdapter.setPetList(emptyList())
         viewModel.activePetId = null
         binding.textViewPetEmpty.isVisible = true
@@ -167,9 +177,12 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     private fun onPetUpdate(petModel: PetModel) {
         viewModel.activePetId = petModel.id
 
-        if (petModel.avatarUri != null)
-            binding.imageViewPetAvatarIcon.setImageURI(petModel.avatarUri)
-        else
+        if (petModel.avatarUri != null) {
+            Glide.with(this)
+                .load(petModel.avatarUri)
+                .circleCrop()
+                .into(binding.imageViewPetAvatarIcon)
+        } else
             binding.imageViewPetAvatarIcon
                 .setImageResource(getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal))
 
@@ -180,14 +193,14 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         binding.textViewPetEmpty.isVisible = false
 
         petModel.age?.let {
-            binding.textViewPetAgeText.text = petModel.age.toString()
+            binding.textViewPetAgeText.text = petModel.age
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
         }
 
         petModel.weight?.let {
-            binding.textViewPetWeightText.text = petModel.weight.toString()
+            binding.textViewPetWeightText.text = petModel.weight
             binding.materialCardViewPetWeight.isVisible = true
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false
@@ -232,7 +245,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun initMenuPetAction() {
-        binding.imageViewPopupMenuPetAction.setOnClickListener {
+        binding.cardViewPopupMenuPetAction.setOnClickListener {
             val popupMenu = PopupMenu(requireContext(), it)
             popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
 
