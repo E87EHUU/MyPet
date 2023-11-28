@@ -15,6 +15,7 @@ class PetCreationViewModel @Inject constructor(
     private val petCreationRepository: PetCreationRepository
 ) : ViewModel() {
 
+    var avatarUri: String? = null
     var dateOfBirthTimeMillis: Long? = null
     var name: String = ""
     var breedOrdinal: Int = 0
@@ -27,7 +28,7 @@ class PetCreationViewModel @Inject constructor(
             petCreationRepository.addNewPetToDb(
                 PetCreationModel(
                     id = DEFAULT_ID,
-                    avatarUri = null,
+                    avatarUri = avatarUri,
                     name = name,
                     dateOfBirthTimeMillis = dateOfBirthTimeMillis,
                     weight = weight,

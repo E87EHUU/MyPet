@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.pet.care.PetCareModel
@@ -160,9 +161,12 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     private fun onPetUpdate(petModel: PetModel) {
         viewModel.activePetMyId = petModel.id
 
-        if (petModel.avatarUri != null)
-            binding.imageViewPetAvatarIcon.setImageURI(petModel.avatarUri)
-        else
+        if (petModel.avatarUri != null) {
+            Glide.with(this)
+                .load(petModel.avatarUri)
+                .circleCrop()
+                .into(binding.imageViewPetAvatarIcon)
+        } else
             binding.imageViewPetAvatarIcon
                 .setImageResource(getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal))
 

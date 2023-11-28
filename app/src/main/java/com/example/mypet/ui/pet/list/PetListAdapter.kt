@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddItemBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerItemBinding
@@ -82,10 +83,13 @@ class PetListAdapter(
 
     inner class PetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(petModel: PetModel, onPetClickListener: OnPetClickListener) {
-           FragmentPetListRecyclerItemBinding.bind(itemView).apply {
-                if (petModel.avatarUri != null)
-                    imageViewPetListItem.setImageURI(petModel.avatarUri)
-                else
+            FragmentPetListRecyclerItemBinding.bind(itemView).apply {
+                if (petModel.avatarUri != null) {
+                    Glide.with(itemView)
+                        .load(petModel.avatarUri)
+                        .circleCrop()
+                        .into(imageViewPetListItem)
+                } else
                     imageViewPetListItem.setImageResource(
                         getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal)
                     )

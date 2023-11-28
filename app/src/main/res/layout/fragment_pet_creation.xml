@@ -13,11 +13,13 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/app_compat_image_view_pet_creation_avatar"
             android:layout_width="@dimen/avatar_creation_size"
             android:layout_height="@dimen/avatar_creation_size"
             android:src="@drawable/profile" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/app_compat_button_pet_creation_choose_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
