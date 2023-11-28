@@ -30,13 +30,14 @@
     <string name="map_search_error">Search error, check your network connection</string>
     <string name="map_zoom_out">Zoom out</string>
     <string name="map_zoom_in">Zoom in</string>
-    <string name="choose_photo">Загрузить фотографию</string>
-    <string name="pet_name">Имя питомца</string>
-    <string name="category">Категория питомца</string>
-    <string name="breed">Порода</string>
-    <string name="date_of_birth">Дата рождения</string>
-    <string name="save_new_pet">Сохранить нового питомца</string>
-    <string name="weight">Вес</string>
+
+    <string name="pet_creation_choose_photo">Загрузить фотографию</string>
+    <string name="pet_creation_pet_name">Имя питомца</string>
+    <string name="pet_creation_kind">Категория питомца</string>
+    <string name="pet_creation_breed">Порода</string>
+    <string name="pet_creation_date_of_birth">Дата рождения</string>
+    <string name="pet_creation_save">Сохранить</string>
+    <string name="pet_creation_weight">Вес</string>
 
     <string name="notification_chanel_action_delay">Отложить</string>
     <string name="notification_chanel_action_stop">Остановить</string>

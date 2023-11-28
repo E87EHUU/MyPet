@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.pet.care.PetCareModel
@@ -165,9 +166,12 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     private fun onPetUpdate(petModel: PetModel) {
         viewModel.activePetMyId = petModel.id
 
-        if (petModel.avatarUri != null)
-            binding.imageViewPetAvatarIcon.setImageURI(petModel.avatarUri)
-        else
+        if (petModel.avatarUri != null) {
+            Glide.with(this)
+                .load(petModel.avatarUri)
+                .circleCrop()
+                .into(binding.imageViewPetAvatarIcon)
+        } else
             binding.imageViewPetAvatarIcon
                 .setImageResource(getPetIcon(petModel.kindOrdinal, petModel.breedOrdinal))
 
@@ -176,14 +180,14 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
             getString(getPetName(petModel.kindOrdinal, petModel.breedOrdinal))
 
         petModel.age?.let {
-            binding.textViewPetAgeText.text = petModel.age.toString()
+            binding.textViewPetAgeText.text = petModel.age
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
         }
 
         petModel.weight?.let {
-            binding.textViewPetWeightText.text = petModel.weight.toString()
+            binding.textViewPetWeightText.text = petModel.weight
             binding.materialCardViewPetWeight.isVisible = true
         } ?: run {
             binding.materialCardViewPetWeight.isVisible = false
