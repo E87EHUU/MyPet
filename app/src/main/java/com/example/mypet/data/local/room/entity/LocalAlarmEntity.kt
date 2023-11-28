@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 
 const val ALARM_TABLE = "alarm"
@@ -14,16 +15,16 @@ data class LocalAlarmEntity(
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
 
+    @ColumnInfo(name = "${CARE_TABLE}_$ID")
+    val careId: Int,
+
+    @ColumnInfo(name = DESCRIPTION)
+    val description: String?,
+
     @ColumnInfo(name = HOUR)
     val hour: Int,
     @ColumnInfo(name = MINUTE)
     val minute: Int,
-    @ColumnInfo(name = DAY)
-    val day: Int? = null,
-    @ColumnInfo(name = MONTH)
-    val month: Int? = null,
-    @ColumnInfo(name = YEAR)
-    val year: Int? = null,
 
     @ColumnInfo(name = RINGTONE_PATH)
     val ringtonePath: String?,
@@ -54,25 +55,20 @@ data class LocalAlarmEntity(
     val isRepeatSaturday: Boolean? = null,
     @ColumnInfo(name = IS_REPEAT_SUNDAY)
     val isRepeatSunday: Boolean? = null,
-
-    @ColumnInfo(name = END_DAY)
-    val endDay: Int? = null,
-    @ColumnInfo(name = END_MONTH)
-    val endMonth: Int? = null,
-    @ColumnInfo(name = END_YEAR)
-    val endYear: Int? = null,
-
-    @ColumnInfo(name = END_COUNT)
-    val endCount: Int? = null,
 ) {
     companion object {
         const val HOUR = "hour"
         const val MINUTE = "minute"
-        const val DAY = "day"
-        const val MONTH = "month"
-        const val YEAR = "year"
+
+        const val RINGTONE_PATH = "ringtone_path"
+
+        const val IS_VIBRATION = "is_vibration"
+        const val IS_DELAY = "is_delay"
+        const val IS_ACTIVE = "is_active"
+
         const val REPEAT_TYPE_ORDINAL = "repeat_type_ordinal"
         const val REPEAT_INTERVAL = "repeat_interval"
+
         const val IS_REPEAT_MONDAY = "is_repeat_monday"
         const val IS_REPEAT_TUESDAY = "is_repeat_tuesday"
         const val IS_REPEAT_WEDNESDAY = "is_repeat_wednesday"
@@ -80,14 +76,6 @@ data class LocalAlarmEntity(
         const val IS_REPEAT_FRIDAY = "is_repeat_friday"
         const val IS_REPEAT_SATURDAY = "is_repeat_saturday"
         const val IS_REPEAT_SUNDAY = "is_repeat_sunday"
-        const val END_DAY = "end_day"
-        const val END_MONTH = "end_month"
-        const val END_YEAR = "end_year"
-        const val END_COUNT = "end_count"
-        const val RINGTONE_PATH = "ringtone_path"
-        const val IS_VIBRATION = "is_vibration"
-        const val IS_DELAY = "is_delay"
-        const val IS_ACTIVE = "is_active"
 
         const val IS_ACTIVE_DEFAULT = true
     }

@@ -3,13 +3,13 @@ package com.example.mypet.ui.pet.food
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetFoodRecyclerItemBinding
-import com.example.mypet.domain.pet.PetFoodModel
+import com.example.mypet.domain.pet.PetFoodAlarmModel
 
 class PetFoodAdapterViewHolder(
     private val binding: FragmentPetFoodRecyclerItemBinding,
     private val callback: PetFoodAdapterCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var petFoodModel: PetFoodModel
+    private lateinit var petFoodModel: PetFoodAlarmModel
 
     init {
         binding.root.setOnClickListener {
@@ -17,7 +17,7 @@ class PetFoodAdapterViewHolder(
         }
     }
 
-    fun bind(petFoodModel: PetFoodModel) {
+    fun bind(petFoodModel: PetFoodAlarmModel) {
         this.petFoodModel = petFoodModel
 
         val iconResId = if (petFoodModel.isActive) R.drawable.baseline_notifications_24

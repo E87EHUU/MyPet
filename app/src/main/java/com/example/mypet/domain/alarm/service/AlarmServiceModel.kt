@@ -3,13 +3,7 @@ package com.example.mypet.domain.alarm.service
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.TITLE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_COUNT
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_DAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_MONTH
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_YEAR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
@@ -22,44 +16,39 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_RE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_WEDNESDAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MONTH
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_INTERVAL
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.PET_TABLE
 import com.example.mypet.domain.alarm.AlarmModel
 
 data class AlarmServiceModel(
-    @ColumnInfo(name = ID)
-    val anyId: Int,
-
-    @ColumnInfo(name = AVATAR_PATH)
-    val anyAvatarPath: String?,
-    @ColumnInfo(name = TITLE)
-    val anyTitle: String,
-    @ColumnInfo(name = DESCRIPTION)
-    val anyDescription: String,
-
-    @ColumnInfo(name = KIND_ORDINAL)
-    val kindOrdinal: Int,
-    @ColumnInfo(name = BREED_ORDINAL)
-    val breedOrdinal: Int?,
+    @ColumnInfo(name = "${PET_TABLE}_$ID")
+    val petId: Int,
+    @ColumnInfo(name = "${PET_TABLE}_$AVATAR_PATH")
+    val petAvatarPath: String?,
+    @ColumnInfo(name = "${PET_TABLE}_$KIND_ORDINAL")
+    val petKindOrdinal: Int,
+    @ColumnInfo(name = "${PET_TABLE}_$BREED_ORDINAL")
+    val petBreedOrdinal: Int?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
+    @ColumnInfo(name = "${ALARM_TABLE}_$DESCRIPTION")
+    val alarmDescription: String?,
     @ColumnInfo(name = "${ALARM_TABLE}_$HOUR")
     val alarmHour: Int,
     @ColumnInfo(name = "${ALARM_TABLE}_$MINUTE")
     val alarmMinute: Int,
-    @ColumnInfo(name = "${ALARM_TABLE}_$DAY")
+/*    @ColumnInfo(name = "${ALARM_TABLE}_$DAY")
     val alarmDay: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$MONTH")
     val alarmMonth: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$YEAR")
-    val alarmYear: Int?,
+    val alarmYear: Int?,*/
     @ColumnInfo(name = "${ALARM_TABLE}_$RINGTONE_PATH")
     val alarmRingtonePath: String?,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_VIBRATION")
@@ -87,23 +76,23 @@ data class AlarmServiceModel(
     val alarmIsRepeatSaturday: Boolean?,
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_REPEAT_SUNDAY")
     val alarmIsRepeatSunday: Boolean?,
-    @ColumnInfo(name = "${ALARM_TABLE}_$END_DAY")
+/*    @ColumnInfo(name = "${ALARM_TABLE}_$END_DAY")
     val alarmEndDay: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_MONTH")
     val alarmEndMonth: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_YEAR")
     val alarmEndYear: Int?,
     @ColumnInfo(name = "${ALARM_TABLE}_$END_COUNT")
-    val alarmEndCount: Int?,
+    val alarmEndCount: Int?,*/
 ) {
     fun toAlarmModel(delayTime: Int? = null) =
         AlarmModel(
             id = alarmId,
             hour = alarmHour,
             minute = alarmMinute,
-            day = alarmDay,
+/*            day = alarmDay,
             month = alarmMonth,
-            year = alarmYear,
+            year = alarmYear,*/
             ringtonePath = alarmRingtonePath,
             isVibration = alarmIsVibration,
             isDelay = alarmIsDelay,
@@ -117,9 +106,9 @@ data class AlarmServiceModel(
             isRepeatFriday = alarmIsRepeatFriday,
             isRepeatSaturday = alarmIsRepeatSaturday,
             isRepeatSunday = alarmIsRepeatSunday,
-            endDay = alarmEndDay,
+/*            endDay = alarmEndDay,
             endMonth = alarmEndMonth,
             endYear = alarmEndYear,
-            endCount = alarmEndCount,
+            endCount = alarmEndCount,*/
         )
 }

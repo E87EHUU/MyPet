@@ -3,9 +3,7 @@ package com.example.mypet.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,7 +15,6 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.ActivityMainBinding
 import com.example.mypet.ui.preferences.PreferencesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -41,14 +38,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navHost.navController
     }
 
-    private val toolbarOnDestinations = mapOf(
-        R.id.foodDetailFragment to R.menu.toolbar_pet_detail,
+/*    private val toolbarOnDestinations = mapOf(
+        R.id.careFragment to R.menu.toolbar_pet_detail,
     )
 
     private val fabDestinations = setOf(
-        R.id.foodDetailFragment,
-        R.id.careDetailFragment,
-    )
+        R.id.careFragment,
+    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +58,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         binding.bottomNavigation.setupWithNavController(navController)
-        observeNavigation()
+        //observeNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -70,7 +66,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
     }
 
-    private fun observeNavigation() {
+/*    private fun observeNavigation() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 navController.currentBackStack.collectLatest {
@@ -90,7 +86,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
         }
-    }
+    }*/
 
     private fun applyPreferences() {
         lifecycleScope.launch {

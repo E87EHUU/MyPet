@@ -22,7 +22,7 @@ android {
         minSdk = minSdkVersion.toInt()
         targetSdk = targetSdkVersion.toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.0.1"
 
         android.buildFeatures.buildConfig = true
    }

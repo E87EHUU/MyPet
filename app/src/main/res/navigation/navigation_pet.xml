@@ -10,41 +10,12 @@
         android:name="com.example.mypet.ui.pet.PetFragment"
         tools:layout="@layout/fragment_pet">
         <action
-            android:id="@+id/action_petFragment_to_foodFragment"
-            app:destination="@id/foodFragment" />
-        <action
             android:id="@+id/action_petFragment_to_careFragment"
             app:destination="@id/careFragment" />
-        <action
-            android:id="@+id/action_petFragment_to_foodDetailFragment"
-            app:destination="@id/foodDetailFragment" />
-        <action
-            android:id="@+id/action_petFragment_to_careDetailFragment"
-            app:destination="@id/careDetailFragment" />
 
         <action
             android:id="@+id/action_pet_to_petCreationFragment"
             app:destination="@id/petCreationFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/foodFragment"
-        android:name="com.example.mypet.ui.food.FoodFragment"
-        android:layout="@layout/fragment_food">
-
-        <argument
-            android:name="pet_my_id"
-            app:argType="integer" />
-
-        <action
-            android:id="@+id/action_foodFragment_to_foodDetailFragment"
-            app:destination="@id/foodDetailFragment" />
-        <action
-            android:id="@+id/action_foodFragment_to_repeatFragment"
-            app:destination="@id/repeatFragment" />
-        <action
-            android:id="@+id/action_foodFragment_to_alarmDetailFragment"
-            app:destination="@id/alarmDetailFragment" />
     </fragment>
 
     <fragment
@@ -57,32 +28,17 @@
         android:name="com.example.mypet.ui.care.CareFragment"
         tools:layout="@layout/fragment_care">
         <argument
-            android:name="pet_my_id"
+            android:name="pet_id"
+            app:argType="integer" />
+        <argument
+            android:name="care_type_ordinal"
             app:argType="integer" />
         <action
-            android:id="@+id/action_careFragment_to_careDetailFragment"
-            app:destination="@id/careDetailFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/careDetailFragment"
-        android:name="com.example.mypet.ui.care.detail.CareDetailFragment"
-        tools:layout="@layout/fragment_care_detail">
-        <argument
-            android:name="pet_care_id"
-            app:argType="integer" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/foodDetailFragment"
-        android:name="com.example.mypet.ui.food.detail.FoodDetailFragment"
-        tools:layout="@layout/fragment_food_detail">
-        <argument
-            android:name="pet_food_id"
-            app:argType="integer" />
-        <argument
-            android:name="pet_my_id"
-            app:argType="integer" />
+            android:id="@+id/action_careFragment_to_alarmDetailFragment"
+            app:destination="@id/alarmDetailFragment" />
+        <action
+            android:id="@+id/action_careFragment_to_repeatFragment"
+            app:destination="@id/repeatFragment" />
     </fragment>
 
     <fragment

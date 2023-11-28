@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.mypet.app.databinding.FragmentPetFoodRecyclerItemBinding
-import com.example.mypet.domain.pet.PetFoodModel
+import com.example.mypet.domain.pet.PetFoodAlarmModel
 
 class PetFoodAdapter(
     private val callback: PetFoodAdapterCallback,
-) : ListAdapter<PetFoodModel, PetFoodAdapterViewHolder>(DiffCallback()) {
+) : ListAdapter<PetFoodAlarmModel, PetFoodAdapterViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -23,15 +23,15 @@ class PetFoodAdapter(
         holder.bind(getItem(position))
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<PetFoodModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<PetFoodAlarmModel>() {
         override fun areItemsTheSame(
-            oldItem: PetFoodModel,
-            newItem: PetFoodModel
-        ) = oldItem.id == newItem.id
+            oldItem: PetFoodAlarmModel,
+            newItem: PetFoodAlarmModel
+        ) = oldItem.alarmId == newItem.alarmId
 
         override fun areContentsTheSame(
-            oldItem: PetFoodModel,
-            newItem: PetFoodModel
+            oldItem: PetFoodAlarmModel,
+            newItem: PetFoodAlarmModel
         ) = oldItem == newItem
     }
 }
