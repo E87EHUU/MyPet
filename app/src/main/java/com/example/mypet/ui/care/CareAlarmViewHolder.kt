@@ -1,14 +1,14 @@
-package com.example.mypet.ui.food
+package com.example.mypet.ui.care
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
-import com.example.mypet.domain.food.CareAlarmModel
+import com.example.mypet.domain.care.CareViewHolderAlarmModel
 
 class CareAlarmViewHolder(
     private val binding: FragmentCareRecyclerAlarmBinding,
     private val callback: CareAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var careAlarmModel: CareAlarmModel
+    private lateinit var careAlarmModel: CareViewHolderAlarmModel
 
     init {
         binding.root.setOnClickListener {
@@ -16,7 +16,7 @@ class CareAlarmViewHolder(
         }
     }
 
-    fun bind(careAlarmModel: CareAlarmModel) {
+    fun bind(careAlarmModel: CareViewHolderAlarmModel) {
         this.careAlarmModel = careAlarmModel
 
         // TODO добавить событие на клик по времени, чтобы открывался пикер времени, устанавливать время и обновлять в изменяымх полях и последующие использование данных при сохранении модели.
@@ -28,7 +28,7 @@ class CareAlarmViewHolder(
         // TODO добавить ограничение на вводимые данные в поле количества раз до разумного. Больше 0 и меньше 10 ???
         with(careAlarmModel) {
            // binding.textViewCareRecyclerAlarmDescription.text = a
-            binding.textViewCareRecyclerAlarmTime.text = toAppTime(alarmHour, alarmMinute)
+            //binding.textViewCareRecyclerAlarmTime.text = toAppTime(alarmHour, alarmMinute)
 
 //            binding.switchFoodItemActive.isVisible = alarmId != null
 //            binding.switchFoodItemActive.isChecked = alarmIsActive ?: false

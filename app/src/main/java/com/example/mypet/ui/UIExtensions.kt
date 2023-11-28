@@ -14,6 +14,7 @@ import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import java.text.DecimalFormat
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
@@ -85,3 +86,9 @@ fun Fragment.getFloatingActionButton() =
 
 val Context.is24HourFormat
     get() = DateFormat.is24HourFormat(this)
+
+private val dateTimeFormatter = DecimalFormat("00")
+private fun Int.formatDateTime(): String = dateTimeFormatter.format(this)
+
+fun toAppTime(hour: Int?, minute: Int?) =
+    "${hour?.formatDateTime() ?: "--"}:${minute?.formatDateTime() ?: "--"}"

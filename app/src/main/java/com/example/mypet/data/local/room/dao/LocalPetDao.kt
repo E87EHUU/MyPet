@@ -7,12 +7,12 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.pet.LocalPetFoodAlarmModel
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
@@ -36,12 +36,13 @@ interface LocalPetDao {
 
     @Query(
         "SELECT " +
-                "id ${ALARM_TABLE}_$ID, " +
-                "hour ${ALARM_TABLE}_$HOUR, " +
-                "minute ${ALARM_TABLE}_$MINUTE, " +
-                "is_active ${ALARM_TABLE}_$IS_ACTIVE " +
-                "FROM alarm " +
-                "WHERE pet_id = :petId AND care_type_ordinal = :careFoodTypeOrdinal"
+                "a.id ${ALARM_TABLE}_$ID, " +
+                "a.hour ${ALARM_TABLE}_$HOUR, " +
+                "a.minute ${ALARM_TABLE}_$MINUTE, " +
+                "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
+                "FROM care c " +
+                "LEFT JOIN alarm a ON a.id = c.pet_id " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal = :careFoodTypeOrdinal"
     )
     fun getLocalPetFoodModel(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalPetFoodAlarmModel>>
 

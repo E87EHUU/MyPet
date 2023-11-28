@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food
+package com.example.mypet.ui.care
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmHeaderBinding

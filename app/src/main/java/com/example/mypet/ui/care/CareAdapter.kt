@@ -1,4 +1,4 @@
-package com.example.mypet.ui.food
+package com.example.mypet.ui.care
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,19 +11,19 @@ import com.example.mypet.app.databinding.FragmentCareRecyclerEndBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerFoodBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.food.CareAlarmHeaderModel
-import com.example.mypet.domain.food.CareAlarmModel
-import com.example.mypet.domain.food.CareEndModel
-import com.example.mypet.domain.food.CareFoodModel
-import com.example.mypet.domain.food.CareModel
-import com.example.mypet.domain.food.CareRepeatModel
-import com.example.mypet.domain.food.CareStartModel
+import com.example.mypet.domain.care.CareViewHolderAlarmModel
+import com.example.mypet.domain.care.CareViewHolderEndModel
+import com.example.mypet.domain.care.CareViewHolderFoodModel
+import com.example.mypet.domain.care.CareViewHolderHeaderAlarmModel
+import com.example.mypet.domain.care.CareViewHolderModel
+import com.example.mypet.domain.care.CareViewHolderRepeatModel
+import com.example.mypet.domain.care.CareViewHolderStartModel
 
 class CareAdapter(
     private val careFoodCallback: CareFoodCallback,
     private val careRepeatCallback: CareRepeatCallback,
     private val careAlarmCallback: CareAlarmCallback,
-) : ListAdapter<CareModel, RecyclerView.ViewHolder>(DiffCallback()) {
+) : ListAdapter<CareViewHolderModel, RecyclerView.ViewHolder>(DiffCallback()) {
     override fun getItemViewType(position: Int): Int {
         return position
     }
@@ -33,23 +33,23 @@ class CareAdapter(
         viewType: Int
     ): RecyclerView.ViewHolder {
         return when (getItem(viewType)) {
-            is CareFoodModel -> foodViewHolder(parent)
-            is CareStartModel -> startViewHolder(parent)
-            is CareRepeatModel -> repeatViewHolder(parent)
-            is CareEndModel -> endViewHolder(parent)
-            is CareAlarmHeaderModel -> alarmHeaderViewHolder(parent)
-            is CareAlarmModel -> alarmViewHolder(parent)
+            is CareViewHolderFoodModel -> foodViewHolder(parent)
+            is CareViewHolderStartModel -> startViewHolder(parent)
+            is CareViewHolderRepeatModel -> repeatViewHolder(parent)
+            is CareViewHolderEndModel -> endViewHolder(parent)
+            is CareViewHolderHeaderAlarmModel -> alarmHeaderViewHolder(parent)
+            is CareViewHolderAlarmModel -> alarmViewHolder(parent)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
-            is CareFoodModel -> (holder as CareFoodViewHolder).bind(item)
-            is CareStartModel -> (holder as CareStartViewHolder).bind(item)
-            is CareRepeatModel -> (holder as CareRepeatViewHolder).bind(item)
-            is CareEndModel -> (holder as CareEndViewHolder).bind(item)
-            is CareAlarmHeaderModel -> (holder as CareAlarmHeaderViewHolder)
-            is CareAlarmModel -> (holder as CareAlarmViewHolder).bind(item)
+            is CareViewHolderFoodModel -> (holder as CareFoodViewHolder).bind(item)
+            is CareViewHolderStartModel -> (holder as CareStartViewHolder).bind(item)
+            is CareViewHolderRepeatModel -> (holder as CareRepeatViewHolder).bind(item)
+            is CareViewHolderEndModel -> (holder as CareEndViewHolder).bind(item)
+            is CareViewHolderHeaderAlarmModel -> (holder as CareAlarmHeaderViewHolder)
+            is CareViewHolderAlarmModel -> (holder as CareAlarmViewHolder).bind(item)
         }
     }
 
@@ -89,15 +89,15 @@ class CareAdapter(
         return CareAlarmViewHolder(binding, careAlarmCallback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<CareViewHolderModel>() {
         override fun areItemsTheSame(
-            oldItem: CareModel,
-            newItem: CareModel
+            oldItem: CareViewHolderModel,
+            newItem: CareViewHolderModel
         ) = oldItem.key == newItem.key
 
         override fun areContentsTheSame(
-            oldItem: CareModel,
-            newItem: CareModel
+            oldItem: CareViewHolderModel,
+            newItem: CareViewHolderModel
         ) = oldItem == newItem
     }
 }

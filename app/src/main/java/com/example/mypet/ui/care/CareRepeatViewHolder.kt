@@ -1,9 +1,9 @@
-package com.example.mypet.ui.food
+package com.example.mypet.ui.care
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
-import com.example.mypet.domain.food.CareRepeatModel
+import com.example.mypet.domain.care.CareViewHolderRepeatModel
 
 class CareRepeatViewHolder(
     private val binding: FragmentCareRecyclerRepeatBinding,
@@ -15,7 +15,7 @@ class CareRepeatViewHolder(
         }
     }
 
-    fun bind(foodRepeatModel: CareRepeatModel) {
+    fun bind(foodRepeatModel: CareViewHolderRepeatModel) {
         //TODO дописать функуию отображения информации о повторе в зависимости от данных. Как пример, если установлены понедельник, вторник то "Каждый Пн, Вт", если через неделю то "Каждую 2 неделю по Пн, Вт". в таком роде, надо хорошо так подумать.
         binding.textViewCareRecyclerRepeatDescription.text = foodRepeatModel.description.ifEmpty {
             binding.root.context.getString(

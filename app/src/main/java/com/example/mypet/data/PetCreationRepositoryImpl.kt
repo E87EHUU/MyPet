@@ -1,7 +1,7 @@
 package com.example.mypet.data
 
 import com.example.mypet.data.local.room.dao.PetCreationDao
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity
+import com.example.mypet.data.local.room.entity.LocalPetEntity
 import com.example.mypet.domain.PetCreationRepository
 import com.example.mypet.domain.pet.PetModel
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class PetCreationRepositoryImpl @Inject constructor(
 
     override suspend fun addNewPetToDb(newPet: PetModel) {
         petCreationDao.addNewPetToDb(
-            LocalPetMyEntity(
+            LocalPetEntity(
                 id = generateUniqueId(),
                 kindOrdinal = newPet.kindOrdinal,
                 breedOrdinal = newPet.breedOrdinal,

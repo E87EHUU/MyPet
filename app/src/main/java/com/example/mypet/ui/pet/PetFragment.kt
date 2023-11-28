@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.pet.PetFoodAlarmModel
 import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
@@ -203,30 +204,31 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
     private fun navToFood() {
         viewModel.activePetId?.let {
-            val directions = PetFragmentDirections.actionPetFragmentToFoodFragment(it)
+            val directions = PetFragmentDirections
+                .actionPetFragmentToCareFragment(it, CareTypes.FOOD.ordinal)
             findNavController().navigate(directions)
         }
     }
 
     private fun navToFoodDetail(petFoodModel: PetFoodAlarmModel) {
+        /*        viewModel.activePetId?.let {
+                    val directions =
+                        PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.f)
+                    findNavController().navigate(directions)
+                }*/
+    }
+
+    private fun navToCare() {
 /*        viewModel.activePetId?.let {
-            val directions =
-                PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.f)
+            val directions = PetFragmentDirections.actionPetFragmentToCareFragment(it)
             findNavController().navigate(directions)
         }*/
     }
 
-    private fun navToCare() {
-        viewModel.activePetId?.let {
-            val directions = PetFragmentDirections.actionPetFragmentToCareFragment(it)
-            findNavController().navigate(directions)
-        }
-    }
-
     private fun navToCareDetail(petCareModel: PetCareModel) {
-        val directions =
+/*        val directions =
             PetFragmentDirections.actionPetFragmentToCareDetailFragment(petCareModel.id)
-        findNavController().navigate(directions)
+        findNavController().navigate(directions)*/
     }
 
     private fun initMenuPetAction() {

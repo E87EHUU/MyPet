@@ -7,7 +7,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.domain.pet.PetFoodAlarmModel
-import com.example.mypet.ui.food.toAppTime
+import com.example.mypet.ui.toAppTime
 
 data class LocalPetFoodAlarmModel(
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")

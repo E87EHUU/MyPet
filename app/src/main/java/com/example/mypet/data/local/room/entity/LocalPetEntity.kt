@@ -10,7 +10,7 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 const val PET_TABLE = "pet"
 
 @Entity(tableName = PET_TABLE)
-data class LocalPetMyEntity(
+data class LocalPetEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,

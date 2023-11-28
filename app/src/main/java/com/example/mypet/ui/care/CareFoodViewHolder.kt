@@ -1,8 +1,8 @@
-package com.example.mypet.ui.food
+package com.example.mypet.ui.care
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerFoodBinding
-import com.example.mypet.domain.food.CareFoodModel
+import com.example.mypet.domain.care.CareViewHolderFoodModel
 
 class CareFoodViewHolder(
     private val binding: FragmentCareRecyclerFoodBinding,
@@ -14,6 +14,6 @@ class CareFoodViewHolder(
         }
     }
 
-    fun bind(careFoodModel: CareFoodModel) {
+    fun bind(careFoodModel: CareViewHolderFoodModel) {
     }
 }
