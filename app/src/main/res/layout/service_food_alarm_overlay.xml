@@ -10,7 +10,7 @@
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/offset_24"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

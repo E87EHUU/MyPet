@@ -3,7 +3,7 @@
 
     android:layout_width="@dimen/pet_avatar_size"
     android:layout_height="@dimen/pet_avatar_size"
-    android:layout_marginEnd="@dimen/creation_fragment_margin_top_for_view"
+    android:layout_marginEnd="@dimen/offset_16"
     android:background="@drawable/pet_avatar_round_background">
 
     <ImageView

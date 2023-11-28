@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/creation_fragment_margin_top_for_view"
-    android:paddingTop="@dimen/creation_fragment_margin_top_for_view">
+    android:paddingHorizontal="@dimen/offset_16"
+    android:paddingTop="@dimen/offset_16">
 
     <Button
         android:id="@+id/buttonAlarmRepeatClose"
@@ -19,7 +19,7 @@
         android:id="@+id/textViewAlarmRepeatTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginStart="@dimen/offset_16"
         android:text="@string/alarm_repeat_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAlarmRepeatClose"
@@ -29,7 +29,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero"
-        android:layout_marginTop="@dimen/creation_fragment_margin_top_for_view"
+        android:layout_marginTop="@dimen/offset_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAlarmRepeatClose">

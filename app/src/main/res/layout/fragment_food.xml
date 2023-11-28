@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/offset_24"
-        android:paddingBottom="@dimen/creation_fragment_margin_top_for_view"
+        android:paddingBottom="@dimen/offset_16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/careFragment"
         android:name="com.example.mypet.ui.care.CareFragment"
-        tools:layout="@layout/fragment_care">
+        tools:layout="@layout/fragment_care" >
         <argument
             android:name="pet_my_id"
             app:argType="integer" />
@@ -81,7 +81,7 @@
         android:id="@+id/careDetailFragment"
         android:name="com.example.mypet.ui.care.detail.CareDetailFragment"
         android:label="fragment_care_detail"
-        tools:layout="@layout/fragment_care_detail">
+        tools:layout="@layout/fragment_care_detail" >
         <argument
             android:name="pet_care_id"
             app:argType="integer" />
@@ -91,7 +91,7 @@
         android:id="@+id/foodDetailFragment"
         android:name="com.example.mypet.ui.food.detail.FoodDetailFragment"
         android:label="fragment_food_detail"
-        tools:layout="@layout/fragment_food_detail">
+        tools:layout="@layout/fragment_food_detail" >
         <argument
             android:name="pet_food_id"
             app:argType="integer" />

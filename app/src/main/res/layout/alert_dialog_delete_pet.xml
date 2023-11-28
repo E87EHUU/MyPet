@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/creation_fragment_margin_top_for_view"
+        android:padding="@dimen/offset_16"
         android:textColor="?attr/colorPrimaryDark"
         android:text="@string/alert_dialog_delete_pet_message"
         android:textSize="@dimen/alert_dialog_delete_pet_message_text_size" />
@@ -35,7 +35,7 @@
             android:id="@+id/buttonAcceptDeletePetDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="?android:attr/colorBackground"
+            android:backgroundTint="?attr/colorOnPrimarySurface"
             android:text="@string/alert_dialog_delete_pet_button_accept_text"
             android:textColor="?attr/colorPrimaryDark"
             android:textSize="@dimen/alert_dialog_delete_pet_button_text_size" />
@@ -48,7 +48,7 @@
             android:id="@+id/buttonCancelDeletePetDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="?android:attr/colorBackground"
+            android:backgroundTint="?attr/colorOnPrimarySurface"
             android:text="@string/alert_dialog_delete_pet_button_cancel_text"
             android:textColor="?attr/colorPrimaryDark"
             android:textSize="@dimen/alert_dialog_delete_pet_button_text_size"

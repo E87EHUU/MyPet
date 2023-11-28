@@ -73,7 +73,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         Glide.with(this)
             .load(localPetModel.avatarUri)
             .circleCrop()
-            .placeholder(R.drawable.add_pet_icon)
             .into(binding.appCompatImageViewPetCreationAvatar)
         binding.textInputEditTextPetCreationName.setText(localPetModel.name)
         binding.appCompatTextViewPetCreationKindListSpinner.setSelection(localPetModel.kindOrdinal)
@@ -197,7 +196,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
             Glide.with(this)
                 .load(imageUri)
                 .circleCrop()
-                .placeholder(R.drawable.add_pet_icon)
                 .into(binding.appCompatImageViewPetCreationAvatar)
             viewModel.avatarUri = imageUri.toString()
         }
