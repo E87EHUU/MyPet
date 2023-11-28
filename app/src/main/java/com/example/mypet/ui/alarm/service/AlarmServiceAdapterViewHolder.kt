@@ -11,10 +11,10 @@ class AlarmServiceAdapterViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(localAlarmServiceModel: AlarmServiceModel) {
         with(localAlarmServiceModel) {
-            if (anyAvatarPath != null)
-                binding.imageViewAlarmIcon.setImageURI(Uri.parse(anyAvatarPath))
+            if (petAvatarPath != null)
+                binding.imageViewAlarmIcon.setImageURI(Uri.parse(petAvatarPath))
             else
-                binding.imageViewAlarmIcon.setImageResource(getPetIcon(kindOrdinal, breedOrdinal))
+                binding.imageViewAlarmIcon.setImageResource(getPetIcon(petKindOrdinal, petBreedOrdinal))
 
             //binding.textViewAlarmTitle.text = anyTitle
         }

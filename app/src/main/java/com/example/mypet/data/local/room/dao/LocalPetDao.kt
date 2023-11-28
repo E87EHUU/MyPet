@@ -22,30 +22,29 @@ import kotlinx.coroutines.flow.Flow
 interface LocalPetDao {
     @Query(
         "SELECT " +
-                "m.id $ID, " +
-                "m.avatar_path $AVATAR_PATH, " +
-                "m.name $NAME, " +
-                "m.age $AGE, " +
-                "m.weight $WEIGHT, " +
-                "m.kind_ordinal $KIND_ORDINAL, " +
-                "m.breed_ordinal $BREED_ORDINAL, " +
-                "m.is_active $IS_ACTIVE " +
-                "FROM pet_my m "
+                "id $ID, " +
+                "avatar_path $AVATAR_PATH, " +
+                "name $NAME, " +
+                "age $AGE, " +
+                "weight $WEIGHT, " +
+                "kind_ordinal $KIND_ORDINAL, " +
+                "breed_ordinal $BREED_ORDINAL, " +
+                "is_active $IS_ACTIVE " +
+                "FROM pet"
     )
     fun getLocalPetModels(): Flow<List<LocalPetModel>>
 
     @Query(
         "SELECT " +
-                "a.id ${ALARM_TABLE}_$ID, " +
-                "a.hour ${ALARM_TABLE}_$HOUR, " +
-                "a.minute ${ALARM_TABLE}_$MINUTE, " +
-                "a.is_active ${ALARM_TABLE}_$IS_ACTIVE " +
-                "FROM pet_food f " +
-                "LEFT JOIN alarm a ON a.id = f.alarm_id " +
-                "WHERE f.pet_my_id = :petId"
+                "id ${ALARM_TABLE}_$ID, " +
+                "hour ${ALARM_TABLE}_$HOUR, " +
+                "minute ${ALARM_TABLE}_$MINUTE, " +
+                "is_active ${ALARM_TABLE}_$IS_ACTIVE " +
+                "FROM alarm " +
+                "WHERE pet_id = :petId AND care_type_ordinal = :careFoodTypeOrdinal"
     )
-    fun getLocalPetFoodModel(petId: Int): Flow<List<LocalPetFoodAlarmModel>>
+    fun getLocalPetFoodModel(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalPetFoodAlarmModel>>
 
-    @Query("DELETE FROM pet_my WHERE id = :petId")
+    @Query("DELETE FROM pet WHERE id = :petId")
     suspend fun deletePet(petId: Int)
 }

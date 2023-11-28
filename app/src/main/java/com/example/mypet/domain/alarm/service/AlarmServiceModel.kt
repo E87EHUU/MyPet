@@ -29,19 +29,18 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.PET_TABLE
 import com.example.mypet.domain.alarm.AlarmModel
 
 data class AlarmServiceModel(
-    @ColumnInfo(name = ID)
-    val anyId: Int,
-
-    @ColumnInfo(name = AVATAR_PATH)
-    val anyAvatarPath: String?,
-
-    @ColumnInfo(name = KIND_ORDINAL)
-    val kindOrdinal: Int,
-    @ColumnInfo(name = BREED_ORDINAL)
-    val breedOrdinal: Int?,
+    @ColumnInfo(name = "${PET_TABLE}_$ID")
+    val petId: Int,
+    @ColumnInfo(name = "${PET_TABLE}_$AVATAR_PATH")
+    val petAvatarPath: String?,
+    @ColumnInfo(name = "${PET_TABLE}_$KIND_ORDINAL")
+    val petKindOrdinal: Int,
+    @ColumnInfo(name = "${PET_TABLE}_$BREED_ORDINAL")
+    val petBreedOrdinal: Int?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,

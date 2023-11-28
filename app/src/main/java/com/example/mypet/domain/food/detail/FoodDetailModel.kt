@@ -1,11 +1,9 @@
 package com.example.mypet.domain.food.detail
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.DAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_COUNT
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.END_DAY
@@ -28,26 +26,24 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEA
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.YEAR
-import com.example.mypet.data.local.room.entity.LocalPetFoodEntity
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.PET_FOOD_TABLE
-import com.example.mypet.data.local.room.entity.PET_MY_TABLE
+import com.example.mypet.data.local.room.entity.PET_TABLE
 import com.example.mypet.domain.alarm.AlarmModel
 
 data class FoodDetailModel(
-    @ColumnInfo(name = "${PET_MY_TABLE}_$ID")
+    @ColumnInfo(name = "${PET_TABLE}_$ID")
     val petId: Int,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$AVATAR_PATH")
+    @ColumnInfo(name = "${PET_TABLE}_$AVATAR_PATH")
     val petAvatarPath: String? = null,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$KIND_ORDINAL")
+    @ColumnInfo(name = "${PET_TABLE}_$KIND_ORDINAL")
     val petKindOrdinal: Int,
-    @ColumnInfo(name = "${PET_MY_TABLE}_$BREED_ORDINAL")
+    @ColumnInfo(name = "${PET_TABLE}_$BREED_ORDINAL")
     val petBreedOrdinal: Int? = null,
 
-    @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
-    val foodId: Int? = null,
+/*    @ColumnInfo(name = "${PET_FOOD_TABLE}_$ID")
+    val foodId: Int? = null,*/
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int? = null,
@@ -132,7 +128,7 @@ data class FoodDetailModel(
         )
     }
 
-    fun toLocalPetFoodEntity(): LocalPetFoodEntity? {
+/*    fun toLocalPetFoodEntity(): LocalPetFoodEntity? {
         val alarmId = alarmId ?: return null
 
         return LocalPetFoodEntity(
@@ -140,9 +136,9 @@ data class FoodDetailModel(
             petId = petId,
             alarmId = alarmId,
         )
-    }
+    }*/
 
-    fun toLocalAlarmEntity(): LocalAlarmEntity? {
+/*    fun toLocalAlarmEntity(): LocalAlarmEntity? {
         val alarmHour = alarmHour ?: return null
         val alarmMinute = alarmMinute ?: return null
 
@@ -171,5 +167,5 @@ data class FoodDetailModel(
             endYear = alarmEndYear,
             endCount = alarmEndCount,
         )
-    }
+    }*/
 }

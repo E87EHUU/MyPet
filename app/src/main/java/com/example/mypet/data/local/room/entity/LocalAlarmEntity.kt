@@ -15,6 +15,11 @@ data class LocalAlarmEntity(
     @ColumnInfo(name = ID)
     val id: Int = DEFAULT_ID,
 
+    @ColumnInfo(name = "${PET_TABLE}_$ID")
+    val petId: Int,
+    @ColumnInfo(name = CARE_TYPE_ORDINAL)
+    val careTypeOrdinal: Int,
+
     @ColumnInfo(name = DESCRIPTION)
     val description: String?,
 
@@ -70,6 +75,7 @@ data class LocalAlarmEntity(
     val endCount: Int? = null,
 ) {
     companion object {
+        const val CARE_TYPE_ORDINAL = "care_type_ordinal"
         const val HOUR = "hour"
         const val MINUTE = "minute"
         const val DAY = "day"

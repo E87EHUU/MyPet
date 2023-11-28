@@ -10,11 +10,11 @@ class FoodDetailRepositoryImpl @Inject constructor(
     private val localFoodDetailDao: LocalFoodDetailDao,
     private val alarmDao: AlarmDao,
 ) : FoodDetailRepository {
-    override suspend fun getFoodDetailModel(foodId: Int) =
-        localFoodDetailDao.getLocalFoodDetailModel(foodId)
+    override suspend fun getFoodDetailModel(foodId: Int) = TODO()
+        /*localFoodDetailDao.getLocalFoodDetailModel(foodId)*/
 
     override suspend fun saveAndSetFoodDetailModel(foodDetailModel: FoodDetailModel) {
-        localFoodDetailDao.saveFoodDetailModel(foodDetailModel)
-            ?.toAlarmModel()?.let { alarmDao.setAlarm(it) }
+/*        localFoodDetailDao.saveFoodDetailModel(foodDetailModel)
+            ?.toAlarmModel()?.let { alarmDao.setAlarm(it) }*/
     }
 }
