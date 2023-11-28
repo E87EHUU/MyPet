@@ -103,6 +103,9 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onNotEmptyPetModels(petModels: List<PetModel>) {
+        binding.constraintLayoutPetEmpty.isVisible = false
+        binding.constraintLayoutPetDetail.isVisible = true
+
         petListAdapter.setPetList(petModels)
         val activePetModel = petModels.find { it.isActive } ?: petModels.first()
         viewModel.activePetMyId = activePetModel.id
@@ -110,9 +113,11 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun onEmptyPetModels() {
+        binding.constraintLayoutPetDetail.isVisible = false
+        binding.constraintLayoutPetEmpty.isVisible = true
+
         petListAdapter.setPetList(emptyList())
         viewModel.activePetMyId = null
-        binding.textViewPetEmpty.isVisible = true
     }
 
     private fun startObservePetFoodList() {
@@ -174,8 +179,6 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         binding.textViewPetBreedName.text =
             getString(getPetName(petModel.kindOrdinal, petModel.breedOrdinal))
 
-        binding.textViewPetEmpty.isVisible = false
-
         petModel.age?.let {
             binding.textViewPetAgeText.text = petModel.age
             binding.materialCardViewPetAge.isVisible = true
@@ -226,7 +229,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
     }
 
     private fun initMenuPetAction() {
-        binding.imageViewPopupMenuPetAction.setOnClickListener {
+        binding.cardViewPopupMenuPetAction.setOnClickListener {
             val popupMenu = PopupMenu(requireContext(), it)
             popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
 
