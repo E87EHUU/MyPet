@@ -1,36 +1,36 @@
 package com.example.mypet.data
 
 import android.net.Uri
-import com.example.mypet.data.local.room.dao.PetCreationDao
+import com.example.mypet.data.local.room.dao.PetCreationAndUpdateDao
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
-import com.example.mypet.domain.PetCreationRepository
-import com.example.mypet.domain.pet.creation.PetCreationModel
+import com.example.mypet.domain.PetCreationAndUpdateRepository
+import com.example.mypet.domain.pet.creation.PetCreationAndUpdateModel
 import com.example.mypet.domain.pet.detail.PetModel
 import javax.inject.Inject
 
-class PetCreationRepositoryImpl @Inject constructor(
-    private val petCreationDao: PetCreationDao
-) : PetCreationRepository {
+class PetCreationAndUpdateRepositoryImpl @Inject constructor(
+    private val petCreationAndUpdateDao: PetCreationAndUpdateDao
+) : PetCreationAndUpdateRepository {
 
 
-    override suspend fun addNewPetToDb(petCreationModel: PetCreationModel) {
-        petCreationDao.addNewPetToDb(
-            petCreationModel.toLocalPetMyEntity()
+    override suspend fun addNewPetToDb(petCreationAndUpdateModel: PetCreationAndUpdateModel) {
+        petCreationAndUpdateDao.addNewPetToDb(
+            petCreationAndUpdateModel.toLocalPetMyEntity()
         )
     }
 
     override suspend fun getPetFromDbForUpdateDetails(petId: Int): PetModel {
-        return petCreationDao.getPetFromDbForUpdateDetails(petId).toPetModel()
+        return petCreationAndUpdateDao.getPetFromDbForUpdateDetails(petId).toPetModel()
     }
 
-    override suspend fun updatePetDetailsInDb(updatedPet: PetCreationModel) {
-        petCreationDao.updatePetDetailsInDb(
+    override suspend fun updatePetDetailsInDb(updatedPet: PetCreationAndUpdateModel) {
+        petCreationAndUpdateDao.updatePetDetailsInDb(
             updatedPet.toLocalPetMyEntity()
         )
     }
 
-    private fun PetCreationModel.toLocalPetMyEntity() =
+    private fun PetCreationAndUpdateModel.toLocalPetMyEntity() =
         LocalPetMyEntity(
             id = id,
             kindOrdinal = kindOrdinal,

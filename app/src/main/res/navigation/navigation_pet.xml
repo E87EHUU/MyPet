@@ -56,7 +56,7 @@
         app:graph="@navigation/navigation_food_alarm" />
     <fragment
         android:id="@+id/petCreationFragment"
-        android:name="com.example.mypet.ui.pet.creation.PetCreationFragment"
+        android:name="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment"
         android:label="fragment_pet_creation"
         tools:layout="@layout/fragment_pet_creation">
         <argument

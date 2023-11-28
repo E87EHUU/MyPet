@@ -31,14 +31,14 @@ import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
-class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
+class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val binding by viewBinding(FragmentPetCreationBinding::bind)
-    private val viewModel by viewModels<PetCreationViewModel>()
+    private val viewModel by viewModels<PetCreationAndUpdateViewModel>()
 
     private lateinit var breedSpinnerAdapter: ArrayAdapter<String>
 
-    private val args: PetCreationFragmentArgs by navArgs()
+    private val args: PetCreationAndUpdateFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

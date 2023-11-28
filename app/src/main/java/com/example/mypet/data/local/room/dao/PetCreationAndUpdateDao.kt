@@ -9,7 +9,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 
 @Dao
-interface PetCreationDao {
+interface PetCreationAndUpdateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNewPetToDb(newPet: LocalPetMyEntity)

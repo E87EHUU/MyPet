@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.domain.PetCreationRepository
-import com.example.mypet.domain.pet.creation.PetCreationModel
+import com.example.mypet.domain.PetCreationAndUpdateRepository
+import com.example.mypet.domain.pet.creation.PetCreationAndUpdateModel
 import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUES
 import com.example.mypet.utils.DEFAULT_STRING_VALUES
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PetCreationViewModel @Inject constructor(
-    private val petCreationRepository: PetCreationRepository
+class PetCreationAndUpdateViewModel @Inject constructor(
+    private val petCreationAndUpdateRepository: PetCreationAndUpdateRepository
 ) : ViewModel() {
 
     var avatarUri: String = DEFAULT_STRING_VALUES
@@ -43,7 +43,7 @@ class PetCreationViewModel @Inject constructor(
 
     private fun addNewPetToDb() {
         viewModelScope.launch(Dispatchers.IO) {
-            petCreationRepository.addNewPetToDb(
+            petCreationAndUpdateRepository.addNewPetToDb(
                 viewModelVariablesToPetCreationModel(DEFAULT_ID)
             )
         }
@@ -51,19 +51,19 @@ class PetCreationViewModel @Inject constructor(
 
     fun getPetFromDbForUpdateDetails(petId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _localPetForUpdate.postValue(petCreationRepository.getPetFromDbForUpdateDetails(petId))
+            _localPetForUpdate.postValue(petCreationAndUpdateRepository.getPetFromDbForUpdateDetails(petId))
         }
     }
 
     private fun updatePetDetailsInDb() {
         viewModelScope.launch(Dispatchers.IO) {
-            petCreationRepository.updatePetDetailsInDb(
+            petCreationAndUpdateRepository.updatePetDetailsInDb(
                 viewModelVariablesToPetCreationModel(petId)
             )
         }
     }
 
-    private fun viewModelVariablesToPetCreationModel(id: Int) = PetCreationModel(
+    private fun viewModelVariablesToPetCreationModel(id: Int) = PetCreationAndUpdateModel(
         id = id,
         avatarUri = avatarUri,
         name = name,
