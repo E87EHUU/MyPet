@@ -8,20 +8,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
+import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.kind.PetKind
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.snackMessage
+import com.example.mypet.utils.DEFAULT_INTEGER_VALUES
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -34,15 +38,52 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private lateinit var breedSpinnerAdapter: ArrayAdapter<String>
 
+    private val args: PetCreationFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         onChoosePhotoButtonClickListener()
-        initKindListSpinner()
-        onKindItemSelectedListener()
-        onBreedItemSelectedListener()
+        initKindAndBreedListSpinner()
         onChooseDateOfBirthClickListener()
         onSaveNewPetButtonClickListener()
+
+        collectPetDetailsIfNeedsToUpdate()
+    }
+
+    private fun collectPetDetailsIfNeedsToUpdate() {
+        if (args.petMyId > DEFAULT_INTEGER_VALUES) {
+            viewModel.petId = args.petMyId
+            viewModel.getPetFromDbForUpdateDetails(args.petMyId)
+            startObservePetDetailsForUpdate()
+        }
+    }
+
+    private fun startObservePetDetailsForUpdate() {
+        lifecycleScope.launch {
+            viewModel.localPetForUpdate.observe(viewLifecycleOwner) {
+                initPetDetailsForUpdate(it)
+            }
+        }
+    }
+
+    private fun initPetDetailsForUpdate(localPetModel: PetModel) {
+        viewModel.avatarUri = localPetModel.avatarUri.toString()
+        Glide.with(this)
+            .load(localPetModel.avatarUri)
+            .circleCrop()
+            .placeholder(R.drawable.add_pet_icon)
+            .into(binding.appCompatImageViewPetCreationAvatar)
+        binding.textInputEditTextPetCreationName.setText(localPetModel.name)
+        binding.appCompatTextViewPetCreationKindListSpinner.setSelection(localPetModel.kindOrdinal)
+        localPetModel.breedOrdinal?.let {
+            binding.appCompatSpinnerPetCreationBreedListSpinner.setSelection(it)
+        }
+        binding.textInputEditTextPetCreationWeight.setText(localPetModel.weight)
+        binding.appCompatTextViewPetCreationSelectedDate.text =
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(localPetModel.age?.toLong())
+        viewModel.dateOfBirth = localPetModel.age
     }
 
     private fun onChoosePhotoButtonClickListener() {
@@ -51,7 +92,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun initKindListSpinner() {
+    private fun initKindAndBreedListSpinner() {
         val adapter =
             ArrayAdapter(
                 requireContext(),
@@ -60,6 +101,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.appCompatTextViewPetCreationKindListSpinner.adapter = adapter
+        onKindItemSelectedListener()
     }
 
     private fun onKindItemSelectedListener() {
@@ -72,7 +114,6 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                     id: Long
                 ) {
                     initBreedListSpinner(position)
-                    viewModel.kindOrdinal = position
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -107,24 +148,6 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun onBreedItemSelectedListener() {
-        binding.appCompatSpinnerPetCreationBreedListSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel.breedOrdinal = position
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Действие при отсутствии выбора
-                }
-            }
-    }
-
     private fun onChooseDateOfBirthClickListener() {
         binding.appCompatImageViewPetCreationCalendar.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -139,7 +162,7 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
                     val selectedDate =
                         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
                     binding.appCompatTextViewPetCreationSelectedDate.text = selectedDate
-                    viewModel.dateOfBirthTimeMillis = calendar.timeInMillis
+                    viewModel.dateOfBirth = calendar.timeInMillis.toString()
                 },
                 year,
                 month,
@@ -151,14 +174,18 @@ class PetCreationFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun onSaveNewPetButtonClickListener() {
         binding.appCompatButtonPetCreationSave.setOnClickListener {
+            viewModel.kindOrdinal =
+                binding.appCompatTextViewPetCreationKindListSpinner.selectedItemPosition
+            viewModel.breedOrdinal =
+                binding.appCompatSpinnerPetCreationBreedListSpinner.selectedItemPosition
             viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
             viewModel.weight =
                 binding.textInputEditTextPetCreationWeight.text?.toString()?.toIntOrNull()
             with(viewModel) {
-                if (name.isEmpty() || dateOfBirthTimeMillis == null || weight == null) {
+                if (name.isEmpty() || dateOfBirth.isNullOrEmpty() || weight == null) {
                     view?.snackMessage(getString(R.string.fill_up_all_fields))
                 } else {
-                    viewModel.addNewPetToDb()
+                    viewModel.addOrUpdatePetInDb()
                     findNavController().popBackStack()
                 }
             }

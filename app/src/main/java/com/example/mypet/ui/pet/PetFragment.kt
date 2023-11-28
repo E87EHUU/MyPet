@@ -33,6 +33,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
@@ -177,7 +179,8 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
         binding.textViewPetEmpty.isVisible = false
 
         petModel.age?.let {
-            binding.textViewPetAgeText.text = petModel.age
+            binding.textViewPetAgeText.text =
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(petModel.age.toLong())
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
@@ -233,7 +236,13 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.pet_menu_item_edit_pet -> {
-                        // Add Edit pet
+                        viewModel.activePetMyId?.let { activePetMyId ->
+                            val directions =
+                                PetFragmentDirections.actionPetFragmentToPetCreationFragment(
+                                    activePetMyId
+                                )
+                            findNavController().navigate(directions)
+                        }
                         true
                     }
 
