@@ -19,7 +19,7 @@ data class LocalPetMyEntity(
     @ColumnInfo(name = NAME)
     val name: String,
     @ColumnInfo(name = AGE)
-    val age: Int?,
+    val dateOfBirthTimeMillis: Long?,
     @ColumnInfo(name = WEIGHT)
     val weight: Int?,
     @ColumnInfo(name = SEX)
