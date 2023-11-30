@@ -10,7 +10,7 @@ import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_O
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.list.PetListModel
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
@@ -30,8 +30,8 @@ data class LocalPetModel(
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 ) {
-    fun toPetModel() =
-        PetModel(
+    fun toPetListModel() =
+        PetListModel(
             id = id,
             avatarUri = avatarPath?.let { Uri.parse(avatarPath) },
             name = name,

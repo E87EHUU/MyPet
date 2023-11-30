@@ -8,18 +8,18 @@ import com.example.mypet.app.databinding.FragmentPetCareRecyclerItemBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 
 class PetCareAdapter(
-    private val callback: PetCareAdapterCallback,
-) : ListAdapter<PetCareModel, PetCareAdapterViewHolder>(DiffCallback()) {
+    private val callback: PetCareCallback,
+) : ListAdapter<PetCareModel, PetCareMainViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PetCareAdapterViewHolder {
+    ): PetCareMainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = FragmentPetCareRecyclerItemBinding.inflate(inflater, parent, false)
-        return PetCareAdapterViewHolder(binding, callback)
+        return PetCareMainViewHolder(binding, callback)
     }
 
-    override fun onBindViewHolder(holder: PetCareAdapterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PetCareMainViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 

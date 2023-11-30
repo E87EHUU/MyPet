@@ -4,15 +4,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetCareRecyclerItemBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 
-class PetCareAdapterViewHolder(
+class PetCareMainViewHolder(
     private val binding: FragmentPetCareRecyclerItemBinding,
-    private val callback: PetCareAdapterCallback,
+    private val callback: PetCareCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var petCareModel: PetCareModel
 
     init {
         binding.root.setOnClickListener {
-            callback.onItemClick(petCareModel)
+            callback.onPetCareClick(petCareModel)
         }
     }
 

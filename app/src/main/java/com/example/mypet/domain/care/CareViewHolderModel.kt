@@ -31,7 +31,6 @@ data class CareViewHolderEndModel(
 
 data class CareViewHolderAlarmModel(
     val id: Int,
-    val hour: Int,
-    val minute: Int,
+    val time: String,
     val isActive: Boolean
 ) : CareViewHolderModel("$ALARM_KEY-$id")

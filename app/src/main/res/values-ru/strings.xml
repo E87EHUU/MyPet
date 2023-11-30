@@ -149,4 +149,10 @@
         <item>раза в меясяц</item>
     </string-array>
 
+    <string name="food_title">Кормление</string>
+    <string name="bath_title">Ванна</string>
+    <string name="combing_the_wall_title">Вычесывание шерсти</string>
+    <string name="vaccination_title">Вакцинанция</string>
+    <string name="walk_title">Прогулка</string>
+
 </resources>
