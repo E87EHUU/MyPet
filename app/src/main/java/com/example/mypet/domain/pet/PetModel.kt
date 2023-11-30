@@ -1,8 +1,8 @@
-package com.example.mypet.domain.pet.list
+package com.example.mypet.domain.pet
 
 import android.net.Uri
 
-data class PetListModel(
+data class PetModel(
     val id: Int,
     val avatarUri: Uri?,
     val name: String,

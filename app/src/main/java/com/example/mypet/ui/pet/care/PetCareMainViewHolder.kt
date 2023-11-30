@@ -8,6 +8,7 @@ class PetCareMainViewHolder(
     private val binding: FragmentPetCareRecyclerItemBinding,
     private val callback: PetCareCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
+    private val context = binding.root.context
     private lateinit var petCareModel: PetCareModel
 
     init {
@@ -20,7 +21,7 @@ class PetCareMainViewHolder(
         this.petCareModel = petCareModel
 
         binding.imageViewPetCareRecyclerItemIcon.setImageResource(petCareModel.iconResId)
-        binding.textViewPetCareRecyclerItemTitle.text = petCareModel.title
+        binding.textViewPetCareRecyclerItemTitle.text = context.getString(petCareModel.title)
         binding.textViewPetCareRecyclerItemDate.text = petCareModel.date
         binding.progressBarPetCareRecyclerItem.progress = petCareModel.progress
     }

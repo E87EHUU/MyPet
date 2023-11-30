@@ -3,20 +3,20 @@ package com.example.mypet.ui.pet.main.list
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.databinding.FragmentPetListRecyclerMainBinding
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.ui.getPetIcon
 
 class PetListMainViewHolder(
     private val binding: FragmentPetListRecyclerMainBinding,
     private val callback: PetListCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var petListModel: PetListModel
+    private lateinit var petListModel: PetModel
 
     init {
         binding.root.setOnClickListener { callback.onPetListMainClick(petListModel) }
     }
 
-    fun bind(petListModel: PetListModel) {
+    fun bind(petListModel: PetModel) {
         this.petListModel = petListModel
 
         petListModel.avatarUri?.let {

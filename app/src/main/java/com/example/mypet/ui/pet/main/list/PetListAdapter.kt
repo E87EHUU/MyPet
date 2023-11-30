@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetListRecyclerAddBinding
 import com.example.mypet.app.databinding.FragmentPetListRecyclerMainBinding
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.PetModel
 
 class PetListAdapter(
     private val callback: PetListCallback,
-) : ListAdapter<PetListModel, RecyclerView.ViewHolder>(DiffCallback()) {
+) : ListAdapter<PetModel, RecyclerView.ViewHolder>(DiffCallback()) {
     var selectedPetListPosition = itemCount
         private set
     private fun shiftPosition(position: Int) =
@@ -44,15 +44,15 @@ class PetListAdapter(
         return PetListAddViewHolder(binding, callback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<PetListModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<PetModel>() {
         override fun areItemsTheSame(
-            oldItem: PetListModel,
-            newItem: PetListModel
+            oldItem: PetModel,
+            newItem: PetModel
         ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
-            oldItem: PetListModel,
-            newItem: PetListModel
+            oldItem: PetModel,
+            newItem: PetModel
         ) = oldItem == newItem
     }
 }

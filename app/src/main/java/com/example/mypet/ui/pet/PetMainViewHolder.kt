@@ -4,7 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
 import com.example.mypet.ui.pet.main.PetMainCallback
@@ -16,14 +16,14 @@ class PetMainViewHolder(
     private val callback: PetMainCallback,
 ) : RecyclerView.ViewHolder(binding.root), PetListCallback {
     private val context = binding.root.context
-    private lateinit var pet: List<PetListModel>
+    private lateinit var pet: List<PetModel>
     private val petListAdapter: PetListAdapter = PetListAdapter(this)
 
     init {
         binding.recyclerViewPetList.adapter = petListAdapter
     }
 
-    fun bind(pet: List<PetListModel>) {
+    fun bind(pet: List<PetModel>) {
         this.pet = pet
         petListAdapter.submitList(pet)
 
@@ -33,7 +33,7 @@ class PetMainViewHolder(
         }
     }
 
-    private fun updatePet(petListModel: PetListModel) {
+    private fun updatePet(petListModel: PetModel) {
         with(petListModel) {
             if (avatarUri != null) {
                 Glide.with(context)
@@ -68,7 +68,7 @@ class PetMainViewHolder(
         callback.onPetAddClick()
     }
 
-    override fun onPetListMainClick(petListModel: PetListModel) {
-        callback.onPetClick(petListModel.id)
+    override fun onPetListMainClick(petListModel: PetModel) {
+        callback.onPetClick(petListModel)
     }
 }

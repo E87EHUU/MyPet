@@ -8,7 +8,7 @@ import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodAlarmModel
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.ui.pet.care.PetCareCallback
 import com.example.mypet.ui.pet.food.PetFoodCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
@@ -33,7 +33,7 @@ class PetAdapter(
         }
     }
 
-    var petListModel: List<PetListModel> = emptyList()
+    var petListModel: List<PetModel> = emptyList()
     var food: List<PetFoodAlarmModel> = emptyList()
     var care: List<PetCareModel> = emptyList()
 

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.domain.pet.PetModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 import com.example.mypet.ui.getActionBar
@@ -182,7 +183,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         findNavController().navigate(R.id.petCreationFragment)
     }
 
-    override fun onPetClick(petId: Int) {
-        viewModel.updatePetDetail(petId)
+    override fun onPetClick(petModel: PetModel) {
+        viewModel.updatePetDetail(petModel)
     }
 }
