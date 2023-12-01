@@ -26,7 +26,7 @@ class PetViewModel @Inject constructor(
     private val _food = MutableStateFlow<PetFoodModel?>(null)
     val food = _food.asStateFlow()
 
-    private val _care = MutableStateFlow<List<PetCareModel>>(emptyList())
+    private val _care = MutableStateFlow<List<PetCareModel>?>(null)
     val care = _care.asStateFlow()
 
     init {
@@ -38,9 +38,14 @@ class PetViewModel @Inject constructor(
             .collectLatest { _pet.value = it }
     }
 
-    fun updatePetDetail(petModel: PetListModel) {
-        updateFood(petModel.id)
-        updateCare(petModel)
+    fun updatePetDetail(petListModel: PetListModel?) {
+        petListModel?.let {
+            updateFood(it.id)
+            updateCare(it)
+        } ?: run {
+            _food.value = null
+            _care.value = null
+        }
     }
 
     private fun updateFood(petId: Int) = viewModelScope.launch(Dispatchers.IO) {
@@ -48,13 +53,13 @@ class PetViewModel @Inject constructor(
             .collectLatest { _food.value = it }
     }
 
-    private fun updateCare(petModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getCare(petModel.id)
-            .collectLatest { _care.value = getCares(petModel) }
+    private fun updateCare(petListModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
+        petRepository.getCare(petListModel.id)
+            .collectLatest { _care.value = getCares(petListModel) }
     }
 
-    private fun getCares(petModel: PetListModel) =
-        when (petModel.kindOrdinal) {
+    private fun getCares(petListModel: PetListModel) =
+        when (petListModel.kindOrdinal) {
             PetKind.CAT.ordinal,
             PetKind.DOG.ordinal -> {
                 listOf(

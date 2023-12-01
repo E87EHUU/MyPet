@@ -4,5 +4,5 @@ import com.example.mypet.domain.pet.PetListModel
 
 interface PetListCallback {
     fun onClickPetAdd()
-    fun onClickPet(petListModel: PetListModel)
+    fun onClickPet(petListModel: PetListModel?)
 }

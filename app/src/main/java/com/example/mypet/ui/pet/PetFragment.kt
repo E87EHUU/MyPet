@@ -72,7 +72,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.food.collectLatest {
                     adapter.food = it
-                    adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
+                    binding.root.post {
+                        adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
+                    }
                 }
             }
         }
@@ -83,7 +85,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.care.collectLatest {
                     adapter.care = it
-                    adapter.notifyItemChanged(PetAdapter.CARE_POSITION)
+                    binding.root.post {
+                        adapter.notifyItemChanged(PetAdapter.CARE_POSITION)
+                    }
                 }
             }
         }
@@ -113,7 +117,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         findNavController().navigate(R.id.petCreationFragment)
     }
 
-    override fun onClickPet(petListModel: PetListModel) {
+    override fun onClickPet(petListModel: PetListModel?) {
         viewModel.updatePetDetail(petListModel)
     }
 

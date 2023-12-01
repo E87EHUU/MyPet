@@ -35,7 +35,7 @@ class PetAdapter(
 
     var petListModel: List<PetListModel> = emptyList()
     var food: PetFoodModel? = null
-    var care: List<PetCareModel> = emptyList()
+    var care: List<PetCareModel>? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (position) {

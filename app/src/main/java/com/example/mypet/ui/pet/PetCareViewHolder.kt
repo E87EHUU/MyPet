@@ -1,5 +1,6 @@
 package com.example.mypet.ui.pet
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerCareBinding
 import com.example.mypet.domain.pet.care.PetCareModel
@@ -15,11 +16,18 @@ class PetCareViewHolder(
 
     private val petCareAdapter = PetCareAdapter(this)
 
-    fun bind(petCareModels: List<PetCareModel>) {
-        this.petCareModels = petCareModels
-
+    init {
         binding.recyclerViewPetCareList.adapter = petCareAdapter
-        petCareAdapter.submitList(petCareModels)
+    }
+
+    fun bind(petCareModels: List<PetCareModel>?) {
+        petCareModels?.let {
+            this.petCareModels = petCareModels
+            petCareAdapter.submitList(petCareModels)
+            binding.root.isVisible = true
+        } ?: run {
+            binding.root.isVisible = false
+        }
     }
 
     override fun onPetCareClick(petCareModel: PetCareModel) {

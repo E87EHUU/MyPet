@@ -1,5 +1,6 @@
 package com.example.mypet.ui.pet
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.domain.pet.food.PetFoodModel
@@ -22,8 +23,10 @@ class PetFoodViewHolder(
     fun bind(petFoodModel: PetFoodModel?) {
         petFoodModel?.let {
             this.petFoodModel = petFoodModel
+            petFoodAdapter.submitList(petFoodModel.alarmModels)
+            binding.root.isVisible = true
+        } ?: run {
+            binding.root.isVisible = false
         }
-
-        petFoodAdapter.submitList(petFoodModel?.alarmModels)
     }
 }

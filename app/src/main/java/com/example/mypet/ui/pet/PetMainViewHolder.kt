@@ -81,47 +81,54 @@ class PetMainViewHolder(
         this.petListModels = petListModels
         petListAdapter.submitList(petListModels)
 
-        if (petListModels.isNotEmpty()) onClickPet(petListModels.first())
-
+        onClickPet(petListModels.firstOrNull())
     }
 
-    private fun updatePet(petListModel: PetListModel) {
-        with(petListModel) {
+    private fun updatePet(petListModel: PetListModel?) {
+        petListModel?.let {
             activePetListModel = petListModel
-            if (avatarUri != null) {
+
+            if (it.avatarUri != null) {
                 Glide.with(context)
-                    .load(avatarUri)
+                    .load(it.avatarUri)
                     .circleCrop()
                     .into(binding.imageViewPetRecyclerMainAvatarIcon)
             } else
                 binding.imageViewPetRecyclerMainAvatarIcon
-                    .setImageResource(getPetIcon(kindOrdinal, breedOrdinal))
+                    .setImageResource(getPetIcon(it.kindOrdinal, it.breedOrdinal))
 
-            binding.textViewPetRecyclerMainName.text = name
+            binding.textViewPetRecyclerMainName.text = it.name
             binding.textViewPetRecyclerMainBreedName.text =
-                context.getString(getPetName(kindOrdinal, breedOrdinal))
+                context.getString(getPetName(it.kindOrdinal, it.breedOrdinal))
 
-            age?.let {
-                binding.textViewPetAgeText.text = age
-                binding.materialCardViewPetAge.isVisible = true
-            } ?: run {
-                binding.materialCardViewPetAge.isVisible = false
-            }
-
-            weight?.let {
-                binding.textViewPetWeightText.text = weight
-                binding.materialCardViewPetWeight.isVisible = true
-            } ?: run {
-                binding.materialCardViewPetWeight.isVisible = false
-            }
+            binding.imageViewPetRecyclerMainEmpty.isVisible = false
+            binding.groupPetRecyclerMain.isVisible = true
+        } ?: run {
+            binding.groupPetRecyclerMain.isVisible = false
+            binding.imageViewPetRecyclerMainEmpty.isVisible = true
         }
+
+        petListModel?.age?.let {
+            binding.textViewPetRecyclerMainAgeText.text = it
+            binding.materialCardViewPetRecyclerMainAge.isVisible = true
+        } ?: run {
+            binding.materialCardViewPetRecyclerMainAge.isVisible = false
+        }
+
+        petListModel?.weight?.let {
+            binding.textViewPetRecyclerMainWeightText.text = it
+            binding.materialCardViewPetRecyclerMainWeight.isVisible = true
+        } ?: run {
+            binding.materialCardViewPetRecyclerMainWeight.isVisible = false
+        }
+
     }
 
     override fun onClickPetAdd() {
         callback.onClickPetAdd()
     }
 
-    override fun onClickPet(petListModel: PetListModel) {
+    override fun onClickPet(petListModel: PetListModel?) {
         callback.onClickPet(petListModel)
         updatePet(petListModel)
     }
