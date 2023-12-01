@@ -2,25 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayoutPetFood"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/materialCardViewPetWeight">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textViewPetListTitle"
+        android:id="@+id/textViewPetRecyclerMainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="@dimen/offset_16"
+        android:layout_marginStart="@dimen/offset_24"
+        android:layout_marginTop="16dp"
         android:text="@string/pet_list_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPetList"
+        android:id="@+id/recyclerViewPetRecyclerMain"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -31,31 +28,30 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPetListTitle"
-        tools:listitem="@layout/fragment_pet_list_recycler_main" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerMainTitle"
+        tools:listitem="@layout/fragment_pet_recycler_main_recycler_main" />
 
     <FrameLayout
-        android:id="@+id/frameLayoutPetListShadow"
+        android:id="@+id/frameLayoutPetRecyclerMainShadow"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/offset_8"
         android:background="@drawable/pet_list_bottom_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetList" />
-
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetRecyclerMain" />
 
     <FrameLayout
-        android:id="@+id/imageViewPetAvatar"
+        android:id="@+id/imageViewPetRecyclerMainAvatar"
         android:layout_width="@dimen/pet_avatar_size"
         android:layout_height="@dimen/pet_avatar_size"
         android:layout_marginStart="@dimen/offset_24"
         android:layout_marginTop="@dimen/offset_16"
         android:background="@drawable/pet_active_avatar_round_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayoutPetListShadow">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutPetRecyclerMainShadow">
 
         <ImageView
-            android:id="@+id/imageViewPetAvatarIcon"
+            android:id="@+id/imageViewPetRecyclerMainAvatarIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/offset_8"
@@ -63,63 +59,60 @@
 
     </FrameLayout>
 
+    <Button
+        android:id="@+id/buttonPetRecyclerMainMore"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/baseline_more_vert_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerMainAvatar" />
+
     <ImageView
-        android:id="@+id/imageViewPetSexMale"
+        android:id="@+id/imageViewPetRecyclerMainSexMale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/pet_sex_offset_vertical"
         android:layout_marginEnd="@dimen/pet_sex_offset_horizontal"
         android:src="@drawable/baseline_male_24"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewPetAvatar"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPetAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerMainAvatar"
         app:tint="@color/pet_sex_male_background" />
 
     <ImageView
-        android:id="@+id/imageViewPetSexFemale"
+        android:id="@+id/imageViewPetRecyclerMainSexFemale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/pet_sex_offset_horizontal"
         android:layout_marginBottom="@dimen/pet_sex_offset_vertical"
         android:src="@drawable/baseline_female_24"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetAvatar"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewPetAvatar"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewPetRecyclerMainAvatar"
         app:tint="@color/pet_sex_female_background" />
 
     <TextView
-        android:id="@+id/textViewPetName"
+        android:id="@+id/textViewPetRecyclerMainName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPetBreedName"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPetAvatar"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPetAvatar"
+        app:layout_constraintBottom_toTopOf="@+id/textViewPetRecyclerMainBreedName"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerMainAvatar"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Бобик" />
 
     <TextView
-        android:id="@+id/textViewPetBreedName"
+        android:id="@+id/textViewPetRecyclerMainBreedName"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/offset_24"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetAvatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewPetName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPetName"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPetRecyclerMainMore"
+        app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerMainName"
         tools:text="Карликовая домашняя свинья" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewPopupMenuPetAction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_16"
-        android:layout_marginEnd="@dimen/offset_8"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_pet_action_menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardViewPetWeight"
@@ -127,7 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="@dimen/pet_card_detail_min_width"
-        app:layout_constraintStart_toStartOf="@+id/textViewPetBreedName"
+        app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainBreedName"
         app:layout_constraintTop_toTopOf="@+id/materialCardViewPetAge">
 
         <LinearLayout
@@ -163,7 +156,7 @@
         android:layout_marginTop="@dimen/offset_16"
         android:minWidth="@dimen/pet_card_detail_min_width"
         app:layout_constraintStart_toEndOf="@+id/materialCardViewPetWeight"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPetAvatar">
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPetRecyclerMainAvatar">
 
         <LinearLayout
             android:layout_width="match_parent"

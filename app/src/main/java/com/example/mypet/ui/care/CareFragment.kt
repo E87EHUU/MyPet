@@ -58,7 +58,7 @@ class CareFragment : Fragment(R.layout.fragment_care) {
         initObserveCareViewHolderModels()
         binding.recyclerViewCare.adapter = adapter
 
-        viewModel.updateCare(args.petId, args.careTypeOrdinal)
+        viewModel.updateCare(args.careId, args.careTypeOrdinal)
     }
 
     private fun initObserveCareViewHolderModels() {

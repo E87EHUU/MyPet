@@ -11,20 +11,18 @@ class PetCareViewHolder(
     private val callback: PetCareCallback,
 ) : RecyclerView.ViewHolder(binding.root), PetCareCallback {
     private val context = binding.root.context
-    private lateinit var petCareModel: PetCareModel
+    private lateinit var petCareModels: List<PetCareModel>
 
     private val petCareAdapter = PetCareAdapter(this)
 
-    fun bind(petCareModel: List<PetCareModel>) {
-//        this.petCareModel = petCareModel
+    fun bind(petCareModels: List<PetCareModel>) {
+        this.petCareModels = petCareModels
 
         binding.recyclerViewPetCareList.adapter = petCareAdapter
-        petCareAdapter.submitList(petCareModel)
-
-
+        petCareAdapter.submitList(petCareModels)
     }
 
-    override fun onPetCareClick(petCareModel: com.example.mypet.domain.pet.care.PetCareModel) {
-        TODO("Not yet implemented")
+    override fun onPetCareClick(petCareModel: PetCareModel) {
+        callback.onPetCareClick(petCareModel)
     }
 }

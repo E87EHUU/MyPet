@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerCareBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
+import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.food.PetFoodAlarmModel
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.ui.pet.care.PetCareCallback
 import com.example.mypet.ui.pet.food.PetFoodCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
@@ -33,8 +33,8 @@ class PetAdapter(
         }
     }
 
-    var petListModel: List<PetModel> = emptyList()
-    var food: List<PetFoodAlarmModel> = emptyList()
+    var petListModel: List<PetListModel> = emptyList()
+    var food: PetFoodModel? = null
     var care: List<PetCareModel> = emptyList()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

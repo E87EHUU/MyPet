@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 import com.example.mypet.ui.getActionBar
@@ -48,7 +48,6 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         initObservePet()
         initObserveFood()
         initObserveCare()
-        //initMenuPetAction()
     }
 
     private fun initView() {
@@ -90,100 +89,39 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         }
     }
 
-    private fun navToFood() {
-        /*        viewModel.activePetId?.let {
-                    val directions = PetFragmentDirections
-                        .actionPetFragmentToCareFragment(it, CareTypes.FOOD.ordinal)
-                    findNavController().navigate(directions)
-                }*/
+    private fun navToCare(petCareModel: PetCareModel) {
+        val directions = PetFragmentDirections.actionPetFragmentToCareFragment(
+            petCareModel.id,
+            petCareModel.careType.ordinal
+        )
+        findNavController().navigate(directions)
     }
 
-    private fun navToFoodDetail(petFoodModel: PetFoodAlarmModel) {
-        /*        viewModel.activePetId?.let {
-                    val directions =
-                        PetFragmentDirections.actionPetFragmentToFoodDetailFragment(it, petFoodModel.f)
-                    findNavController().navigate(directions)
-                }*/
-    }
-
-    private fun navToCare() {
-        /*        viewModel.activePetId?.let {
-                    val directions = PetFragmentDirections.actionPetFragmentToCareFragment(it)
-                    findNavController().navigate(directions)
-                }*/
-    }
-
-    private fun navToCareDetail(petCareModel: PetCareModel) {
-        /*        val directions =
-                    PetFragmentDirections.actionPetFragmentToCareDetailFragment(petCareModel.id)
-                findNavController().navigate(directions)*/
-    }
-
-    /*    private fun initMenuPetAction() {
-            binding.cardViewPopupMenuPetAction.setOnClickListener {
-                val popupMenu = PopupMenu(requireContext(), it)
-                popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
-
-                popupMenu.setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.pet_menu_item_edit_pet -> {
-                            // Add Edit pet
-                            true
-                        }
-
-                        R.id.pet_menu_item_delete_pet -> {
-                            showDeletePetDialog()
-                            true
-                        }
-
-                        else -> false
-                    }
-                }
-                popupMenu.show()
-            }
-        }*/
-
-    private fun showDeletePetDialog() {
-        /*        val deletePetAlertDialog = layoutInflater.inflate(R.layout.alert_dialog_delete_pet, null)
-
-                val alertDialog = MaterialAlertDialogBuilder(requireContext())
-                    .setView(deletePetAlertDialog)
-                    .create()
-
-                deletePetAlertDialog.findViewById<Button>(R.id.buttonAcceptDeletePetDialog)
-                    .setOnClickListener {
-                        val activePetId = viewModel.activePetId
-
-                        if (activePetId != null) {
-                            viewModel.deletePet(activePetId)
-                            alertDialog.dismiss()
-                            view?.snackMessage(getString(R.string.alert_dialog_delete_pet_successful))
-                        } else {
-                            view?.snackMessage(getString(R.string.alert_dialog_delete_pet_error))
-                        }
-                    }
-
-                deletePetAlertDialog.findViewById<Button>(R.id.buttonCancelDeletePetDialog)
-                    .setOnClickListener {
-                        alertDialog.dismiss()
-                    }
-
-                alertDialog.show()*/
+    override fun onPetFoodClick(petCareModel: PetCareModel) {
+        navToCare(petCareModel)
     }
 
     override fun onPetFoodAlarmClick(petFoodAlarmModel: PetFoodAlarmModel) {
-        navToFoodDetail(petFoodAlarmModel)
+
     }
 
     override fun onPetCareClick(petCareModel: PetCareModel) {
-        navToCareDetail(petCareModel)
+        navToCare(petCareModel)
     }
 
-    override fun onPetAddClick() {
+    override fun onClickPetAdd() {
         findNavController().navigate(R.id.petCreationFragment)
     }
 
-    override fun onPetClick(petModel: PetModel) {
-        viewModel.updatePetDetail(petModel)
+    override fun onClickPet(petListModel: PetListModel) {
+        viewModel.updatePetDetail(petListModel)
+    }
+
+    override fun onClickPetDelete(petListModel: PetListModel) {
+        viewModel.deletePet(petListModel.id)
+    }
+
+    override fun onClickPetEdit(petListModel: PetListModel) {
+        TODO("Not yet implemented")
     }
 }

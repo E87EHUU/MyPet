@@ -1,5 +1,6 @@
 package com.example.mypet.ui.pet.care
 
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetCareRecyclerItemBinding
 import com.example.mypet.domain.pet.care.PetCareModel
@@ -20,9 +21,16 @@ class PetCareMainViewHolder(
     fun bind(petCareModel: PetCareModel) {
         this.petCareModel = petCareModel
 
-        binding.imageViewPetCareRecyclerItemIcon.setImageResource(petCareModel.iconResId)
-        binding.textViewPetCareRecyclerItemTitle.text = context.getString(petCareModel.title)
-        binding.textViewPetCareRecyclerItemDate.text = petCareModel.date
-        binding.progressBarPetCareRecyclerItem.progress = petCareModel.progress
+        binding.imageViewPetCareRecyclerItemIcon.setImageResource(petCareModel.careType.iconResId)
+        binding.textViewPetCareRecyclerItemTitle.text =
+            context.getString(petCareModel.careType.titleResId)
+
+        binding.textViewPetCareRecyclerItemDate.text = petCareModel.date ?: "не установлено"
+        petCareModel.progress?.let {
+            binding.progressBarPetCareRecyclerItem.progress = petCareModel.progress
+            binding.progressBarPetCareRecyclerItem.isVisible = true
+        } ?: run {
+            binding.progressBarPetCareRecyclerItem.isVisible = false
+        }
     }
 }

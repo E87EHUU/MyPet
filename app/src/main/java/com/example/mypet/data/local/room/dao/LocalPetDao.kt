@@ -11,6 +11,7 @@ import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTI
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.LocalAlarmMinModel
+import com.example.mypet.data.local.room.model.pet.LocalPetCareModel
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
 
@@ -27,9 +28,17 @@ interface LocalPetDao {
                 "kind_ordinal $KIND_ORDINAL, " +
                 "breed_ordinal $BREED_ORDINAL, " +
                 "is_active $IS_ACTIVE " +
-                "FROM pet"
+                "FROM pet "
     )
     fun getLocalPetModels(): Flow<List<LocalPetModel>>
+
+    @Query(
+        "SELECT " +
+                "id, start_day, start_month, start_year, progress " +
+                "FROM care " +
+                "WHERE pet_id = :petId AND care_type_ordinal = :careFoodTypeOrdinal"
+    )
+    fun getLocalPetCareModels(petId: Int, careFoodTypeOrdinal: Int): Flow<LocalPetCareModel?>
 
     @Query(
         "SELECT " +

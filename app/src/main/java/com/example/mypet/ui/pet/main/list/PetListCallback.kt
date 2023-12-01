@@ -1,8 +1,8 @@
 package com.example.mypet.ui.pet.main.list
 
-import com.example.mypet.domain.pet.PetModel
+import com.example.mypet.domain.pet.PetListModel
 
 interface PetListCallback {
-    fun onPetListAddClick()
-    fun onPetListMainClick(petListModel: PetModel)
+    fun onClickPetAdd()
+    fun onClickPet(petListModel: PetListModel)
 }

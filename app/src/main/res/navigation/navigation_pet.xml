@@ -27,18 +27,18 @@
         android:id="@+id/careFragment"
         android:name="com.example.mypet.ui.care.CareFragment"
         tools:layout="@layout/fragment_care">
-        <argument
-            android:name="pet_id"
-            app:argType="integer" />
-        <argument
-            android:name="care_type_ordinal"
-            app:argType="integer" />
         <action
             android:id="@+id/action_careFragment_to_alarmDetailFragment"
             app:destination="@id/alarmDetailFragment" />
         <action
             android:id="@+id/action_careFragment_to_repeatFragment"
             app:destination="@id/repeatFragment" />
+        <argument
+            android:name="care_id"
+            app:argType="integer" />
+        <argument
+            android:name="care_type_ordinal"
+            app:argType="integer" />
     </fragment>
 
     <fragment
