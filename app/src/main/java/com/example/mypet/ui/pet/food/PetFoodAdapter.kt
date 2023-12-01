@@ -4,22 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.mypet.app.databinding.FragmentPetFoodRecyclerItemBinding
-import com.example.mypet.domain.pet.PetFoodAlarmModel
+import com.example.mypet.app.databinding.FragmentPetFoodRecyclerMainBinding
+import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 
 class PetFoodAdapter(
-    private val callback: PetFoodAdapterCallback,
-) : ListAdapter<PetFoodAlarmModel, PetFoodAdapterViewHolder>(DiffCallback()) {
+    private val callback: PetFoodCallback,
+) : ListAdapter<PetFoodAlarmModel, PetFoodAlarmViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PetFoodAdapterViewHolder {
+    ): PetFoodAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentPetFoodRecyclerItemBinding.inflate(inflater, parent, false)
-        return PetFoodAdapterViewHolder(binding, callback)
+        val binding = FragmentPetFoodRecyclerMainBinding.inflate(inflater, parent, false)
+        return PetFoodAlarmViewHolder(binding, callback)
     }
 
-    override fun onBindViewHolder(holder: PetFoodAdapterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PetFoodAlarmViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
@@ -27,7 +27,7 @@ class PetFoodAdapter(
         override fun areItemsTheSame(
             oldItem: PetFoodAlarmModel,
             newItem: PetFoodAlarmModel
-        ) = oldItem.alarmId == newItem.alarmId
+        ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
             oldItem: PetFoodAlarmModel,

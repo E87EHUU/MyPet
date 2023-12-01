@@ -23,6 +23,9 @@ data class LocalCareEntity(
     @ColumnInfo(name = DESCRIPTION)
     val description: String?,
 
+    @ColumnInfo(name = PROGRESS)
+    val progress: Int? = null,
+
     @ColumnInfo(name = START_DAY)
     val startDay: Int? = null,
     @ColumnInfo(name = START_MONTH)
@@ -42,6 +45,8 @@ data class LocalCareEntity(
 ) {
     companion object {
         const val CARE_TYPE_ORDINAL = "care_type_ordinal"
+
+        const val PROGRESS = "progress"
 
         const val START_DAY = "start_day"
         const val START_MONTH = "start_month"

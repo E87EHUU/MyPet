@@ -55,13 +55,13 @@ class CareFragment : Fragment(R.layout.fragment_care) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initObserveFoods()
+        initObserveCareViewHolderModels()
         binding.recyclerViewCare.adapter = adapter
 
-        viewModel.updateCare(args.petId, args.careTypeOrdinal)
+        viewModel.updateCare(args.careId, args.careTypeOrdinal)
     }
 
-    private fun initObserveFoods() {
+    private fun initObserveCareViewHolderModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.careViewHolderModels.collectLatest {
