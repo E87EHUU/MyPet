@@ -11,9 +11,9 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.PetCareCallback
 import com.example.mypet.ui.pet.food.PetFoodCallback
@@ -29,7 +29,6 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     private val viewModel by viewModels<PetViewModel>()
 
     private val adapter = PetAdapter(this, this, this)
-
 
     override fun onResume() {
         super.onResume()
@@ -69,9 +68,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObserveFood() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.food.collectLatest {
-                    adapter.food = it
+                    adapter.petFoodModel = it
                     binding.root.post {
                         adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
                     }
@@ -82,7 +81,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObserveCare() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.care.collectLatest {
                     adapter.care = it
                     binding.root.post {
@@ -101,11 +100,11 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         findNavController().navigate(directions)
     }
 
-    override fun onPetFoodClick(petCareModel: PetCareModel) {
+    override fun onClickPetFood(petCareModel: PetCareModel) {
         navToCare(petCareModel)
     }
 
-    override fun onPetFoodAlarmClick(petFoodAlarmModel: PetFoodAlarmModel) {
+    override fun onClickAlarm(alarmMinModel: AlarmMinModel) {
 
     }
 

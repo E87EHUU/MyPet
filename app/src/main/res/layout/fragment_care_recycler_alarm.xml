@@ -4,35 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.MyPet.CareContainer">
 
-    <TextView
-        android:id="@+id/textViewCareRecyclerAlarmTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
-        android:textColor="?attr/colorPrimary"
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerAlarmIcon"
+        style="@style/Theme.MyPet.CareHeaderIcon"
+        android:contentDescription="@string/care_alarm_title"
+        android:src="@drawable/baseline_notifications_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="10:00" />
-
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/baseline_more_vert_24"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewCareRecyclerAlarmDescription"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_8"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerAlarmTitle"
+        style="@style/Theme.MyPet.CareHeaderTitle"
+        android:text="@string/care_alarm_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerAlarmTime"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerAlarmTime"
-        tools:text="Влажный корм 100 грамм" />
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerAlarmIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerAlarmIcon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCareRecyclerAlarmRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerAlarmIcon"
+        tools:listitem="@layout/fragment_care_recycler_alarm_recycler_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

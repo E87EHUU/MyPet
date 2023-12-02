@@ -12,4 +12,4 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:context="com.example.mypet.ui.care.CareFragment"
-    tools:listitem="@layout/fragment_care_recycler_alarm" />
+    tools:listitem="@layout/fragment_care_recycler_alarm_recycler_main" />

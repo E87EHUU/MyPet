@@ -2,67 +2,69 @@ package com.example.mypet.ui.care
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
-import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmHeaderBinding
-import com.example.mypet.app.databinding.FragmentCareRecyclerEndBinding
-import com.example.mypet.app.databinding.FragmentCareRecyclerFoodBinding
+import com.example.mypet.app.databinding.FragmentCareRecyclerMainBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.care.CareViewHolderAlarmModel
-import com.example.mypet.domain.care.CareViewHolderEndModel
-import com.example.mypet.domain.care.CareViewHolderFoodModel
-import com.example.mypet.domain.care.CareViewHolderHeaderAlarmModel
-import com.example.mypet.domain.care.CareViewHolderModel
-import com.example.mypet.domain.care.CareViewHolderRepeatModel
-import com.example.mypet.domain.care.CareViewHolderStartModel
+import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareMainModel
+import com.example.mypet.domain.care.CareRepeatModel
+import com.example.mypet.domain.care.CareStartModel
+import com.example.mypet.ui.care.alarm.CareAlarmCallback
+import com.example.mypet.ui.care.alarm.CareAlarmViewHolder
+import com.example.mypet.ui.care.main.CareMainCallback
+import com.example.mypet.ui.care.main.CareMainViewHolder
+import com.example.mypet.ui.care.repeat.CareRepeatCallback
+import com.example.mypet.ui.care.repeat.CareRepeatViewHolder
+import com.example.mypet.ui.care.start.CareStartCallback
+import com.example.mypet.ui.care.start.CareStartViewHolder
 
 class CareAdapter(
-    private val careFoodCallback: CareFoodCallback,
+    private val careFoodCallback: CareMainCallback,
     private val careRepeatCallback: CareRepeatCallback,
     private val careAlarmCallback: CareAlarmCallback,
-) : ListAdapter<CareViewHolderModel, RecyclerView.ViewHolder>(DiffCallback()) {
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
+    private val careStartCallback: CareStartCallback,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var careMainModel: CareMainModel? = null
+    var careStartModel: CareStartModel? = null
+    var careRepeatModel: CareRepeatModel? = null
+    var careAlarmModel: CareAlarmModel? = null
+
+    override fun getItemCount() = 4
+    override fun getItemViewType(position: Int) = position
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        position: Int
     ): RecyclerView.ViewHolder {
-        return when (getItem(viewType)) {
-            is CareViewHolderFoodModel -> foodViewHolder(parent)
-            is CareViewHolderStartModel -> startViewHolder(parent)
-            is CareViewHolderRepeatModel -> repeatViewHolder(parent)
-            is CareViewHolderEndModel -> endViewHolder(parent)
-            is CareViewHolderHeaderAlarmModel -> alarmHeaderViewHolder(parent)
-            is CareViewHolderAlarmModel -> alarmViewHolder(parent)
+        return when (position) {
+            MAIN_POSITION -> mainViewHolder(parent)
+            START_POSITION -> startViewHolder(parent)
+            REPEAT_POSITION -> repeatViewHolder(parent)
+            else -> alarmViewHolder(parent)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val item = getItem(position)) {
-            is CareViewHolderFoodModel -> (holder as CareFoodViewHolder).bind(item)
-            is CareViewHolderStartModel -> (holder as CareStartViewHolder).bind(item)
-            is CareViewHolderRepeatModel -> (holder as CareRepeatViewHolder).bind(item)
-            is CareViewHolderEndModel -> (holder as CareEndViewHolder).bind(item)
-            is CareViewHolderHeaderAlarmModel -> (holder as CareAlarmHeaderViewHolder)
-            is CareViewHolderAlarmModel -> (holder as CareAlarmViewHolder).bind(item)
+        return when (position) {
+            MAIN_POSITION -> (holder as CareMainViewHolder).bind(careMainModel)
+            START_POSITION -> (holder as CareStartViewHolder).bind(careStartModel)
+            REPEAT_POSITION -> (holder as CareRepeatViewHolder).bind(careRepeatModel)
+            else -> (holder as CareAlarmViewHolder).bind(careAlarmModel)
         }
     }
 
-    private fun foodViewHolder(parent: ViewGroup): CareFoodViewHolder {
+    private fun mainViewHolder(parent: ViewGroup): CareMainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerFoodBinding.inflate(inflater, parent, false)
-        return CareFoodViewHolder(binding, careFoodCallback)
+        val binding = FragmentCareRecyclerMainBinding.inflate(inflater, parent, false)
+        return CareMainViewHolder(binding, careFoodCallback)
     }
 
     private fun startViewHolder(parent: ViewGroup): CareStartViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
-        return CareStartViewHolder(binding)
+        return CareStartViewHolder(binding, careStartCallback)
     }
 
     private fun repeatViewHolder(parent: ViewGroup): CareRepeatViewHolder {
@@ -71,33 +73,16 @@ class CareAdapter(
         return CareRepeatViewHolder(binding, careRepeatCallback)
     }
 
-    private fun endViewHolder(parent: ViewGroup): CareEndViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerEndBinding.inflate(inflater, parent, false)
-        return CareEndViewHolder(binding)
-    }
-
-    private fun alarmHeaderViewHolder(parent: ViewGroup): CareAlarmHeaderViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerAlarmHeaderBinding.inflate(inflater, parent, false)
-        return CareAlarmHeaderViewHolder(binding)
-    }
-
     private fun alarmViewHolder(parent: ViewGroup): CareAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
         return CareAlarmViewHolder(binding, careAlarmCallback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<CareViewHolderModel>() {
-        override fun areItemsTheSame(
-            oldItem: CareViewHolderModel,
-            newItem: CareViewHolderModel
-        ) = oldItem.key == newItem.key
-
-        override fun areContentsTheSame(
-            oldItem: CareViewHolderModel,
-            newItem: CareViewHolderModel
-        ) = oldItem == newItem
+    companion object {
+        const val MAIN_POSITION = 0
+        const val START_POSITION = 1
+        const val REPEAT_POSITION = 2
+        const val ALARM_POSITION = 4
     }
 }

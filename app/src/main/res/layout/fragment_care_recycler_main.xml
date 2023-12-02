@@ -5,33 +5,33 @@
     style="@style/Theme.MyPet.CareContainer">
 
     <ImageView
-        android:id="@+id/imageViewCareRecyclerFoodIcon"
+        android:id="@+id/imageViewCareRecyclerMainIcon"
         style="@style/Theme.MyPet.CareHeaderIcon"
         android:contentDescription="@string/care_food_title"
-        android:src="@drawable/feed"
+        tools:src="@drawable/feed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewCareRecyclerFoodTitle"
+        android:id="@+id/textViewCareRecyclerMainTitle"
         style="@style/Theme.MyPet.CareHeaderTitle"
-        android:text="@string/care_food_title"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerFoodIcon"
-        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerFoodIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerFoodIcon" />
+        tools:text="@string/care_food_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerMainIcon"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerMainIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerMainIcon" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutsCareRecyclerEndTimes"
+        android:id="@+id/textInputLayoutsCareRecyclerMainEndTimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_8"
         android:maxEms="2"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerFoodIcon">
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerMainTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerMainIcon">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextCareRecyclerEndTimes"
+            android:id="@+id/textInputEditTextCareRecyclerMainEndTimes"
             style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,27 +39,27 @@
             android:singleLine="true"
             android:text="1"
             android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerMainTitle"
             app:layout_constraintTop_toBottomOf="@+id/imageViewFoodRecyclerRepeatIcon"
             tools:text="10" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textViewCareRecyclerFoodTimes"
+        android:id="@+id/textViewCareRecyclerMainTimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_8"
         android:text="@string/care_food_times"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerEndTimes"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerEndTimes"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRecyclerEndTimes" />
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerMainEndTimes"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerMainEndTimes"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRecyclerMainEndTimes" />
 
     <com.google.android.material.divider.MaterialDivider
         style="@style/Theme.MyPet.CareBottomDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerEndTimes" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerMainEndTimes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

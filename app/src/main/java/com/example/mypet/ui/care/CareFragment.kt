@@ -12,72 +12,93 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
-import com.example.mypet.domain.care.CareViewHolderAlarmModel
-import com.example.mypet.domain.care.CareViewHolderModel
+import com.example.mypet.domain.alarm.AlarmMinModel
+import com.example.mypet.ui.care.alarm.CareAlarmCallback
+import com.example.mypet.ui.care.main.CareMainCallback
+import com.example.mypet.ui.care.repeat.CareRepeatCallback
+import com.example.mypet.ui.care.start.CareStartCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CareFragment : Fragment(R.layout.fragment_care) {
+class CareFragment : Fragment(R.layout.fragment_care),
+    CareMainCallback, CareStartCallback, CareRepeatCallback, CareAlarmCallback {
     private val binding by viewBinding(FragmentCareBinding::bind)
     private val viewModel by viewModels<CareViewModel>()
     private val args by navArgs<CareFragmentArgs>()
 
-    private val careFoodCallback =
-        object : CareFoodCallback {
-            override fun onItemClick() {
-                TODO("Not yet implemented")
-            }
-        }
+    private val adapter = CareAdapter(this, this, this, this)
 
-    private val careRepeatCallback =
-        object : CareRepeatCallback {
-            override fun onItemClick() {
-                navToRepeat()
-            }
-        }
-
-    private val careAlarmCallback =
-        object : CareAlarmCallback {
-            override fun onItemClick(careAlarmModel: CareViewHolderAlarmModel) {
-                navToAlarmDetail(careAlarmModel)
-            }
-
-            override fun onSwitchActive(careAlarmModel: CareViewHolderAlarmModel) {
-                viewModel.switchAlarmState(careAlarmModel)
-            }
-
-        }
-
-    private val adapter = CareAdapter(careFoodCallback, careRepeatCallback, careAlarmCallback)
+    override fun onStart() {
+        super.onStart()
+        viewModel.updateCare(args.careId, args.careTypeOrdinal)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initObserveCareViewHolderModels()
-        binding.recyclerViewCare.adapter = adapter
-
-        viewModel.updateCare(args.careId, args.careTypeOrdinal)
+        initView()
+        initObserveCareMainModel()
+        initObserveCareStartModel()
+        initObserveCareRepeatModel()
+        initObserveCareAlarmModel()
     }
 
-    private fun initObserveCareViewHolderModels() {
+    private fun initView() {
+        binding.recyclerViewCare.adapter = adapter
+    }
+
+    private fun initObserveCareMainModel() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careViewHolderModels.collectLatest {
-                    if (it.isEmpty()) onEmptyCareModels()
-                    else onUpdateCareModels(it)
+                viewModel.careMainModel.collectLatest {
+                    adapter.careMainModel = it
+                    binding.root.post {
+                        adapter.notifyItemChanged(CareAdapter.MAIN_POSITION)
+                    }
                 }
             }
         }
     }
 
-    private fun onUpdateCareModels(careModels: List<CareViewHolderModel>) {
-        adapter.submitList(careModels)
+    private fun initObserveCareStartModel() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.careStartModel.collectLatest {
+                    adapter.careStartModel = it
+                    binding.root.post {
+                        adapter.notifyItemChanged(CareAdapter.START_POSITION)
+                    }
+                }
+            }
+        }
     }
 
-    private fun onEmptyCareModels() {
+    private fun initObserveCareRepeatModel() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.careRepeatModel.collectLatest {
+                    adapter.careRepeatModel = it
+                    binding.root.post {
+                        adapter.notifyItemChanged(CareAdapter.REPEAT_POSITION)
+                    }
+                }
+            }
+        }
+    }
 
+    private fun initObserveCareAlarmModel() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.careAlarmModel.collectLatest {
+                    adapter.careAlarmModel = it
+                    binding.root.post {
+                        adapter.notifyItemChanged(CareAdapter.ALARM_POSITION)
+                    }
+                }
+            }
+        }
     }
 
     private fun navToRepeat() {
@@ -85,9 +106,21 @@ class CareFragment : Fragment(R.layout.fragment_care) {
         findNavController().navigate(directions)
     }
 
-    private fun navToAlarmDetail(careViewHolderAlarmModel: CareViewHolderAlarmModel) {
+    private fun navToAlarmDetail(alarmMinModel: AlarmMinModel) {
         val directions = CareFragmentDirections
-            .actionCareFragmentToAlarmDetailFragment(careViewHolderAlarmModel.id)
+            .actionCareFragmentToAlarmDetailFragment(alarmMinModel.id)
         findNavController().navigate(directions)
+    }
+
+    override fun onClickAlarm(alarmMinModel: AlarmMinModel) {
+        navToAlarmDetail(alarmMinModel)
+    }
+
+    override fun onSwitchAlarmStart(alarmMinModel: AlarmMinModel) {
+        viewModel.switchAlarmState(alarmMinModel)
+    }
+
+    override fun onClickRepeat() {
+        navToRepeat()
     }
 }

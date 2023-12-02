@@ -35,7 +35,7 @@
 
         <include
             android:id="@+id/includeFoodDetailAlert"
-            layout="@layout/fragment_care_recycler_alert"
+            layout="@layout/trash_alert"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/offset_8"
@@ -50,8 +50,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="true"
-            app:layout_constraintEnd_toEndOf="@+id/textViewCareRecyclerFoodTitle"
-            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerFoodTitle"
+            app:layout_constraintEnd_toEndOf="@+id/textViewCareRecyclerMainTitle"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerMainTitle"
             app:layout_constraintTop_toBottomOf="@+id/TextInputLayoutsCareRecyclerFoodTimes"
             app:singleLine="true">
 

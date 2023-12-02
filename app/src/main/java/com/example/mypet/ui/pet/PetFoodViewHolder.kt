@@ -17,7 +17,7 @@ class PetFoodViewHolder(
 
     init {
         binding.recyclerViewPetFoodList.adapter = petFoodAdapter
-        binding.root.setOnClickListener { callback.onPetFoodClick(petFoodModel.care) }
+        binding.root.setOnClickListener { callback.onClickPetFood(petFoodModel.care) }
     }
 
     fun bind(petFoodModel: PetFoodModel?) {

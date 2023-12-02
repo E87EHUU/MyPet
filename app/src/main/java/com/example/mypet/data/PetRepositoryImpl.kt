@@ -30,7 +30,7 @@ class PetRepositoryImpl @Inject constructor(
 
             PetFoodModel(
                 care = localPetCareModel.toPetCareDetailModel(CareTypes.FOOD.ordinal),
-                alarmModels = localAlarmMinModels.map { it.toPetFoodAlarmModel() }
+                alarmModels = localAlarmMinModels.map { it.toAlarmMinModel() }
             )
         }
 
