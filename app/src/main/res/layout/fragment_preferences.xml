@@ -51,7 +51,9 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/preferences_chip_spacing"/>
+            android:layout_marginStart="@dimen/preferences_chip_spacing"
+            android:layout_marginEnd="@dimen/preferences_chip_spacing"
+            android:layout_marginTop="@dimen/preferences_lines_spacing"/>
 
         <include
             layout="@layout/line_with_image"
@@ -86,7 +88,9 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/preferences_chip_spacing"/>
+            android:layout_marginStart="@dimen/preferences_chip_spacing"
+            android:layout_marginEnd="@dimen/preferences_chip_spacing"
+            android:layout_marginTop="@dimen/preferences_lines_spacing"/>
 
     </LinearLayout>
 

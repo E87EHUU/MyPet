@@ -47,5 +47,6 @@
     <dimen name="user_margin">20dp</dimen>
 
     <dimen name="preferences_chip_spacing">20dp</dimen>
+    <dimen name="preferences_lines_spacing">12dp</dimen>
 
 </resources>

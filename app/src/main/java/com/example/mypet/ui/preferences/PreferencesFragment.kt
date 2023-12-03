@@ -2,17 +2,13 @@ package com.example.mypet.ui.preferences
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPreferencesBinding
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class PreferencesFragment : Fragment(R.layout.fragment_preferences) {
 
@@ -31,24 +27,24 @@ class PreferencesFragment : Fragment(R.layout.fragment_preferences) {
             preferencesTheme.lineImage.setImageResource(R.drawable.icon_dark_mode)
             preferencesTheme.lineText.text = getString(R.string.preferences_theme)
 
-            chipSystemTheme.onThemeClickReaction(THEME_SYSTEM, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            chipLightTheme.onThemeClickReaction(THEME_LIGHT, AppCompatDelegate.MODE_NIGHT_NO)
-            chipDarkTheme.onThemeClickReaction(THEME_DARK, AppCompatDelegate.MODE_NIGHT_YES)
+            chipSystemTheme.onThemeClickReaction(THEME_SYSTEM)
+            chipLightTheme.onThemeClickReaction(THEME_LIGHT)
+            chipDarkTheme.onThemeClickReaction(THEME_DARK)
 
-            lifecycleScope.launch {
-                when (preferences.getThemeFlow.first()) {
-                    THEME_SYSTEM -> chipSystemTheme.isChecked = true
-                    THEME_LIGHT -> chipLightTheme.isChecked = true
-                    THEME_DARK -> chipDarkTheme.isChecked = true
-                }
+            when (preferences.loadThemeValue(requireContext())) {
+                THEME_SYSTEM -> chipSystemTheme.isChecked = true
+                THEME_LIGHT -> chipLightTheme.isChecked = true
+                THEME_DARK -> chipDarkTheme.isChecked = true
             }
         }
     }
 
-    private fun Chip.onThemeClickReaction(theme: String, mode: Int) {
+    private fun Chip.onThemeClickReaction(theme: String) {
         this.setOnClickListener {
-            preferences.saveThemeToDataStore(theme)
-            AppCompatDelegate.setDefaultNightMode(mode)
+            preferences.run {
+                saveTheme(theme)
+                loadTheme(requireActivity())
+            }
         }
     }
 
