@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.PetRepository
 import com.example.mypet.domain.care.CareTypes
-import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.domain.pet.kind.PetKind
+import com.example.mypet.domain.pet.list.PetListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +34,7 @@ class PetViewModel @Inject constructor(
     }
 
     private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getPet()
+        petRepository.getPetListModels()
             .collectLatest { _pet.value = it }
     }
 
@@ -54,7 +54,7 @@ class PetViewModel @Inject constructor(
     }
 
     private fun updateCare(petListModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getCare(petListModel.id)
+        petRepository.getCareModels(petListModel.id)
             .collectLatest { _care.value = getCares(petListModel) }
     }
 

@@ -1,6 +1,6 @@
 package com.example.mypet.ui.pet.main
 
-import com.example.mypet.domain.pet.PetListModel
+import com.example.mypet.domain.pet.list.PetListModel
 
 interface PetMainCallback {
     fun onClickPetAdd()

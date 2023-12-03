@@ -10,7 +10,7 @@ import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_O
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
-import com.example.mypet.domain.pet.PetListModel
+import com.example.mypet.domain.pet.list.PetListModel
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)

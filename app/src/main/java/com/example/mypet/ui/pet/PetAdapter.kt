@@ -6,17 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerCareBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
-import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodModel
-import com.example.mypet.ui.pet.care.PetCareCallback
-import com.example.mypet.ui.pet.food.PetFoodCallback
+import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.ui.pet.care.PetCareViewHolder
+import com.example.mypet.ui.pet.care.main.PetCareMainCallback
+import com.example.mypet.ui.pet.food.PetFoodViewHolder
+import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
+import com.example.mypet.ui.pet.main.PetMainViewHolder
 
 class PetAdapter(
     private val petMainCallback: PetMainCallback,
-    private val petFoodCallback: PetFoodCallback,
-    private val petCareCallback: PetCareCallback,
+    private val petFoodCallback: PetFoodAlarmCallback,
+    private val petCareCallback: PetCareMainCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount() = 3
 

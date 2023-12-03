@@ -12,11 +12,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.domain.alarm.AlarmMinModel
-import com.example.mypet.domain.pet.PetListModel
 import com.example.mypet.domain.pet.care.PetCareModel
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getActionBar
-import com.example.mypet.ui.pet.care.PetCareCallback
-import com.example.mypet.ui.pet.food.PetFoodCallback
+import com.example.mypet.ui.pet.care.main.PetCareMainCallback
+import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PetFragment : Fragment(R.layout.fragment_pet),
-    PetMainCallback, PetFoodCallback, PetCareCallback {
+    PetMainCallback, PetFoodAlarmCallback, PetCareMainCallback {
     private val binding by viewBinding(FragmentPetBinding::bind)
     private val viewModel by viewModels<PetViewModel>()
 

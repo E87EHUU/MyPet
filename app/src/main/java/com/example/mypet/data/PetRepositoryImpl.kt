@@ -17,7 +17,7 @@ import javax.inject.Inject
 class PetRepositoryImpl @Inject constructor(
     private val localPetDao: LocalPetDao,
 ) : PetRepository {
-    override fun getPet() =
+    override fun getPetListModels() =
         localPetDao.getLocalPetModels()
             .mapNotNull { its -> its.map { it.toPetListModel() } }
 
@@ -34,7 +34,7 @@ class PetRepositoryImpl @Inject constructor(
             )
         }
 
-    override fun getCare(petId: Int) =
+    override fun getCareModels(petId: Int) =
         flow {
             emit(emptyList<PetCareModel>())
         }

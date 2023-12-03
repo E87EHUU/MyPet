@@ -3,7 +3,7 @@ package com.example.mypet.ui.pet.main.list
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainRecyclerMainBinding
-import com.example.mypet.domain.pet.PetListModel
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 
 class PetListMainViewHolder(

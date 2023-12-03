@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainRecyclerAddBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainRecyclerMainBinding
-import com.example.mypet.domain.pet.PetListModel
+import com.example.mypet.domain.pet.list.PetListModel
 
 class PetListAdapter(
     private val callback: PetListCallback,

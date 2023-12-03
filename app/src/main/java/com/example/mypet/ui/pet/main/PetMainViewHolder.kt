@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet
+package com.example.mypet.ui.pet.main
 
 import android.view.LayoutInflater
 import android.widget.Button
@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
-import com.example.mypet.domain.pet.PetListModel
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
-import com.example.mypet.ui.pet.main.PetMainCallback
 import com.example.mypet.ui.pet.main.list.PetListAdapter
 import com.example.mypet.ui.pet.main.list.PetListCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

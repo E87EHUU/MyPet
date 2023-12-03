@@ -1,4 +1,4 @@
-package com.example.mypet.domain.pet
+package com.example.mypet.domain.pet.list
 
 import android.net.Uri
 

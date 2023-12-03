@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.care
+package com.example.mypet.ui.pet.care.main
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +7,7 @@ import com.example.mypet.domain.pet.care.PetCareModel
 
 class PetCareMainViewHolder(
     private val binding: FragmentPetCareRecyclerItemBinding,
-    private val callback: PetCareCallback,
+    private val callback: PetCareMainCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private val context = binding.root.context
     private lateinit var petCareModel: PetCareModel

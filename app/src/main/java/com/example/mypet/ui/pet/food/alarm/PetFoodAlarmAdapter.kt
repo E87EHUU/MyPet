@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.food
+package com.example.mypet.ui.pet.food.alarm
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.mypet.app.databinding.FragmentPetFoodRecyclerMainBinding
 import com.example.mypet.domain.alarm.AlarmMinModel
 
-class PetFoodAdapter(
-    private val callback: PetFoodCallback,
+class PetFoodAlarmAdapter(
+    private val callback: PetFoodAlarmCallback,
 ) : ListAdapter<AlarmMinModel, PetFoodAlarmViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.pet.care
+package com.example.mypet.ui.pet.care.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.mypet.app.databinding.FragmentPetCareRecyclerItemBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 
-class PetCareAdapter(
-    private val callback: PetCareCallback,
+class PetCareMainAdapter(
+    private val callback: PetCareMainCallback,
 ) : ListAdapter<PetCareModel, PetCareMainViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,

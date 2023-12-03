@@ -1,19 +1,19 @@
-package com.example.mypet.ui.pet
+package com.example.mypet.ui.pet.food
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.domain.pet.food.PetFoodModel
-import com.example.mypet.ui.pet.food.PetFoodAdapter
-import com.example.mypet.ui.pet.food.PetFoodCallback
+import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmAdapter
+import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 
 class PetFoodViewHolder(
     private val binding: FragmentPetRecyclerFoodBinding,
-    private val callback: PetFoodCallback,
+    private val callback: PetFoodAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private val context = binding.root.context
     private lateinit var petFoodModel: PetFoodModel
-    private val petFoodAdapter = PetFoodAdapter(callback)
+    private val petFoodAdapter = PetFoodAlarmAdapter(callback)
 
     init {
         binding.recyclerViewPetFoodList.adapter = petFoodAdapter

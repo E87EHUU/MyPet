@@ -1,20 +1,20 @@
-package com.example.mypet.ui.pet
+package com.example.mypet.ui.pet.care
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerCareBinding
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.ui.pet.care.PetCareAdapter
-import com.example.mypet.ui.pet.care.PetCareCallback
+import com.example.mypet.ui.pet.care.main.PetCareMainAdapter
+import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 
 class PetCareViewHolder(
     private val binding: FragmentPetRecyclerCareBinding,
-    private val callback: PetCareCallback,
-) : RecyclerView.ViewHolder(binding.root), PetCareCallback {
+    private val callback: PetCareMainCallback,
+) : RecyclerView.ViewHolder(binding.root), PetCareMainCallback {
     private val context = binding.root.context
     private lateinit var petCareModels: List<PetCareModel>
 
-    private val petCareAdapter = PetCareAdapter(this)
+    private val petCareAdapter = PetCareMainAdapter(this)
 
     init {
         binding.recyclerViewPetCareList.adapter = petCareAdapter
