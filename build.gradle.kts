@@ -1,3 +1,8 @@
+buildscript {
+    dependencies {
+        classpath("com.google.gms:google-services:4.4.0")
+    }
+}
 plugins {
     val gradleVersion: String by System.getProperties()
     val kotlinVersion: String by System.getProperties()
