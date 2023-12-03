@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 class UserFragment : Fragment(R.layout.fragment_user) {
 
     private val binding by viewBinding(FragmentUserBinding::bind)
+    private var isDialogShowing = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,12 +68,18 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private fun dialog(title: String, message: Spanned) {
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(title)
-                    .setMessage(message)
-                    .setCancelable(true)
-                    .setPositiveButton(getString(R.string.map_ok)) { dialog, _ -> dialog.cancel() }
-                    .show()
+                if (!isDialogShowing) {
+                    isDialogShowing = true
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setPositiveButton(getString(R.string.map_ok)) { dialog, _ ->
+                            dialog.cancel()
+                            isDialogShowing = false
+                        }
+                        .show()
+                }
             }
         }
     }
