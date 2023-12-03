@@ -16,6 +16,8 @@ class CareStartViewHolder(
         careStartModel?.let {
             this.careStartModel = careStartModel
 
+            binding.textViewCareRecyclerStartDate.text = careStartModel.date
+            binding.textViewCareRecyclerStartTime.text = careStartModel.time
 
             binding.root.isVisible = true
         } ?: run {
