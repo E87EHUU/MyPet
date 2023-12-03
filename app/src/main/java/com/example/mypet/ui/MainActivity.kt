@@ -77,6 +77,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun applyPreferences() {
+        preferences.loadColor(this)
+
         lifecycleScope.launch {
             if (!preferences.appIsRunning) {
                 preferences.run {

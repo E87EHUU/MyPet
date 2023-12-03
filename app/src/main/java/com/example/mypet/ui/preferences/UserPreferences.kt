@@ -28,14 +28,14 @@ class UserPreferences(var context: Context) {
             themeSelected
         }
 
-    suspend fun saveToDataStore(theme: String) {
+    suspend fun saveThemeToDataStore(theme: String) {
         context.dataStore.edit { preferences ->
             preferences[THEME_KEY] = theme
         }
     }
 
     companion object {
-        private val THEME_KEY = stringPreferencesKey("theme_key")
         private const val PREFERENCE_NAME = "preference_name"
+        private val THEME_KEY = stringPreferencesKey("theme_key")
     }
 }

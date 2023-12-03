@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPreferencesBinding
@@ -22,18 +23,18 @@ class PreferencesFragment : Fragment(R.layout.fragment_preferences) {
         super.onViewCreated(view, savedInstanceState)
 
         themePreferences()
+        colorPreferences()
     }
 
     private fun themePreferences() {
         with (binding) {
             preferencesTheme.lineImage.setImageResource(R.drawable.icon_dark_mode)
-            preferencesTheme.lineText.text = getString(R.string.settings_theme)
+            preferencesTheme.lineText.text = getString(R.string.preferences_theme)
 
-            chipSystemTheme.onClickReaction(THEME_SYSTEM, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            chipLightTheme.onClickReaction(THEME_LIGHT, AppCompatDelegate.MODE_NIGHT_NO)
-            chipDarkTheme.onClickReaction(THEME_DARK, AppCompatDelegate.MODE_NIGHT_YES)
+            chipSystemTheme.onThemeClickReaction(THEME_SYSTEM, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            chipLightTheme.onThemeClickReaction(THEME_LIGHT, AppCompatDelegate.MODE_NIGHT_NO)
+            chipDarkTheme.onThemeClickReaction(THEME_DARK, AppCompatDelegate.MODE_NIGHT_YES)
 
-            // switch position is determined by user preferences
             lifecycleScope.launch {
                 when (preferences.getThemeFlow.first()) {
                     THEME_SYSTEM -> chipSystemTheme.isChecked = true
@@ -44,11 +45,43 @@ class PreferencesFragment : Fragment(R.layout.fragment_preferences) {
         }
     }
 
-    // Sets the selected theme mode and saves the selection
-    private fun Chip.onClickReaction(theme: String, mode: Int) {
+    private fun Chip.onThemeClickReaction(theme: String, mode: Int) {
         this.setOnClickListener {
-            preferences.saveToDataStore(theme)
+            preferences.saveThemeToDataStore(theme)
             AppCompatDelegate.setDefaultNightMode(mode)
+        }
+    }
+
+    private fun colorPreferences() {
+        with (binding) {
+            preferencesColor.lineImage.setImageResource(R.drawable.icon_color_scheme)
+            preferencesColor.lineText.text = getString(R.string.preferences_color)
+
+            chipDynamicColor.onColorClickReaction(COLOR_DYNAMIC)
+            chipDefaultColor.onColorClickReaction(COLOR_DEFAULT)
+
+            when (preferences.loadColorValue(requireContext())) {
+                COLOR_DYNAMIC -> chipDynamicColor.isChecked = true
+                COLOR_DEFAULT -> chipDefaultColor.isChecked = true
+            }
+        }
+    }
+
+    private fun Chip.onColorClickReaction(color: String) {
+        this.setOnClickListener {
+            preferences.run {
+                saveColor(color)
+                loadColor(requireActivity())
+            }
+            refreshCurrentFragment()
+        }
+    }
+
+    private fun refreshCurrentFragment() {
+        val id = findNavController().currentDestination?.id
+        findNavController().run {
+            popBackStack(id!!, true)
+            navigate(id)
         }
     }
 }
