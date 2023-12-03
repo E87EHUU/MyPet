@@ -10,5 +10,5 @@ interface CareRepository {
     fun getCareMainModel(careId: Int, careTypeOrdinal: Int): Flow<CareMainModel>
     fun getCareStartModel(careId: Int, careTypeOrdinal: Int): Flow<CareStartModel?>
     fun getCareRepeatModel(careId: Int, careTypeOrdinal: Int): Flow<CareRepeatModel?>
-    fun getCareAlarmModel(careId: Int, careTypeOrdinal: Int): Flow<CareAlarmModel?>
+    fun getCareAlarmModel(careId: Int, careTypeOrdinal: Int): Flow<CareAlarmModel>
 }

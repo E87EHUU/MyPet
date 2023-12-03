@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.ui.care.alarm.main.CareAlarmMainAdapter
 
 class CareAlarmViewHolder(
     private val binding: FragmentCareRecyclerAlarmBinding,
@@ -11,17 +12,20 @@ class CareAlarmViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     private val context = binding.root.context
     private lateinit var careAlarmModel: CareAlarmModel
+    private val adapter = CareAlarmMainAdapter(callback)
 
     init {
+        binding.recyclerViewCareRecyclerAlarmRecycler.adapter = adapter
         binding.root.setOnClickListener {
             //callback.onClickAlarm(careAlarmModel)
         }
     }
 
     fun bind(careAlarmModel: CareAlarmModel?) {
-
         careAlarmModel?.let {
             this.careAlarmModel = careAlarmModel
+
+            adapter.submitList(careAlarmModel.alarms)
 
             // binding.textViewCareRecyclerAlarmDescription.text = a
 

@@ -39,63 +39,18 @@ class CareFragment : Fragment(R.layout.fragment_care),
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        initObserveCareMainModel()
-        initObserveCareStartModel()
-        initObserveCareRepeatModel()
-        initObserveCareAlarmModel()
+        initObserveCareAdapterModels()
     }
 
     private fun initView() {
-        binding.recyclerViewCare.adapter = adapter
+        binding.root.adapter = adapter
     }
 
-    private fun initObserveCareMainModel() {
+    private fun initObserveCareAdapterModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careMainModel.collectLatest {
-                    adapter.careMainModel = it
-                    binding.root.post {
-                        adapter.notifyItemChanged(CareAdapter.MAIN_POSITION)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun initObserveCareStartModel() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careStartModel.collectLatest {
-                    adapter.careStartModel = it
-                    binding.root.post {
-                        adapter.notifyItemChanged(CareAdapter.START_POSITION)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun initObserveCareRepeatModel() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careRepeatModel.collectLatest {
-                    adapter.careRepeatModel = it
-                    binding.root.post {
-                        adapter.notifyItemChanged(CareAdapter.REPEAT_POSITION)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun initObserveCareAlarmModel() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careAlarmModel.collectLatest {
-                    adapter.careAlarmModel = it
-                    binding.root.post {
-                        adapter.notifyItemChanged(CareAdapter.ALARM_POSITION)
-                    }
+                viewModel.careAdapterModels.collectLatest {
+                    adapter.submitList(it)
                 }
             }
         }
