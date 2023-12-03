@@ -102,6 +102,8 @@
     <string name="snippet_alert_alarm">Будильник</string>
     <string name="save">Сохранить</string>
 
+    <string name="pet_action_menu_item_edit_pet">Изменить</string>
+    <string name="pet_action_menu_item_delete_pet">Удалить</string>
     <string name="alert_dialog_delete_pet_title">Удаление питомца</string>
     <string name="alert_dialog_delete_pet_message">Вы уверены, что хотите удалить питомца?</string>
     <string name="alert_dialog_delete_pet_button_accept_text">Да</string>
@@ -154,5 +156,14 @@
     <string name="combing_the_wall_title">Вычесывание шерсти</string>
     <string name="vaccination_title">Вакцинанция</string>
     <string name="walk_title">Прогулка</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
 </resources>

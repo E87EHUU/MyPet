@@ -7,7 +7,7 @@ import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
 import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
 import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.dao.LocalPetDao
-import com.example.mypet.data.local.room.dao.PetCreationDao
+import com.example.mypet.data.local.room.dao.PetCreationAndUpdateDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
 import com.example.mypet.data.local.room.entity.LocalPetEntity
@@ -28,7 +28,7 @@ abstract class LocalDatabase : RoomDatabase() {
     abstract fun localAlarmDao(): LocalAlarmDao
     abstract fun localAlarmServiceDao(): LocalAlarmServiceDao
     abstract fun localBootCompleteDao(): LocalBootCompleteDao
-    abstract fun localPetCreationDao(): PetCreationDao
+    abstract fun localPetCreationDao(): PetCreationAndUpdateDao
 
     companion object {
         const val ID = "id"
