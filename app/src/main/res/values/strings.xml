@@ -10,9 +10,6 @@
     <string name="bottom_navigation_pet_detail">Главная</string>
     <string name="bottom_navigation_reminder">Напоминание</string>
     <string name="bottom_navigation_food">Еда</string>
-    <string name="pet_action_menu_item_edit_pet">Изменить</string>
-    <string name="pet_action_menu_item_delete_pet">Удалить</string>
-    <string name="pet_empty_text">Добавьте своего питомца,\n нажав “+” наверху</string>
 
     <string name="map_ok">OK</string>
     <string name="map_location_enabled">Location is enabled</string>
@@ -84,6 +81,8 @@
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
 
+    <string name="pet_action_menu_item_edit_pet">Изменить</string>
+    <string name="pet_action_menu_item_delete_pet">Удалить</string>
     <string name="alert_dialog_delete_pet_title">Удаление питомца</string>
     <string name="alert_dialog_delete_pet_message">Вы уверены, что хотите удалить питомца?</string>
     <string name="alert_dialog_delete_pet_button_accept_text">Да</string>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/pet_creation_fragment_margin"
     android:orientation="vertical"
-    tools:context="com.example.mypet.ui.pet.creation.PetCreationFragment">
+    tools:context="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
