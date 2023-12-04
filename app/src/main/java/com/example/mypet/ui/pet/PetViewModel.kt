@@ -65,11 +65,11 @@ class PetViewModel @Inject constructor(
                 listOf(
                     PetCareModel(careType = CareTypes.BATH),
                     PetCareModel(careType = CareTypes.COMBING_THE_WOOL),
-                    PetCareModel(careType = CareTypes.VACCINATION),
+                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_WORMS),
+                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_AND_TICKS),
                     PetCareModel(careType = CareTypes.WALK),
                 )
             }
-
 
             else -> emptyList()
         }
