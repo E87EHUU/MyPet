@@ -52,6 +52,7 @@ class PetCreationAndUpdateRepositoryImpl @Inject constructor(
             weight = weight,
             kindOrdinal = kindOrdinal,
             breedOrdinal = breedOrdinal,
+            sex = sex,
             isActive = isActive,
         )
 }
