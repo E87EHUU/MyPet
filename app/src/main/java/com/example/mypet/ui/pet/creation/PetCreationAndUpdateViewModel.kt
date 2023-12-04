@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.PetCreationAndUpdateRepository
 import com.example.mypet.domain.pet.creation.PetCreationAndUpdateModel
-import com.example.mypet.domain.pet.detail.PetModel
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUES
 import com.example.mypet.utils.DEFAULT_STRING_VALUES
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +29,8 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     var sex: Int = DEFAULT_INTEGER_VALUES
     var petId: Int = DEFAULT_INTEGER_VALUES
 
-    private val _localPetForUpdate = MutableLiveData<PetModel>()
-    val localPetForUpdate: LiveData<PetModel>
+    private val _localPetForUpdate = MutableLiveData<PetListModel>()
+    val localPetForUpdate: LiveData<PetListModel>
         get() = _localPetForUpdate
 
     fun addOrUpdatePetInDb() {

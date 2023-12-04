@@ -19,8 +19,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
-import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.kind.PetKind
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.snackMessage
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUES
@@ -53,9 +53,9 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun collectPetDetailsIfNeedsToUpdate() {
-        if (args.petMyId > DEFAULT_INTEGER_VALUES) {
-            viewModel.petId = args.petMyId
-            viewModel.getPetFromDbForUpdateDetails(args.petMyId)
+        if (args.petId > DEFAULT_INTEGER_VALUES) {
+            viewModel.petId = args.petId
+            viewModel.getPetFromDbForUpdateDetails(args.petId)
             startObservePetDetailsForUpdate()
         }
     }
@@ -68,7 +68,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun initPetDetailsForUpdate(localPetModel: PetModel) {
+    private fun initPetDetailsForUpdate(localPetModel: PetListModel) {
         viewModel.avatarUri = localPetModel.avatarUri.toString()
         Glide.with(this)
             .load(localPetModel.avatarUri)

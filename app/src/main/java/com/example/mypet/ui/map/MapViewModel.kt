@@ -1,39 +1,9 @@
 package com.example.mypet.ui.map
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.mypet.domain.map.MapSearchResponseItem
-import com.example.mypet.domain.map.MapSearchState
-import com.example.mypet.domain.map.MapTypeSpecificState
-import com.example.mypet.domain.map.MapUiState
-import com.yandex.mapkit.GeoObject
-import com.yandex.mapkit.geometry.Geometry
-import com.yandex.mapkit.map.VisibleRegion
-import com.yandex.mapkit.map.VisibleRegionUtils
-import com.yandex.mapkit.search.BusinessObjectMetadata
-import com.yandex.mapkit.search.Response
-import com.yandex.mapkit.search.SearchFactory
-import com.yandex.mapkit.search.SearchManagerType
-import com.yandex.mapkit.search.SearchOptions
-import com.yandex.mapkit.search.Session
-import com.yandex.mapkit.search.Session.SearchListener
-import com.yandex.mapkit.search.ToponymObjectMetadata
-import com.yandex.runtime.Error
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlin.time.Duration.Companion.seconds
 
 class MapViewModel : ViewModel() {
-
+/*
     companion object {
         private const val NO_TITLE = "No title"
         private const val NO_DESCRIPTION = "No description"
@@ -170,5 +140,5 @@ class MapViewModel : ViewModel() {
         return detailsString.toString()
     }
 
-    private fun <T> List<T>.takeIfNotEmpty(): List<T>? = takeIf { it.isNotEmpty() }
+    private fun <T> List<T>.takeIfNotEmpty(): List<T>? = takeIf { it.isNotEmpty() }*/
 }

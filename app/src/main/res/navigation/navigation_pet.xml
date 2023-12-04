@@ -14,14 +14,18 @@
             app:destination="@id/careFragment" />
 
         <action
-            android:id="@+id/action_pet_to_petCreationFragment"
-            app:destination="@id/petCreationFragment" />
+            android:id="@+id/action_pet_to_petCreationAndUpdateFragment"
+            app:destination="@id/petCreationAndUpdateFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/petCreationFragment"
-        android:name="com.example.mypet.ui.pet.creation.PetCreationFragment"
-        tools:layout="@layout/fragment_pet_creation" />
+        android:id="@+id/petCreationAndUpdateFragment"
+        android:name="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment"
+        tools:layout="@layout/fragment_pet_creation" >
+        <argument
+            android:name="pet_id"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/careFragment"

@@ -113,7 +113,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetAdd() {
-        findNavController().navigate(R.id.petCreationFragment)
+        findNavController().navigate(R.id.petCreationAndUpdateFragment)
     }
 
     override fun onClickPet(petListModel: PetListModel?) {

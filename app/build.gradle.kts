@@ -100,7 +100,7 @@ dependencies {
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
 
-    implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
+    //implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
 
     implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
 }
