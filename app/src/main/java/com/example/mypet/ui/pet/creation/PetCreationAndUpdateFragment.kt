@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -23,7 +22,9 @@ import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.kind.PetKind
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.snackMessage
-import com.example.mypet.utils.DEFAULT_INTEGER_VALUES
+import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
+import com.example.mypet.utils.DEFAULT_SEX_FEMALE_VALUE
+import com.example.mypet.utils.DEFAULT_SEX_MALE_VALUE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -36,16 +37,17 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private val binding by viewBinding(FragmentPetCreationBinding::bind)
     private val viewModel by viewModels<PetCreationAndUpdateViewModel>()
 
-    private lateinit var breedSpinnerAdapter: ArrayAdapter<String>
+    private lateinit var kindListAdapter: ArrayAdapter<String>
+    private lateinit var breedListAdapter: ArrayAdapter<String>
 
     private val args: PetCreationAndUpdateFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         onChoosePhotoButtonClickListener()
-        initKindAndBreedListSpinner()
+        onWhichSexChipSelectedListener()
+        initKindListView()
         onChooseDateOfBirthClickListener()
         onSaveNewPetButtonClickListener()
 
@@ -53,7 +55,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun collectPetDetailsIfNeedsToUpdate() {
-        if (args.petMyId > DEFAULT_INTEGER_VALUES) {
+        if (args.petMyId > DEFAULT_INTEGER_VALUE) {
             viewModel.petId = args.petMyId
             viewModel.getPetFromDbForUpdateDetails(args.petMyId)
             startObservePetDetailsForUpdate()
@@ -63,109 +65,131 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun startObservePetDetailsForUpdate() {
         lifecycleScope.launch {
             viewModel.localPetForUpdate.observe(viewLifecycleOwner) {
+                initBreedListView(it.kindOrdinal)
                 initPetDetailsForUpdate(it)
             }
         }
     }
 
-    private fun initPetDetailsForUpdate(localPetModel: PetModel) {
-        viewModel.avatarUri = localPetModel.avatarUri.toString()
-        Glide.with(this)
-            .load(localPetModel.avatarUri)
-            .circleCrop()
-            .into(binding.appCompatImageViewPetCreationAvatar)
-        binding.textInputEditTextPetCreationName.setText(localPetModel.name)
-        binding.appCompatTextViewPetCreationKindListSpinner.setSelection(localPetModel.kindOrdinal)
-        localPetModel.breedOrdinal?.let {
-            binding.appCompatSpinnerPetCreationBreedListSpinner.setSelection(it)
+    private fun onWhichSexChipSelectedListener() {
+        binding.petCreationChipMale.setOnClickListener {
+            viewModel.sex = DEFAULT_SEX_MALE_VALUE
         }
-        binding.textInputEditTextPetCreationWeight.setText(localPetModel.weight)
-        binding.appCompatTextViewPetCreationSelectedDate.text =
-            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(localPetModel.age?.toLong())
+        binding.petCreationChipFemale.setOnClickListener {
+            viewModel.sex = DEFAULT_SEX_FEMALE_VALUE
+        }
+    }
+
+    private fun initPetDetailsForUpdate(localPetModel: PetModel) {
+        fillViewModelFields(localPetModel)
+        with(binding) {
+            Glide.with(this@PetCreationAndUpdateFragment)
+                .load(localPetModel.avatarUri)
+                .circleCrop()
+                .placeholder(R.drawable.baseline_add_photo_alternate_24)
+                .into(appCompatImageViewPetCreationAvatar)
+            textInputEditTextPetCreationName.setText(localPetModel.name)
+            autoCompleteTextViewPetCreationKindList.setText(
+                kindListAdapter.getItem(
+                    localPetModel.kindOrdinal
+                ), false
+            )
+            localPetModel.breedOrdinal?.let {
+                autoCompleteTextViewPetCreationBreedList.setText(
+                    breedListAdapter.getItem(
+                        localPetModel.breedOrdinal
+                    ), false
+                )
+            }
+            textInputEditTextPetCreationWeight.setText(localPetModel.weight)
+            if (localPetModel.age != null) {
+                textInputEditTextPetCreationDateOfBirth.setText(
+                    SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(localPetModel.age.toLong())
+                )
+            }
+        }
+        if (localPetModel.sex == DEFAULT_SEX_FEMALE_VALUE) {
+            binding.petCreationChipFemale.isChecked = true
+        } else if (localPetModel.sex == DEFAULT_SEX_MALE_VALUE) {
+            binding.petCreationChipMale.isChecked = true
+        }
+    }
+
+    private fun fillViewModelFields(localPetModel: PetModel) {
         viewModel.dateOfBirth = localPetModel.age
+        viewModel.avatarUri = localPetModel.avatarUri.toString()
+        viewModel.kindOrdinal = localPetModel.kindOrdinal
+        viewModel.breedOrdinal = localPetModel.breedOrdinal
+        viewModel.sex = localPetModel.sex
     }
 
     private fun onChoosePhotoButtonClickListener() {
-        binding.appCompatButtonPetCreationChoosePhoto.setOnClickListener {
+        binding.appCompatImageViewPetCreationAvatar.setOnClickListener {
             requestPermission()
         }
     }
 
-    private fun initKindAndBreedListSpinner() {
-        val adapter =
-            ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                PetKind.values().map { getString(it.nameResId) }
-            )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.appCompatTextViewPetCreationKindListSpinner.adapter = adapter
+    private fun initKindListView() {
+        kindListAdapter = ArrayAdapter(requireContext(),
+            R.layout.fragment_pet_creation_custom_dropdown_item,
+            PetKind.values().map { getString(it.nameResId) })
+        binding.autoCompleteTextViewPetCreationKindList.setAdapter(kindListAdapter)
         onKindItemSelectedListener()
     }
 
     private fun onKindItemSelectedListener() {
-        binding.appCompatTextViewPetCreationKindListSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    initBreedListSpinner(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Действие при отсутствии выбора
-                }
-            }
+        binding.autoCompleteTextViewPetCreationKindList.setOnItemClickListener { _, _, position, _ ->
+            viewModel.kindOrdinal = position
+            initBreedListView(position)
+        }
     }
 
-    private fun initBreedListSpinner(kindId: Int) {
+    private fun initBreedListView(kindId: Int) {
+        if (!::breedListAdapter.isInitialized) {
+            breedListAdapter = ArrayAdapter(
+                requireContext(),
+                R.layout.fragment_pet_creation_custom_dropdown_item,
+                mutableListOf()
+            )
+            binding.autoCompleteTextViewPetCreationBreedList.setAdapter(breedListAdapter)
+        }
         if (getPetBreedList(kindId) == null) {
-            binding.appCompatSpinnerPetCreationBreedListSpinner.visibility = View.GONE
-            binding.appCompatTextViewPetCreationBreedListSpinnerTittle.visibility = View.GONE
+            binding.textInputLayoutPetCreationChoicePetBreed.visibility = View.GONE
         } else {
-            binding.appCompatSpinnerPetCreationBreedListSpinner.visibility = View.VISIBLE
-            binding.appCompatTextViewPetCreationBreedListSpinnerTittle.visibility = View.VISIBLE
-
-            if (!::breedSpinnerAdapter.isInitialized) {
-                breedSpinnerAdapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    mutableListOf()
-                )
-                breedSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.appCompatSpinnerPetCreationBreedListSpinner.adapter = breedSpinnerAdapter
-            }
-
+            binding.textInputLayoutPetCreationChoicePetBreed.visibility = View.VISIBLE
             getPetBreedList(kindId)?.let { listBreedNameId ->
-                breedSpinnerAdapter.clear()
-                breedSpinnerAdapter.addAll(listBreedNameId.map { getString(it) })
-                breedSpinnerAdapter.notifyDataSetChanged()
+                breedListAdapter.clear()
+                breedListAdapter.addAll(listBreedNameId.map { getString(it) })
+                breedListAdapter.notifyDataSetChanged()
             }
+            onBreedItemSelectedListener()
+        }
+    }
+
+    private fun onBreedItemSelectedListener() {
+        binding.autoCompleteTextViewPetCreationBreedList.setOnItemClickListener { _, _, position, _ ->
+            viewModel.breedOrdinal = position
         }
     }
 
     private fun onChooseDateOfBirthClickListener() {
-        binding.appCompatImageViewPetCreationCalendar.setOnClickListener {
+        binding.textInputEditTextPetCreationDateOfBirth.setOnClickListener {
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                { _, selectedYear, selectedMonth, selectedDay ->
+                requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
                     calendar.set(selectedYear, selectedMonth, selectedDay)
                     val selectedDate =
                         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
-                    binding.appCompatTextViewPetCreationSelectedDate.text = selectedDate
+                    binding.textInputEditTextPetCreationDateOfBirth.setText(selectedDate)
                     viewModel.dateOfBirth = calendar.timeInMillis.toString()
-                },
-                year,
-                month,
-                day
+                }, year, month, day
             )
             datePickerDialog.show()
         }
@@ -173,15 +197,11 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun onSaveNewPetButtonClickListener() {
         binding.appCompatButtonPetCreationSave.setOnClickListener {
-            viewModel.kindOrdinal =
-                binding.appCompatTextViewPetCreationKindListSpinner.selectedItemPosition
-            viewModel.breedOrdinal =
-                binding.appCompatSpinnerPetCreationBreedListSpinner.selectedItemPosition
             viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
             viewModel.weight =
                 binding.textInputEditTextPetCreationWeight.text?.toString()?.toIntOrNull()
             with(viewModel) {
-                if (name.isEmpty() || dateOfBirth.isNullOrEmpty() || weight == null) {
+                if (name.isEmpty() || kindOrdinal == null || sex == null) {
                     view?.snackMessage(getString(R.string.fill_up_all_fields))
                 } else {
                     viewModel.addOrUpdatePetInDb()
@@ -193,9 +213,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-            Glide.with(this)
-                .load(imageUri)
-                .circleCrop()
+            Glide.with(this).load(imageUri).circleCrop()
                 .into(binding.appCompatImageViewPetCreationAvatar)
             viewModel.avatarUri = imageUri.toString()
         }
@@ -206,8 +224,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted)
-                pickImageFromGallery()
+            if (isGranted) pickImageFromGallery()
         }
 
     private fun requestPermission() {
@@ -218,8 +235,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
-                requireContext(),
-                IMAGE_SELECTION_PERMISSION
+                requireContext(), IMAGE_SELECTION_PERMISSION
             ) -> {
                 pickImageFromGallery()
             }

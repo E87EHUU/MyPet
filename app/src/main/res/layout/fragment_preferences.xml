@@ -30,28 +30,67 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/settings_system_theme"/>
+                android:text="@string/preferences_system_theme"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipLightTheme"
                 style="@style/Widget.Material3.Chip.Suggestion.Elevated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_light_theme"/>
+                android:text="@string/preferences_light_theme"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipDarkTheme"
                 style="@style/Widget.Material3.Chip.Suggestion.Elevated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_dark_theme"/>
+                android:text="@string/preferences_dark_theme"/>
 
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/preferences_chip_spacing"/>
+            android:layout_marginStart="@dimen/preferences_chip_spacing"
+            android:layout_marginEnd="@dimen/preferences_chip_spacing"
+            android:layout_marginTop="@dimen/preferences_lines_spacing"/>
+
+        <include
+            layout="@layout/line_with_image"
+            android:id="@+id/preferencesColor"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/preferencesColorChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:chipSpacingHorizontal="@dimen/preferences_chip_spacing"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDynamicColor"
+                style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/preferences_dynamic_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDefaultColor"
+                style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_default_color"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/preferences_chip_spacing"
+            android:layout_marginEnd="@dimen/preferences_chip_spacing"
+            android:layout_marginTop="@dimen/preferences_lines_spacing"/>
 
     </LinearLayout>
 

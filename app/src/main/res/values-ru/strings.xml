@@ -98,10 +98,12 @@
     <string name="user_button">Button</string>
     <string name="fill_up_all_fields">Заполните все поля</string>
 
-    <string name="settings_theme">Application theme</string>
-    <string name="settings_light_theme">Light</string>
-    <string name="settings_dark_theme">Dark</string>
-    <string name="settings_system_theme">System</string>
-    <string name="user_auth_button">Войти</string>
+    <string name="preferences_theme">Тема приложения</string>
+    <string name="preferences_light_theme">Светлая</string>
+    <string name="preferences_dark_theme">Темная</string>
+    <string name="preferences_system_theme">Системная</string>
+    <string name="preferences_color">Цвет приложения</string>
+    <string name="preferences_dynamic_color">Динамический</string>
+    <string name="preferences_default_color">По умолчанию</string>
 
 </resources>
