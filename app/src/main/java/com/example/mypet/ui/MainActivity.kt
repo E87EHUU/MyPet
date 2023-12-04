@@ -8,7 +8,6 @@ import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,7 +19,6 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.ActivityMainBinding
 import com.example.mypet.ui.preferences.PreferencesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -77,13 +75,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun applyPreferences() {
-        lifecycleScope.launch {
-            if (!preferences.appIsRunning) {
-                preferences.run {
-                    appIsRunning = true
-                    applyThemeMode()
-                }
-            }
+        preferences.loadColor(this)
+        if (!preferences.appIsRunning) {
+            preferences.appIsRunning = true
+            preferences.loadTheme(this)
         }
     }
 }
