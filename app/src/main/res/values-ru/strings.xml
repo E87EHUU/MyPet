@@ -102,5 +102,6 @@
     <string name="settings_light_theme">Light</string>
     <string name="settings_dark_theme">Dark</string>
     <string name="settings_system_theme">System</string>
+    <string name="user_auth_button">Войти</string>
 
 </resources>

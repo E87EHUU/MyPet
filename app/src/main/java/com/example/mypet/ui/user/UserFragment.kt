@@ -24,7 +24,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun initView() {
-        with (binding) {
+        with(binding) {
             profileAbout.lineImage.setImageResource(R.drawable.icon_about)
             profileAbout.lineText.text = getString(R.string.user_about)
 
@@ -42,6 +42,9 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             }
             profilePreferences.lineBlock.setOnClickListener {
                 findNavController().navigate(UserFragmentDirections.actionUserFragmentToPreferencesFragment())
+            }
+            userAuthButton.setOnClickListener {
+                findNavController().navigate(UserFragmentDirections.actionUserFragmentToLoginFragment())
             }
         }
     }
