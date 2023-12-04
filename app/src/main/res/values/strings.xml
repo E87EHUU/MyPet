@@ -102,7 +102,18 @@
     <string name="settings_light_theme">Light</string>
     <string name="settings_dark_theme">Dark</string>
     <string name="settings_system_theme">System</string>
+
     <string name="pet_creation_sex_male">Самец</string>
     <string name="pet_creation_sex_female">Самка</string>
     <string name="pet_creation_fragment_name">Информация о питомце</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
