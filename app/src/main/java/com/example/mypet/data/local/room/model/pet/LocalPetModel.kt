@@ -8,6 +8,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATA
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.SEX
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
 
 data class LocalPetModel(
@@ -25,6 +26,8 @@ data class LocalPetModel(
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)
     val breedOrdinal: Int?,
+    @ColumnInfo(name = SEX)
+    val sex: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 )
