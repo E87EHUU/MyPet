@@ -6,9 +6,10 @@ data class PetModel(
     val id: Int,
     val avatarUri: Uri?,
     val name: String,
-    val age: Int?,
-    val weight: Int?,
+    val age: String?,
+    val weight: String?,
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
+    val sex: Int?,
     val isActive: Boolean,
 )

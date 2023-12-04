@@ -9,6 +9,7 @@ import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATA
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.SEX
 import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,7 @@ interface LocalPetDao {
                 "m.weight $WEIGHT, " +
                 "m.kind_ordinal $KIND_ORDINAL, " +
                 "m.breed_ordinal $BREED_ORDINAL, " +
+                "m.sex $SEX, "+
                 "m.is_active $IS_ACTIVE " +
                 "FROM pet_my m"
     )
