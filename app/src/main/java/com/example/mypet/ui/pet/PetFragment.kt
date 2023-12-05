@@ -127,6 +127,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetEdit(petListModel: PetListModel) {
-        TODO("Not yet implemented")
+        val directions = PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListModel.id)
+        findNavController().navigate(directions)
     }
 }
