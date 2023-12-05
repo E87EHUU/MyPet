@@ -10,6 +10,7 @@
     <string name="bottom_navigation_pet_detail">Главная</string>
     <string name="bottom_navigation_reminder">Напоминание</string>
     <string name="bottom_navigation_food">Еда</string>
+    <string name="pet_empty_text">Добавьте своего питомца,\n нажав “+” наверху</string>
 
     <string name="map_ok">OK</string>
     <string name="map_location_enabled">Location is enabled</string>
@@ -35,13 +36,15 @@
     <string name="pet_creation_choose_pet_kind">Выбрать вид питомца*</string>
     <string name="pet_creation_choose_breed">Выбрать породу питомца*</string>
 
+
     <string name="notification_chanel_action_delay">Отложить</string>
     <string name="notification_chanel_action_stop">Остановить</string>
 
-    <string name="alarm_title">Будильник %s</string>
+    <string name="bottom_sheet_app_bar_button_ok">Установить</string>
 
-    <string name="alarm_button_ok">Установить</string>
-    <string name="alarm_description_title">Описание</string>
+    <string name="food_detail_title_default">Название</string>
+    <string name="food_detail_description_default">Рацион</string>
+
     <string name="alarm_repeat_title">Повтор</string>
     <string name="alarm_repeat_once">Один раз</string>
     <string name="alarm_repeat_everyday">Ежедневно</string>
@@ -79,6 +82,22 @@
     <string name="pet_food_forward_title">все</string>
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
+    <string name="food_detail_title_hint">Напоминание</string>
+    <string name="food_detail_ration_hint">Рацион</string>
+    <string name="food_detail_repeat_disable">Отключен</string>
+    <string name="alarm_repeat_chooser_none">Не повторять</string>
+    <string name="alarm_repeat_chooser_everyday">Ежедневно</string>
+    <string name="alarm_repeat_chooser_every_week">Еженедельно</string>
+    <string name="alarm_repeat_chooser_every_month">Ежемесячно</string>
+    <string name="alarm_repeat_chooser_every_year">Ежегодно</string>
+    <string name="alarm_repeat_chooser_custom">Настроить</string>
+    <string name="fab_content_description">Добавить</string>
+    <string name="alarm_information">Для включения будильника необходимо разрешить приложению работу поверх всех окон.</string>
+    <string name="alarm_access">Разрешить</string>
+    <string name="alert_title">Оповещение</string>
+    <string name="snippet_alert_notification">Уведомления</string>
+    <string name="snippet_alert_alarm">Будильник</string>
+    <string name="save">Сохранить</string>
 
     <string name="pet_action_menu_item_edit_pet">Изменить</string>
     <string name="pet_action_menu_item_delete_pet">Удалить</string>
@@ -106,6 +125,43 @@
     <string name="preferences_dynamic_color">Dynamic</string>
     <string name="preferences_default_color">Default</string>
 
+    <string name="settings_theme">Application theme</string>
+    <string name="settings_light_theme">Light</string>
+    <string name="settings_dark_theme">Dark</string>
+    <string name="settings_system_theme">System</string>
+    <string name="care_repeat_title">Повторяется</string>
+    <string name="care_repeat_description_none">Без повтора</string>
+    <string name="care_food_title">Кормежка</string>
+    <string name="care_food_times">раз(а)</string>
+    <string name="care_end_title">Окончание</string>
+    <string name="care_end_in">В</string>
+    <string name="care_end_after">После</string>
+    <string name="care_end_none">Никогда</string>
+    <string name="care_start_title">Начало</string>
+    <string name="care_time_default">10:10</string>
+    <string name="care_date_default">10.10.2020</string>
+    <string name="care_alarm_title">Уведомления</string>
+
+
+    <string-array name="repeats">
+        <item>каждый день</item>
+        <item>каждую неделю</item>
+        <item>каждый месяц</item>
+        <item>каждый год</item>
+    </string-array>
+
+    <string-array name="food_interval">
+        <item>раз(а) в день</item>
+        <item>через день</item>
+        <item>раза в меясяц</item>
+    </string-array>
+
+    <string name="food_title">Кормление</string>
+    <string name="bath_title">Ванна</string>
+    <string name="combing_the_wall_title">Вычесывание шерсти</string>
+    <string name="care_against_fleas_and_ticks_title">Против блох и клещей</string>
+    <string name="care_against_worms_title">Против глистов</string>
+    <string name="walk_title">Прогулка</string>
     <string name="pet_creation_sex_male">Самец</string>
     <string name="pet_creation_sex_female">Самка</string>
     <string name="pet_creation_fragment_name">Информация о питомце</string>
@@ -119,4 +175,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="date_picker_title">Установите дату</string>
+    <string name="time_picker_title">Установите время</string>
+
 </resources>

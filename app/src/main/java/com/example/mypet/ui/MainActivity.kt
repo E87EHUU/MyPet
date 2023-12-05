@@ -1,13 +1,10 @@
 package com.example.mypet.ui
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -22,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
     private val binding by viewBinding(ActivityMainBinding::bind)
     private val preferences: PreferencesViewModel by viewModels()
 
@@ -42,12 +38,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navHost.navController
     }
 
+/*    private val toolbarOnDestinations = mapOf(
+        R.id.careFragment to R.menu.toolbar_pet_detail,
+    )
+
+    private val fabDestinations = setOf(
+        R.id.careFragment,
+    )*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         applyPreferences()
-
-        requestPermissionForOverlay()
 
         setSupportActionBar(binding.toolbar)
 
@@ -56,10 +58,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         binding.bottomNavigation.setupWithNavController(navController)
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-            != PackageManager.PERMISSION_GRANTED
-        ) requestPermissionForOverlay()
+        //observeNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -67,12 +66,27 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
     }
 
-    private fun requestPermissionForOverlay() {
-        if (!Settings.canDrawOverlays(this)) {
-            val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-            startActivityForResult(intent, 0)
+/*    private fun observeNavigation() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                navController.currentBackStack.collectLatest {
+                    val lastId = it.last().destination.id
+//                    if (fabDestinations.contains(lastId))
+//                        binding.floatingActionButton.hide()
+//                    else
+//                        binding.floatingActionButton.show()
+
+                    toolbarOnDestinations[lastId]?.let { menuId ->
+                        binding.toolbar.menu.clear()
+                        binding.toolbar.inflateMenu(menuId)
+                    } ?: run {
+                        binding.toolbar.menu.clear()
+                        binding.toolbar.inflateMenu(R.menu.toolbar_empty)
+                    }
+                }
+            }
         }
-    }
+    }*/
 
     private fun applyPreferences() {
         preferences.loadColor(this)

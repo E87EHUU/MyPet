@@ -1,14 +1,22 @@
 package com.example.mypet.ui
 
+import android.content.Context
+import android.text.format.DateFormat
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.example.mypet.app.R
 import com.example.mypet.domain.pet.breed.PetBreedCat
 import com.example.mypet.domain.pet.breed.PetBreedChameleon
 import com.example.mypet.domain.pet.breed.PetBreedDog
 import com.example.mypet.domain.pet.breed.PetBreedSnake
 import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import java.text.DecimalFormat
+import java.time.LocalDateTime
+import java.util.Calendar
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
@@ -71,3 +79,33 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
 
 fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
+
+fun Fragment.getToolbar() =
+    (requireActivity() as? MainActivity)?.findViewById<Toolbar>(R.id.toolbar)
+
+fun Fragment.getFloatingActionButton() =
+    (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)
+
+val Context.is24HourFormat
+    get() = DateFormat.is24HourFormat(this)
+
+private val dateTimeFormatter = DecimalFormat("00")
+private fun Int.formatDateTime(): String = dateTimeFormatter.format(this)
+
+fun toAppDate(timeInMillis: Long?): String {
+    val calendar = Calendar.getInstance()
+    timeInMillis?.let { calendar.timeInMillis = it }
+    val rDay = calendar[Calendar.DAY_OF_MONTH]
+    val rMonth = calendar[Calendar.MONTH] + 1
+    val rYear = calendar[Calendar.YEAR]
+
+    return "${rDay.formatDateTime()}.${rMonth.formatDateTime()}.${rYear}"
+}
+
+fun toAppTime(hour: Int?, minute: Int?): String {
+    val localDateTime = LocalDateTime.now()
+    val rHour = hour ?: localDateTime.hour
+    val rMinute = minute ?: localDateTime.minute
+
+    return "${rHour.formatDateTime()}:${rMinute.formatDateTime()}"
+}

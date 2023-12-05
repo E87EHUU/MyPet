@@ -34,11 +34,12 @@
         </receiver>
 
         <service
-            android:name="com.example.mypet.ui.food.alarm.service.FoodAlarmService"
+            android:name="com.example.mypet.ui.alarm.service.AlarmService"
             android:enabled="true" />
 
         <activity
             android:name="com.example.mypet.ui.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

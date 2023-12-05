@@ -1,8 +1,9 @@
 package com.example.mypet.domain.pet.food
 
+import com.example.mypet.domain.alarm.AlarmMinModel
+import com.example.mypet.domain.pet.care.PetCareModel
+
 data class PetFoodModel(
-    val id: Int,
-    val title: String,
-    val time: String,
-    val isActive: Boolean,
+    val care: PetCareModel,
+    val alarmModels: List<AlarmMinModel>
 )

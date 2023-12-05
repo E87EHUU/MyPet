@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.MyPet.CareContainer">
+
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerAlarmIcon"
+        style="@style/Theme.MyPet.CareHeaderIcon"
+        android:contentDescription="@string/care_alarm_title"
+        android:src="@drawable/baseline_notifications_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerAlarmTitle"
+        style="@style/Theme.MyPet.CareHeaderTitle"
+        android:text="@string/care_alarm_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerAlarmIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerAlarmIcon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCareRecyclerAlarmRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerAlarmIcon"
+        tools:listitem="@layout/fragment_care_recycler_alarm_recycler_main" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
