@@ -50,11 +50,6 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     private fun initView() {
         binding.root.adapter = adapter
-
-        datePicker.addOnDismissListener { isUnlockUI = true }
-        datePicker.addOnPositiveButtonClickListener {
-            viewModel.date = it
-        }
     }
 
     private fun initObserveCareAdapterModels() {
@@ -69,11 +64,18 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
 
     private val datePicker by lazy {
-        MaterialDatePicker.Builder.datePicker()
-            .setSelection(viewModel.date)
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setSelection(viewModel.timeInMillis)
             .setTitleText(getString(R.string.date_picker_title))
             .setInputMode(INPUT_MODE_CALENDAR)
             .build()
+
+        datePicker.addOnDismissListener { isUnlockUI = true }
+        datePicker.addOnPositiveButtonClickListener {
+            viewModel.timeInMillis = it
+            adapter.startViewHolder?.updateDate()
+        }
+        datePicker
     }
 
     private val is24HourFormat by lazy {

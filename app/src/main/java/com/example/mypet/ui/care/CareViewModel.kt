@@ -36,7 +36,11 @@ class CareViewModel @Inject constructor(
             careStartModel.minute = value
         }
 
-    var date: Long? = null
+    var timeInMillis: Long
+        get() = careStartModel.timeInMillis
+        set(value) {
+            careStartModel.timeInMillis = value
+        }
 
     fun updateCare(careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {

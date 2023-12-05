@@ -7,7 +7,6 @@ import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
-import com.example.mypet.ui.toAppDate
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -28,9 +27,7 @@ class CareRepositoryImpl @Inject constructor(
             when (careTypeOrdinal) {
                 CareTypes.FOOD.ordinal -> emit(null)
                 else -> emit(
-                    CareStartModel(
-                        date = toAppDate(null),
-                    )
+                    CareStartModel()
                 )
             }
         }

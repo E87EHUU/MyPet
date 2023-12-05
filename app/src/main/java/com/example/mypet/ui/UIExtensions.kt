@@ -91,9 +91,9 @@ val Context.is24HourFormat
 private val dateTimeFormatter = DecimalFormat("00")
 private fun Int.formatDateTime(): String = dateTimeFormatter.format(this)
 
-fun toAppDate(timeInMillis: Long?): String {
+fun toAppDate(timeInMillis: Long): String {
     val calendar = Calendar.getInstance()
-    timeInMillis?.let { calendar.timeInMillis = it }
+    calendar.timeInMillis = timeInMillis
     val rDay = calendar[Calendar.DAY_OF_MONTH]
     val rMonth = calendar[Calendar.MONTH] + 1
     val rYear = calendar[Calendar.YEAR]
