@@ -29,6 +29,13 @@ class CareAdapter(
     private val careAlarmCallback: CareAlarmCallback,
     private val careStartCallback: CareStartCallback,
 ) : ListAdapter<CareAdapterModel, RecyclerView.ViewHolder>(DiffCallback()) {
+    var mainBinding: FragmentCareRecyclerMainBinding? = null
+        private set
+    var startBinding: FragmentCareRecyclerStartBinding? = null
+        private set
+    var repeatBinding: FragmentCareRecyclerRepeatBinding? = null
+        private set
+
     override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -53,20 +60,20 @@ class CareAdapter(
 
     private fun mainViewHolder(parent: ViewGroup): CareMainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerMainBinding.inflate(inflater, parent, false)
-        return CareMainViewHolder(binding, careFoodCallback)
+        mainBinding = FragmentCareRecyclerMainBinding.inflate(inflater, parent, false)
+        return CareMainViewHolder(mainBinding!!, careFoodCallback)
     }
 
     private fun startViewHolder(parent: ViewGroup): CareStartViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
-        return CareStartViewHolder(binding, careStartCallback)
+        startBinding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
+        return CareStartViewHolder(startBinding!!, careStartCallback)
     }
 
     private fun repeatViewHolder(parent: ViewGroup): CareRepeatViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerRepeatBinding.inflate(inflater, parent, false)
-        return CareRepeatViewHolder(binding, careRepeatCallback)
+        repeatBinding = FragmentCareRecyclerRepeatBinding.inflate(inflater, parent, false)
+        return CareRepeatViewHolder(repeatBinding!!, careRepeatCallback)
     }
 
     private fun alarmViewHolder(parent: ViewGroup): CareAlarmViewHolder {

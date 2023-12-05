@@ -18,8 +18,13 @@ import javax.inject.Inject
 class CareViewModel @Inject constructor(
     private val careRepository: CareRepository
 ) : ViewModel() {
-    private val _careAdapterModels = MutableStateFlow<List<CareAdapterModel>>(emptyList())
+    private val _careAdapterModels =
+        MutableStateFlow<MutableList<CareAdapterModel>>(mutableListOf())
     val careAdapterModels = _careAdapterModels.asStateFlow()
+
+    var hour: Int? = null
+    var minute: Int? = null
+    var date: Long? = null
 
     fun updateCare(careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {

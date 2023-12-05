@@ -17,6 +17,13 @@ import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
+import com.example.mypet.ui.toAppDate
+import com.example.mypet.ui.toAppTime
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,6 +36,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private val args by navArgs<CareFragmentArgs>()
 
     private val adapter = CareAdapter(this, this, this, this)
+    private var isUnlockUI = true
 
     override fun onStart() {
         super.onStart()
@@ -44,6 +52,20 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     private fun initView() {
         binding.root.adapter = adapter
+
+        datePicker.addOnDismissListener { isUnlockUI = true }
+        datePicker.addOnPositiveButtonClickListener {
+            viewModel.date = it
+            adapter.startBinding?.textViewCareRecyclerStartDate?.text = toAppDate(it)
+        }
+
+        timePicker.addOnDismissListener { isUnlockUI = true }
+        timePicker.addOnPositiveButtonClickListener {
+            viewModel.hour = timePicker.hour
+            viewModel.minute = timePicker.minute
+            adapter.startBinding?.textViewCareRecyclerStartTime?.text =
+                toAppTime(timePicker.hour, timePicker.minute)
+        }
     }
 
     private fun initObserveCareAdapterModels() {
@@ -54,6 +76,31 @@ class CareFragment : Fragment(R.layout.fragment_care),
                 }
             }
         }
+    }
+
+
+    private val datePicker by lazy {
+        MaterialDatePicker.Builder.datePicker()
+            .setSelection(viewModel.date)
+            .setTitleText(getString(R.string.date_picker_title))
+            .setInputMode(INPUT_MODE_CALENDAR)
+            .build()
+    }
+
+    private val is24HourFormat by lazy {
+        android.text.format.DateFormat.is24HourFormat(requireContext())
+    }
+
+    private val timePicker by lazy {
+        MaterialTimePicker.Builder()
+            .setTitleText(getString(R.string.time_picker_title))
+            .setInputMode(INPUT_MODE_CLOCK)
+            .setTimeFormat(if (is24HourFormat) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
+            .build()
+            .apply {
+                viewModel.hour?.let { hour = it }
+                viewModel.minute?.let { minute = it }
+            }
     }
 
     private fun navToRepeat() {
@@ -77,5 +124,21 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     override fun onClickRepeat() {
         navToRepeat()
+    }
+
+    override fun showDatePicker() {
+        if (isUnlockUI)
+            activity?.supportFragmentManager?.let { fragmentManager ->
+                isUnlockUI = false
+                datePicker.show(fragmentManager, datePicker.toString())
+            }
+    }
+
+    override fun showTimePicker() {
+        if (isUnlockUI)
+            activity?.supportFragmentManager?.let { fragmentManager ->
+                isUnlockUI = false
+                timePicker.show(fragmentManager, timePicker.toString())
+            }
     }
 }

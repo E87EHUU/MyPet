@@ -30,7 +30,7 @@ class CareRepositoryImpl @Inject constructor(
                 CareTypes.FOOD.ordinal -> emit(null)
                 else -> emit(
                     CareStartModel(
-                        date = toAppDate(null, null, null),
+                        date = toAppDate(null),
                         time = toAppTime(null, null)
                     )
                 )

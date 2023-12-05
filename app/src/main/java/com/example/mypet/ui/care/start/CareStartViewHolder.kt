@@ -12,6 +12,16 @@ class CareStartViewHolder(
     private val context = binding.root.context
     private lateinit var careStartModel: CareStartModel
 
+    init {
+        binding.textViewCareRecyclerStartDate.setOnClickListener {
+            callback.showDatePicker()
+        }
+
+        binding.textViewCareRecyclerStartTime.setOnClickListener {
+            callback.showTimePicker()
+        }
+    }
+
     fun bind(careStartModel: CareStartModel?) {
         careStartModel?.let {
             this.careStartModel = careStartModel

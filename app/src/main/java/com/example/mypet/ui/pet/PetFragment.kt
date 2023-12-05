@@ -18,6 +18,7 @@ import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
+import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -113,7 +114,8 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetAdd() {
-        findNavController().navigate(R.id.petCreationAndUpdateFragment)
+        val directions = PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_INTEGER_VALUE)
+        findNavController().navigate(directions)
     }
 
     override fun onClickPet(petListModel: PetListModel?) {

@@ -15,8 +15,8 @@ import com.example.mypet.domain.pet.kind.PetKind
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.text.DecimalFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Calendar
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
@@ -92,11 +92,12 @@ val Context.is24HourFormat
 private val dateTimeFormatter = DecimalFormat("00")
 private fun Int.formatDateTime(): String = dateTimeFormatter.format(this)
 
-fun toAppDate(day: Int?, month: Int?, year: Int?): String {
-    val localDate = LocalDate.now()
-    val rDay = day ?: localDate.dayOfMonth
-    val rMonth = month ?: localDate.monthValue
-    val rYear = year ?: localDate.year
+fun toAppDate(timeInMillis: Long?): String {
+    val calendar = Calendar.getInstance()
+    timeInMillis?.let { calendar.timeInMillis = it }
+    val rDay = calendar[Calendar.DAY_OF_MONTH]
+    val rMonth = calendar[Calendar.MONTH] + 1
+    val rYear = calendar[Calendar.YEAR]
 
     return "${rDay.formatDateTime()}.${rMonth.formatDateTime()}.${rYear}"
 }
