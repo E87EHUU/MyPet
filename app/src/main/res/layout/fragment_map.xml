@@ -9,10 +9,10 @@
     android:focusable="true"
     android:elevation="@dimen/offset_8">
 
-    <com.yandex.mapkit.mapview.MapView
+<!--    <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapViewMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mapSearchBox"

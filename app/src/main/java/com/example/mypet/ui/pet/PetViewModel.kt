@@ -2,11 +2,12 @@ package com.example.mypet.ui.pet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypet.app.R
 import com.example.mypet.domain.PetRepository
+import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.food.PetFoodModel
+import com.example.mypet.domain.pet.kind.PetKind
+import com.example.mypet.domain.pet.list.PetListModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,44 +20,62 @@ import javax.inject.Inject
 class PetViewModel @Inject constructor(
     private val petRepository: PetRepository,
 ) : ViewModel() {
-    var activePetMyId: Int? = null
+    private val _pet = MutableStateFlow<List<PetListModel>>(emptyList())
+    val pet = _pet.asStateFlow()
 
-    private val _petList = MutableStateFlow<List<PetModel>>(emptyList())
-    val petList = _petList.asStateFlow()
+    private val _food = MutableStateFlow<PetFoodModel?>(null)
+    val food = _food.asStateFlow()
 
-    private val _petFoodList = MutableStateFlow<List<PetFoodModel>>(emptyList())
-    val petFoodList = _petFoodList.asStateFlow()
-
-    private val _petCareList = MutableStateFlow<List<PetCareModel>>(emptyList())
-    val petCareList = _petCareList.asStateFlow()
+    private val _care = MutableStateFlow<List<PetCareModel>?>(null)
+    val care = _care.asStateFlow()
 
     init {
-        _petFoodList.value =
-            listOf(
-                PetFoodModel(1, "Утро 1", "08:05", false),
-                PetFoodModel(2, "Утро 2", "08:35", true),
-                PetFoodModel(3, "Обедчик", "12:25", false),
-                PetFoodModel(4, "Супердлинныйвечерпослетяжелогодня", "20:13", true),
-            )
-
-        _petCareList.value =
-            listOf(
-                PetCareModel(1, R.drawable.ic_care_bath, "Ванна", "10:00", 30),
-                PetCareModel(2, R.drawable.ic_care_brushing, "Вычесывание", "20|10|23", 50),
-                PetCareModel(3, R.drawable.ic_care_against_fleas_and_ticks, "От блох и клещей", "10|02|24", 80),
-                PetCareModel(4, R.drawable.ic_care_against_worms, "От глистов", "20:00", 70),
-                PetCareModel(5, R.drawable.ic_pet_kind_turtle, "Прогулка", "10|05|20", 10),
-                PetCareModel(6, R.drawable.ic_pet_kind_frog, "Четоеще", "00:00", 0),
-            )
+        updatePet()
     }
 
-    fun updatePetList() = viewModelScope.launch(Dispatchers.IO) {
-        if (_petList.value.isEmpty())
-            petRepository.observePetList()
-                .collectLatest { _petList.value = it }
+    private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
+        petRepository.getPetListModels()
+            .collectLatest { _pet.value = it }
     }
 
-    fun deletePet(petId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.deletePet(petId)
+    fun updatePetDetail(petListModel: PetListModel?) {
+        petListModel?.let {
+            updateFood(it.id)
+            updateCare(it)
+        } ?: run {
+            _food.value = null
+            _care.value = null
+        }
     }
+
+    private fun updateFood(petId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        petRepository.getPetFoodModel(petId)
+            .collectLatest { _food.value = it }
+    }
+
+    private fun updateCare(petListModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
+        petRepository.getCareModels(petListModel.id)
+            .collectLatest { _care.value = getCares(petListModel) }
+    }
+
+    private fun getCares(petListModel: PetListModel) =
+        when (petListModel.kindOrdinal) {
+            PetKind.CAT.ordinal,
+            PetKind.DOG.ordinal -> {
+                listOf(
+                    PetCareModel(careType = CareTypes.BATH),
+                    PetCareModel(careType = CareTypes.COMBING_THE_WOOL),
+                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_WORMS),
+                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_AND_TICKS),
+                    PetCareModel(careType = CareTypes.WALK),
+                )
+            }
+
+            else -> emptyList()
+        }
+
+    fun deletePet(petId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            petRepository.deletePet(petId)
+        }
 }

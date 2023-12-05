@@ -61,6 +61,7 @@ dependencies {
     val androidxLifecycleVersion: String by System.getProperties()
     val androidxNavigationVersion: String by System.getProperties()
     val androidxRoomVersion: String by System.getProperties()
+    val androidxRecyclerViewVersion: String by System.getProperties()
 
     val viewBindingDelegateVersion: String by System.getProperties()
 
@@ -84,6 +85,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$androidxLifecycleVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$androidxNavigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
+    implementation("androidx.recyclerview:recyclerview:$androidxRecyclerViewVersion")
 
     implementation("androidx.room:room-runtime:$androidxRoomVersion")
     kapt("androidx.room:room-compiler:$androidxRoomVersion")
@@ -97,7 +99,7 @@ dependencies {
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
 
-    implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
+    //implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
 
     implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
 
