@@ -12,7 +12,11 @@ class CareRepeatViewHolder(
     private val context = binding.root.context
     private lateinit var careRepeatModel: CareRepeatModel
 
-
+    init {
+        binding.root.setOnClickListener { 
+            callback
+        }
+    }
 
     fun bind(careRepeatModel: CareRepeatModel?) {
         careRepeatModel?.let {

@@ -99,4 +99,39 @@
         <item name="android:layout_marginTop">@dimen/offset_8</item>
     </style>
 
+    <style name="Theme.MyPet.TextInputLayout" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputEditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputEditTextPicker">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">none</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputLayoutSpinner" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">none</item>
+        <item name="android:textAlignment">center</item>
+        <item name="endIconDrawable">@drawable/baseline_arrow_drop_down_24</item>
+        <item name="endIconMinSize">@dimen/text_input_layout_spinner_icon_size</item>
+        <item name="endIconMode">custom</item>
+    </style>
+
+    <style name="Theme.MyPet.ChipWeek">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="chipEndPadding">2dp</item>
+        <item name="chipStartPadding">2dp</item>
+    </style>
+
 </resources>

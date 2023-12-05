@@ -177,5 +177,9 @@
     <string name="login_failed">"Login failed"</string>
     <string name="date_picker_title">Установите дату</string>
     <string name="time_picker_title">Установите время</string>
+    <string name="care_repeat_times_default">1</string>
+    <string name="day">день</string>
+    <string name="care_repeat_times">Повторяется раз в</string>
+    <string name="care_repeat_end_times_default">1</string>
 
 </resources>

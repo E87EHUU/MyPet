@@ -26,8 +26,8 @@ data class LocalCareEntity(
     @ColumnInfo(name = PROGRESS)
     val progress: Int? = null,
 
-    @ColumnInfo(name = START_DAY)
-    val startDay: Int? = null,
+    @ColumnInfo(name = START_TIME_IN_MILLIS)
+    val startTimeInMillis: Long? = null,
     @ColumnInfo(name = START_MONTH)
     val startMonth: Int? = null,
     @ColumnInfo(name = START_YEAR)
@@ -48,7 +48,7 @@ data class LocalCareEntity(
 
         const val PROGRESS = "progress"
 
-        const val START_DAY = "start_day"
+        const val START_TIME_IN_MILLIS = "start_day"
         const val START_MONTH = "start_month"
         const val START_YEAR = "start_year"
 

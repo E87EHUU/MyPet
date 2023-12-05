@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerMainIcon" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutsCareRecyclerMainEndTimes"
+        android:id="@+id/textInputLayoutsCareRepeatEndTimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_16"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerMainIcon">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextCareRecyclerMainEndTimes"
+            android:id="@+id/textInputEditTextCareRepeatEndTimes"
             style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,14 +52,14 @@
         android:layout_marginStart="@dimen/offset_8"
         android:text="@string/care_food_times"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerMainEndTimes"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerMainEndTimes"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRecyclerMainEndTimes" />
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRepeatEndTimes"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes" />
 
     <com.google.android.material.divider.MaterialDivider
         style="@style/Theme.MyPet.CareBottomDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerMainEndTimes" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

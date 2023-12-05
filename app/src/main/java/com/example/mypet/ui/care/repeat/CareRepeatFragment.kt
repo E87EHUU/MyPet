@@ -1,4 +1,4 @@
-package com.example.mypet.ui.repeat
+package com.example.mypet.ui.care.repeat
 
 import android.os.Bundle
 import android.view.View
@@ -9,12 +9,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentRepeatBinding
+import com.example.mypet.app.databinding.FragmentCareRepeatBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class RepeatFragment : Fragment(R.layout.fragment_repeat) {
-    private val binding by viewBinding(FragmentRepeatBinding::bind)
+class CareRepeatFragment : Fragment(R.layout.fragment_care_repeat) {
+    private val binding by viewBinding(FragmentCareRepeatBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/repeatFragment"
-        android:name="com.example.mypet.ui.repeat.RepeatFragment"
-        tools:layout="@layout/fragment_repeat" />
+        android:name="com.example.mypet.ui.care.repeat.CareRepeatFragment"
+        tools:layout="@layout/fragment_care_repeat" />
 
 </navigation>
