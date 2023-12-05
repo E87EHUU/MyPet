@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
+import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.SEX
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
@@ -27,6 +28,8 @@ data class LocalPetModel(
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)
     val breedOrdinal: Int?,
+    @ColumnInfo(name = SEX)
+    val sex: Int?,
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 ) {

@@ -29,11 +29,11 @@ private fun getPetBreedName(kindOrdinal: Int, breedOrdinal: Int?) =
     breedOrdinal?.let {
         try {
             when (kindOrdinal) {
-                1 -> PetBreedCat.values()[breedOrdinal].nameResId
-                2 -> PetBreedDog.values()[breedOrdinal].nameResId
-                13 -> PetBreedChameleon.values()[breedOrdinal].nameResId
-                15 -> PetBreedSnake.values()[breedOrdinal].nameResId
-                18 -> PetBreedSpider.values()[breedOrdinal].nameResId
+                0 -> PetBreedCat.values()[breedOrdinal].nameResId
+                1 -> PetBreedDog.values()[breedOrdinal].nameResId
+                12 -> PetBreedChameleon.values()[breedOrdinal].nameResId
+                14 -> PetBreedSnake.values()[breedOrdinal].nameResId
+                17 -> PetBreedSpider.values()[breedOrdinal].nameResId
                 else -> null
             }
         } catch (e: Exception) {

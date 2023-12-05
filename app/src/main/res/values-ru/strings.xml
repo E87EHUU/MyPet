@@ -164,5 +164,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="preferences_theme">Тема приложения</string>
+    <string name="preferences_light_theme">Светлая</string>
+    <string name="preferences_dark_theme">Темная</string>
+    <string name="preferences_system_theme">Системная</string>
+    <string name="preferences_color">Цвет приложения</string>
+    <string name="preferences_dynamic_color">Динамический</string>
+    <string name="preferences_default_color">По умолчанию</string>
 
 </resources>

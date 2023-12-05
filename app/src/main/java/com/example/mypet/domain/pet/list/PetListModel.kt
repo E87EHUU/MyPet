@@ -10,5 +10,6 @@ data class PetListModel(
     val weight: String?,
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
+    val sex: Int?,
     val isActive: Boolean,
 )
