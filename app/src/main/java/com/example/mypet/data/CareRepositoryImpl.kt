@@ -8,7 +8,6 @@ import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.ui.toAppDate
-import com.example.mypet.ui.toAppTime
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -31,7 +30,6 @@ class CareRepositoryImpl @Inject constructor(
                 else -> emit(
                     CareStartModel(
                         date = toAppDate(null),
-                        time = toAppTime(null, null)
                     )
                 )
             }

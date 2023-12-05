@@ -31,7 +31,7 @@ class CareAdapter(
 ) : ListAdapter<CareAdapterModel, RecyclerView.ViewHolder>(DiffCallback()) {
     var mainBinding: FragmentCareRecyclerMainBinding? = null
         private set
-    var startBinding: FragmentCareRecyclerStartBinding? = null
+    var startViewHolder: CareStartViewHolder? = null
         private set
     var repeatBinding: FragmentCareRecyclerRepeatBinding? = null
         private set
@@ -66,8 +66,9 @@ class CareAdapter(
 
     private fun startViewHolder(parent: ViewGroup): CareStartViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        startBinding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
-        return CareStartViewHolder(startBinding!!, careStartCallback)
+        val binding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
+        startViewHolder = CareStartViewHolder(binding, careStartCallback)
+        return startViewHolder!!
     }
 
     private fun repeatViewHolder(parent: ViewGroup): CareRepeatViewHolder {

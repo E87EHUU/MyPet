@@ -17,8 +17,6 @@ import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
-import com.example.mypet.ui.toAppDate
-import com.example.mypet.ui.toAppTime
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -56,15 +54,6 @@ class CareFragment : Fragment(R.layout.fragment_care),
         datePicker.addOnDismissListener { isUnlockUI = true }
         datePicker.addOnPositiveButtonClickListener {
             viewModel.date = it
-            adapter.startBinding?.textViewCareRecyclerStartDate?.text = toAppDate(it)
-        }
-
-        timePicker.addOnDismissListener { isUnlockUI = true }
-        timePicker.addOnPositiveButtonClickListener {
-            viewModel.hour = timePicker.hour
-            viewModel.minute = timePicker.minute
-            adapter.startBinding?.textViewCareRecyclerStartTime?.text =
-                toAppTime(timePicker.hour, timePicker.minute)
         }
     }
 
@@ -92,15 +81,21 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     private val timePicker by lazy {
-        MaterialTimePicker.Builder()
+        val timePicker = MaterialTimePicker.Builder()
             .setTitleText(getString(R.string.time_picker_title))
             .setInputMode(INPUT_MODE_CLOCK)
+            .setHour(viewModel.hour)
+            .setMinute(viewModel.minute)
             .setTimeFormat(if (is24HourFormat) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
             .build()
-            .apply {
-                viewModel.hour?.let { hour = it }
-                viewModel.minute?.let { minute = it }
-            }
+
+        timePicker.addOnDismissListener { isUnlockUI = true }
+        timePicker.addOnPositiveButtonClickListener {
+            viewModel.hour = timePicker.hour
+            viewModel.minute = timePicker.minute
+            adapter.startViewHolder?.updateTime()
+        }
+        timePicker
     }
 
     private fun navToRepeat() {

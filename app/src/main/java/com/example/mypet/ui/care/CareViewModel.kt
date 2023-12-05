@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.care.CareAdapterModel
+import com.example.mypet.domain.care.CareStartModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +23,19 @@ class CareViewModel @Inject constructor(
         MutableStateFlow<MutableList<CareAdapterModel>>(mutableListOf())
     val careAdapterModels = _careAdapterModels.asStateFlow()
 
-    var hour: Int? = null
-    var minute: Int? = null
+    private lateinit var careStartModel: CareStartModel
+
+    var hour: Int
+        get() = careStartModel.hour
+        set(value) {
+            careStartModel.hour = value
+        }
+    var minute: Int
+        get() = careStartModel.minute
+        set(value) {
+            careStartModel.minute = value
+        }
+
     var date: Long? = null
 
     fun updateCare(careId: Int, careTypeOrdinal: Int) =
@@ -33,11 +45,14 @@ class CareViewModel @Inject constructor(
                 careRepository.getCareStartModel(careId, careTypeOrdinal),
                 careRepository.getCareRepeatModel(careId, careTypeOrdinal),
                 careRepository.getCareAlarmModel(careId, careTypeOrdinal),
-            ) { careMainModel, careStartModel, careRepeatModel, careAlarmModel ->
+            ) { careMainModel, startModel, careRepeatModel, careAlarmModel ->
                 val mutableCareAdapterModels = mutableListOf<CareAdapterModel>()
 
                 mutableCareAdapterModels.add(careMainModel)
-                careStartModel?.let { mutableCareAdapterModels.add(it) }
+                startModel?.let {
+                    careStartModel = it
+                    mutableCareAdapterModels.add(it)
+                }
                 careRepeatModel?.let { mutableCareAdapterModels.add(it) }
                 mutableCareAdapterModels.add(careAlarmModel)
 

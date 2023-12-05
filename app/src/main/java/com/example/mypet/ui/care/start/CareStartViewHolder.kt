@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
 import com.example.mypet.domain.care.CareStartModel
+import com.example.mypet.ui.toAppTime
 
 class CareStartViewHolder(
     private val binding: FragmentCareRecyclerStartBinding,
@@ -27,11 +28,16 @@ class CareStartViewHolder(
             this.careStartModel = careStartModel
 
             binding.textViewCareRecyclerStartDate.text = careStartModel.date
-            binding.textViewCareRecyclerStartTime.text = careStartModel.time
+            updateTime()
 
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false
         }
+    }
+
+    fun updateTime() {
+        binding.textViewCareRecyclerStartTime.text =
+            toAppTime(careStartModel.hour, careStartModel.minute)
     }
 }
