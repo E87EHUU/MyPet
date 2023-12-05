@@ -64,7 +64,7 @@ class AlarmServiceNotification(
             .setContentText(context.getString(R.string.alarm_delay_message))
             .addAction(
                 R.drawable.baseline_close_24,
-                context.getString(R.string.notification_chanel_action_stop),
+                context.getString(R.string.alarm_notification_chanel_action_stop),
                 pendingIntentStartServiceStop
             )
             .build()
@@ -79,13 +79,13 @@ class AlarmServiceNotification(
                 if (alarmModel.alarmIsDelay)
                     addAction(
                         R.drawable.baseline_repeat_24,
-                        context.getString(R.string.notification_chanel_action_delay),
+                        context.getString(R.string.alarm_notification_chanel_action_delay),
                         pendingIntentStartServiceDelay
                     )
             }
             .addAction(
                 R.drawable.baseline_close_24,
-                context.getString(R.string.notification_chanel_action_stop),
+                context.getString(R.string.alarm_notification_chanel_action_stop),
                 pendingIntentStartServiceStop
             )
             .build()
