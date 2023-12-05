@@ -101,8 +101,8 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     private fun navToRepeat() {
-        val directions = CareFragmentDirections.actionCareFragmentToRepeatFragment()
-        findNavController().navigate(directions)
+        //val directions = CareFragmentDirections.actionCareFragmentToRepeatFragment()
+        findNavController().navigate(R.id.action_careFragment_to_careRepeatFragment)
     }
 
     private fun navToAlarmDetail(alarmMinModel: AlarmMinModel) {

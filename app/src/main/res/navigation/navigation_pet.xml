@@ -35,8 +35,8 @@
             android:id="@+id/action_careFragment_to_alarmDetailFragment"
             app:destination="@id/alarmDetailFragment" />
         <action
-            android:id="@+id/action_careFragment_to_repeatFragment"
-            app:destination="@id/repeatFragment" />
+            android:id="@+id/action_careFragment_to_careRepeatFragment"
+            app:destination="@id/careRepeatFragment" />
         <argument
             android:name="care_id"
             app:argType="integer" />
@@ -55,8 +55,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/repeatFragment"
-        android:name="com.example.mypet.ui.care.repeat.CareRepeatFragment"
-        tools:layout="@layout/fragment_care_repeat" />
+        android:id="@+id/careRepeatFragment"
+        android:name="com.example.mypet.ui.care.repeat.detail.CareRepeatDetailFragment"
+        tools:layout="@layout/fragment_care_repeat_detail" />
 
 </navigation>

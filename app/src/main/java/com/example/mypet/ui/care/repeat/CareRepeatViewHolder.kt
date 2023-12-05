@@ -14,7 +14,7 @@ class CareRepeatViewHolder(
 
     init {
         binding.root.setOnClickListener { 
-            callback
+            callback.onClickRepeat()
         }
     }
 
