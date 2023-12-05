@@ -105,5 +105,6 @@
     <string name="preferences_color">Цвет приложения</string>
     <string name="preferences_dynamic_color">Динамический</string>
     <string name="preferences_default_color">По умолчанию</string>
+    <string name="user_auth_button">Войти</string>
 
 </resources>
