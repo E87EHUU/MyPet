@@ -6,21 +6,16 @@ import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.BuildConfig
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentUserBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UserFragment : Fragment(R.layout.fragment_user) {
 
     private val binding by viewBinding(FragmentUserBinding::bind)
-    private var isDialogShowing = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,21 +61,11 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun dialog(title: String, message: Spanned) {
-        lifecycleScope.launch {
-            withContext(Dispatchers.Main) {
-                if (!isDialogShowing) {
-                    isDialogShowing = true
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(title)
-                        .setMessage(message)
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.map_ok)) { dialog, _ ->
-                            dialog.cancel()
-                            isDialogShowing = false
-                        }
-                        .show()
-                }
-            }
-        }
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setCancelable(true)
+            .setPositiveButton(getString(R.string.map_ok)) { dialog, _ -> dialog.cancel() }
+            .show()
     }
 }
