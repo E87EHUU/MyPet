@@ -5,7 +5,7 @@ import com.example.mypet.app.R
 enum class CareTypes(val titleResId: Int, val iconResId: Int) {
     FOOD(R.string.care_food_title, R.drawable.feed),
     BATH(R.string.care_bath_title, R.drawable.ic_care_bath),
-    COMBING_THE_WOOL(R.string.care_combing_the_wall_title, R.drawable.ic_care_brushing),
+    COMBING_THE_WOOL(R.string.care_combing_the_wool_title, R.drawable.ic_care_brushing),
     AGAINST_FLEAS_WORMS(
         R.string.care_against_worms_title,
         R.drawable.ic_care_against_worms

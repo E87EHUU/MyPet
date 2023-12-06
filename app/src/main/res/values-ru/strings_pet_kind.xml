@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pet_kind_cat">Кошка</string>
+    <string name="pet_kind_dog">Собака</string>
+    <string name="pet_kind_rabbit">Кролик</string>
+    <string name="pet_kind_parrot">Попугай</string>
+    <string name="pet_kind_hamster">Хомяк</string>
+    <string name="pet_kind_fish">Аквариумная рыбка</string>
+    <string name="pet_kind_turtle">Черепаха</string>
+    <string name="pet_kind_guinea_pig">Морская свинка</string>
+    <string name="pet_kind_rat">Декоративная крыса</string>
+    <string name="pet_kind_ferret">Хорек</string>
+    <string name="pet_kind_canary">Канарейка</string>
+    <string name="pet_kind_chinchilla">Шиншилла</string>
+    <string name="pet_kind_chameleon">Ящерица</string>
+    <string name="pet_kind_crocodile">Крокодил</string>
+    <string name="pet_kind_snake">Змея</string>
+    <string name="pet_kind_racoon">Енот-полоскун</string>
+    <string name="pet_kind_fox">Лисица фенек</string>
+    <string name="pet_kind_spider">Паук</string>
+    <string name="pet_kind_madagascar_hissing_cockroach">Мадагаскарские тараканы</string>
+    <string name="pet_kind_snail">Улитка Ахатина</string>
+    <string name="pet_kind_mini_pig">Карликовая домашняя свинья</string>
+    <string name="pet_kind_owl">Сова</string>
+    <string name="pet_kind_monkey">Обезьянка</string>
+    <string name="pet_kind_frog">Лягушка</string>
+    <string name="pet_kind_hedgehog">Еж</string>
+    <string name="pet_kind_horse">Лошадь</string>
+</resources>
