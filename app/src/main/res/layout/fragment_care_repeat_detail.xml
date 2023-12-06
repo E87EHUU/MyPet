@@ -51,18 +51,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupCareRepeatWeek"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/offset_16"
             android:visibility="gone"
-            app:chipSpacingHorizontal="0dp"
+            app:chipSpacingHorizontal="@dimen/zero"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textInputLayoutsCareRepeatIntervalTitle"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRepeatIntervalTimes"
-            app:singleSelection="true"
             tools:visibility="visible">
 
             <com.google.android.material.chip.Chip
@@ -144,12 +142,22 @@
             app:layout_constraintStart_toEndOf="@+id/radioGroupCareRepeatEnd"
             app:layout_constraintTop_toTopOf="@+id/radioGroupCareRepeatEnd" />
 
+        <TextView
+            android:id="@+id/textViewCareRepeatEndTimesTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/care_repeat_end_times_title_1"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareRepeatEndNone"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutsCareRepeatEndTimes"
             style="@style/Theme.MyPet.TextInputLayout"
+            android:layout_marginStart="@dimen/offset_8"
             android:layout_marginTop="@dimen/offset_24"
             android:maxEms="3"
-            app:layout_constraintStart_toStartOf="@+id/textViewCareRepeatEndNone"
+            app:layout_constraintStart_toEndOf="@+id/textViewCareRepeatEndTimesTitle1"
             app:layout_constraintTop_toBottomOf="@+id/textViewCareRepeatEndNone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -162,20 +170,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutsCareRepeatEndTimesChooser"
-            style="@style/Theme.MyPet.TextInputLayoutSpinner"
-            android:layout_marginStart="@dimen/offset_16"
+        <TextView
+            android:id="@+id/textViewCareRepeatEndTimesTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_8"
+            android:text="@string/care_repeat_end_times_title_2"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes"
             app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRepeatEndTimes"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditTextCareRepeatEndTimesChooser"
-                style="@style/Theme.MyPet.TextInputEditTextPicker"
-                android:text="@string/day" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutsCareRepeatEndDate"

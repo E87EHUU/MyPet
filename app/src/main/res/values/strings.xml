@@ -184,5 +184,7 @@
     <string name="month">месяц</string>
     <string name="week">неделя</string>
     <string name="year">год</string>
+    <string name="care_repeat_end_times_title_2">раза</string>
+    <string name="care_repeat_end_times_title_1">После</string>
 
 </resources>

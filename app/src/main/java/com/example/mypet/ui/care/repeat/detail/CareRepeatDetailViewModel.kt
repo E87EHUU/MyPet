@@ -20,7 +20,14 @@ class CareRepeatDetailViewModel @Inject constructor(
             careRepeatDetailModel.timeInMillis = value
         }
 
-    var repeatIntervalOrdinal = CareRepeatInterval.DAY.ordinal
+    var intervalOrdinal = CareRepeatInterval.DAY.ordinal
+    var isMonday = false
+    var isTuesday = false
+    var isWednesday = false
+    var isThursday = false
+    var isFriday = false
+    var isSaturday = false
+    var isSunday = false
 
     init {
         careRepeatDetailModel = CareRepeatDetailModel()

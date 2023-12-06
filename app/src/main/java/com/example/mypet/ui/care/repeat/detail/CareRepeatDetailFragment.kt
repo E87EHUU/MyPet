@@ -5,7 +5,6 @@ import android.text.InputFilter
 import android.view.View
 import android.widget.PopupMenu
 import androidx.core.view.isVisible
-import androidx.core.view.removeItemAt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -36,6 +35,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     private fun initView() {
         changeStateContentRadioEndIn()
         changeStateContentRadioEndAfter()
+        updateWeekChips()
     }
 
     private fun initListeners() {
@@ -49,11 +49,17 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterTimes
         binding.textInputEditTextCareRepeatEndTimes.filters = inputFilterTimes
 
-        binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { group, checkedIds ->
-
+        binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { _, checkedIds ->
+            viewModel.isMonday = checkedIds.contains(R.id.chipCareRepeatMonday)
+            viewModel.isTuesday = checkedIds.contains(R.id.chipCareRepeatTuesday)
+            viewModel.isWednesday = checkedIds.contains(R.id.chipCareRepeatWednesday)
+            viewModel.isThursday = checkedIds.contains(R.id.chipCareRepeatThursday)
+            viewModel.isFriday = checkedIds.contains(R.id.chipCareRepeatFriday)
+            viewModel.isSaturday = checkedIds.contains(R.id.chipCareRepeatSaturday)
+            viewModel.isSunday = checkedIds.contains(R.id.chipCareRepeatSunday)
         }
 
-        binding.radioGroupCareRepeatEnd.setOnCheckedChangeListener { group, checkedId ->
+        binding.radioGroupCareRepeatEnd.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButtonCareRepeatEndAfter -> {
                     changeStateContentRadioEndIn()
@@ -78,7 +84,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private fun changeStateContentRadioEndAfter(state: Boolean = false) {
         binding.textInputLayoutsCareRepeatEndTimes.isEnabled = state
-        binding.textInputLayoutsCareRepeatEndTimesChooser.isEnabled = state
     }
 
     private fun changeStateContentRadioEndIn(state: Boolean = false) {
@@ -88,26 +93,25 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     private fun showPopUpRepeatTimes() {
         val popupMenu = PopupMenu(context, binding.textInputEditTextCareRepeatInterval)
         popupMenu.menuInflater.inflate(R.menu.popup_care_repeat_times, popupMenu.menu)
-        popupMenu.menu.removeItemAt(viewModel.repeatIntervalOrdinal)
 
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.care_repeat_times_day -> {
-                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.DAY.ordinal
+                    viewModel.intervalOrdinal = CareRepeatInterval.DAY.ordinal
                     updateInterval()
                     hideWeekDetail()
                     true
                 }
 
                 R.id.care_repeat_times_week -> {
-                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.WEEK.ordinal
+                    viewModel.intervalOrdinal = CareRepeatInterval.WEEK.ordinal
                     updateInterval()
                     showWeekDetail()
                     true
                 }
 
                 R.id.care_repeat_times_month -> {
-                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.MONTH.ordinal
+                    viewModel.intervalOrdinal = CareRepeatInterval.MONTH.ordinal
                     updateInterval()
                     hideWeekDetail()
 
@@ -115,7 +119,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 }
 
                 R.id.care_repeat_times_year -> {
-                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.YEAR.ordinal
+                    viewModel.intervalOrdinal = CareRepeatInterval.YEAR.ordinal
                     updateInterval()
                     hideWeekDetail()
 
@@ -144,8 +148,18 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private fun updateInterval() {
         binding.textInputEditTextCareRepeatInterval.setText(
-            CareRepeatInterval.values()[viewModel.repeatIntervalOrdinal].titleResId
+            CareRepeatInterval.values()[viewModel.intervalOrdinal].titleResId
         )
+    }
+
+    private fun updateWeekChips() {
+        binding.chipCareRepeatMonday.isChecked = viewModel.isMonday
+        binding.chipCareRepeatTuesday.isChecked = viewModel.isTuesday
+        binding.chipCareRepeatWednesday.isChecked = viewModel.isWednesday
+        binding.chipCareRepeatThursday.isChecked = viewModel.isThursday
+        binding.chipCareRepeatFriday.isChecked = viewModel.isFriday
+        binding.chipCareRepeatSaturday.isChecked = viewModel.isSaturday
+        binding.chipCareRepeatSunday.isChecked = viewModel.isSunday
     }
 
     private val datePicker by lazy {
@@ -164,7 +178,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun showDatePicker() {
-        println("!!!")
         if (isUnlockUI)
             activity?.supportFragmentManager?.let { fragmentManager ->
                 isUnlockUI = false
