@@ -24,40 +24,52 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun initView() {
+        appPreferences()
+        appPrivacyPolicy()
+        appAbout()
+    }
+
+    private fun appPreferences() {
         with (binding) {
-            profileAbout.lineImage.setImageResource(R.drawable.icon_about)
-            profileAbout.lineText.text = getString(R.string.user_about)
-
-            profilePrivacy.lineImage.setImageResource(R.drawable.icon_privacy)
-            profilePrivacy.lineText.text = getString(R.string.user_privacy)
-
             profilePreferences.lineImage.setImageResource(R.drawable.icon_settings)
-            profilePreferences.lineText.text = getString(R.string.user_settings)
+            profilePreferences.lineText.text = getString(R.string.user_preferences)
 
-            profileAbout.lineBlock.setOnClickListener {
-                dialog(getString(R.string.user_about), getAppVersion())
-            }
-            profilePrivacy.lineBlock.setOnClickListener {
-                dialog(getString(R.string.user_privacy), getPrivacyPolicy())
-            }
             profilePreferences.lineBlock.setOnClickListener {
                 findNavController().navigate(UserFragmentDirections.actionUserFragmentToPreferencesFragment())
             }
         }
     }
 
-    private fun getAppVersion() =
-        """
-            ${getString(R.string.app_name)}
-            
-            ${getString(R.string.user_version_name)}: ${BuildConfig.VERSION_NAME}
-            ${getString(R.string.user_version_code)}: ${BuildConfig.VERSION_CODE}
-        """.trimIndent().toSpannable()
+    private fun appPrivacyPolicy() {
+        with (binding) {
+            profilePrivacy.lineImage.setImageResource(R.drawable.icon_privacy)
+            profilePrivacy.lineText.text = getString(R.string.user_privacy)
 
-    private fun getPrivacyPolicy(): Spanned {
-        val text = getString(R.string.user_privacy_description)
-        val dynamicText = String.format(text, null)
-        return HtmlCompat.fromHtml(dynamicText, HtmlCompat.FROM_HTML_MODE_COMPACT)
+            val dynamicText = String.format(getString(R.string.user_privacy_description), null)
+            val userPrivacyFormatted = HtmlCompat.fromHtml(dynamicText, HtmlCompat.FROM_HTML_MODE_COMPACT)
+
+            profilePrivacy.lineBlock.setOnClickListener {
+                dialog(getString(R.string.user_privacy), userPrivacyFormatted)
+            }
+        }
+    }
+
+    private fun appAbout() {
+        with (binding) {
+            profileAbout.lineImage.setImageResource(R.drawable.icon_about)
+            profileAbout.lineText.text = getString(R.string.user_about)
+
+            val appVersion = """
+                ${getString(R.string.app_name)}
+                
+                ${getString(R.string.user_version_name)}: ${BuildConfig.VERSION_NAME}
+                ${getString(R.string.user_version_code)}: ${BuildConfig.VERSION_CODE}
+            """.trimIndent().toSpannable()
+
+            profileAbout.lineBlock.setOnClickListener {
+                dialog(getString(R.string.user_about), appVersion)
+            }
+        }
     }
 
     private fun dialog(title: String, message: Spanned) {

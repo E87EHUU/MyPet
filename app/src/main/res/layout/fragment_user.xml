@@ -16,7 +16,7 @@
 
             <include
                 layout="@layout/line_with_image"
-                android:id="@+id/profileAbout"/>
+                android:id="@+id/profile_preferences"/>
 
             <include
                 layout="@layout/line_with_image"
@@ -24,7 +24,7 @@
 
             <include
                 layout="@layout/line_with_image"
-                android:id="@+id/profile_preferences"/>
+                android:id="@+id/profileAbout"/>
 
         </LinearLayout>
 
