@@ -1,9 +1,13 @@
 package com.example.mypet.ui.care.repeat.detail
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
-import androidx.core.widget.doBeforeTextChanged
+import android.widget.PopupMenu
+import androidx.core.view.isVisible
+import androidx.core.view.removeItemAt
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -11,11 +15,16 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
+import com.example.mypet.domain.care.repeat.CareRepeatInterval
+import com.example.mypet.ui.toAppDate
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) {
     private val binding by viewBinding(FragmentCareRepeatDetailBinding::bind)
+    private val viewModel by viewModels<CareRepeatDetailViewModel>()
+    private var isUnlockUI = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,28 +39,32 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun initListeners() {
-        binding.textInputEditTextCareRepeatTimes.doBeforeTextChanged { text, start, count, after ->
+        val inputFilterTimes = arrayOf(
+            InputFilter { source, _, _, dest, _, _ ->
+                if (dest.toString().length < 2) source
+                else ""
+            }
+        )
 
-        }
-
-        binding.textInputEditTextCareRepeatEndTimes.doBeforeTextChanged { text, start, count, after ->
-
-        }
+        binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterTimes
+        binding.textInputEditTextCareRepeatEndTimes.filters = inputFilterTimes
 
         binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { group, checkedIds ->
 
         }
 
         binding.radioGroupCareRepeatEnd.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId) {
+            when (checkedId) {
                 R.id.radioButtonCareRepeatEndAfter -> {
                     changeStateContentRadioEndIn()
                     changeStateContentRadioEndAfter(true)
                 }
+
                 R.id.radioButtonCareRepeatEndIn -> {
                     changeStateContentRadioEndAfter()
                     changeStateContentRadioEndIn(true)
                 }
+
                 else -> {
                     changeStateContentRadioEndAfter()
                     changeStateContentRadioEndIn()
@@ -59,9 +72,8 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             }
         }
 
-        binding.textInputLayoutsCareRepeatTimesChooser.setOnClickListener { showPopUpRepeatTimes() }
-        binding.textInputLayoutsCareRepeatEndTimesChooser.setOnClickListener { showPopUpEndTimes() }
-        binding.textInputLayoutsCareRepeatEndDate.setOnClickListener { showDatePickerEndIn() }
+        binding.textInputEditTextCareRepeatInterval.setOnClickListener { showPopUpRepeatTimes() }
+        binding.textInputEditTextCareRepeatEndDate.setOnClickListener { showDatePicker() }
     }
 
     private fun changeStateContentRadioEndAfter(state: Boolean = false) {
@@ -74,16 +86,92 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun showPopUpRepeatTimes() {
+        val popupMenu = PopupMenu(context, binding.textInputEditTextCareRepeatInterval)
+        popupMenu.menuInflater.inflate(R.menu.popup_care_repeat_times, popupMenu.menu)
+        popupMenu.menu.removeItemAt(viewModel.repeatIntervalOrdinal)
 
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.care_repeat_times_day -> {
+                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.DAY.ordinal
+                    updateInterval()
+                    hideWeekDetail()
+                    true
+                }
+
+                R.id.care_repeat_times_week -> {
+                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.WEEK.ordinal
+                    updateInterval()
+                    showWeekDetail()
+                    true
+                }
+
+                R.id.care_repeat_times_month -> {
+                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.MONTH.ordinal
+                    updateInterval()
+                    hideWeekDetail()
+
+                    true
+                }
+
+                R.id.care_repeat_times_year -> {
+                    viewModel.repeatIntervalOrdinal = CareRepeatInterval.YEAR.ordinal
+                    updateInterval()
+                    hideWeekDetail()
+
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popupMenu.show()
     }
 
-    private fun showPopUpEndTimes() {
-
+    private fun showWeekDetail() {
+        if (!binding.chipGroupCareRepeatWeek.isVisible)
+            binding.chipGroupCareRepeatWeek.isVisible = true
     }
 
-    private fun showDatePickerEndIn() {
-
+    private fun hideWeekDetail() {
+        if (binding.chipGroupCareRepeatWeek.isVisible)
+            binding.chipGroupCareRepeatWeek.isVisible = false
     }
+
+    private fun updateEndDate() {
+        binding.textInputEditTextCareRepeatEndDate.setText(toAppDate(viewModel.timeInMillis))
+    }
+
+    private fun updateInterval() {
+        binding.textInputEditTextCareRepeatInterval.setText(
+            CareRepeatInterval.values()[viewModel.repeatIntervalOrdinal].titleResId
+        )
+    }
+
+    private val datePicker by lazy {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setSelection(viewModel.timeInMillis)
+            .setTitleText(getString(R.string.date_picker_title))
+            .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
+            .build()
+
+        datePicker.addOnDismissListener { isUnlockUI = true }
+        datePicker.addOnPositiveButtonClickListener {
+            viewModel.timeInMillis = it
+            updateEndDate()
+        }
+        datePicker
+    }
+
+    private fun showDatePicker() {
+        println("!!!")
+        if (isUnlockUI)
+            activity?.supportFragmentManager?.let { fragmentManager ->
+                isUnlockUI = false
+                datePicker.show(fragmentManager, datePicker.toString())
+            }
+    }
+
 
     private fun observePopBackStack() {
         lifecycleScope.launch {

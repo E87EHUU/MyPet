@@ -181,5 +181,8 @@
     <string name="day">день</string>
     <string name="care_repeat_times">Повторяется раз в</string>
     <string name="care_repeat_end_times_default">1</string>
+    <string name="month">месяц</string>
+    <string name="week">неделя</string>
+    <string name="year">год</string>
 
 </resources>

@@ -33,7 +33,7 @@ class PetMainViewHolder(
     private fun initMenuPetAction() {
         binding.buttonPetRecyclerMainMore.setOnClickListener { view ->
             val popupMenu = PopupMenu(context, view)
-            popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
+            popupMenu.menuInflater.inflate(R.menu.popup_pet_action_menu, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {

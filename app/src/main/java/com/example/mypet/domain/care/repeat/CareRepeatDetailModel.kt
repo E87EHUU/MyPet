@@ -1,4 +1,7 @@
 package com.example.mypet.domain.care.repeat
 
-class CareRepeatDetailModel {
-}
+import java.util.Calendar
+
+data class CareRepeatDetailModel(
+    var timeInMillis: Long = Calendar.getInstance().timeInMillis,
+)
