@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
+import com.example.mypet.domain.care.repeat.CareRepeatDetailModel
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import com.example.mypet.ui.toAppDate
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -39,24 +40,33 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun initListeners() {
-        val inputFilterTimes = arrayOf(
+        val inputFilterIntervalTimes = arrayOf(
             InputFilter { source, _, _, dest, _, _ ->
-                if (dest.toString().length < 2) source
+                if (dest.isEmpty() && source == "0") CareRepeatDetailModel.DEFAULT_INTERVAL_TIMES
+                else if (dest.length < 2) source
                 else ""
             }
         )
 
-        binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterTimes
-        binding.textInputEditTextCareRepeatEndTimes.filters = inputFilterTimes
+        val inputFilterEndAfterTimes = arrayOf(
+            InputFilter { source, _, _, dest, _, _ ->
+                if (dest.isEmpty() && source == "0") CareRepeatDetailModel.DEFAULT_END_AFTER_TIMES
+                else if (dest.length < 2) source
+                else ""
+            }
+        )
+
+        binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterIntervalTimes
+        binding.textInputEditTextCareRepeatEndAfterTimes.filters = inputFilterEndAfterTimes
 
         binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { _, checkedIds ->
-            viewModel.isMonday = checkedIds.contains(R.id.chipCareRepeatMonday)
-            viewModel.isTuesday = checkedIds.contains(R.id.chipCareRepeatTuesday)
-            viewModel.isWednesday = checkedIds.contains(R.id.chipCareRepeatWednesday)
-            viewModel.isThursday = checkedIds.contains(R.id.chipCareRepeatThursday)
-            viewModel.isFriday = checkedIds.contains(R.id.chipCareRepeatFriday)
-            viewModel.isSaturday = checkedIds.contains(R.id.chipCareRepeatSaturday)
-            viewModel.isSunday = checkedIds.contains(R.id.chipCareRepeatSunday)
+            viewModel.detail.isMonday = checkedIds.contains(R.id.chipCareRepeatMonday)
+            viewModel.detail.isTuesday = checkedIds.contains(R.id.chipCareRepeatTuesday)
+            viewModel.detail.isWednesday = checkedIds.contains(R.id.chipCareRepeatWednesday)
+            viewModel.detail.isThursday = checkedIds.contains(R.id.chipCareRepeatThursday)
+            viewModel.detail.isFriday = checkedIds.contains(R.id.chipCareRepeatFriday)
+            viewModel.detail.isSaturday = checkedIds.contains(R.id.chipCareRepeatSaturday)
+            viewModel.detail.isSunday = checkedIds.contains(R.id.chipCareRepeatSunday)
         }
 
         binding.radioGroupCareRepeatEnd.setOnCheckedChangeListener { _, checkedId ->
@@ -97,21 +107,21 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.care_repeat_times_day -> {
-                    viewModel.intervalOrdinal = CareRepeatInterval.DAY.ordinal
+                    viewModel.detail.intervalOrdinal = CareRepeatInterval.DAY.ordinal
                     updateInterval()
                     hideWeekDetail()
                     true
                 }
 
                 R.id.care_repeat_times_week -> {
-                    viewModel.intervalOrdinal = CareRepeatInterval.WEEK.ordinal
+                    viewModel.detail.intervalOrdinal = CareRepeatInterval.WEEK.ordinal
                     updateInterval()
                     showWeekDetail()
                     true
                 }
 
                 R.id.care_repeat_times_month -> {
-                    viewModel.intervalOrdinal = CareRepeatInterval.MONTH.ordinal
+                    viewModel.detail.intervalOrdinal = CareRepeatInterval.MONTH.ordinal
                     updateInterval()
                     hideWeekDetail()
 
@@ -119,7 +129,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 }
 
                 R.id.care_repeat_times_year -> {
-                    viewModel.intervalOrdinal = CareRepeatInterval.YEAR.ordinal
+                    viewModel.detail.intervalOrdinal = CareRepeatInterval.YEAR.ordinal
                     updateInterval()
                     hideWeekDetail()
 
@@ -142,37 +152,37 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             binding.chipGroupCareRepeatWeek.isVisible = false
     }
 
-    private fun updateEndDate() {
-        binding.textInputEditTextCareRepeatEndDate.setText(toAppDate(viewModel.timeInMillis))
+    private fun updateEndAfterDate() {
+        binding.textInputEditTextCareRepeatEndDate.setText(toAppDate(viewModel.detail.endAfterDate))
     }
 
     private fun updateInterval() {
         binding.textInputEditTextCareRepeatInterval.setText(
-            CareRepeatInterval.values()[viewModel.intervalOrdinal].titleResId
+            CareRepeatInterval.values()[viewModel.detail.intervalOrdinal].titleResId
         )
     }
 
     private fun updateWeekChips() {
-        binding.chipCareRepeatMonday.isChecked = viewModel.isMonday
-        binding.chipCareRepeatTuesday.isChecked = viewModel.isTuesday
-        binding.chipCareRepeatWednesday.isChecked = viewModel.isWednesday
-        binding.chipCareRepeatThursday.isChecked = viewModel.isThursday
-        binding.chipCareRepeatFriday.isChecked = viewModel.isFriday
-        binding.chipCareRepeatSaturday.isChecked = viewModel.isSaturday
-        binding.chipCareRepeatSunday.isChecked = viewModel.isSunday
+        binding.chipCareRepeatMonday.isChecked = viewModel.detail.isMonday
+        binding.chipCareRepeatTuesday.isChecked = viewModel.detail.isTuesday
+        binding.chipCareRepeatWednesday.isChecked = viewModel.detail.isWednesday
+        binding.chipCareRepeatThursday.isChecked = viewModel.detail.isThursday
+        binding.chipCareRepeatFriday.isChecked = viewModel.detail.isFriday
+        binding.chipCareRepeatSaturday.isChecked = viewModel.detail.isSaturday
+        binding.chipCareRepeatSunday.isChecked = viewModel.detail.isSunday
     }
 
     private val datePicker by lazy {
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setSelection(viewModel.timeInMillis)
+            .setSelection(viewModel.detail.endAfterDate)
             .setTitleText(getString(R.string.date_picker_title))
             .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
             .build()
 
         datePicker.addOnDismissListener { isUnlockUI = true }
         datePicker.addOnPositiveButtonClickListener {
-            viewModel.timeInMillis = it
-            updateEndDate()
+            viewModel.detail.endAfterDate = it
+            updateEndAfterDate()
         }
         datePicker
     }

@@ -34,7 +34,7 @@
     <ImageView
         android:id="@+id/imageViewCareRecyclerEndIcon"
         style="@style/Theme.MyPet.CareHeaderIcon"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/offset_24"
         android:contentDescription="@string/care_repeat_title"
         android:src="@drawable/baseline_timer_off_24"
         app:layout_constraintStart_toStartOf="parent"
