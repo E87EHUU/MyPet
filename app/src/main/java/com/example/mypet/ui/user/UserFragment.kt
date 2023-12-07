@@ -1,5 +1,6 @@
 package com.example.mypet.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Spanned
 import android.view.View
@@ -11,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.BuildConfig
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentUserBinding
+import com.example.mypet.ui.showToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class UserFragment : Fragment(R.layout.fragment_user) {
@@ -26,6 +28,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private fun initView() {
         appPreferences()
         appPrivacyPolicy()
+        appFeedBack()
         appAbout()
     }
 
@@ -54,6 +57,33 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
     }
 
+    private fun appFeedBack() {
+        with (binding) {
+            profileFeedBack.lineImage.setImageResource(R.drawable.icon_email)
+            profileFeedBack.lineText.text = getString(R.string.user_feedback)
+
+            profileFeedBack.lineBlock.setOnClickListener {
+                sendEmail()
+            }
+        }
+    }
+
+    private fun sendEmail() {
+        requireActivity().showToast(getString(R.string.user_feedback_choose_app))
+        try {
+            val subject = "${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.user_feedback_email_recipient)))
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+                type = EMAIL_TYPE
+            }
+            startActivity(Intent.createChooser(sendIntent, null))
+        } catch (e: Exception) {
+            requireActivity().showToast(getString(R.string.user_feedback_email_error))
+        }
+    }
+
     private fun appAbout() {
         with (binding) {
             profileAbout.lineImage.setImageResource(R.drawable.icon_about)
@@ -79,5 +109,9 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             .setCancelable(true)
             .setPositiveButton(getString(R.string.map_ok)) { dialog, _ -> dialog.cancel() }
             .show()
+    }
+
+    companion object {
+        private const val EMAIL_TYPE = "message/rfc822"
     }
 }

@@ -24,6 +24,10 @@
 
             <include
                 layout="@layout/line_with_image"
+                android:id="@+id/profileFeedBack"/>
+
+            <include
+                layout="@layout/line_with_image"
                 android:id="@+id/profileAbout"/>
 
         </LinearLayout>

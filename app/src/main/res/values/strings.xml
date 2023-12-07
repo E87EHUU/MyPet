@@ -126,6 +126,10 @@
     <string name="user_version_code">Version code</string>
     <string name="user_privacy">Privacy policy</string>
     <string name="user_preferences">Preferences</string>
+    <string name="user_feedback">Feedback</string>
+    <string name="user_feedback_choose_app">Choose an app to send your email to the developer</string>
+    <string name="user_feedback_email_recipient" translatable="false">mypetappfeedback@gmail.com</string>
+    <string name="user_feedback_email_error">Unable to send an email</string>
     <string name="user_button">Button</string>
 
     <string name="login_prompt_email">Email</string>
