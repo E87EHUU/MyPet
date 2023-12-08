@@ -17,10 +17,10 @@ data class LocalRepeatEntity(
     @ColumnInfo(name = "${CARE_TABLE}_$ID")
     val careId: Int,
 
-    @ColumnInfo(name = TYPE_ORDINAL)
-    val typeOrdinal: Int? = null,
-    @ColumnInfo(name = INTERVAL)
-    val interval: Int? = null,
+    @ColumnInfo(name = INTERVAL_ORDINAL)
+    val intervalOrdinal: Int? = null,
+    @ColumnInfo(name = INTERVAL_TIMES)
+    val intervalTimes: String? = null,
 
     @ColumnInfo(name = IS_MONDAY)
     val isMonday: Boolean? = null,
@@ -37,19 +37,17 @@ data class LocalRepeatEntity(
     @ColumnInfo(name = IS_SUNDAY)
     val isSunday: Boolean? = null,
 
-    @ColumnInfo(name = END_DAY)
-    val endDay: Int? = null,
-    @ColumnInfo(name = END_MONTH)
-    val endMonth: Int? = null,
-    @ColumnInfo(name = END_YEAR)
-    val endYear: Int? = null,
-
-    @ColumnInfo(name = END_COUNT)
-    val endCount: Int? = null,
+    @ColumnInfo(name = END_TYPE_ORDINAL)
+    var endTypeOrdinal: Int?,
+    @ColumnInfo(name = END_AFTER_TIMES)
+    var endAfterTimes: String?,
+    @ColumnInfo(name = END_AFTER_DATE)
+    var endAfterDate: Long?,
 ) {
     companion object {
         const val TYPE_ORDINAL = "type_ordinal"
-        const val INTERVAL = "interval"
+        const val INTERVAL_TIMES = "interval_times"
+        const val INTERVAL_ORDINAL = "interval_ordinal"
 
         const val IS_MONDAY = "is_monday"
         const val IS_TUESDAY = "is_tuesday"
@@ -59,9 +57,8 @@ data class LocalRepeatEntity(
         const val IS_SATURDAY = "is_saturday"
         const val IS_SUNDAY = "is_sunday"
 
-        const val END_DAY = "end_day"
-        const val END_MONTH = "end_month"
-        const val END_YEAR = "end_year"
-        const val END_COUNT = "end_count"
+        const val END_TYPE_ORDINAL = "end_type_ordinal"
+        const val END_AFTER_TIMES = "end_after_times"
+        const val END_AFTER_DATE = "end_after_date"
     }
 }

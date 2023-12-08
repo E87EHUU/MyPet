@@ -37,8 +37,8 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private val adapter = CareAdapter(this, this, this, this)
     private var isUnlockUI = true
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel.updateCare(args.careId, args.careTypeOrdinal)
     }
 

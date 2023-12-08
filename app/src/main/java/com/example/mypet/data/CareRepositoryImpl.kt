@@ -10,6 +10,8 @@ import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
+import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
+import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -59,15 +61,21 @@ class CareRepositoryImpl @Inject constructor(
                     val localRepeatEntity = localCareDao.getLocalRepeatEntity(careId)
                     val careRepeatModel = CareRepeatModel(
                         id = localRepeatEntity?.id ?: DEFAULT_ID,
-                        typeOrdinal = localRepeatEntity?.typeOrdinal,
-                        interval = localRepeatEntity?.interval,
-                        isMonday = localRepeatEntity?.isMonday,
-                        isTuesday = localRepeatEntity?.isTuesday,
-                        isWednesday = localRepeatEntity?.isWednesday,
-                        isThursday = localRepeatEntity?.isThursday,
-                        isFriday = localRepeatEntity?.isFriday,
-                        isSaturday = localRepeatEntity?.isSaturday,
-                        isSunday = localRepeatEntity?.isSunday,
+                        intervalTimes = localRepeatEntity?.intervalTimes ?: "1",
+                        intervalOrdinal = localRepeatEntity?.intervalOrdinal
+                            ?: CareRepeatInterval.DAY.ordinal,
+                        isMonday = localRepeatEntity?.isMonday ?: false,
+                        isTuesday = localRepeatEntity?.isTuesday ?: false,
+                        isWednesday = localRepeatEntity?.isWednesday ?: false,
+                        isThursday = localRepeatEntity?.isThursday ?: false,
+                        isFriday = localRepeatEntity?.isFriday ?: false,
+                        isSaturday = localRepeatEntity?.isSaturday ?: false,
+                        isSunday = localRepeatEntity?.isSunday ?: false,
+                        endTypeOrdinal = localRepeatEntity?.endTypeOrdinal?.let { CareRepeatEndTypes.values()[it].ordinal }
+                            ?: CareRepeatEndTypes.NONE.ordinal,
+                        endAfterTimes = localRepeatEntity?.endAfterTimes ?: "1",
+                        endAfterDate = localRepeatEntity?.endAfterDate
+                            ?: Calendar.getInstance().timeInMillis
                     )
                     emit(careRepeatModel)
                 }

@@ -9,7 +9,7 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
-import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_FRIDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_MONDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SATURDAY
@@ -44,7 +44,7 @@ data class AlarmModel(
 
     @ColumnInfo(name = TYPE_ORDINAL)
     val repeatTypeOrdinal: Int? = null,
-    @ColumnInfo(name = INTERVAL)
+    @ColumnInfo(name = INTERVAL_ORDINAL)
     val repeatInterval: Int? = null,
     @ColumnInfo(name = IS_MONDAY)
     val isRepeatMonday: Boolean? = null,

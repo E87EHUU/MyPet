@@ -13,7 +13,8 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGT
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL_TIMES
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_FRIDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_MONDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SATURDAY
@@ -21,7 +22,6 @@ import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_S
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_THURSDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_TUESDAY
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_WEDNESDAY
-import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.PET_TABLE
 import com.example.mypet.data.local.room.entity.REPEAT_TABLE
 import com.example.mypet.domain.alarm.AlarmModel
@@ -59,9 +59,9 @@ data class AlarmServiceModel(
     @ColumnInfo(name = "${ALARM_TABLE}_$IS_ACTIVE")
     val alarmIsActive: Boolean,
 
-    @ColumnInfo(name = "${REPEAT_TABLE}_$TYPE_ORDINAL")
+    @ColumnInfo(name = "${REPEAT_TABLE}_$INTERVAL_ORDINAL")
     val alarmRepeatTypeOrdinal: Int?,
-    @ColumnInfo(name = "${REPEAT_TABLE}_$INTERVAL")
+    @ColumnInfo(name = "${REPEAT_TABLE}_$INTERVAL_TIMES")
     val alarmRepeatInterval: Int?,
     @ColumnInfo(name = "${REPEAT_TABLE}_$IS_MONDAY")
     val alarmIsRepeatMonday: Boolean?,

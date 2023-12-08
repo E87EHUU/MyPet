@@ -123,11 +123,11 @@
                 style="@style/Theme.MyPet.CareEndRadio" />
 
             <RadioButton
-                android:id="@+id/radioButtonCareRepeatEndAfter"
+                android:id="@+id/radioButtonCareRepeatEndAfterTimes"
                 style="@style/Theme.MyPet.CareEndRadio" />
 
             <RadioButton
-                android:id="@+id/radioButtonCareRepeatEndIn"
+                android:id="@+id/radioButtonCareRepeatEndAfterDate"
                 style="@style/Theme.MyPet.CareEndRadio" />
 
         </RadioGroup>

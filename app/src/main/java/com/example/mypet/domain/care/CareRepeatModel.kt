@@ -3,19 +3,18 @@ package com.example.mypet.domain.care
 data class CareRepeatModel(
     val id: Int,
 
-    val typeOrdinal: Int? = null,
-    val interval: Int? = null,
+    var intervalTimes: String,
+    var intervalOrdinal: Int,
 
-    val isMonday: Boolean? = null,
-    val isTuesday: Boolean? = null,
-    val isWednesday: Boolean? = null,
-    val isThursday: Boolean? = null,
-    val isFriday: Boolean? = null,
-    val isSaturday: Boolean? = null,
-    val isSunday: Boolean? = null,
+    var isMonday: Boolean,
+    var isTuesday: Boolean,
+    var isWednesday: Boolean,
+    var isThursday: Boolean,
+    var isFriday: Boolean,
+    var isSaturday: Boolean,
+    var isSunday: Boolean,
 
-    val endDay: Int? = null,
-    val endMonth: Int? = null,
-    val endYear: Int? = null,
-    val endCount: Int? = null,
+    var endTypeOrdinal: Int,
+    var endAfterTimes: String,
+    var endAfterDate: Long,
 ) : CareAdapterModel(CARE_ADAPTER_REPEAT_KEY)
