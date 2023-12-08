@@ -12,24 +12,31 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
 import com.example.mypet.ui.care.CareViewModel
+import com.example.mypet.ui.is24HourFormat
 
 
 class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     private val binding by viewBinding(FragmentCareAlarmDetailBinding::bind)
     private val viewModel by navGraphViewModels<CareViewModel>(R.id.navigationPetCare) { defaultViewModelProviderFactory }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+            careAlarmDetailModel.isDelay = binding.switchCareAlarmDetailDelay.isChecked
+            careAlarmDetailModel.isVibration = binding.switchCareAlarmDetailVibration.isChecked
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        updateUI()
         initListeners()
     }
 
     private fun initView() {
-        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-            binding.switchCareAlarmDetailDelay.isChecked = careAlarmDetailModel.isDelay
-            binding.switchCareAlarmDetailVibration.isChecked = careAlarmDetailModel.isVibration
-        }
+        binding.timePickerCareAlarmDetail.setIs24HourView(requireContext().is24HourFormat)
     }
 
     private fun initListeners() {
@@ -58,6 +65,24 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         }
 
         binding.layerCareAlarmDetailRingtone.setOnClickListener { launchChooserRingtoneIntent() }
+
+        binding.timePickerCareAlarmDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
+            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+                careAlarmDetailModel.hour = hourOfDay
+                careAlarmDetailModel.minute = minute
+            }
+        }
+    }
+
+    private fun updateUI() {
+        viewModel.careAlarmDetailModel?.let {
+            binding.timePickerCareAlarmDetail.hour = it.hour
+            binding.timePickerCareAlarmDetail.minute = it.minute
+            binding.switchCareAlarmDetailVibration.isChecked = it.isVibration
+            binding.switchCareAlarmDetailDelay.isChecked = it.isDelay
+        }
+
+        updateUIRingtoneDescription()
     }
 
     private fun updateUIRingtoneDescription() {
