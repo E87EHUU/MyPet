@@ -76,7 +76,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.annotation:annotation:1.6.0")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")

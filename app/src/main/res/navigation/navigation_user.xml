@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.mypet.ui.user.ui.login.LoginFragment"
+        android:name="com.example.mypet.ui.auth.ui.LoginFragment"
         tools:layout="@layout/fragment_login" />
 
 </navigation>
