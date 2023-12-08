@@ -2,24 +2,25 @@ package com.example.mypet.ui.care.alarm.main
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
-import com.example.mypet.domain.alarm.AlarmMinModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
+import com.example.mypet.ui.toAppTime
 
 class CareAlarmMainViewHolder(
     private val binding: FragmentCareRecyclerAlarmRecyclerMainBinding,
     private val callback: CareAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var alarmMinModel: AlarmMinModel
+    private lateinit var careAlarmDetailModel: CareAlarmDetailModel
 
     init {
-        binding.root.setOnClickListener { callback.onClickAlarm(alarmMinModel) }
+        binding.root.setOnClickListener { callback.onClickAlarm(careAlarmDetailModel) }
     }
 
-    fun bind(alarmMinModel: AlarmMinModel) {
-        this.alarmMinModel = alarmMinModel
+    fun bind(careAlarmDetailModel: CareAlarmDetailModel) {
+        this.careAlarmDetailModel = careAlarmDetailModel
 
-        with(alarmMinModel) {
-            binding.textViewCareRecyclerAlarmTime.text = alarmMinModel.time
+        with(careAlarmDetailModel) {
+            binding.textViewCareRecyclerAlarmTime.text = toAppTime(hour, minute)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.detail
+package com.example.mypet.ui.care.alarm.detail
 
 import android.media.RingtoneManager
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AlarmDetailViewModel @Inject constructor(
+class CareAlarmDetailViewModel @Inject constructor(
 
 ) : ViewModel() {
     var alarmModel: AlarmModel? = null

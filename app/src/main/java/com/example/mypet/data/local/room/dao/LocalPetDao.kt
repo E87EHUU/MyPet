@@ -34,9 +34,10 @@ interface LocalPetDao {
 
     @Query(
         "SELECT " +
-                "id, start_day, start_month, start_year, progress " +
-                "FROM care " +
-                "WHERE pet_id = :petId AND care_type_ordinal = :careFoodTypeOrdinal"
+                "c.id, s.time_in_millis, s.hour, s.minute, c.progress " +
+                "FROM care c " +
+                "LEFT JOIN start s ON s.care_id = c.id " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal = :careFoodTypeOrdinal"
     )
     fun getLocalPetCareModels(petId: Int, careFoodTypeOrdinal: Int): Flow<LocalPetCareModel?>
 

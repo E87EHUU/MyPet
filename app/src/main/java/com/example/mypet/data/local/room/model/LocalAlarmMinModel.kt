@@ -1,10 +1,10 @@
 package com.example.mypet.data.local.room.model
 
 import androidx.room.ColumnInfo
+import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
+import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.ui.toAppTime
 

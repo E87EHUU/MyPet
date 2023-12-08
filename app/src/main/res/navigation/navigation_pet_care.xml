@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigationPetCare"
+    app:startDestination="@id/careFragment">
+
+    <fragment
+        android:id="@+id/careFragment"
+        android:name="com.example.mypet.ui.care.CareFragment"
+        tools:layout="@layout/fragment_care">
+        <action
+            android:id="@+id/action_careFragment_to_alarmDetailFragment"
+            app:destination="@id/alarmDetailFragment" />
+        <action
+            android:id="@+id/action_careFragment_to_careRepeatDetailFragment"
+            app:destination="@id/careRepeatDetailFragment" />
+        <argument
+            android:name="care_id"
+            app:argType="integer" />
+        <argument
+            android:name="care_type_ordinal"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/alarmDetailFragment"
+        android:name="com.example.mypet.ui.care.alarm.detail.CareAlarmDetailFragment"
+        tools:layout="@layout/fragment_care_alarm_detail" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/careRepeatDetailFragment"
+        android:name="com.example.mypet.ui.care.repeat.detail.CareRepeatDetailFragment"
+        tools:layout="@layout/fragment_care_repeat_detail" />
+
+</navigation>

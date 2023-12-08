@@ -94,7 +94,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     private fun navToCare(petCareModel: PetCareModel) {
-        val directions = PetFragmentDirections.actionPetFragmentToCareFragment(
+        val directions = PetFragmentDirections.actionPetFragmentToNavigationPetCare(
             petCareModel.id,
             petCareModel.careType.ordinal
         )

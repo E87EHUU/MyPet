@@ -3,25 +3,26 @@ package com.example.mypet.data.local.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
+import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_FRIDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_MONDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SATURDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SUNDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_THURSDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_TUESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_WEDNESDAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_FRIDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_MONDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SATURDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SUNDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_THURSDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_TUESDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_WEDNESDAY
 import com.example.mypet.data.local.room.entity.PET_TABLE
+import com.example.mypet.data.local.room.entity.REPEAT_TABLE
 import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 
@@ -44,13 +45,13 @@ interface LocalAlarmServiceDao {
                 "a.is_vibration ${ALARM_TABLE}_$IS_VIBRATION, " +
                 "a.is_delay ${ALARM_TABLE}_$IS_DELAY, " +
                 "a.is_active ${ALARM_TABLE}_$IS_ACTIVE, " +
-                "a.is_repeat_monday ${ALARM_TABLE}_$IS_REPEAT_MONDAY, " +
-                "a.is_repeat_tuesday ${ALARM_TABLE}_$IS_REPEAT_TUESDAY, " +
-                "a.is_repeat_wednesday ${ALARM_TABLE}_$IS_REPEAT_WEDNESDAY, " +
-                "a.is_repeat_thursday ${ALARM_TABLE}_$IS_REPEAT_THURSDAY, " +
-                "a.is_repeat_friday ${ALARM_TABLE}_$IS_REPEAT_FRIDAY, " +
-                "a.is_repeat_saturday ${ALARM_TABLE}_$IS_REPEAT_SATURDAY, " +
-                "a.is_repeat_sunday ${ALARM_TABLE}_$IS_REPEAT_SUNDAY " +
+                "r.is_monday ${REPEAT_TABLE}_$IS_MONDAY, " +
+                "r.is_tuesday ${REPEAT_TABLE}_$IS_TUESDAY, " +
+                "r.is_wednesday ${REPEAT_TABLE}_$IS_WEDNESDAY, " +
+                "r.is_thursday ${REPEAT_TABLE}_$IS_THURSDAY, " +
+                "r.is_friday ${REPEAT_TABLE}_$IS_FRIDAY, " +
+                "r.is_saturday ${REPEAT_TABLE}_$IS_SATURDAY, " +
+                "r.is_sunday ${REPEAT_TABLE}_$IS_SUNDAY " +
 /*                "a.end_day ${ALARM_TABLE}_$END_DAY, " +
                 "a.end_month ${ALARM_TABLE}_$END_MONTH, " +
                 "a.end_year ${ALARM_TABLE}_$END_YEAR, " +
@@ -58,6 +59,7 @@ interface LocalAlarmServiceDao {
                 "FROM alarm a " +
                 "LEFT JOIN care c ON c.id = a.care_id " +
                 "LEFT JOIN pet p ON p.id = c.pet_id " +
+                "LEFT JOIN repeat r ON r.id = c.pet_id " +
                 "WHERE a.id = :alarmId " +
                 "LIMIT 1"
     )

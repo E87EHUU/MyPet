@@ -9,13 +9,21 @@
         android:id="@+id/petFragment"
         android:name="com.example.mypet.ui.pet.PetFragment"
         tools:layout="@layout/fragment_pet">
-        <action
-            android:id="@+id/action_petFragment_to_careFragment"
-            app:destination="@id/careFragment" />
 
         <action
             android:id="@+id/action_pet_to_petCreationAndUpdateFragment"
             app:destination="@id/petCreationAndUpdateFragment" />
+
+        <action
+            android:id="@+id/action_petFragment_to_navigationPetCare"
+            app:destination="@id/navigationPetCare">
+            <argument
+                android:name="care_id"
+                app:argType="integer" />
+            <argument
+                android:name="care_type_ordinal"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
@@ -26,37 +34,7 @@
             android:name="pet_id"
             app:argType="integer" />
     </fragment>
+    <include app:graph="@navigation/navigation_pet_care" />
 
-    <fragment
-        android:id="@+id/careFragment"
-        android:name="com.example.mypet.ui.care.CareFragment"
-        tools:layout="@layout/fragment_care">
-        <action
-            android:id="@+id/action_careFragment_to_alarmDetailFragment"
-            app:destination="@id/alarmDetailFragment" />
-        <action
-            android:id="@+id/action_careFragment_to_careRepeatFragment"
-            app:destination="@id/careRepeatFragment" />
-        <argument
-            android:name="care_id"
-            app:argType="integer" />
-        <argument
-            android:name="care_type_ordinal"
-            app:argType="integer" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/alarmDetailFragment"
-        android:name="com.example.mypet.ui.alarm.detail.AlarmDetailFragment"
-        tools:layout="@layout/fragment_alarm_detail" >
-        <argument
-            android:name="alarm_id"
-            app:argType="integer" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/careRepeatFragment"
-        android:name="com.example.mypet.ui.care.repeat.detail.CareRepeatDetailFragment"
-        tools:layout="@layout/fragment_care_repeat_detail" />
 
 </navigation>

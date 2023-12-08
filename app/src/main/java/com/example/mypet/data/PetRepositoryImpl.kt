@@ -47,7 +47,7 @@ class PetRepositoryImpl @Inject constructor(
         PetCareModel(
             id = this?.id ?: LocalDatabase.DEFAULT_ID,
             careType = CareTypes.values()[careTypeOrdinal],
-            date = toAppDate(this?.startDay, this?.startMonth, this?.startYear),
+            date = toAppDate(this?.timeInMillis, this?.hour, this?.minute),
             progress = this?.progress
         )
 

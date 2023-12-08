@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.care.CareAdapterModel
+import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,24 +26,10 @@ class CareViewModel @Inject constructor(
         MutableStateFlow<MutableList<CareAdapterModel>>(mutableListOf())
     val careAdapterModels = _careAdapterModels.asStateFlow()
 
-    private lateinit var careStartModel: CareStartModel
-
-    var hour: Int
-        get() = careStartModel.hour
-        set(value) {
-            careStartModel.hour = value
-        }
-    var minute: Int
-        get() = careStartModel.minute
-        set(value) {
-            careStartModel.minute = value
-        }
-
-    var timeInMillis: Long
-        get() = careStartModel.timeInMillis
-        set(value) {
-            careStartModel.timeInMillis = value
-        }
+    var careStartModel: CareStartModel? = null
+    var careRepeatModel: CareRepeatModel? = null
+    var careAlarmModel: CareAlarmModel? = null
+    var careAlarmDetailModel: CareAlarmDetailModel? = null
 
     fun updateCare(careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -49,16 +38,20 @@ class CareViewModel @Inject constructor(
                 careRepository.getCareStartModel(careId, careTypeOrdinal),
                 careRepository.getCareRepeatModel(careId, careTypeOrdinal),
                 careRepository.getCareAlarmModel(careId, careTypeOrdinal),
-            ) { careMainModel, startModel, careRepeatModel, careAlarmModel ->
+            ) { mainModel, startModel, repeatModel, alarmModel ->
                 val mutableCareAdapterModels = mutableListOf<CareAdapterModel>()
 
-                mutableCareAdapterModels.add(careMainModel)
+                mutableCareAdapterModels.add(mainModel)
                 startModel?.let {
                     careStartModel = it
                     mutableCareAdapterModels.add(it)
                 }
-                careRepeatModel?.let { mutableCareAdapterModels.add(it) }
-                mutableCareAdapterModels.add(careAlarmModel)
+                repeatModel?.let {
+                    careRepeatModel = it
+                    mutableCareAdapterModels.add(it)
+                }
+                careAlarmModel = alarmModel
+                mutableCareAdapterModels.add(alarmModel)
 
                 _careAdapterModels.value = mutableCareAdapterModels
             }.collect()

@@ -3,21 +3,21 @@ package com.example.mypet.domain.alarm
 import android.media.RingtoneManager
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
+import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.HOUR
+import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_FRIDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_MONDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SATURDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_SUNDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_THURSDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_TUESDAY
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_REPEAT_WEDNESDAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.MINUTE
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_INTERVAL
-import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.REPEAT_TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.INTERVAL
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_FRIDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_MONDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SATURDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_SUNDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_THURSDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_TUESDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.IS_WEDNESDAY
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.TYPE_ORDINAL
 
 data class AlarmModel(
     @ColumnInfo(name = ID)
@@ -42,23 +42,23 @@ data class AlarmModel(
 
     val delayTime: Int? = null,
 
-    @ColumnInfo(name = REPEAT_TYPE_ORDINAL)
+    @ColumnInfo(name = TYPE_ORDINAL)
     val repeatTypeOrdinal: Int? = null,
-    @ColumnInfo(name = REPEAT_INTERVAL)
+    @ColumnInfo(name = INTERVAL)
     val repeatInterval: Int? = null,
-    @ColumnInfo(name = IS_REPEAT_MONDAY)
+    @ColumnInfo(name = IS_MONDAY)
     val isRepeatMonday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_TUESDAY)
+    @ColumnInfo(name = IS_TUESDAY)
     val isRepeatTuesday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_WEDNESDAY)
+    @ColumnInfo(name = IS_WEDNESDAY)
     val isRepeatWednesday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_THURSDAY)
+    @ColumnInfo(name = IS_THURSDAY)
     val isRepeatThursday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_FRIDAY)
+    @ColumnInfo(name = IS_FRIDAY)
     val isRepeatFriday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_SATURDAY)
+    @ColumnInfo(name = IS_SATURDAY)
     val isRepeatSaturday: Boolean? = null,
-    @ColumnInfo(name = IS_REPEAT_SUNDAY)
+    @ColumnInfo(name = IS_SUNDAY)
     val isRepeatSunday: Boolean? = null,
     /*    @ColumnInfo(name = END_DAY)
         val endDay: Int? = null,
