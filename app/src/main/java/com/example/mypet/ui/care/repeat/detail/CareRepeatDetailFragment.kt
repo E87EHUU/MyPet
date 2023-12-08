@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
@@ -13,6 +14,7 @@ import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import com.example.mypet.ui.care.CareViewModel
+import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.toAppDate
 import com.google.android.material.datepicker.MaterialDatePicker
 
@@ -26,8 +28,8 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        initListeners()
         updateUI()
+        initListeners()
     }
 
     override fun onPause() {
@@ -42,8 +44,21 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun initView() {
-        changeStateContentRadioEndAfterDate()
-        changeStateContentRadioEndAfterTimes()
+        getToolbar()?.let { toolbar ->
+            toolbar.title = null
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.toolbar_save)
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.toolbarSave -> {
+                        findNavController().popBackStack()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
     }
 
     private fun updateUI() {
@@ -384,8 +399,4 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
       private fun navToAlarmRepeatWeek() {
           findNavController().navigate(R.id.action_alarmFragment_to_alarmRepeatWeekFragment)
       }*/
-
-    companion object {
-        const val ALARM_REPEAT_POP_BACK = "alarm_repeat_pop_back"
-    }
 }

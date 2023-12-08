@@ -17,6 +17,7 @@ import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
+import com.example.mypet.ui.getToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -55,6 +56,21 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     private fun initView() {
+        getToolbar()?.let { toolbar ->
+            toolbar.title = null
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.toolbar_save)
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.toolbarSave -> {
+                        saveAndPopBack()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
         binding.root.adapter = adapter
     }
 
@@ -152,5 +168,9 @@ class CareFragment : Fragment(R.layout.fragment_care),
                 isUnlockUI = false
                 timePicker.show(fragmentManager, timePicker.toString())
             }
+    }
+
+    private fun saveAndPopBack() {
+
     }
 }
