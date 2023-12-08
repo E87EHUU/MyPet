@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.CareViewModel
+import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
 
 
@@ -27,6 +30,12 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (viewModel.careAlarmDetailModel == null)
+            viewModel.careAlarmDetailModel = CareAlarmDetailModel()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,6 +45,21 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     }
 
     private fun initView() {
+        getToolbar()?.let { toolbar ->
+            toolbar.title = null
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.toolbar_save)
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.toolbarSave -> {
+                        saveAndPopBack()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
         binding.timePickerCareAlarmDetail.setIs24HourView(requireContext().is24HourFormat)
     }
 
@@ -116,5 +140,16 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         )
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, null as Uri?)
         chooserRingtoneRegisterForActivityResult.launch(intent)
+    }
+
+    private fun saveAndPopBack() {
+        viewModel.careAlarmModel?.let { careAlarmModel ->
+            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+                val mutableList = careAlarmModel.alarms.toMutableList()
+                mutableList.add(careAlarmDetailModel)
+                careAlarmModel.alarms = mutableList
+                findNavController().popBackStack()
+            }
+        }
     }
 }

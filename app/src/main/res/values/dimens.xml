@@ -72,5 +72,6 @@
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="text_input_layout_spinner_icon_size">44dp</dimen>
+    <dimen name="care_recycler_alarm_recycler_offset_start">64dp</dimen>
 
 </resources>

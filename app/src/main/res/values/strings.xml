@@ -73,7 +73,6 @@
     <string name="sundayShort">Вс</string>
 
     <string name="pet_detail_food_title">Режим питания</string>
-    <string name="food_add_alarm_title">Добавить напоминание</string>
     <string name="pet_toolbar_more">Меню питомца</string>
     <string name="alarm_service_overlay_delay">Отложить</string>
     <string name="alarm_service_overlay_stop">Остановить</string>
@@ -186,5 +185,6 @@
     <string name="year">год</string>
     <string name="care_repeat_end_times_title_2">раза</string>
     <string name="care_repeat_end_times_title_1">После</string>
+    <string name="care_recycler_alarm_recycler_add">Добавить напоминание</string>
 
 </resources>

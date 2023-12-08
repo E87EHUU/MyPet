@@ -28,7 +28,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         initView()
         initListeners()
         updateUI()
-        println(viewModel.careRepeatModel)
     }
 
     override fun onPause() {

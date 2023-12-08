@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerAddBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
-import com.example.mypet.app.databinding.FragmentPetRecyclerMainRecyclerAddBinding
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
 
@@ -14,6 +14,7 @@ class CareAlarmMainAdapter(
     private val callback: CareAlarmCallback,
 ) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
     override fun getItemCount() = super.getItemCount() + 1
+    override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         return if (position == itemCount - 1) addViewHolder(parent) else mainViewHolder(parent)
     }
@@ -30,7 +31,7 @@ class CareAlarmMainAdapter(
 
     private fun addViewHolder(parent: ViewGroup): CareAlarmAddViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentPetRecyclerMainRecyclerAddBinding.inflate(inflater, parent, false)
+        val binding = FragmentCareRecyclerAlarmRecyclerAddBinding.inflate(inflater, parent, false)
         return CareAlarmAddViewHolder(binding, callback)
     }
 
