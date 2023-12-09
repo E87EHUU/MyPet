@@ -94,11 +94,14 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     private fun navToCare(petCareModel: PetCareModel) {
-        val directions = PetFragmentDirections.actionPetFragmentToNavigationPetCare(
-            petCareModel.id,
-            petCareModel.careType.ordinal
-        )
-        findNavController().navigate(directions)
+        viewModel.activePetListModel?.let {
+            val directions = PetFragmentDirections.actionPetFragmentToNavigationPetCare(
+                petId = it.id,
+                careId = petCareModel.id,
+                careTypeOrdinal = petCareModel.careType.ordinal
+            )
+            findNavController().navigate(directions)
+        }
     }
 
     override fun onClickPetFood(petCareModel: PetCareModel) {
@@ -114,7 +117,8 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetAdd() {
-        val directions = PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_INTEGER_VALUE)
+        val directions =
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_INTEGER_VALUE)
         findNavController().navigate(directions)
     }
 
@@ -127,7 +131,8 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetEdit(petListModel: PetListModel) {
-        val directions = PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListModel.id)
+        val directions =
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListModel.id)
         findNavController().navigate(directions)
     }
 }

@@ -4,8 +4,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
 import com.example.mypet.domain.care.CareStartModel
-import com.example.mypet.ui.toAppDate
-import com.example.mypet.ui.toAppTime
+import com.example.mypet.domain.toAppDate
+import com.example.mypet.domain.toAppTime
 
 class CareStartViewHolder(
     private val binding: FragmentCareRecyclerStartBinding,

@@ -1,11 +1,16 @@
 package com.example.mypet.data
 
+import androidx.room.Transaction
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
+import com.example.mypet.data.local.room.entity.LocalCareEntity
+import com.example.mypet.data.local.room.entity.LocalRepeatEntity
+import com.example.mypet.data.local.room.entity.LocalStartEntity
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
@@ -20,11 +25,13 @@ import javax.inject.Inject
 class CareRepositoryImpl @Inject constructor(
     private val localCareDao: LocalCareDao,
 ) : CareRepository {
-    override suspend fun getCareMainModel(careId: Int, careTypeOrdinal: Int) =
+    override suspend fun getCareMainModel(petId: Int, careTypeOrdinal: Int) =
         flow {
-            val localCareEntity = localCareDao.getLocalCareEntity(careId)
+            val localCareEntity = localCareDao.getLocalCareEntity(petId, careTypeOrdinal)
 
             val careMainModel = CareMainModel(
+                id = localCareEntity?.id ?: DEFAULT_ID,
+                petId = petId,
                 careType = CareTypes.values()[localCareEntity?.careTypeOrdinal ?: careTypeOrdinal],
                 note = localCareEntity?.note,
                 progress = localCareEntity?.progress
@@ -39,7 +46,9 @@ class CareRepositoryImpl @Inject constructor(
                 CareTypes.FOOD.ordinal -> emit(null)
                 else -> {
                     val localStartEntity = localCareDao.getLocalStartEntity(careId)
+
                     val careStartModel = CareStartModel(
+                        id = localStartEntity?.id ?: DEFAULT_ID,
                         timeInMillis = localStartEntity?.timeInMillis
                             ?: Calendar.getInstance().timeInMillis,
                         hour = localStartEntity?.hour
@@ -58,6 +67,7 @@ class CareRepositoryImpl @Inject constructor(
                 CareTypes.FOOD.ordinal -> emit(null)
                 else -> {
                     val localRepeatEntity = localCareDao.getLocalRepeatEntity(careId)
+
                     val careRepeatModel = CareRepeatModel(
                         id = localRepeatEntity?.id ?: DEFAULT_ID,
                         intervalTimes = localRepeatEntity?.intervalTimes ?: "1",
@@ -88,6 +98,92 @@ class CareRepositoryImpl @Inject constructor(
             )
             emit(careAlarmModel)
         }
+
+    @Transaction
+    override suspend fun saveCareModels(careModels: List<CareModel>) =
+        flow {
+            var careId: Int? = null
+
+            careModels.forEach { careModel ->
+                when (careModel) {
+                    is CareMainModel ->
+                        careId = careModel.save().toInt()
+
+                    is CareStartModel ->
+                        careId?.let {
+                            localCareDao.saveLocalStartEntity(careModel.toLocalStartEntity(it))
+                        }
+
+                    is CareRepeatModel ->
+                        careId?.let {
+                            localCareDao.saveLocalRepeatEntity(careModel.toLocalRepeatEntity(it))
+                        }
+
+                    is CareAlarmModel ->
+                        careId?.let {
+                            localCareDao.saveLocalAlarmEntity(careModel.toListLocalAlarmEntity(it))
+                        }
+                }
+            }
+
+            emit(Unit)
+        }
+
+    private fun CareMainModel.save() =
+        localCareDao.saveLocalCareEntity(toLocalCareEntity())
+
+    private fun CareMainModel.toLocalCareEntity() =
+        LocalCareEntity(
+            id = id,
+            petId = petId,
+            careTypeOrdinal = careType.ordinal,
+            note = note,
+            progress = progress
+        )
+
+    private fun CareStartModel.toLocalStartEntity(careId: Int) =
+        LocalStartEntity(
+            id = id,
+            careId = careId,
+            timeInMillis = timeInMillis,
+            hour = hour,
+            minute = minute
+        )
+
+    private fun CareRepeatModel.toLocalRepeatEntity(careId: Int) =
+        LocalRepeatEntity(
+            id,
+            careId,
+            intervalOrdinal,
+            intervalTimes,
+            isMonday,
+            isTuesday,
+            isWednesday,
+            isThursday,
+            isFriday,
+            isSaturday,
+            isSunday,
+            endTypeOrdinal,
+            endAfterTimes,
+            endAfterDate
+        )
+
+    private fun CareAlarmModel.toListLocalAlarmEntity(careId: Int) =
+        alarms.map { it.toLocalAlarmEntity(careId) }
+
+    private fun CareAlarmDetailModel.toLocalAlarmEntity(careId: Int) =
+        LocalAlarmEntity(
+            id,
+            careId,
+            nextStart,
+            description,
+            hour,
+            minute,
+            ringtonePath,
+            isVibration,
+            isDelay,
+            isActive
+        )
 
     private fun LocalAlarmEntity.toCareAlarmDetailModel() =
         CareAlarmDetailModel(

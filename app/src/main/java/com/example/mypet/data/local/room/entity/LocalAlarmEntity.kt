@@ -20,6 +20,9 @@ data class LocalAlarmEntity(
     @ColumnInfo(name = "${CARE_TABLE}_$ID")
     val careId: Int,
 
+    @ColumnInfo(name = NEXT_START)
+    val nextStart: Long,
+
     @ColumnInfo(name = DESCRIPTION)
     val description: String?,
 
@@ -39,6 +42,8 @@ data class LocalAlarmEntity(
     val isActive: Boolean = IS_ACTIVE_DEFAULT,
 ) {
     companion object {
+        const val NEXT_START = "next_start"
+
         const val RINGTONE_PATH = "ringtone_path"
 
         const val IS_VIBRATION = "is_vibration"

@@ -40,7 +40,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.updateCare(args.careId, args.careTypeOrdinal)
+        viewModel.updateCare(args.petId, args.careId, args.careTypeOrdinal)
     }
 
     override fun onResume() {
@@ -77,7 +77,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private fun initObserveCareAdapterModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careAdapterModels.collectLatest { mutableList ->
+                viewModel.careModels.collectLatest { mutableList ->
                     adapter.submitList(mutableList)
                     viewModel.careMainModel?.careType?.titleResId?.let {
                         getToolbar()?.title = getString(it)
@@ -174,6 +174,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     private fun saveAndPopBack() {
-
+        viewModel.saveCare()
+        findNavController().popBackStack()
     }
 }

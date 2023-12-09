@@ -17,4 +17,4 @@ data class CareRepeatModel(
     var endTypeOrdinal: Int,
     var endAfterTimes: String,
     var endAfterDate: Long,
-) : CareAdapterModel(CARE_ADAPTER_REPEAT_KEY)
+) : CareModel(CARE_ADAPTER_REPEAT_KEY)

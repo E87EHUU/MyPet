@@ -29,6 +29,8 @@ class PetViewModel @Inject constructor(
     private val _care = MutableStateFlow<List<PetCareModel>?>(null)
     val care = _care.asStateFlow()
 
+    var activePetListModel: PetListModel? = null
+
     init {
         updatePet()
     }
@@ -40,6 +42,7 @@ class PetViewModel @Inject constructor(
 
     fun updatePetDetail(petListModel: PetListModel?) {
         petListModel?.let {
+            activePetListModel = it
             updateFood(it.id)
             updateCare(it)
         } ?: run {
@@ -55,19 +58,28 @@ class PetViewModel @Inject constructor(
 
     private fun updateCare(petListModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
         petRepository.getCareModels(petListModel.id)
-            .collectLatest { _care.value = getCares(petListModel) }
+            .collectLatest { _care.value = getCares(petListModel, it) }
     }
 
-    private fun getCares(petListModel: PetListModel) =
+    private fun getCares(petListModel: PetListModel, petCareModel: List<PetCareModel>) =
         when (petListModel.kindOrdinal) {
             PetKind.CAT.ordinal,
             PetKind.DOG.ordinal -> {
                 listOf(
-                    PetCareModel(careType = CareTypes.BATH),
-                    PetCareModel(careType = CareTypes.COMBING_THE_WOOL),
-                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_WORMS),
-                    PetCareModel(careType = CareTypes.AGAINST_FLEAS_AND_TICKS),
-                    PetCareModel(careType = CareTypes.WALK),
+                    petCareModel.find { it.careType == CareTypes.BATH }
+                        ?: PetCareModel(careType = CareTypes.BATH),
+
+                    petCareModel.find { it.careType == CareTypes.COMBING_THE_WOOL }
+                        ?: PetCareModel(careType = CareTypes.COMBING_THE_WOOL),
+
+                    petCareModel.find { it.careType == CareTypes.AGAINST_FLEAS_WORMS }
+                        ?: PetCareModel(careType = CareTypes.AGAINST_FLEAS_WORMS),
+
+                    petCareModel.find { it.careType == CareTypes.AGAINST_FLEAS_AND_TICKS }
+                        ?: PetCareModel(careType = CareTypes.AGAINST_FLEAS_AND_TICKS),
+
+                    petCareModel.find { it.careType == CareTypes.WALK }
+                        ?: PetCareModel(careType = CareTypes.WALK),
                 )
             }
 

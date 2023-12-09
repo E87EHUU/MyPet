@@ -9,7 +9,7 @@ import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerMainBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.care.CareAdapterModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareRepeatModel
@@ -28,7 +28,7 @@ class CareAdapter(
     private val careRepeatCallback: CareRepeatCallback,
     private val careAlarmCallback: CareAlarmCallback,
     private val careStartCallback: CareStartCallback,
-) : ListAdapter<CareAdapterModel, RecyclerView.ViewHolder>(DiffCallback()) {
+) : ListAdapter<CareModel, RecyclerView.ViewHolder>(DiffCallback()) {
     var mainBinding: FragmentCareRecyclerMainBinding? = null
         private set
     var startViewHolder: CareStartViewHolder? = null
@@ -83,15 +83,15 @@ class CareAdapter(
         return CareAlarmViewHolder(binding, careAlarmCallback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<CareAdapterModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {
         override fun areItemsTheSame(
-            oldItem: CareAdapterModel,
-            newItem: CareAdapterModel
+            oldItem: CareModel,
+            newItem: CareModel
         ) = oldItem.key == newItem.key
 
         override fun areContentsTheSame(
-            oldItem: CareAdapterModel,
-            newItem: CareAdapterModel
+            oldItem: CareModel,
+            newItem: CareModel
         ) = oldItem == newItem
     }
 }

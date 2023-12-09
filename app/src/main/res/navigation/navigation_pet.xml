@@ -18,6 +18,9 @@
             android:id="@+id/action_petFragment_to_navigationPetCare"
             app:destination="@id/navigationPetCare">
             <argument
+                android:name="pet_id"
+                app:argType="integer" />
+            <argument
                 android:name="care_id"
                 app:argType="integer" />
             <argument

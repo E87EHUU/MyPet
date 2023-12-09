@@ -4,4 +4,4 @@ import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 
 data class CareAlarmModel(
     var alarms: List<CareAlarmDetailModel>
-) : CareAdapterModel(CARE_ADAPTER_ALARM_KEY)
+) : CareModel(CARE_ADAPTER_ALARM_KEY)

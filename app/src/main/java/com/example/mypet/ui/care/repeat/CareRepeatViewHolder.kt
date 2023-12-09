@@ -7,7 +7,7 @@ import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
-import com.example.mypet.ui.toAppDate
+import com.example.mypet.domain.toAppDate
 
 class CareRepeatViewHolder(
     private val binding: FragmentCareRecyclerRepeatBinding,

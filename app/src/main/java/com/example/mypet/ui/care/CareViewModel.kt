@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.alarm.AlarmMinModel
-import com.example.mypet.domain.care.CareAdapterModel
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
@@ -23,9 +23,9 @@ import javax.inject.Inject
 class CareViewModel @Inject constructor(
     private val careRepository: CareRepository
 ) : ViewModel() {
-    private val _careAdapterModels =
-        MutableStateFlow<MutableList<CareAdapterModel>>(mutableListOf())
-    val careAdapterModels = _careAdapterModels.asStateFlow()
+    private val _careModels =
+        MutableStateFlow<MutableList<CareModel>>(mutableListOf())
+    val careModels = _careModels.asStateFlow()
 
     var careMainModel: CareMainModel? = null
     var careStartModel: CareStartModel? = null
@@ -33,15 +33,15 @@ class CareViewModel @Inject constructor(
     var careAlarmModel: CareAlarmModel? = null
     var careAlarmDetailModel: CareAlarmDetailModel? = null
 
-    fun updateCare(careId: Int, careTypeOrdinal: Int) =
+    fun updateCare(petId: Int, careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             combine(
-                careRepository.getCareMainModel(careId, careTypeOrdinal),
+                careRepository.getCareMainModel(petId, careTypeOrdinal),
                 careRepository.getCareStartModel(careId, careTypeOrdinal),
                 careRepository.getCareRepeatModel(careId, careTypeOrdinal),
                 careRepository.getCareAlarmModel(careId, careTypeOrdinal),
             ) { mainModel, startModel, repeatModel, alarmModel ->
-                val mutableCareAdapterModels = mutableListOf<CareAdapterModel>()
+                val mutableCareAdapterModels = mutableListOf<CareModel>()
 
                 mutableCareAdapterModels.add(mainModel)
                 careMainModel = mainModel
@@ -56,9 +56,14 @@ class CareViewModel @Inject constructor(
                 careAlarmModel = alarmModel
                 mutableCareAdapterModels.add(alarmModel)
 
-                _careAdapterModels.value = mutableCareAdapterModels
+                _careModels.value = mutableCareAdapterModels
             }.collect()
         }
+
+    fun saveCare() = viewModelScope.launch(Dispatchers.IO) {
+        careRepository.saveCareModels(_careModels.value)
+            .collect()
+    }
 
     fun switchAlarmState(alarmMinModel: AlarmMinModel) {
         /*        foodModel.toAlarmSwitchModel()?.let {

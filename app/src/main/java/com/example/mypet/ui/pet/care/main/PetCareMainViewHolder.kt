@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetCareRecyclerItemBinding
 import com.example.mypet.domain.pet.care.PetCareModel
+import com.example.mypet.domain.toAppDate
 
 class PetCareMainViewHolder(
     private val binding: FragmentPetCareRecyclerItemBinding,
@@ -25,7 +26,8 @@ class PetCareMainViewHolder(
         binding.textViewPetCareRecyclerItemTitle.text =
             context.getString(petCareModel.careType.titleResId)
 
-        binding.textViewPetCareRecyclerItemDate.text = petCareModel.date ?: "не установлено"
+        binding.textViewPetCareRecyclerItemDate.text =
+            petCareModel.nextStart?.let { toAppDate(it) } ?: "не установлено"
         petCareModel.progress?.let {
             binding.progressBarPetCareRecyclerItem.progress = petCareModel.progress
             binding.progressBarPetCareRecyclerItem.isVisible = true
