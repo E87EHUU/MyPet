@@ -188,7 +188,7 @@
     <string name="care_recycler_alarm_recycler_add">Добавить напоминание</string>
     <string name="care_repeat_end_after_times">после %1$s раз(а)</string>
     <string name="care_repeat_interval_description_day">Каждый %1$s день</string>
-    <string name="care_repeat_interval_description_week">Каждую %1$s неделю</string>
+    <string name="care_repeat_interval_description_week">Каждую %1$s неделю%2$s</string>
     <string name="care_repeat_interval_description_month">Каждый %1$s месяц</string>
     <string name="care_repeat_interval_description_year">Каждый %1$s год</string>
 

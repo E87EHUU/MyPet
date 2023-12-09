@@ -12,6 +12,7 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.CareViewModel
 import com.example.mypet.ui.getToolbar
@@ -143,13 +144,16 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     }
 
     private fun saveAndPopBack() {
-        viewModel.careAlarmModel?.let { careAlarmModel ->
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                val mutableList = careAlarmModel.alarms.toMutableList()
-                mutableList.add(careAlarmDetailModel)
-                careAlarmModel.alarms = mutableList
-                findNavController().popBackStack()
+        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+            if (careAlarmDetailModel.id == DEFAULT_ID) {
+                viewModel.careAlarmModel?.let { careAlarmModel ->
+                    val mutableList = careAlarmModel.alarms.toMutableList()
+                    mutableList.add(careAlarmDetailModel)
+                    careAlarmModel.alarms = mutableList
+                }
             }
         }
+
+        findNavController().popBackStack()
     }
 }

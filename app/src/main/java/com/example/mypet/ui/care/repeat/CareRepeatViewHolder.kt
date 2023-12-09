@@ -67,7 +67,8 @@ class CareRepeatViewHolder(
                 CareRepeatInterval.WEEK.ordinal ->
                     context.getString(
                         R.string.care_repeat_interval_description_week,
-                        getIntervalTimes()
+                        getIntervalTimes(),
+                        getCheckedDay()
                     )
 
                 CareRepeatInterval.MONTH.ordinal ->
@@ -89,4 +90,64 @@ class CareRepeatViewHolder(
     private fun getIntervalTimes() =
         if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
         else ""
+
+    private fun getCheckedDay(): String {
+        with(careRepeatModel) {
+            if (isMonday || isTuesday || isWednesday
+                || isThursday || isFriday || isSaturday || isSunday
+            ) {
+                val stringBuilder = StringBuilder()
+                val divider = ", "
+
+                if (isMonday)
+                    stringBuilder.append(context.getString(R.string.mondayShort))
+
+                if (isTuesday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.tuesdayShort))
+                }
+
+                if (isWednesday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.wednesdayShort))
+                }
+
+                if (isThursday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.thursdayShort))
+                }
+
+                if (isFriday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.fridayShort))
+                }
+
+                if (isSaturday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.saturdayShort))
+                }
+
+                if (isSunday) {
+                    if (stringBuilder.isNotEmpty())
+                        stringBuilder.append(divider)
+
+                    stringBuilder.append(context.getString(R.string.sundayShort))
+                }
+
+
+                return " (${stringBuilder.toString()})"
+            }
+        }
+        return ""
+    }
 }
