@@ -73,6 +73,8 @@ dependencies {
 
     val dataStoreVersion: String by System.getProperties()
 
+    val firebaseBomVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
@@ -102,6 +104,6 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
 
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
     implementation("com.google.firebase:firebase-auth")
 }
