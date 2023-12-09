@@ -77,8 +77,11 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private fun initObserveCareAdapterModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careAdapterModels.collectLatest {
-                    adapter.submitList(it)
+                viewModel.careAdapterModels.collectLatest { mutableList ->
+                    adapter.submitList(mutableList)
+                    viewModel.careMainModel?.careType?.titleResId?.let {
+                        getToolbar()?.title = getString(it)
+                    }
                 }
             }
         }

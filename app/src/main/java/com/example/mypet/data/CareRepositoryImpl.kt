@@ -11,7 +11,6 @@ import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
-import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -62,8 +61,7 @@ class CareRepositoryImpl @Inject constructor(
                     val careRepeatModel = CareRepeatModel(
                         id = localRepeatEntity?.id ?: DEFAULT_ID,
                         intervalTimes = localRepeatEntity?.intervalTimes ?: "1",
-                        intervalOrdinal = localRepeatEntity?.intervalOrdinal
-                            ?: CareRepeatInterval.DAY.ordinal,
+                        intervalOrdinal = localRepeatEntity?.intervalOrdinal,
                         isMonday = localRepeatEntity?.isMonday ?: false,
                         isTuesday = localRepeatEntity?.isTuesday ?: false,
                         isWednesday = localRepeatEntity?.isWednesday ?: false,

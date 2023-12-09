@@ -123,13 +123,13 @@
     <string name="settings_dark_theme">Dark</string>
     <string name="settings_system_theme">System</string>
     <string name="care_repeat_title">Повторяется</string>
-    <string name="care_repeat_description_none">Без повтора</string>
+    <string name="care_repeat_interval_description_none">Без повтора</string>
     <string name="care_food_title">Кормежка</string>
     <string name="care_food_times">раз(а)</string>
     <string name="care_end_title">Окончание</string>
     <string name="care_end_in">В</string>
     <string name="care_end_after">После</string>
-    <string name="care_end_none">Никогда</string>
+    <string name="care_repeat_end_none">Никогда</string>
     <string name="care_start_title">Начало</string>
     <string name="care_time_default">10:10</string>
     <string name="care_date_default">10.10.2020</string>

@@ -5,6 +5,7 @@
         android:id="@+id/toolbarSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:showAsAction="always"
-        android:title="@string/save" />
+        android:icon="@drawable/baseline_done_24"
+        android:title="@string/save"
+        app:showAsAction="always" />
 </menu>

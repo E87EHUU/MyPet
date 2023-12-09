@@ -26,10 +26,20 @@
     <TextView
         android:id="@+id/textViewCareRecyclerRepeatDescription"
         style="@style/Theme.MyPet.CareTextView"
-        android:text="@string/care_repeat_description_none"
+        android:text="@string/care_repeat_interval_description_none"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerRepeatTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerRepeatTitle" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupCareRecyclerEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageViewCareRecyclerEndIcon,textViewCareRecyclerEndTitle,textViewCareRecyclerEndDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerEndIcon"
@@ -52,7 +62,7 @@
     <TextView
         android:id="@+id/textViewCareRecyclerEndDescription"
         style="@style/Theme.MyPet.CareTextView"
-        android:text="@string/care_end_none"
+        android:text="@string/care_repeat_end_none"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerEndTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndTitle" />

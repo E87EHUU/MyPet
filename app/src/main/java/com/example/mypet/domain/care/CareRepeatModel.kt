@@ -4,7 +4,7 @@ data class CareRepeatModel(
     val id: Int,
 
     var intervalTimes: String,
-    var intervalOrdinal: Int,
+    var intervalOrdinal: Int?,
 
     var isMonday: Boolean,
     var isTuesday: Boolean,

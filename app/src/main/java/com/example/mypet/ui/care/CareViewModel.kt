@@ -6,6 +6,7 @@ import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.care.CareAdapterModel
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
@@ -26,6 +27,7 @@ class CareViewModel @Inject constructor(
         MutableStateFlow<MutableList<CareAdapterModel>>(mutableListOf())
     val careAdapterModels = _careAdapterModels.asStateFlow()
 
+    var careMainModel: CareMainModel? = null
     var careStartModel: CareStartModel? = null
     var careRepeatModel: CareRepeatModel? = null
     var careAlarmModel: CareAlarmModel? = null
@@ -42,6 +44,7 @@ class CareViewModel @Inject constructor(
                 val mutableCareAdapterModels = mutableListOf<CareAdapterModel>()
 
                 mutableCareAdapterModels.add(mainModel)
+                careMainModel = mainModel
                 startModel?.let {
                     careStartModel = it
                     mutableCareAdapterModels.add(it)

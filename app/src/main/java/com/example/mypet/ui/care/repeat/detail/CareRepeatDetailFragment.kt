@@ -51,7 +51,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.toolbarSave -> {
-                        findNavController().popBackStack()
+                        saveAndPopBack()
                         true
                     }
 
@@ -304,6 +304,13 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             }
     }
 
+    private fun saveAndPopBack() {
+        viewModel.careRepeatModel?.let { careRepeatModel ->
+            if (careRepeatModel.intervalOrdinal == null)
+                careRepeatModel.intervalOrdinal = CareRepeatInterval.DAY.ordinal
+        }
+        findNavController().popBackStack()
+    }
 
     /*  private fun updateUIRepeatDescription() {
           with(viewModel) {

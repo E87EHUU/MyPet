@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/offset_16"
             android:layout_marginTop="@dimen/offset_24"
-            android:text="@string/care_end_none"
+            android:text="@string/care_repeat_end_none"
             app:layout_constraintStart_toEndOf="@+id/radioGroupCareRepeatEnd"
             app:layout_constraintTop_toTopOf="@+id/radioGroupCareRepeatEnd" />
 
