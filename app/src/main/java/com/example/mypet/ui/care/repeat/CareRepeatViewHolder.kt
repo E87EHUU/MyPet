@@ -58,38 +58,35 @@ class CareRepeatViewHolder(
     private fun updateUIInterval() {
         binding.textViewCareRecyclerRepeatDescription.text =
             when (careRepeatModel.intervalOrdinal) {
-                CareRepeatInterval.DAY.ordinal -> {
-                    val day =
-                        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
-                        else ""
+                CareRepeatInterval.DAY.ordinal ->
+                    context.getString(
+                        R.string.care_repeat_interval_description_day,
+                        getIntervalTimes()
+                    )
 
-                    context.getString(R.string.care_repeat_interval_description_day, day)
-                }
+                CareRepeatInterval.WEEK.ordinal ->
+                    context.getString(
+                        R.string.care_repeat_interval_description_week,
+                        getIntervalTimes()
+                    )
 
-                CareRepeatInterval.WEEK.ordinal -> {
-                    val week =
-                        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
-                        else ""
+                CareRepeatInterval.MONTH.ordinal ->
+                    context.getString(
+                        R.string.care_repeat_interval_description_month,
+                        getIntervalTimes()
+                    )
 
-                    context.getString(R.string.care_repeat_interval_description_week, week)
-                }
+                CareRepeatInterval.YEAR.ordinal ->
+                    context.getString(
+                        R.string.care_repeat_interval_description_year,
+                        getIntervalTimes()
+                    )
 
-                CareRepeatInterval.MONTH.ordinal -> {
-                    val month =
-                        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
-                        else ""
-
-                    context.getString(R.string.care_repeat_interval_description_month, month)
-                }
-
-                CareRepeatInterval.YEAR.ordinal -> {
-                    val year =
-                        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
-                        else ""
-
-                    context.getString(R.string.care_repeat_interval_description_year, year)
-                }
                 else -> context.getString(R.string.care_repeat_interval_description_none)
             }
     }
+
+    private fun getIntervalTimes() =
+        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
+        else ""
 }
