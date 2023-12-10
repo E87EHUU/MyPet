@@ -89,7 +89,7 @@ class AlarmDetailFragment : Fragment(R.layout.fragment_alarm_detail) {
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
         intent.putExtra(
             RingtoneManager.EXTRA_RINGTONE_TITLE,
-            R.string.intent_chooser_ringtone_picker_title
+            R.string.alarm_intent_chooser_ringtone_picker_title
         )
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, null as Uri?)
         chooserRingtoneRegisterForActivityResult.launch(intent)

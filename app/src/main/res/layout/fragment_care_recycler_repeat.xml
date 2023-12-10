@@ -87,7 +87,7 @@
         android:layout_height="@dimen/app_compat_spinner_height"
         android:layout_marginStart="@dimen/offset_16"
         android:dropDownWidth="match_parent"
-        android:entries="@array/repeats"
+        android:entries="@array/care_repeats"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerMainEndTimes"
         app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerMainEndTimes" />

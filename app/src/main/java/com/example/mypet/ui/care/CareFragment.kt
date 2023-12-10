@@ -82,7 +82,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private val datePicker by lazy {
         MaterialDatePicker.Builder.datePicker()
             .setSelection(viewModel.date)
-            .setTitleText(getString(R.string.date_picker_title))
+            .setTitleText(getString(R.string.care_date_picker_title))
             .setInputMode(INPUT_MODE_CALENDAR)
             .build()
     }
@@ -93,7 +93,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     private val timePicker by lazy {
         MaterialTimePicker.Builder()
-            .setTitleText(getString(R.string.time_picker_title))
+            .setTitleText(getString(R.string.care_time_picker_title))
             .setInputMode(INPUT_MODE_CLOCK)
             .setTimeFormat(if (is24HourFormat) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
             .build()
