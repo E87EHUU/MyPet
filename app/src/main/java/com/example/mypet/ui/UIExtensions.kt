@@ -1,8 +1,10 @@
 package com.example.mypet.ui
 
+import android.app.Activity
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.mypet.app.R
@@ -17,6 +19,10 @@ import com.google.android.material.snackbar.Snackbar
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
+}
+
+fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, text, length).show()
 }
 
 fun getPetName(kindOrdinal: Int, breedOrdinal: Int?) =
