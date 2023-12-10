@@ -123,7 +123,10 @@
     <string name="user_version_name">Версия приложения</string>
     <string name="user_version_code">Номер версии</string>
     <string name="user_privacy">Политика конфиденциальности</string>
-    <string name="user_settings">Настройки</string>
+    <string name="user_preferences">Настройки</string>
+    <string name="user_feedback">Обратная связь</string>
+    <string name="user_feedback_choose_app">Выберите приложение для отправки email разработчику</string>
+    <string name="user_feedback_email_error">Невозможно отправить email</string>
     <string name="user_button">Кнопка</string>
 
     <string name="login_prompt_email">Email</string>
