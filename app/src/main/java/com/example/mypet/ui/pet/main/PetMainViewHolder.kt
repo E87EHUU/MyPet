@@ -77,16 +77,17 @@ class PetMainViewHolder(
         }
     }
 
-    fun bind(petListModels: List<PetListModel>, activePetListModel: PetListModel?) {
-        this.petListModels = petListModels
-        petListAdapter.submitList(petListModels)
-
-        println(activePetListModel)
-
-        onClickPet(activePetListModel ?: petListModels.firstOrNull())
+    fun bind(petListModels: List<PetListModel>?, activePetListModel: PetListModel?) {
+        petListModels?.let {
+            this.petListModels = it
+            petListAdapter.submitList(petListModels)
+            onClickPet(activePetListModel ?: petListModels.firstOrNull())
+        }
     }
 
     private fun updatePet(petListModel: PetListModel?) {
+
+
         petListModel?.let {
             activePetListModel = petListModel
 
@@ -123,7 +124,6 @@ class PetMainViewHolder(
         } ?: run {
             binding.linearLayoutPetRecyclerMainWeight.isVisible = false
         }
-
     }
 
     override fun onClickPetAdd() {

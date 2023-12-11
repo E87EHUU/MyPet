@@ -36,7 +36,7 @@ class PetAdapter(
         }
     }
 
-    var petListModel: List<PetListModel> = emptyList()
+    var petListModel: List<PetListModel>? = null
     var petFoodModel: PetFoodModel? = null
     var care: List<PetCareModel>? = null
     var activePetListModel: PetListModel? = null

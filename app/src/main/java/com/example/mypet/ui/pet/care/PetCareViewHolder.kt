@@ -17,6 +17,7 @@ class PetCareViewHolder(
     private val petCareAdapter = PetCareMainAdapter(this)
 
     init {
+        binding.root.itemAnimator = null
         binding.root.adapter = petCareAdapter
     }
 
@@ -24,6 +25,7 @@ class PetCareViewHolder(
         petCareModels?.let {
             this.petCareModels = petCareModels
             petCareAdapter.submitList(petCareModels)
+
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false
