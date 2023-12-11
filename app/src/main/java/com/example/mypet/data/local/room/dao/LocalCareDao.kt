@@ -34,5 +34,5 @@ interface LocalCareDao {
     fun saveLocalRepeatEntity(localRepeatEntity: LocalRepeatEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveLocalAlarmEntity(localAlarmEntity: List<LocalAlarmEntity>): List<Long>
+    fun saveLocalAlarmEntity(localAlarmEntity: LocalAlarmEntity): Long
 }

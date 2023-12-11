@@ -66,37 +66,37 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatMonday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/mondayShort" />
+                android:text="@string/alarm_monday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatTuesday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/tuesdayShort" />
+                android:text="@string/alarm_thursday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatWednesday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/wednesdayShort" />
+                android:text="@string/alarm_wednesday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatThursday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/thursdayShort" />
+                android:text="@string/alarm_thursday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatFriday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/fridayShort" />
+                android:text="@string/alarm_friday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatSaturday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/saturdayShort" />
+                android:text="@string/alarm_saturday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatSunday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/sundayShort" />
+                android:text="@string/alarm_sunday_short" />
 
         </com.google.android.material.chip.ChipGroup>
 

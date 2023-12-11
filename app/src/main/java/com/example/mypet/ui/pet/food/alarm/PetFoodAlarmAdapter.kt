@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.mypet.app.databinding.FragmentPetFoodRecyclerMainBinding
+import com.example.mypet.app.databinding.FragmentPetRecyclerFoodRecyclerMainBinding
 import com.example.mypet.domain.alarm.AlarmMinModel
 
 class PetFoodAlarmAdapter(
@@ -15,7 +15,7 @@ class PetFoodAlarmAdapter(
         viewType: Int
     ): PetFoodAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentPetFoodRecyclerMainBinding.inflate(inflater, parent, false)
+        val binding = FragmentPetRecyclerFoodRecyclerMainBinding.inflate(inflater, parent, false)
         return PetFoodAlarmViewHolder(binding, callback)
     }
 

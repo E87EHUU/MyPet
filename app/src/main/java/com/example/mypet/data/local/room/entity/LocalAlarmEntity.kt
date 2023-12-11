@@ -21,7 +21,7 @@ data class LocalAlarmEntity(
     val careId: Int,
 
     @ColumnInfo(name = NEXT_START)
-    val nextStart: Long,
+    val nextStart: Long?,
 
     @ColumnInfo(name = DESCRIPTION)
     val description: String?,

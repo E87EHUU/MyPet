@@ -16,7 +16,11 @@ class BootCompleteRepositoryImpl @Inject constructor(
         runBlocking {
             launch(Dispatchers.IO) {
                 localBootCompleteDao.getActiveAlarmModels().forEach { localAlarmEntity ->
-                    alarmDao.setAlarm(localAlarmEntity)
+                    if (localAlarmEntity.isActive) {
+                        localAlarmEntity.nextStart?.let {
+                            alarmDao.setAlarm(localAlarmEntity.id, localAlarmEntity.nextStart)
+                        }
+                    }
                 }
             }
         }

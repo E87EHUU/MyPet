@@ -51,19 +51,19 @@
         <item name="android:elevation">@dimen/offset_4</item>
     </style>
 
-    <style name="Theme.MyPet.CareContainer">
+    <style name="Theme.MyPet.ViewHolderContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/offset_16</item>
     </style>
 
-    <style name="Theme.MyPet.CareHeaderIcon">
+    <style name="Theme.MyPet.ViewHolderHeaderIcon">
         <item name="android:layout_width">@dimen/care_header_icon_size</item>
         <item name="android:layout_height">@dimen/care_header_icon_size</item>
         <item name="android:layout_marginStart">@dimen/offset_16</item>
     </style>
 
-    <style name="Theme.MyPet.CareHeaderTitle">
+    <style name="Theme.MyPet.ViewHolderHeaderTitle">
         <item name="android:layout_width">@dimen/zero</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">@dimen/offset_16</item>

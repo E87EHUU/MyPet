@@ -1,6 +1,8 @@
 package com.example.mypet.data
 
 import androidx.room.Transaction
+import com.example.mypet.data.alarm.AlarmNextStartCalculate
+import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
@@ -24,6 +26,7 @@ import javax.inject.Inject
 
 class CareRepositoryImpl @Inject constructor(
     private val localCareDao: LocalCareDao,
+    private val alarmDao: IAlarmDao,
 ) : CareRepository {
     override suspend fun getCareMainModel(petId: Int, careTypeOrdinal: Int) =
         flow {
@@ -103,6 +106,9 @@ class CareRepositoryImpl @Inject constructor(
     override suspend fun saveCareModels(careModels: List<CareModel>) =
         flow {
             var careId: Int? = null
+            var localStartEntity: LocalStartEntity? = null
+            var localRepeatEntity: LocalRepeatEntity? = null
+            val alarmNextStartCalculate = AlarmNextStartCalculate()
 
             careModels.forEach { careModel ->
                 when (careModel) {
@@ -111,17 +117,36 @@ class CareRepositoryImpl @Inject constructor(
 
                     is CareStartModel ->
                         careId?.let {
-                            localCareDao.saveLocalStartEntity(careModel.toLocalStartEntity(it))
+                            localStartEntity = careModel.toLocalStartEntity(it)
+                            localCareDao.saveLocalStartEntity(localStartEntity!!)
                         }
 
                     is CareRepeatModel ->
                         careId?.let {
-                            localCareDao.saveLocalRepeatEntity(careModel.toLocalRepeatEntity(it))
+                            localRepeatEntity = careModel.toLocalRepeatEntity(it)
+                            localCareDao.saveLocalRepeatEntity(localRepeatEntity!!)
                         }
 
                     is CareAlarmModel ->
-                        careId?.let {
-                            localCareDao.saveLocalAlarmEntity(careModel.toListLocalAlarmEntity(it))
+                        careId?.let { careId ->
+                            careModel.alarms.forEach { careAlarmDetailModel ->
+                                val nextStart = if (careAlarmDetailModel.isActive) {
+                                    alarmNextStartCalculate.getNextStartTimeInMillis(
+                                        localStartEntity,
+                                        localRepeatEntity,
+                                        careAlarmDetailModel.hour,
+                                        careAlarmDetailModel.minute
+                                    )
+                                } else null
+
+                                val localAlarmEntity =
+                                    careAlarmDetailModel.toLocalAlarmEntity(careId, nextStart)
+                                localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+
+                                nextStart?.let {
+                                    alarmDao.setAlarm(careAlarmDetailModel.id, nextStart)
+                                }
+                            }
                         }
                 }
             }
@@ -168,10 +193,7 @@ class CareRepositoryImpl @Inject constructor(
             endAfterDate
         )
 
-    private fun CareAlarmModel.toListLocalAlarmEntity(careId: Int) =
-        alarms.map { it.toLocalAlarmEntity(careId) }
-
-    private fun CareAlarmDetailModel.toLocalAlarmEntity(careId: Int) =
+    private fun CareAlarmDetailModel.toLocalAlarmEntity(careId: Int, nextStart: Long?) =
         LocalAlarmEntity(
             id,
             careId,

@@ -58,7 +58,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObservePet() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.pet.collectLatest {
                     adapter.petListModel = it
                     adapter.notifyItemChanged(PetAdapter.PET_POSITION)
@@ -82,7 +82,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObserveCare() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.care.collectLatest {
                     adapter.care = it
                     binding.root.post {

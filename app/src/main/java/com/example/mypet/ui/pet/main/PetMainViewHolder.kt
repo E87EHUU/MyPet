@@ -109,16 +109,16 @@ class PetMainViewHolder(
 
         petListModel?.age?.let {
             binding.textViewPetRecyclerMainAgeText.text = it
-            binding.materialCardViewPetRecyclerMainAge.isVisible = true
+            binding.linearLayoutPetRecyclerMainAge.isVisible = true
         } ?: run {
-            binding.materialCardViewPetRecyclerMainAge.isVisible = false
+            binding.linearLayoutPetRecyclerMainAge.isVisible = false
         }
 
         petListModel?.weight?.let {
             binding.textViewPetRecyclerMainWeightText.text = it
-            binding.materialCardViewPetRecyclerMainWeight.isVisible = true
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = true
         } ?: run {
-            binding.materialCardViewPetRecyclerMainWeight.isVisible = false
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
         }
 
     }

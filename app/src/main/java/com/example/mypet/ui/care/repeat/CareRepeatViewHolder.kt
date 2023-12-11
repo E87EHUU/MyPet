@@ -100,48 +100,48 @@ class CareRepeatViewHolder(
                 val divider = ", "
 
                 if (isMonday)
-                    stringBuilder.append(context.getString(R.string.mondayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_monday_short))
 
                 if (isTuesday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.tuesdayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_tuesday_short))
                 }
 
                 if (isWednesday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.wednesdayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_wednesday_short))
                 }
 
                 if (isThursday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.thursdayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_thursday_short))
                 }
 
                 if (isFriday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.fridayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_friday_short))
                 }
 
                 if (isSaturday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.saturdayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_saturday_short))
                 }
 
                 if (isSunday) {
                     if (stringBuilder.isNotEmpty())
                         stringBuilder.append(divider)
 
-                    stringBuilder.append(context.getString(R.string.sundayShort))
+                    stringBuilder.append(context.getString(R.string.alarm_sunday_short))
                 }
 
 

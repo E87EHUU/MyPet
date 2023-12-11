@@ -277,7 +277,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private val datePicker by lazy {
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.date_picker_title))
+            .setTitleText(getString(R.string.care_date_picker_title))
             .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
             .apply {
                 viewModel.careRepeatModel?.let {

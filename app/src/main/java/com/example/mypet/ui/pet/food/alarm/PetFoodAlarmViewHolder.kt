@@ -2,11 +2,11 @@ package com.example.mypet.ui.pet.food.alarm
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentPetFoodRecyclerMainBinding
+import com.example.mypet.app.databinding.FragmentPetRecyclerFoodRecyclerMainBinding
 import com.example.mypet.domain.alarm.AlarmMinModel
 
 class PetFoodAlarmViewHolder(
-    private val binding: FragmentPetFoodRecyclerMainBinding,
+    private val binding: FragmentPetRecyclerFoodRecyclerMainBinding,
     private val callback: PetFoodAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var alarmMinModel: AlarmMinModel

@@ -90,7 +90,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     private val datePicker by lazy {
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.date_picker_title))
+            .setTitleText(getString(R.string.care_date_picker_title))
             .setInputMode(INPUT_MODE_CALENDAR)
             .apply {
                 viewModel.careStartModel?.timeInMillis?.let {

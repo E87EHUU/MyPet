@@ -16,7 +16,7 @@ class PetFoodViewHolder(
     private val petFoodAdapter = PetFoodAlarmAdapter(callback)
 
     init {
-        binding.recyclerViewPetFoodList.adapter = petFoodAdapter
+        binding.recyclerViewPetRecyclerFood.adapter = petFoodAdapter
         binding.root.setOnClickListener { callback.onClickPetFood(petFoodModel.care) }
     }
 

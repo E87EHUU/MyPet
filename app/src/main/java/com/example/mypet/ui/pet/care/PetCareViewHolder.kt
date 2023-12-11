@@ -17,7 +17,7 @@ class PetCareViewHolder(
     private val petCareAdapter = PetCareMainAdapter(this)
 
     init {
-        binding.recyclerViewPetCareList.adapter = petCareAdapter
+        binding.root.adapter = petCareAdapter
     }
 
     fun bind(petCareModels: List<PetCareModel>?) {
