@@ -18,7 +18,7 @@
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_8"
-        android:text="@string/alert_title"
+        android:text="@string/alarm_title"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewSnippetAlertIcon"
         app:layout_constraintEnd_toStartOf="@+id/buttonSnippetAlertSettings"
@@ -48,14 +48,14 @@
             style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/snippet_alert_notification" />
+            android:text="@string/alarm_snippet_alert_notification" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipSnippetAlertAlarm"
             style="@style/Widget.Material3.Chip.Suggestion.Elevated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/snippet_alert_alarm" />
+            android:text="@string/alarm_snippet_alert_alarm" />
 
     </com.google.android.material.chip.ChipGroup>
 

@@ -202,7 +202,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 binding.textInputEditTextPetCreationWeight.text?.toString()?.toIntOrNull()
             with(viewModel) {
                 if (name.isEmpty() || kindOrdinal == null || sex == null) {
-                    view?.snackMessage(getString(R.string.fill_up_all_fields))
+                    view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
                 } else {
                     viewModel.addOrUpdatePetInDb()
                     findNavController().popBackStack()
