@@ -53,6 +53,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     private fun initView() {
         getActionBar()?.hide()
 
+        binding.root.itemAnimator = null
         binding.root.adapter = adapter
     }
 

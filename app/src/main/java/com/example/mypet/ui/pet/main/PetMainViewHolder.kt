@@ -26,6 +26,7 @@ class PetMainViewHolder(
     private var activePetListModel: PetListModel? = null
 
     init {
+        binding.recyclerViewPetRecyclerMain.itemAnimator = null
         binding.recyclerViewPetRecyclerMain.adapter = petListAdapter
         initMenuPetAction()
     }
