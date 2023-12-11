@@ -73,11 +73,11 @@ dependencies {
 
     val dataStoreVersion: String by System.getProperties()
 
+    val firebaseBomVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.annotation:annotation:1.6.0")
-    implementation("com.google.firebase:firebase-auth:22.3.0")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")
@@ -103,4 +103,7 @@ dependencies {
     //implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
 
     implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
+
+    implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
+    implementation("com.google.firebase:firebase-auth")
 }

@@ -21,7 +21,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
     }
 
@@ -30,13 +29,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         appPrivacyPolicy()
         appFeedBack()
         appAbout()
+        navigateToAuth()
     }
 
     private fun appPreferences() {
-        with (binding) {
+        with(binding) {
             profilePreferences.lineImage.setImageResource(R.drawable.icon_settings)
             profilePreferences.lineText.text = getString(R.string.user_preferences)
-
             profilePreferences.lineBlock.setOnClickListener {
                 findNavController().navigate(UserFragmentDirections.actionUserFragmentToPreferencesFragment())
             }
@@ -44,13 +43,12 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun appPrivacyPolicy() {
-        with (binding) {
+        with(binding) {
             profilePrivacy.lineImage.setImageResource(R.drawable.icon_privacy)
             profilePrivacy.lineText.text = getString(R.string.user_privacy)
-
             val dynamicText = String.format(getString(R.string.user_privacy_description), null)
-            val userPrivacyFormatted = HtmlCompat.fromHtml(dynamicText, HtmlCompat.FROM_HTML_MODE_COMPACT)
-
+            val userPrivacyFormatted =
+                HtmlCompat.fromHtml(dynamicText, HtmlCompat.FROM_HTML_MODE_COMPACT)
             profilePrivacy.lineBlock.setOnClickListener {
                 dialog(getString(R.string.user_privacy), userPrivacyFormatted)
             }
@@ -58,7 +56,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun appFeedBack() {
-        with (binding) {
+        with(binding) {
             profileFeedBack.lineImage.setImageResource(R.drawable.icon_email)
             profileFeedBack.lineText.text = getString(R.string.user_feedback)
 
@@ -71,10 +69,14 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private fun sendEmail() {
         requireActivity().showToast(getString(R.string.user_feedback_choose_app))
         try {
-            val subject = "${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+            val subject =
+                "${getString(R.string.app_name)} ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.user_feedback_email_recipient)))
+                putExtra(
+                    Intent.EXTRA_EMAIL,
+                    arrayOf(getString(R.string.user_feedback_email_recipient))
+                )
                 putExtra(Intent.EXTRA_SUBJECT, subject)
                 type = EMAIL_TYPE
             }
@@ -85,20 +87,24 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     }
 
     private fun appAbout() {
-        with (binding) {
+        with(binding) {
             profileAbout.lineImage.setImageResource(R.drawable.icon_about)
             profileAbout.lineText.text = getString(R.string.user_about)
-
             val appVersion = """
                 ${getString(R.string.app_name)}
                 
                 ${getString(R.string.user_version_name)}: ${BuildConfig.VERSION_NAME}
                 ${getString(R.string.user_version_code)}: ${BuildConfig.VERSION_CODE}
             """.trimIndent().toSpannable()
-
             profileAbout.lineBlock.setOnClickListener {
                 dialog(getString(R.string.user_about), appVersion)
             }
+        }
+    }
+
+    private fun navigateToAuth() {
+        binding.userAuthButton.setOnClickListener {
+            findNavController().navigate(UserFragmentDirections.actionUserFragmentToLoginFragment())
         }
     }
 

@@ -11,6 +11,10 @@
         tools:layout="@layout/fragment_user">
         <action
             android:id="@+id/action_userFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_loginFragment"
+            app:destination="@+id/loginFragment" />
             app:destination="@id/preferencesFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -22,5 +26,10 @@
         android:id="@+id/preferencesFragment"
         android:name="com.example.mypet.ui.preferences.PreferencesFragment"
         tools:layout="@layout/fragment_preferences" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mypet.ui.auth.ui.LoginFragment"
+        tools:layout="@layout/fragment_login" />
 
 </navigation>

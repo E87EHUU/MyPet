@@ -1,5 +1,4 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,23 +14,31 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/line_with_image"
-                android:id="@+id/profile_preferences"/>
+                android:id="@+id/profile_preferences"
+                layout="@layout/line_with_image" />
 
             <include
-                layout="@layout/line_with_image"
-                android:id="@+id/profilePrivacy"/>
+                android:id="@+id/profilePrivacy"
+                layout="@layout/line_with_image" />
 
             <include
-                layout="@layout/line_with_image"
-                android:id="@+id/profileFeedBack"/>
+                android:id="@+id/profileFeedBack"
+                layout="@layout/line_with_image" />
 
             <include
-                layout="@layout/line_with_image"
-                android:id="@+id/profileAbout"/>
-
+                android:id="@+id/profileAbout"
+                layout="@layout/line_with_image" />
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/userAuthButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/user_margin"
+        android:layout_marginEnd="@dimen/user_margin"
+        android:layout_marginBottom="@dimen/user_margin"
+        android:text="@string/user_auth_button" />
 
 </FrameLayout>

@@ -12,6 +12,8 @@ import com.example.mypet.domain.BootCompleteRepository
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.PetCreationAndUpdateRepository
 import com.example.mypet.domain.PetRepository
+import com.example.mypet.ui.auth.data.AuthRepositoryImpl
+import com.example.mypet.ui.auth.data.model.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +51,9 @@ object DomainModule {
     @Provides
     fun providePetCreationAndUpdateRepository(petCreationAndUpdateRepositoryImpl: PetCreationAndUpdateRepositoryImpl): PetCreationAndUpdateRepository =
         petCreationAndUpdateRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository =
+        authRepositoryImpl
 }
