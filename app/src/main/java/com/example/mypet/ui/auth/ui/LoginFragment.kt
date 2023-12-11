@@ -54,7 +54,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 is AuthResult.Success -> {
                     binding.loading.visibility = View.GONE
-                    Toast.makeText(requireContext(), R.string.welcome, Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), R.string.login_welcome, Toast.LENGTH_LONG)
                         .show()
                 }
             }
@@ -70,7 +70,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     loginViewModel.loginDataChanged(

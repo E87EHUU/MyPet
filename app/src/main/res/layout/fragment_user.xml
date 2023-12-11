@@ -14,7 +14,7 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/profileAbout"
+                android:id="@+id/profile_preferences"
                 layout="@layout/line_with_image" />
 
             <include
@@ -22,11 +22,13 @@
                 layout="@layout/line_with_image" />
 
             <include
-                android:id="@+id/profile_preferences"
+                android:id="@+id/profileFeedBack"
                 layout="@layout/line_with_image" />
 
+            <include
+                android:id="@+id/profileAbout"
+                layout="@layout/line_with_image" />
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
     <Button
@@ -37,7 +39,6 @@
         android:layout_marginStart="@dimen/user_margin"
         android:layout_marginEnd="@dimen/user_margin"
         android:layout_marginBottom="@dimen/user_margin"
-        android:text="@string/user_auth_button"
-        />
+        android:text="@string/user_auth_button" />
 
 </FrameLayout>

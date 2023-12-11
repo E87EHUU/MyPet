@@ -41,9 +41,9 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(emailError = R.string.invalid_email)
+            _loginForm.value = LoginFormState(emailError = R.string.login_invalid_email)
         } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+            _loginForm.value = LoginFormState(passwordError = R.string.login_invalid_password)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
