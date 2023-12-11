@@ -40,6 +40,9 @@ class UserFragment : Fragment(R.layout.fragment_user) {
             profilePreferences.lineBlock.setOnClickListener {
                 findNavController().navigate(UserFragmentDirections.actionUserFragmentToPreferencesFragment())
             }
+            userAuthButton.setOnClickListener {
+                findNavController().navigate(UserFragmentDirections.actionUserFragmentToLoginFragment())
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigationUser"
@@ -13,11 +12,19 @@
         <action
             android:id="@+id/action_userFragment_to_preferencesFragment"
             app:destination="@id/preferencesFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_loginFragment"
+            app:destination="@+id/loginFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="com.example.mypet.ui.preferences.PreferencesFragment"
-        tools:layout="@layout/fragment_preferences"/>
+        tools:layout="@layout/fragment_preferences" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mypet.ui.auth.ui.LoginFragment"
+        tools:layout="@layout/fragment_login" />
 
 </navigation>
