@@ -11,10 +11,18 @@
         tools:layout="@layout/fragment_care">
         <action
             android:id="@+id/action_careFragment_to_alarmDetailFragment"
-            app:destination="@id/alarmDetailFragment" />
+            app:destination="@id/alarmDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_careFragment_to_careRepeatDetailFragment"
-            app:destination="@id/careRepeatDetailFragment" />
+            app:destination="@id/careRepeatDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="pet_id"
             app:argType="integer" />
@@ -29,8 +37,7 @@
     <fragment
         android:id="@+id/alarmDetailFragment"
         android:name="com.example.mypet.ui.care.alarm.detail.CareAlarmDetailFragment"
-        tools:layout="@layout/fragment_care_alarm_detail" >
-    </fragment>
+        tools:layout="@layout/fragment_care_alarm_detail" />
 
     <fragment
         android:id="@+id/careRepeatDetailFragment"

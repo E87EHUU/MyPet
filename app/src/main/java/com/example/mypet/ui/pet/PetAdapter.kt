@@ -39,10 +39,11 @@ class PetAdapter(
     var petListModel: List<PetListModel> = emptyList()
     var petFoodModel: PetFoodModel? = null
     var care: List<PetCareModel>? = null
+    var activePetListModel: PetListModel? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (position) {
-            PET_POSITION -> (holder as PetMainViewHolder).bind(petListModel)
+            PET_POSITION -> (holder as PetMainViewHolder).bind(petListModel, activePetListModel)
             FOOD_POSITION -> (holder as PetFoodViewHolder).bind(petFoodModel)
             else -> (holder as PetCareViewHolder).bind(care)
         }

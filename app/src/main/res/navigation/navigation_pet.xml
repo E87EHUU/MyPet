@@ -12,11 +12,19 @@
 
         <action
             android:id="@+id/action_pet_to_petCreationAndUpdateFragment"
-            app:destination="@id/petCreationAndUpdateFragment" />
+            app:destination="@id/petCreationAndUpdateFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
 
         <action
             android:id="@+id/action_petFragment_to_navigationPetCare"
-            app:destination="@id/navigationPetCare">
+            app:destination="@id/navigationPetCare"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
             <argument
                 android:name="pet_id"
                 app:argType="integer" />
@@ -27,17 +35,22 @@
                 android:name="care_type_ordinal"
                 app:argType="integer" />
         </action>
+
     </fragment>
 
     <fragment
         android:id="@+id/petCreationAndUpdateFragment"
         android:name="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment"
-        tools:layout="@layout/fragment_pet_creation" >
+        tools:layout="@layout/fragment_pet_creation">
         <argument
             android:name="pet_id"
-            app:argType="integer" />
+            app:argType="integer"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <include app:graph="@navigation/navigation_pet_care" />
 
+    <include app:graph="@navigation/navigation_pet_care" />
 
 </navigation>

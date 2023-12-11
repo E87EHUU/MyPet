@@ -20,6 +20,7 @@ import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -45,9 +46,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        initObservePet()
-        initObserveFood()
-        initObserveCare()
+        lifecycleScope.launch {
+            // FIXME Ничего лучше не придумал. Необходимо чтобы не дергался интерфейс при переходе между фрагментами.
+            delay(200)
+            initObservePet()
+            initObserveFood()
+            initObserveCare()
+        }
     }
 
     private fun initView() {
@@ -59,10 +64,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObservePet() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.pet.collectLatest {
                     adapter.petListModel = it
-                    adapter.notifyItemChanged(PetAdapter.PET_POSITION)
+                    adapter.activePetListModel = viewModel.activePetListModel
+                    binding.root.post {
+                        adapter.notifyItemChanged(PetAdapter.PET_POSITION)
+                    }
                 }
             }
         }
@@ -70,11 +78,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObserveFood() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.food.collectLatest {
-                    adapter.petFoodModel = it
                     binding.root.post {
-                        adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
+                        adapter.petFoodModel = it
+                        binding.root.post {
+                            adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
+                        }
                     }
                 }
             }
@@ -83,11 +93,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private fun initObserveCare() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.care.collectLatest {
-                    adapter.care = it
                     binding.root.post {
-                        adapter.notifyItemChanged(PetAdapter.CARE_POSITION)
+                        adapter.care = it
+                        binding.root.post {
+                            adapter.notifyItemChanged(PetAdapter.CARE_POSITION)
+                        }
                     }
                 }
             }

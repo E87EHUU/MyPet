@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigationUser"
@@ -12,12 +11,16 @@
         tools:layout="@layout/fragment_user">
         <action
             android:id="@+id/action_userFragment_to_preferencesFragment"
-            app:destination="@id/preferencesFragment" />
+            app:destination="@id/preferencesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="com.example.mypet.ui.preferences.PreferencesFragment"
-        tools:layout="@layout/fragment_preferences"/>
+        tools:layout="@layout/fragment_preferences" />
 
 </navigation>
