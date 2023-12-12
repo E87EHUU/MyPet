@@ -14,6 +14,7 @@ import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 class CareAlarmMainAdapter(
     private val callback: CareAlarmMainCallback,
 ) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
+    //TODO реализовать сортировку
 /*    override fun submitList(list: List<CareAlarmDetailModel>?) {
         println(list)
         val mutableList = list?.toMutableList()

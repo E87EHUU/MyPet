@@ -35,4 +35,7 @@ interface LocalCareDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLocalAlarmEntity(localAlarmEntity: LocalAlarmEntity): Long
+
+    @Query("DELETE FROM alarm WHERE id IN(:deletedAlarmIds)")
+    fun deleteLocalAlarmEntities(deletedAlarmIds: List<Int>)
 }

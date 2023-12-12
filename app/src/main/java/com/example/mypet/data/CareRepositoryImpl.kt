@@ -1,6 +1,5 @@
 package com.example.mypet.data
 
-import androidx.room.Transaction
 import com.example.mypet.data.alarm.AlarmNextStartCalculate
 import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
@@ -108,7 +107,6 @@ class CareRepositoryImpl @Inject constructor(
             emit(careAlarmModel)
         }
 
-    @Transaction
     override suspend fun saveCareModels(careModels: List<CareModel>) =
         flow {
             var careId: Int? = null
@@ -135,6 +133,12 @@ class CareRepositoryImpl @Inject constructor(
 
                     is CareAlarmModel ->
                         careId?.let { careId ->
+                            careModel.deletedAlarmIds.forEach {
+                                alarmDao.removeAlarm(it)
+                            }
+
+                            localCareDao.deleteLocalAlarmEntities(careModel.deletedAlarmIds)
+
                             careModel.alarms.forEach { careAlarmDetailModel ->
                                 when (careAlarmDetailModel) {
                                     is CareAlarmDetailMainModel -> {

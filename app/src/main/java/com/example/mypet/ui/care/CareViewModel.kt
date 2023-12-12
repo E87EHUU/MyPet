@@ -67,7 +67,7 @@ class CareViewModel @Inject constructor(
 
     fun alarmDelete(careAlarmDetailModel: CareAlarmDetailModel) {
         careAlarmModel?.let {
-            println(careAlarmDetailModel)
+            it.deletedAlarmIds.add(careAlarmDetailModel.id)
             val mutableList = it.alarms.toMutableList()
             mutableList.remove(careAlarmDetailModel)
             it.alarms = mutableList
