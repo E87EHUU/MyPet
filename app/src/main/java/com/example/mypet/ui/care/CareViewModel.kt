@@ -3,12 +3,12 @@ package com.example.mypet.ui.care
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.CareRepository
-import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +31,7 @@ class CareViewModel @Inject constructor(
     var careStartModel: CareStartModel? = null
     var careRepeatModel: CareRepeatModel? = null
     var careAlarmModel: CareAlarmModel? = null
-    var careAlarmDetailModel: CareAlarmDetailModel? = null
+    var careAlarmDetailMainModel: CareAlarmDetailMainModel? = null
 
     fun updateCare(petId: Int, careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -65,11 +65,12 @@ class CareViewModel @Inject constructor(
             .collect()
     }
 
-    fun switchAlarmState(alarmMinModel: AlarmMinModel) {
-        /*        foodModel.toAlarmSwitchModel()?.let {
-                    viewModelScope.launch(Dispatchers.IO) {
-                        alarmRepository.switch(it)
-                    }
-                }*/
+    fun alarmDelete(careAlarmDetailModel: CareAlarmDetailModel) {
+        careAlarmModel?.let {
+            println(careAlarmDetailModel)
+            val mutableList = it.alarms.toMutableList()
+            mutableList.remove(careAlarmDetailModel)
+            it.alarms = mutableList
+        }
     }
 }

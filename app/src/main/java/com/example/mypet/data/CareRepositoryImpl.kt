@@ -16,6 +16,8 @@ import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
+import com.example.mypet.domain.care.alarm.CareAlarmDetailAddModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import kotlinx.coroutines.flow.flow
@@ -95,10 +97,14 @@ class CareRepositoryImpl @Inject constructor(
 
     override suspend fun getCareAlarmModel(careId: Int, careTypeOrdinal: Int) =
         flow {
-            val careAlarmModel = CareAlarmModel(
-                alarms = localCareDao.getLocalAlarmEntities(careId)
+            val mutableList = mutableListOf<CareAlarmDetailModel>()
+            mutableList.add(CareAlarmDetailAddModel())
+            mutableList.addAll(
+                localCareDao.getLocalAlarmEntities(careId)
                     .map { it.toCareAlarmDetailModel() }
             )
+
+            val careAlarmModel = CareAlarmModel(alarms = mutableList.toList())
             emit(careAlarmModel)
         }
 
@@ -130,21 +136,30 @@ class CareRepositoryImpl @Inject constructor(
                     is CareAlarmModel ->
                         careId?.let { careId ->
                             careModel.alarms.forEach { careAlarmDetailModel ->
-                                val nextStart = if (careAlarmDetailModel.isActive) {
-                                    alarmNextStartCalculate.getNextStartTimeInMillis(
-                                        localStartEntity,
-                                        localRepeatEntity,
-                                        careAlarmDetailModel.hour,
-                                        careAlarmDetailModel.minute
-                                    )
-                                } else null
+                                when (careAlarmDetailModel) {
+                                    is CareAlarmDetailMainModel -> {
+                                        val nextStart = if (careAlarmDetailModel.isActive) {
+                                            alarmNextStartCalculate.getNextStartTimeInMillis(
+                                                localStartEntity,
+                                                localRepeatEntity,
+                                                careAlarmDetailModel.hour,
+                                                careAlarmDetailModel.minute
+                                            )
+                                        } else null
 
-                                val localAlarmEntity =
-                                    careAlarmDetailModel.toLocalAlarmEntity(careId, nextStart)
-                                localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                        val localAlarmEntity =
+                                            careAlarmDetailModel.toLocalAlarmEntity(
+                                                careId,
+                                                nextStart
+                                            )
+                                        localCareDao.saveLocalAlarmEntity(localAlarmEntity)
 
-                                nextStart?.let {
-                                    alarmDao.setAlarm(careAlarmDetailModel.id, nextStart)
+                                        nextStart?.let {
+                                            alarmDao.setAlarm(careAlarmDetailModel.id, nextStart)
+                                        }
+                                    }
+
+                                    else -> {}
                                 }
                             }
                         }
@@ -193,7 +208,7 @@ class CareRepositoryImpl @Inject constructor(
             endAfterDate
         )
 
-    private fun CareAlarmDetailModel.toLocalAlarmEntity(careId: Int, nextStart: Long?) =
+    private fun CareAlarmDetailMainModel.toLocalAlarmEntity(careId: Int, nextStart: Long?) =
         LocalAlarmEntity(
             id,
             careId,
@@ -208,7 +223,7 @@ class CareRepositoryImpl @Inject constructor(
         )
 
     private fun LocalAlarmEntity.toCareAlarmDetailModel() =
-        CareAlarmDetailModel(
+        CareAlarmDetailMainModel(
             id = id,
             hour = hour,
             minute = minute,

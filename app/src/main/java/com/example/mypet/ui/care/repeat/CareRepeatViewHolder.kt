@@ -17,8 +17,14 @@ class CareRepeatViewHolder(
     private lateinit var careRepeatModel: CareRepeatModel
 
     init {
-        binding.root.setOnClickListener {
-            callback.onClickRepeat()
+        with(binding) {
+            constraintLayoutCareRecyclerRepeat.setOnClickListener {
+                callback.onClickRepeat()
+            }
+
+            constraintLayoutCareRecyclerEnd.setOnClickListener {
+                callback.onClickRepeat()
+            }
         }
     }
 
@@ -37,21 +43,27 @@ class CareRepeatViewHolder(
     }
 
     private fun updateUIEnd() {
-        if (careRepeatModel.endTypeOrdinal == CareRepeatEndTypes.NONE.ordinal) {
-            binding.groupCareRecyclerEnd.isVisible = false
-        } else {
-            binding.textViewCareRecyclerEndDescription.text =
-                when (careRepeatModel.endTypeOrdinal) {
-                    CareRepeatEndTypes.AFTER_TIMES.ordinal -> context.getString(
-                        R.string.care_repeat_end_after_times,
-                        careRepeatModel.endAfterTimes
-                    )
+        with(binding) {
+            if (careRepeatModel.endTypeOrdinal == CareRepeatEndTypes.NONE.ordinal) {
+                textViewCareRecyclerEndTitle.isVisible = false
+                imageViewCareRecyclerEndIcon.isVisible = false
+                constraintLayoutCareRecyclerEnd.isVisible = false
+            } else {
+                binding.textViewCareRecyclerEndDescription.text =
+                    when (careRepeatModel.endTypeOrdinal) {
+                        CareRepeatEndTypes.AFTER_TIMES.ordinal -> context.getString(
+                            R.string.care_repeat_end_after_times,
+                            careRepeatModel.endAfterTimes
+                        )
 
-                    CareRepeatEndTypes.AFTER_DATE.ordinal -> toAppDate(careRepeatModel.endAfterDate)
-                    else -> context.getString(R.string.care_repeat_end_none)
-                }
+                        CareRepeatEndTypes.AFTER_DATE.ordinal -> toAppDate(careRepeatModel.endAfterDate)
+                        else -> context.getString(R.string.care_repeat_end_none)
+                    }
 
-            binding.groupCareRecyclerEnd.isVisible = true
+                textViewCareRecyclerEndTitle.isVisible = true
+                imageViewCareRecyclerEndIcon.isVisible = true
+                constraintLayoutCareRecyclerEnd.isVisible = true
+            }
         }
     }
 

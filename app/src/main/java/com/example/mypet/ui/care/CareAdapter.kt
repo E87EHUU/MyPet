@@ -9,9 +9,9 @@ import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerMainBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
@@ -34,6 +34,8 @@ class CareAdapter(
     var startViewHolder: CareStartViewHolder? = null
         private set
     var repeatBinding: FragmentCareRecyclerRepeatBinding? = null
+        private set
+    var alarmBinding: FragmentCareRecyclerAlarmBinding? = null
         private set
 
     override fun getItemViewType(position: Int) = position
@@ -79,8 +81,8 @@ class CareAdapter(
 
     private fun alarmViewHolder(parent: ViewGroup): CareAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
-        return CareAlarmViewHolder(binding, careAlarmCallback)
+        alarmBinding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
+        return CareAlarmViewHolder(alarmBinding!!, careAlarmCallback)
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {

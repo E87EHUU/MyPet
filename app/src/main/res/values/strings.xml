@@ -47,10 +47,13 @@
     <string name="alarm_repeat_title">Repeat</string>
     <string name="alarm_repeat_once">Once</string>
     <string name="alarm_repeat_everyday">Every day</string>
-    <string name="alarm_melody_title">Ringtone</string>
-    <string name="alarm_melody_description_default">Select</string>
-    <string name="alarm_vibration_title">Vibration</string>
-    <string name="alarm_delay_title">Postpone</string>
+
+    <string name="care_alarm_detail_ringtone_title">Ringtone</string>
+    <string name="care_alarm_detail_vibration_title">Vibration</string>
+    <string name="care_alarm_detail_delay_title">Postpone</string>
+    <string name="care_alarm_detail_hint_mute">Mute</string>
+    <string name="care_alarm_detail_notification_title">Notification</string>
+
     <string name="alarm_delay_message">Alarm is postponed</string>
     <string name="alarm_service_overlay_delay">Postpone</string>
     <string name="alarm_service_overlay_stop">Stop</string>

@@ -47,10 +47,13 @@
     <string name="alarm_repeat_title">Повтор</string>
     <string name="alarm_repeat_once">Один раз</string>
     <string name="alarm_repeat_everyday">Ежедневно</string>
-    <string name="alarm_melody_title">Мелодия</string>
-    <string name="alarm_melody_description_default">Выбрать</string>
-    <string name="alarm_vibration_title">Вибрация</string>
-    <string name="alarm_delay_title">Отложить</string>
+
+    <string name="care_alarm_detail_ringtone_title">Мелодия</string>
+    <string name="care_alarm_detail_hint_mute">Без звука</string>
+    <string name="care_alarm_detail_vibration_title">Вибрация</string>
+    <string name="care_alarm_detail_delay_title">Отложить</string>
+    <string name="care_alarm_detail_notification_title">Уведомление</string>
+
     <string name="alarm_delay_message">Будильник отложен</string>
     <string name="alarm_service_overlay_delay">Отложить</string>
     <string name="alarm_service_overlay_stop">Остановить</string>
@@ -62,7 +65,7 @@
     <string name="alarm_repeat_chooser_custom">Настроить</string>
     <string name="alarm_information">Для включения будильника необходимо разрешить приложению работу поверх всех окон.</string>
     <string name="alarm_access">Разрешить</string>
-    <string name="alarm_intent_chooser_ringtone_picker_title">Выбор мелодии</string>
+    <string name="alarm_intent_chooser_ringtone_picker_title">Без звука</string>
     <string name="alarm_notification_chanel_action_delay">Отложить</string>
     <string name="alarm_notification_chanel_action_stop">Остановить</string>
     <string name="alarm_title">Оповещение</string>

@@ -7,20 +7,35 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerAddBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
+import com.example.mypet.domain.care.alarm.CareAlarmDetailAddModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
-import com.example.mypet.ui.care.alarm.CareAlarmCallback
 
 class CareAlarmMainAdapter(
-    private val callback: CareAlarmCallback,
+    private val callback: CareAlarmMainCallback,
 ) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
-    override fun getItemCount() = super.getItemCount() + 1
+/*    override fun submitList(list: List<CareAlarmDetailModel>?) {
+        println(list)
+        val mutableList = list?.toMutableList()
+        mutableList?.sortBy { it.hour }
+        mutableList?.sortBy { it.minute }
+        println(mutableList)
+        super.submitList(mutableList)
+    }*/
+
     override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
-        return if (position == itemCount - 1) addViewHolder(parent) else mainViewHolder(parent)
+        return when (getItem(position)) {
+            is CareAlarmDetailMainModel -> mainViewHolder(parent)
+            is CareAlarmDetailAddModel -> addViewHolder(parent)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position < itemCount - 1) (holder as CareAlarmMainViewHolder).bind(getItem(position))
+        when (val item = getItem(position)) {
+            is CareAlarmDetailMainModel -> (holder as CareAlarmMainViewHolder).bind(item)
+            is CareAlarmDetailAddModel -> {}
+        }
     }
 
     private fun mainViewHolder(parent: ViewGroup): CareAlarmMainViewHolder {
