@@ -95,7 +95,7 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
                 viewModel.careAlarmDetailMainModel?.let {
                     val isChecked = !switchCareAlarmDetailNotification.isChecked
                     switchCareAlarmDetailNotification.isChecked = isChecked
-                    it.isDelay = isChecked
+                    it.isActive = isChecked
                 }
             }
         }

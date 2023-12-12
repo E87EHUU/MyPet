@@ -18,7 +18,7 @@ data class CareAlarmDetailMainModel(
     var ringtonePath: String? = null,
     var isVibration: Boolean = true,
     var isDelay: Boolean = false,
-    var isActive: Boolean = false,
+    var isActive: Boolean = true,
 ) : CareAlarmDetailModel(id, hour, minute)
 
 data class CareAlarmDetailAddModel(
