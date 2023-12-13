@@ -14,7 +14,7 @@ import com.example.mypet.domain.alarm.service.AlarmServiceModel
 
 class AlarmServiceNotification(
     private val context: Context,
-    private val alarmModel: AlarmServiceModel,
+    private val alarmServiceModel: AlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
@@ -68,15 +68,16 @@ class AlarmServiceNotification(
                 pendingIntentStartServiceStop
             )
             .build()
+
     fun getNotification() =
         NotificationCompat.Builder(context, CHANNEL_ID)
             .setAutoCancel(true)
             .setSmallIcon(R.mipmap.ic_launcher_round)
-           // .setContentTitle(alarmModel.anyTitle)
+            // .setContentTitle(alarmModel.anyTitle)
             .setContentText("")
             .setContentIntent(pendingIntentStartServiceNavToDetail)
             .apply {
-                if (alarmModel.alarmIsDelay)
+                if (alarmServiceModel.alarmIsDelay)
                     addAction(
                         R.drawable.baseline_repeat_24,
                         context.getString(R.string.alarm_notification_chanel_action_delay),
@@ -91,10 +92,14 @@ class AlarmServiceNotification(
             .build()
 
     private fun createNotificationChannel() {
+        val importance =
+            if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
+            else NotificationManager.IMPORTANCE_HIGH
+
         val channel = NotificationChannel(
             CHANNEL_ID,
             context.getString(R.string.app_name),
-            NotificationManager.IMPORTANCE_DEFAULT
+            importance
         )
             .apply {
                 lightColor = Color.BLUE

@@ -15,4 +15,6 @@ data class AlarmServiceModel(
     val alarmIsVibration: Boolean,
     val alarmIsDelay: Boolean,
     val alarmIsActive: Boolean,
+
+    val isOverlayEnable: Boolean = false,
 )

@@ -37,7 +37,7 @@ class CareAlarmViewHolder(
     }
 
     override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
-        callback.onClickAlarm(careAlarmDetailMainModel)
+        callback.onClickAlarm(careAlarmDetailMainModel ?: CareAlarmDetailMainModel())
     }
 
     override fun onClickDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
