@@ -15,8 +15,8 @@ import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
-import com.example.mypet.domain.alarm.service.AlarmServiceModel
 import com.example.mypet.domain.AlarmServiceRepository
+import com.example.mypet.domain.alarm.service.AlarmServiceModel
 import com.example.mypet.ui.MainActivity
 import com.example.mypet.utils.RingtonePlayer
 import com.example.mypet.utils.VibrationPlayer
@@ -122,7 +122,7 @@ class AlarmService : Service() {
 
                     runBlocking {
                         launch(Dispatchers.IO) {
-                            alarmServiceRepository.stopAlarm(alarmModel)
+                            alarmServiceRepository.stopAlarm(alarmModel.alarmId)
                         }
                     }
                 }
@@ -144,7 +144,7 @@ class AlarmService : Service() {
 
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        alarmServiceRepository.setDelayAlarm(alarmModel)
+                        alarmServiceRepository.setDelayAlarm(alarmModel.alarmId)
                     }
                 }
             }

@@ -5,19 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerAddBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
-import com.example.mypet.domain.alarm.AlarmMinModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
 
 class CareAlarmMainAdapter(
     private val callback: CareAlarmCallback,
-) : ListAdapter<AlarmMinModel, RecyclerView.ViewHolder>(DiffCallback()) {
+) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
+    override fun getItemCount() = super.getItemCount() + 1
+    override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
-        return mainViewHolder(parent)
+        return if (position == itemCount - 1) addViewHolder(parent) else mainViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as CareAlarmMainViewHolder).bind(getItem(position))
+        if (position < itemCount - 1) (holder as CareAlarmMainViewHolder).bind(getItem(position))
     }
 
     private fun mainViewHolder(parent: ViewGroup): CareAlarmMainViewHolder {
@@ -26,15 +29,21 @@ class CareAlarmMainAdapter(
         return CareAlarmMainViewHolder(binding, callback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<AlarmMinModel>() {
+    private fun addViewHolder(parent: ViewGroup): CareAlarmAddViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = FragmentCareRecyclerAlarmRecyclerAddBinding.inflate(inflater, parent, false)
+        return CareAlarmAddViewHolder(binding, callback)
+    }
+
+    private class DiffCallback : DiffUtil.ItemCallback<CareAlarmDetailModel>() {
         override fun areItemsTheSame(
-            oldItem: AlarmMinModel,
-            newItem: AlarmMinModel
+            oldItem: CareAlarmDetailModel,
+            newItem: CareAlarmDetailModel
         ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
-            oldItem: AlarmMinModel,
-            newItem: AlarmMinModel
+            oldItem: CareAlarmDetailModel,
+            newItem: CareAlarmDetailModel
         ) = oldItem == newItem
     }
 }

@@ -1,5 +1,9 @@
 package com.example.mypet.domain.care
 
 data class CareMainModel(
+    val id: Int,
+    val petId: Int,
     val careType: CareTypes,
-) : CareAdapterModel(CARE_ADAPTER_MAIN_KEY)
+    var note: String? = null,
+    var progress: Int? = null,
+) : CareModel(CARE_ADAPTER_MAIN_KEY)

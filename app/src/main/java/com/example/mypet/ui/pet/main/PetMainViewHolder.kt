@@ -26,6 +26,7 @@ class PetMainViewHolder(
     private var activePetListModel: PetListModel? = null
 
     init {
+        binding.recyclerViewPetRecyclerMain.itemAnimator = null
         binding.recyclerViewPetRecyclerMain.adapter = petListAdapter
         initMenuPetAction()
     }
@@ -33,7 +34,7 @@ class PetMainViewHolder(
     private fun initMenuPetAction() {
         binding.buttonPetRecyclerMainMore.setOnClickListener { view ->
             val popupMenu = PopupMenu(context, view)
-            popupMenu.menuInflater.inflate(R.menu.pet_action_menu, popupMenu.menu)
+            popupMenu.menuInflater.inflate(R.menu.popup_pet_action_menu, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -76,14 +77,17 @@ class PetMainViewHolder(
         }
     }
 
-    fun bind(petListModels: List<PetListModel>) {
-        this.petListModels = petListModels
-        petListAdapter.submitList(petListModels)
-
-        onClickPet(petListModels.firstOrNull())
+    fun bind(petListModels: List<PetListModel>?, activePetListModel: PetListModel?) {
+        petListModels?.let {
+            this.petListModels = it
+            petListAdapter.submitList(petListModels)
+            onClickPet(activePetListModel ?: petListModels.firstOrNull())
+        }
     }
 
     private fun updatePet(petListModel: PetListModel?) {
+
+
         petListModel?.let {
             activePetListModel = petListModel
 
@@ -109,18 +113,17 @@ class PetMainViewHolder(
 
         petListModel?.age?.let {
             binding.textViewPetRecyclerMainAgeText.text = it
-            binding.materialCardViewPetRecyclerMainAge.isVisible = true
+            binding.linearLayoutPetRecyclerMainAge.isVisible = true
         } ?: run {
-            binding.materialCardViewPetRecyclerMainAge.isVisible = false
+            binding.linearLayoutPetRecyclerMainAge.isVisible = false
         }
 
         petListModel?.weight?.let {
             binding.textViewPetRecyclerMainWeightText.text = it
-            binding.materialCardViewPetRecyclerMainWeight.isVisible = true
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = true
         } ?: run {
-            binding.materialCardViewPetRecyclerMainWeight.isVisible = false
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
         }
-
     }
 
     override fun onClickPetAdd() {

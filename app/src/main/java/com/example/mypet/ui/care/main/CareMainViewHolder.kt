@@ -17,9 +17,9 @@ class CareMainViewHolder(
         careMainModel?.let {
             this.careMainModel = careMainModel
 
-            binding.imageViewCareRecyclerMainIcon.setImageResource(careMainModel.careType.iconResId)
+/*            binding.imageViewCareRecyclerMainIcon.setImageResource(careMainModel.careType.iconResId)
             binding.textViewCareRecyclerMainTitle.text =
-                context.getString(careMainModel.careType.titleResId)
+                context.getString(careMainModel.careType.titleResId)*/
 
             binding.root.isVisible = true
         } ?: run {

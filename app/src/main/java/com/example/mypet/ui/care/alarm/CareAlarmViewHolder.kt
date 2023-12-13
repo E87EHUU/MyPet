@@ -16,9 +16,6 @@ class CareAlarmViewHolder(
 
     init {
         binding.recyclerViewCareRecyclerAlarmRecycler.adapter = adapter
-        binding.root.setOnClickListener {
-            //callback.onClickAlarm(careAlarmModel)
-        }
     }
 
     fun bind(careAlarmModel: CareAlarmModel?) {
@@ -38,7 +35,6 @@ class CareAlarmViewHolder(
         } ?: run {
             binding.root.isVisible = false
         }
-        // TODO добавить событие на клик по времени, чтобы открывался пикер времени, устанавливать время и обновлять в изменяымх полях и последующие использование данных при сохранении модели.
 
         // TODO добавить меню по трем точкам - Удаление, отключение\включение, изменить(дублирование тапа по общей плитке)
 

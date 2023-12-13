@@ -168,4 +168,28 @@
     <string name="map_zoom_out">Zoom out</string>
     <string name="map_zoom_in">Zoom in</string>
 
+
+
+
+    <string name="care_repeat_interval_description_none">Без повтора</string>
+
+    <string name="care_repeat_end_none">Никогда</string>
+
+    <string name="time_picker_title">Установите время</string>
+    <string name="care_repeat_times_default">1</string>
+    <string name="day">день</string>
+    <string name="care_repeat_times">Повторяется раз в</string>
+    <string name="care_repeat_end_times_default">1</string>
+    <string name="month">месяц</string>
+    <string name="week">неделя</string>
+    <string name="year">год</string>
+    <string name="care_repeat_end_times_title_2">раза</string>
+    <string name="care_repeat_end_times_title_1">После</string>
+    <string name="care_recycler_alarm_recycler_add">Добавить напоминание</string>
+    <string name="care_repeat_end_after_times">после %1$s раз(а)</string>
+    <string name="care_repeat_interval_description_day">Каждый %1$s день</string>
+    <string name="care_repeat_interval_description_week">Каждую %1$s неделю%2$s</string>
+    <string name="care_repeat_interval_description_month">Каждый %1$s месяц</string>
+    <string name="care_repeat_interval_description_year">Каждый %1$s год</string>
+
 </resources>
