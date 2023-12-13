@@ -91,6 +91,15 @@
     <string name="care_food_title">Feeding</string>
     <string name="care_food_times">time(s)</string>
     <string name="care_bath_title">Bathing</string>
+
+    <string name="care_medicine_title">Medicine</string>
+    <string name="care_grooming_title">Grooming</string>
+    <string name="care_training_title">Training</string>
+    <string name="care_vaccination_title">Vaccination</string>
+    <string name="care_vitamin_title">Vitamin</string>
+    <string name="care_checkup_title">Check up</string>
+    <string name="care_toothbrushing_title">Toothbrushing</string>
+
     <string name="care_combing_the_wool_title">Wool combing</string>
     <string name="care_against_fleas_and_ticks_title">Against fleas and ticks</string>
     <string name="care_against_worms_title">Against worms</string>
