@@ -9,7 +9,7 @@ import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerMainBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.care.CareAdapterModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareAlarmModel
 import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareRepeatModel
@@ -28,10 +28,10 @@ class CareAdapter(
     private val careRepeatCallback: CareRepeatCallback,
     private val careAlarmCallback: CareAlarmCallback,
     private val careStartCallback: CareStartCallback,
-) : ListAdapter<CareAdapterModel, RecyclerView.ViewHolder>(DiffCallback()) {
+) : ListAdapter<CareModel, RecyclerView.ViewHolder>(DiffCallback()) {
     var mainBinding: FragmentCareRecyclerMainBinding? = null
         private set
-    var startBinding: FragmentCareRecyclerStartBinding? = null
+    var startViewHolder: CareStartViewHolder? = null
         private set
     var repeatBinding: FragmentCareRecyclerRepeatBinding? = null
         private set
@@ -66,8 +66,9 @@ class CareAdapter(
 
     private fun startViewHolder(parent: ViewGroup): CareStartViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        startBinding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
-        return CareStartViewHolder(startBinding!!, careStartCallback)
+        val binding = FragmentCareRecyclerStartBinding.inflate(inflater, parent, false)
+        startViewHolder = CareStartViewHolder(binding, careStartCallback)
+        return startViewHolder!!
     }
 
     private fun repeatViewHolder(parent: ViewGroup): CareRepeatViewHolder {
@@ -82,15 +83,15 @@ class CareAdapter(
         return CareAlarmViewHolder(binding, careAlarmCallback)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<CareAdapterModel>() {
+    private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {
         override fun areItemsTheSame(
-            oldItem: CareAdapterModel,
-            newItem: CareAdapterModel
+            oldItem: CareModel,
+            newItem: CareModel
         ) = oldItem.key == newItem.key
 
         override fun areContentsTheSame(
-            oldItem: CareAdapterModel,
-            newItem: CareAdapterModel
+            oldItem: CareModel,
+            newItem: CareModel
         ) = oldItem == newItem
     }
 }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/offset_16"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/offset_24">
+
+        <TimePicker
+            android:id="@+id/timePickerCareAlarmDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/layerCareAlarmDetailRingtone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewCareAlarmDetailRingtoneTitle,textViewCareAlarmDetailRingtoneDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timePickerCareAlarmDetail" />
+
+        <TextView
+            android:id="@+id/textViewCareAlarmDetailRingtoneTitle"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginEnd="8dp"
+            android:text="@string/alarm_melody_title"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCareAlarmDetailRingtoneDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/layerCareAlarmDetailRingtone"
+            app:layout_constraintTop_toBottomOf="@+id/timePickerCareAlarmDetail"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textViewCareAlarmDetailRingtoneDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_melody_description_default"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareAlarmDetailRingtoneTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCareAlarmDetailRingtoneTitle" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/layerCareAlarmDetailVibration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewCareAlarmDetailVibrationTitle,switchCareAlarmDetailVibration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layerCareAlarmDetailRingtone" />
+
+        <TextView
+            android:id="@+id/textViewCareAlarmDetailVibrationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_vibration_title"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintBottom_toBottomOf="@+id/switchCareAlarmDetailVibration"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareAlarmDetailRingtoneTitle"
+            app:layout_constraintTop_toTopOf="@+id/switchCareAlarmDetailVibration" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchCareAlarmDetailVibration"
+            style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_16"
+            app:layout_constraintEnd_toEndOf="@+id/textViewCareAlarmDetailRingtoneTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCareAlarmDetailRingtoneDescription" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/layerCareAlarmDetailCareDelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textViewCareAlarmDetailDelayTitle,switchCareAlarmDetailDelay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layerCareAlarmDetailVibration" />
+
+        <TextView
+            android:id="@+id/textViewCareAlarmDetailDelayTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_delay_title"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintBottom_toBottomOf="@+id/switchCareAlarmDetailDelay"
+            app:layout_constraintStart_toStartOf="@+id/textViewCareAlarmDetailRingtoneTitle"
+            app:layout_constraintTop_toTopOf="@+id/switchCareAlarmDetailDelay" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchCareAlarmDetailDelay"
+            style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_16"
+            app:layout_constraintEnd_toEndOf="@+id/textViewCareAlarmDetailRingtoneTitle"
+            app:layout_constraintTop_toBottomOf="@+id/switchCareAlarmDetailVibration" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

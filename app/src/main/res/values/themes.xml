@@ -51,19 +51,19 @@
         <item name="android:elevation">@dimen/offset_4</item>
     </style>
 
-    <style name="Theme.MyPet.CareContainer">
+    <style name="Theme.MyPet.ViewHolderContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/offset_16</item>
     </style>
 
-    <style name="Theme.MyPet.CareHeaderIcon">
+    <style name="Theme.MyPet.ViewHolderHeaderIcon">
         <item name="android:layout_width">@dimen/care_header_icon_size</item>
         <item name="android:layout_height">@dimen/care_header_icon_size</item>
         <item name="android:layout_marginStart">@dimen/offset_16</item>
     </style>
 
-    <style name="Theme.MyPet.CareHeaderTitle">
+    <style name="Theme.MyPet.ViewHolderHeaderTitle">
         <item name="android:layout_width">@dimen/zero</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">@dimen/offset_16</item>
@@ -97,6 +97,42 @@
         <item name="android:layout_width">@dimen/zero</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/offset_8</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputLayout" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputEditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputEditTextPicker">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">none</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputLayoutSpinner" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="endIconDrawable">@drawable/baseline_arrow_drop_down_24</item>
+        <item name="endIconMinSize">@dimen/text_input_layout_spinner_icon_size</item>
+        <item name="endIconMode">custom</item>
+    </style>
+
+    <style name="Theme.MyPet.ChipWeek">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="chipEndPadding">2dp</item>
+        <item name="chipStartPadding">2dp</item>
+        <item name="android:checkable">true</item>
     </style>
 
 </resources>

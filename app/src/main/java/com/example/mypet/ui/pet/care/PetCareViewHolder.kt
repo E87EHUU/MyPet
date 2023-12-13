@@ -17,13 +17,15 @@ class PetCareViewHolder(
     private val petCareAdapter = PetCareMainAdapter(this)
 
     init {
-        binding.recyclerViewPetCareList.adapter = petCareAdapter
+        binding.root.itemAnimator = null
+        binding.root.adapter = petCareAdapter
     }
 
     fun bind(petCareModels: List<PetCareModel>?) {
         petCareModels?.let {
             this.petCareModels = petCareModels
             petCareAdapter.submitList(petCareModels)
+
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false

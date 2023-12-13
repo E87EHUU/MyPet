@@ -11,6 +11,7 @@ import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTI
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.LocalAlarmMinModel
+import com.example.mypet.data.local.room.model.pet.LocalPetCareFoodModel
 import com.example.mypet.data.local.room.model.pet.LocalPetCareModel
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
@@ -34,11 +35,11 @@ interface LocalPetDao {
 
     @Query(
         "SELECT " +
-                "id, start_day, start_month, start_year, progress " +
-                "FROM care " +
-                "WHERE pet_id = :petId AND care_type_ordinal = :careFoodTypeOrdinal"
+                "c.id " +
+                "FROM care c " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal = :careFoodTypeOrdinal"
     )
-    fun getLocalPetCareModels(petId: Int, careFoodTypeOrdinal: Int): Flow<LocalPetCareModel?>
+    fun getLocalPetCareFoodModel(petId: Int, careFoodTypeOrdinal: Int): Flow<LocalPetCareFoodModel?>
 
     @Query(
         "SELECT " +
@@ -49,6 +50,16 @@ interface LocalPetDao {
                 "WHERE p.id = :petId"
     )
     fun getLocalAlarmMinModels(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalAlarmMinModel>>
+
+
+    @Query(
+        "SELECT " +
+                "c.id, c.care_type_ordinal, c.progress, a.next_start " +
+                "FROM care c " +
+                "LEFT JOIN alarm a ON a.id = (SELECT id FROM alarm WHERE care_id = c.id AND a.next_start > :currentTimeInMillis LIMIT 1) " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal != 0"
+    )
+    fun getLocalPetCareModels(petId: Int, currentTimeInMillis: Long): Flow<List<LocalPetCareModel>>
 
     @Query("DELETE FROM pet WHERE id = :petId")
     suspend fun deletePet(petId: Int)
