@@ -43,6 +43,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     override fun onResume() {
         super.onResume()
         viewModel.careAlarmDetailMainModel = null
+        initToolbar()
     }
 
     override fun onStop() {
@@ -53,11 +54,16 @@ class CareFragment : Fragment(R.layout.fragment_care),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar()
         initView()
         initObserveCareAdapterModels()
     }
 
     private fun initView() {
+        binding.root.adapter = adapter
+    }
+
+    private fun initToolbar() {
         getToolbar()?.let { toolbar ->
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
@@ -71,7 +77,6 @@ class CareFragment : Fragment(R.layout.fragment_care),
                 }
             }
         }
-        binding.root.adapter = adapter
     }
 
     private fun initObserveCareAdapterModels() {

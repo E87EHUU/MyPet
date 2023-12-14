@@ -1,41 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer"
-    android:paddingBottom="@dimen/offset_16"
-    android:visibility="gone"
-    tools:visibility="visible">
+    android:layout_width="match_parent"
+    style="@style/Widget.Material3.CardView.Elevated"
+    android:layout_marginVertical="@dimen/offset_16"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageViewPetRecyclerFoodIcon"
-        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
-        android:contentDescription="@string/pet_food_title"
-        android:src="@drawable/feed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewPetRecyclerFoodTitle"
-        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
-        android:text="@string/pet_food_title"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerFoodIcon"
-        app:layout_constraintStart_toEndOf="@+id/imageViewPetRecyclerFoodIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerFoodIcon" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPetRecyclerFood"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_16"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:overScrollMode="never"
-        android:paddingHorizontal="@dimen/offset_24"
-        android:paddingVertical="@dimen/offset_4"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerFoodTitle"
-        tools:listitem="@layout/fragment_pet_recycler_food_recycler_main" />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageViewPetRecyclerFoodIcon"
+            style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+            android:layout_marginTop="@dimen/offset_16"
+            android:layout_marginStart="@dimen/offset_32"
+            android:contentDescription="@string/pet_food_title"
+            android:src="@drawable/feed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewPetRecyclerFoodTitle"
+            style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+            android:text="@string/pet_food_title"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerFoodIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPetRecyclerFoodIcon"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerFoodIcon" />
+
+        <ProgressBar
+            android:id="@+id/progressBarPetRecyclerFood"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/offset_24"
+            android:max="100"
+            android:progress="100"
+            android:progressBackgroundTint="@color/pet_care_recycler_item_progress_background"
+            android:progressBackgroundTintMode="add"
+            android:progressTint="@color/pet_care_recycler_item_progress_line"
+            android:progressTintMode="multiply"
+            android:scaleY="2.5"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerFoodIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewPetRecyclerFoodTitle"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerFoodIcon"
+            tools:progress="40"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPetRecyclerFood"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="@dimen/offset_16"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:paddingHorizontal="@dimen/offset_24"
+            android:paddingVertical="@dimen/offset_4"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerFoodTitle"
+            tools:listitem="@layout/fragment_pet_recycler_food_recycler_main" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

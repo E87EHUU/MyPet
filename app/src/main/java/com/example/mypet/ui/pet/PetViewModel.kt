@@ -61,30 +61,35 @@ class PetViewModel @Inject constructor(
             .collectLatest { _care.value = getCares(petListModel, it) }
     }
 
-    private fun getCares(petListModel: PetListModel, petCareModel: List<PetCareModel>) =
+    private fun getCares(petListModel: PetListModel, petCareModel: List<PetCareModel>): MutableList<PetCareModel> {
+        val petCares = mutableListOf<PetCareModel>()
+
+        petCares.add(petCareModel.getCare(CareTypes.BATH))
+        petCares.add(petCareModel.getCare(CareTypes.WALK))
+        petCares.add(petCareModel.getCare(CareTypes.MEDICINE))
+        petCares.add(petCareModel.getCare(CareTypes.GROOMING))
+        petCares.add(petCareModel.getCare(CareTypes.TRAINING))
+        petCares.add(petCareModel.getCare(CareTypes.VACCINATION))
+        petCares.add(petCareModel.getCare(CareTypes.VITAMIN))
+
         when (petListModel.kindOrdinal) {
-            PetKind.CAT.ordinal,
-            PetKind.DOG.ordinal -> {
-                listOf(
-                    petCareModel.find { it.careType == CareTypes.BATH }
-                        ?: PetCareModel(careType = CareTypes.BATH),
-
-                    petCareModel.find { it.careType == CareTypes.COMBING_THE_WOOL }
-                        ?: PetCareModel(careType = CareTypes.COMBING_THE_WOOL),
-
-                    petCareModel.find { it.careType == CareTypes.AGAINST_FLEAS_WORMS }
-                        ?: PetCareModel(careType = CareTypes.AGAINST_FLEAS_WORMS),
-
-                    petCareModel.find { it.careType == CareTypes.AGAINST_FLEAS_AND_TICKS }
-                        ?: PetCareModel(careType = CareTypes.AGAINST_FLEAS_AND_TICKS),
-
-                    petCareModel.find { it.careType == CareTypes.WALK }
-                        ?: PetCareModel(careType = CareTypes.WALK),
-                )
+            PetKind.CAT.ordinal -> {
+                petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_WORMS))
+                petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_AND_TICKS))
             }
 
-            else -> emptyList()
+            PetKind.DOG.ordinal -> {
+                petCares.add(petCareModel.getCare(CareTypes.COMBING_THE_WOOL))
+                petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_WORMS))
+                petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_AND_TICKS))
+            }
         }
+
+        return petCares
+    }
+
+    private fun List<PetCareModel>.getCare(careTypes: CareTypes) =
+        find { it.careType == careTypes } ?: PetCareModel(careType = careTypes)
 
     fun deletePet(petId: Int) =
         viewModelScope.launch(Dispatchers.IO) {

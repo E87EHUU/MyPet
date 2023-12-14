@@ -20,7 +20,6 @@ import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -46,12 +45,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         super.onViewCreated(view, savedInstanceState)
         initView()
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            // FIXME Ничего лучше не придумал. Необходимо чтобы не дергался интерфейс при переходе между фрагментами.
-            initObservePet()
-            initObserveFood()
-            initObserveCare()
-        }
+        initObservePet()
+        initObserveFood()
+        initObserveCare()
     }
 
     private fun initView() {
