@@ -25,7 +25,7 @@ object DataModule {
     @Provides
     fun provideDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, LocalDatabase::class.java, DB_NAME)
-            .createFromAsset(DB_FILE_NAME)
+            //.createFromAsset(DB_FILE_NAME)
             //.fallbackToDestructiveMigration()
             .build()
 
