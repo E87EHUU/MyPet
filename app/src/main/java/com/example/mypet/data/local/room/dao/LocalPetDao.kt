@@ -45,8 +45,8 @@ interface LocalPetDao {
         "SELECT " +
                 "a.id, a.hour, a.minute, a.is_active " +
                 "FROM pet p " +
-                "LEFT JOIN care c ON c.pet_id = p.id AND c.care_type_ordinal = :careFoodTypeOrdinal " +
-                "LEFT JOIN alarm a ON a.care_id = c.id " +
+                "JOIN care c ON c.pet_id = p.id AND c.care_type_ordinal = :careFoodTypeOrdinal " +
+                "JOIN alarm a ON a.care_id = c.id " +
                 "WHERE p.id = :petId"
     )
     fun getLocalAlarmMinModels(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalAlarmMinModel>>

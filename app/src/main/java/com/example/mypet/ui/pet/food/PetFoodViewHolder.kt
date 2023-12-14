@@ -24,6 +24,7 @@ class PetFoodViewHolder(
     fun bind(petFoodModel: PetFoodModel?) {
         petFoodModel?.let {
             this.petFoodModel = petFoodModel
+
             petFoodAdapter.submitList(petFoodModel.alarmModels)
             binding.root.isVisible = true
         } ?: run {

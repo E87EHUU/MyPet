@@ -29,10 +29,10 @@ class PetRepositoryImpl @Inject constructor(
             localPetDao.getLocalPetCareFoodModel(petId, CareTypes.FOOD.ordinal),
             localPetDao.getLocalAlarmMinModels(petId, CareTypes.FOOD.ordinal)
         ) { localPetCareModel, localAlarmMinModels ->
-            PetFoodModel(
-                care = localPetCareModel.toPetCareDetailModel(),
-                alarmModels = localAlarmMinModels.map { it.toAlarmMinModel() }
-            )
+                PetFoodModel(
+                    care = localPetCareModel.toPetCareDetailModel(),
+                    alarmModels = localAlarmMinModels.map { it.toAlarmMinModel() }
+                )
         }
 
     override fun getCareModels(petId: Int) =
