@@ -85,6 +85,10 @@ fun Fragment.getActionBar() =
 
 fun Fragment.getToolbar() =
     (requireActivity() as? MainActivity)?.findViewById<Toolbar>(R.id.toolbar)
+        ?.apply {
+            title = null
+            menu.clear()
+        }
 
 fun Fragment.getFloatingActionButton() =
     (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)

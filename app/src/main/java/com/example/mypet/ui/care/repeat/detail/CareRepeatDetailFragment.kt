@@ -43,10 +43,13 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        getToolbar()
+    }
+
     private fun initView() {
         getToolbar()?.let { toolbar ->
-            toolbar.title = null
-            toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {

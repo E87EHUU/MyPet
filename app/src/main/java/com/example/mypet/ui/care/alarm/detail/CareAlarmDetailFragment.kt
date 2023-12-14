@@ -37,6 +37,11 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
             viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
     }
 
+    override fun onStop() {
+        super.onStop()
+        getToolbar()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,8 +52,6 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     private fun initView() {
         getToolbar()?.let { toolbar ->
-            toolbar.title = null
-            toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
