@@ -39,7 +39,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 binding.textInputEditTextCareRepeatIntervalTimes.text.toString()
 
             careRepeatModel.endAfterTimes =
-                binding.textInputEditTextCareRepeatEndAfterTimes.text.toString()
+                binding.textInputEditTextCareRepeatDetailEndAfterTimes.text.toString()
         }
     }
 
@@ -67,7 +67,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             updateUIInterval()
             updateUIWeekChips()
             updateUIEnd()
-            binding.textInputEditTextCareRepeatEndAfterTimes.setText(careRepeatModel.endAfterTimes)
+            binding.textInputEditTextCareRepeatDetailEndAfterTimes.setText(careRepeatModel.endAfterTimes)
             updateUIEndAfterDateText()
         }
     }
@@ -76,42 +76,52 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         when (viewModel.careRepeatModel?.endTypeOrdinal) {
             CareRepeatEndTypes.AFTER_TIMES.ordinal -> {
                 updateUIEndAfterTimes()
-                binding.radioButtonCareRepeatEndAfterTimes.isChecked = true
+                binding.radioButtonCareRepeatDetailEndAfterTimes.isChecked = true
             }
 
             CareRepeatEndTypes.AFTER_DATE.ordinal -> {
                 updateUIEndAfterDate()
-                binding.radioButtonCareRepeatEndAfterDate.isChecked = true
+                binding.radioButtonCareRepeatDetailEndAfterDate.isChecked = true
             }
 
             else -> {
                 updateUIEndNone()
-                binding.radioButtonCareRepeatEndNone.isChecked = true
+                binding.radioButtonCareRepeatDetailEndNone.isChecked = true
             }
         }
     }
 
     private fun updateUIEndAfterTimes() {
-        changeStateContentRadioEndAfterDate()
-        changeStateContentRadioEndAfterTimes(isEnabled = true)
+        with(binding) {
+            radioButtonCareRepeatDetailEndNone.isChecked = false
+            radioButtonCareRepeatDetailEndAfterTimes.isChecked = true
+            radioButtonCareRepeatDetailEndAfterDate.isChecked = false
+
+            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = true
+            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = false
+        }
     }
 
     private fun updateUIEndAfterDate() {
-        changeStateContentRadioEndAfterTimes()
-        changeStateContentRadioEndAfterDate(isEnabled = true)
+        with(binding) {
+            radioButtonCareRepeatDetailEndNone.isChecked = false
+            radioButtonCareRepeatDetailEndAfterTimes.isChecked = false
+            radioButtonCareRepeatDetailEndAfterDate.isChecked = true
+
+            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = false
+            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = true
+        }
     }
 
     private fun updateUIEndNone() {
-        changeStateContentRadioEndAfterTimes()
-        changeStateContentRadioEndAfterDate()
-    }
+        with(binding) {
+            radioButtonCareRepeatDetailEndNone.isChecked = true
+            radioButtonCareRepeatDetailEndAfterTimes.isChecked = false
+            radioButtonCareRepeatDetailEndAfterDate.isChecked = false
 
-    private fun changeStateContentRadioEndAfterTimes(isEnabled: Boolean = false) {
-        binding.textInputLayoutsCareRepeatEndTimes.isEnabled = isEnabled
-    }
-
-    private fun changeStateContentRadioEndAfterDate(isEnabled: Boolean = false) {
-        binding.textInputEditTextCareRepeatEndDate.isEnabled = isEnabled
+            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = false
+            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = false
+        }
     }
 
     private fun updateUIInterval() {
@@ -152,7 +162,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private fun updateUIEndAfterDateText() {
         viewModel.careRepeatModel?.endAfterDate?.let {
-            binding.textInputEditTextCareRepeatEndDate.setText(toAppDate(it))
+            binding.textInputEditTextCareRepeatEndAfterDate.setText(toAppDate(it))
         }
     }
 
@@ -186,7 +196,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         )
 
         binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterIntervalTimes
-        binding.textInputEditTextCareRepeatEndAfterTimes.filters = inputFilterEndAfterTimes
+        binding.textInputEditTextCareRepeatDetailEndAfterTimes.filters = inputFilterEndAfterTimes
 
         binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { _, checkedIds ->
             viewModel.careRepeatModel?.let { careRepeatModel ->
@@ -200,35 +210,30 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             }
         }
 
-        binding.radioGroupCareRepeatEnd.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.radioButtonCareRepeatEndAfterTimes -> {
-                    viewModel.careRepeatModel?.let { careRepeatModel ->
-                        careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_TIMES.ordinal
-                        updateUIEndAfterTimes()
-                    }
-                }
+        binding.constraintLayoutCareRepeatDetailEndAfterTimes.setOnClickListener {
+            viewModel.careRepeatModel?.let { careRepeatModel ->
+                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_TIMES.ordinal
+                updateUIEndAfterTimes()
+            }
+        }
 
-                R.id.radioButtonCareRepeatEndAfterDate -> {
-                    viewModel.careRepeatModel?.let { careRepeatModel ->
-                        careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_DATE.ordinal
-                        updateUIEndAfterDate()
-                    }
-                }
+        binding.constraintLayoutCareRepeatDetailEndAfterDate.setOnClickListener {
+            viewModel.careRepeatModel?.let { careRepeatModel ->
+                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_DATE.ordinal
+                updateUIEndAfterDate()
+            }
+        }
 
-                else -> {
-                    viewModel.careRepeatModel?.let { careRepeatModel ->
-                        careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.NONE.ordinal
-                        updateUIEndNone()
-                    }
-                }
+        binding.constraintLayoutCareRepeatDetailEndNone.setOnClickListener {
+            viewModel.careRepeatModel?.let { careRepeatModel ->
+                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.NONE.ordinal
+                updateUIEndNone()
             }
         }
 
         binding.textInputEditTextCareRepeatInterval.setOnClickListener { showPopUpRepeatTimes() }
-        binding.textInputEditTextCareRepeatEndDate.setOnClickListener { showDatePicker() }
+        binding.textInputEditTextCareRepeatEndAfterDate.setOnClickListener { showDatePicker() }
     }
-
 
     private fun showPopUpRepeatTimes() {
         val popupMenu = PopupMenu(context, binding.textInputEditTextCareRepeatInterval)
