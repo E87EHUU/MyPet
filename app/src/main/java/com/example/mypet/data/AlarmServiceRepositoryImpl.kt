@@ -64,9 +64,11 @@ class AlarmServiceRepositoryImpl @Inject constructor(
     private fun LocalAlarmServiceModel.toAlarmServiceModel() =
         AlarmServiceModel(
             petId,
+            petName,
             petAvatarPath,
             petKindOrdinal,
             petBreedOrdinal,
+            careTypeOrdinal,
             alarmId,
             alarmDescription,
             alarmHour,

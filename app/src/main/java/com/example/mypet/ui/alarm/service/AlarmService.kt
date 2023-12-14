@@ -139,7 +139,7 @@ class AlarmService : Service() {
             alarmModels[id]?.let { alarmModel ->
                 startForeground(
                     alarmModel.alarmId,
-                    notification.getDelayNotification()
+                    notification.getNotification()
                 )
 
                 runBlocking {

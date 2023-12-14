@@ -10,6 +10,7 @@ import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
 import com.example.mypet.domain.alarm.service.AlarmServiceModel
+import com.example.mypet.domain.care.CareTypes
 
 
 class AlarmServiceNotification(
@@ -55,41 +56,33 @@ class AlarmServiceNotification(
         createNotificationChannel()
     }
 
-    fun getDelayNotification() =
-        NotificationCompat.Builder(context, CHANNEL_ID)
-            .setAutoCancel(true)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            //.setContentTitle(alarmModel.anyTitle)
-            .setContentIntent(pendingIntentStartServiceNavToDetail)
-            .setContentText(context.getString(R.string.alarm_delay_message))
-            .addAction(
-                R.drawable.baseline_close_24,
-                context.getString(R.string.alarm_notification_chanel_action_stop),
-                pendingIntentStartServiceStop
-            )
-            .build()
+    fun getNotification(): Notification {
+        with(alarmServiceModel) {
+            val text = alarmDescription
+                ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
 
-    fun getNotification() =
-        NotificationCompat.Builder(context, CHANNEL_ID)
-            .setAutoCancel(true)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            // .setContentTitle(alarmModel.anyTitle)
-            .setContentText("")
-            .setContentIntent(pendingIntentStartServiceNavToDetail)
-            .apply {
-                if (alarmServiceModel.alarmIsDelay)
-                    addAction(
-                        R.drawable.baseline_repeat_24,
-                        context.getString(R.string.alarm_notification_chanel_action_delay),
-                        pendingIntentStartServiceDelay
-                    )
-            }
-            .addAction(
-                R.drawable.baseline_close_24,
-                context.getString(R.string.alarm_notification_chanel_action_stop),
-                pendingIntentStartServiceStop
-            )
-            .build()
+            return NotificationCompat.Builder(context, CHANNEL_ID)
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle(petName)
+                .setContentText(text)
+                .setContentIntent(pendingIntentStartServiceNavToDetail)
+                .apply {
+                    if (alarmIsDelay)
+                        addAction(
+                            R.drawable.baseline_repeat_24,
+                            context.getString(R.string.alarm_notification_chanel_action_delay),
+                            pendingIntentStartServiceDelay
+                        )
+                }
+                .addAction(
+                    R.drawable.baseline_close_24,
+                    context.getString(R.string.alarm_notification_chanel_action_stop),
+                    pendingIntentStartServiceStop
+                )
+                .build()
+        }
+    }
 
     private fun createNotificationChannel() {
         val importance =
