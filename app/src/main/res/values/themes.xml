@@ -107,9 +107,15 @@
         <item name="android:layout_marginTop">@dimen/offset_8</item>
     </style>
 
-    <style name="Theme.MyPet.TextInputLayout" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+    <style name="Theme.MyPet.TextInputLayoutWrap" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputLayoutZero" parent="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/offset_16</item>
     </style>
 
     <style name="Theme.MyPet.TextInputEditText">

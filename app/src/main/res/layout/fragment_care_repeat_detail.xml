@@ -21,7 +21,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutsCareRepeatIntervalTimes"
-            style="@style/Theme.MyPet.TextInputLayout"
+            style="@style/Theme.MyPet.TextInputLayoutWrap"
             android:layout_marginStart="@dimen/offset_8"
             android:layout_marginTop="@dimen/offset_8"
             android:maxEms="3"
@@ -162,7 +162,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutsCareRepeatDetailEndAfterTimes"
-                style="@style/Theme.MyPet.TextInputLayout"
+                style="@style/Theme.MyPet.TextInputLayoutWrap"
                 android:layout_marginStart="@dimen/offset_8"
                 android:maxEms="3"
                 app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareRepeatDetailEndAfterTimes"
@@ -205,8 +205,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutsCareRepeatEndAfterDate"
-                style="@style/Theme.MyPet.TextInputLayout"
-                android:layout_marginStart="8dp"
+                style="@style/Theme.MyPet.TextInputLayoutWrap"
+                android:layout_marginStart="@dimen/offset_8"
                 app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareRepeatDetailEndAfterDate"
                 app:layout_constraintStart_toEndOf="@+id/radioButtonCareRepeatDetailEndAfterDate"
                 app:layout_constraintTop_toTopOf="@+id/radioButtonCareRepeatDetailEndAfterDate">

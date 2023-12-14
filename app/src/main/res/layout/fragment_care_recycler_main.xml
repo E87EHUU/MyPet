@@ -2,4 +2,64 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer"/>
+    style="@style/Theme.MyPet.ViewHolderContainer">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutsCareRecyclerMainTitle"
+        style="@style/Theme.MyPet.TextInputLayoutZero"
+        android:layout_marginHorizontal="@dimen/offset_16"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextCareRecyclerMainTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/care_recycler_main_title_hint"
+            android:maxLines="2" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutsCareRecyclerMainNote"
+        style="@style/Theme.MyPet.TextInputLayoutZero"
+        android:layout_marginTop="@dimen/offset_8"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerMainTitle"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextCareRecyclerMainNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/care_recycler_main_note_hint"
+            android:maxLines="5"
+            android:minLines="2" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutsCareRecyclerMainDose"
+        style="@style/Theme.MyPet.TextInputLayoutZero"
+        android:layout_marginTop="@dimen/offset_8"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRecyclerMainNote"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextCareRecyclerMainDose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/care_recycler_main_dose_hint"
+            android:maxLines="3" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

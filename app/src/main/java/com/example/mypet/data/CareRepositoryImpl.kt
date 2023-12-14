@@ -181,7 +181,9 @@ class CareRepositoryImpl @Inject constructor(
             id = id,
             petId = petId,
             careTypeOrdinal = careType.ordinal,
+            title = title,
             note = note,
+            dose = dose,
             progress = progress
         )
 
