@@ -103,9 +103,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     private fun navToCare(petCareModel: PetCareModel) {
-        viewModel.activePetListModel?.let {
+        viewModel.activePetListId?.let {
             val directions = PetFragmentDirections.actionPetFragmentToNavigationPetCare(
-                petId = it.id,
+                petId = it,
                 careId = petCareModel.id,
                 careTypeOrdinal = petCareModel.careType.ordinal
             )
@@ -133,10 +133,11 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     override fun onClickPet(petListModel: PetListModel?) {
         viewModel.updatePetDetail(petListModel)
-        adapter.activePetListModel = viewModel.activePetListModel
+        adapter.activePetListId = viewModel.activePetListId
     }
 
     override fun onClickPetDelete(petListModel: PetListModel) {
+        adapter.activePetListId = null
         viewModel.deletePet(petListModel.id)
     }
 

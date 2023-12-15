@@ -29,7 +29,7 @@ class PetViewModel @Inject constructor(
     private val _care = MutableStateFlow<List<PetCareModel>?>(null)
     val care = _care.asStateFlow()
 
-    var activePetListModel: PetListModel? = null
+    var activePetListId: Int? = null
 
     init {
         updatePet()
@@ -42,7 +42,7 @@ class PetViewModel @Inject constructor(
 
     fun updatePetDetail(petListModel: PetListModel?) {
         petListModel?.let {
-            activePetListModel = it
+            activePetListId = it.id
             updateFood(it.id)
             updateCare(it)
         } ?: run {

@@ -77,17 +77,16 @@ class PetMainViewHolder(
         }
     }
 
-    fun bind(petListModels: List<PetListModel>?, activePetListModel: PetListModel?) {
-        petListModels?.let {
-            this.petListModels = it
+    fun bind(petListModels: List<PetListModel>?, activePetListId: Int?) {
+        petListModels?.let { petListModels ->
+            this.petListModels = petListModels
             petListAdapter.submitList(petListModels)
-            onClickPet(activePetListModel ?: petListModels.firstOrNull())
+            onClickPet(petListModels.find { it.id == activePetListId }
+                ?: petListModels.firstOrNull())
         }
     }
 
     private fun updatePet(petListModel: PetListModel?) {
-
-
         petListModel?.let {
             activePetListModel = petListModel
 
