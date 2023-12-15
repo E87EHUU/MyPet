@@ -51,7 +51,6 @@ interface LocalPetDao {
     )
     fun getLocalAlarmMinModels(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalAlarmMinModel>>
 
-
     @Query(
         "SELECT " +
                 "c.id, c.care_type_ordinal, c.progress, a.next_start " +

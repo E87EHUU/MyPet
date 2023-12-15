@@ -2,10 +2,12 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     style="@style/Widget.Material3.CardView.Elevated"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/offset_16"
-    android:layout_height="wrap_content">
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,8 +16,8 @@
         <ImageView
             android:id="@+id/imageViewPetRecyclerFoodIcon"
             style="@style/Theme.MyPet.ViewHolderHeaderIcon"
-            android:layout_marginTop="@dimen/offset_16"
             android:layout_marginStart="@dimen/offset_32"
+            android:layout_marginTop="@dimen/offset_16"
             android:contentDescription="@string/pet_food_title"
             android:src="@drawable/feed"
             app:layout_constraintStart_toStartOf="parent"

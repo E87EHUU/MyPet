@@ -17,6 +17,7 @@ import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.CareViewModel
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
+import java.util.Calendar
 
 
 class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
@@ -156,8 +157,9 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         viewModel.careAlarmDetailMainModel?.let { careAlarmDetailModel ->
             if (careAlarmDetailModel.id == DEFAULT_ID) {
                 viewModel.careAlarmModel?.let { careAlarmModel ->
+                    val genId = (Calendar.getInstance().timeInMillis * -1).toInt()
                     val mutableList = careAlarmModel.alarms.toMutableList()
-                    mutableList.add(careAlarmDetailModel)
+                    mutableList.add(careAlarmDetailModel.copy(id = genId))
                     careAlarmModel.alarms = mutableList
                 }
             }

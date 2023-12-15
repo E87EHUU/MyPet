@@ -50,6 +50,7 @@ class AlarmDao @Inject constructor(
             val intent = Intent(context, AlarmService::class.java)
             intent.action = ALARM_OVERLAY_ACTION_START
             intent.putExtra(ALARM_ID, id)
+
             PendingIntent.getForegroundService(
                 context,
                 id,

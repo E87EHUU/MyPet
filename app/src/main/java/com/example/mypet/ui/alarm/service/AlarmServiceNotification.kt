@@ -15,7 +15,6 @@ import com.example.mypet.domain.care.CareTypes
 
 class AlarmServiceNotification(
     private val context: Context,
-    private val alarmServiceModel: AlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
@@ -52,11 +51,7 @@ class AlarmServiceNotification(
             )
         }
 
-    init {
-        createNotificationChannel()
-    }
-
-    fun getNotification(): Notification {
+    fun getNotification(alarmServiceModel: AlarmServiceModel): Notification {
         with(alarmServiceModel) {
             val text = alarmDescription
                 ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
@@ -84,10 +79,10 @@ class AlarmServiceNotification(
         }
     }
 
-    private fun createNotificationChannel() {
+    fun createNotificationChannel() {
         val importance =
-            if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
-            else NotificationManager.IMPORTANCE_HIGH
+            /*if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
+            else */NotificationManager.IMPORTANCE_HIGH
 
         val channel = NotificationChannel(
             CHANNEL_ID,

@@ -43,6 +43,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     override fun onResume() {
         super.onResume()
         viewModel.careAlarmDetailMainModel = null
+        println(viewModel.careAlarmModel)
         initToolbar()
     }
 
