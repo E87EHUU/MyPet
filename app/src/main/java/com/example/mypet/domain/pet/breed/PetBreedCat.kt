@@ -2,7 +2,6 @@ package com.example.mypet.domain.pet.breed
 
 import com.example.mypet.app.R
 
-
 enum class PetBreedCat(val iconResId: Int?, val nameResId: Int) {
     CAT_1(null, R.string.pet_breed_cat_1),
     CAT_2(null, R.string.pet_breed_cat_2),
@@ -64,4 +63,30 @@ enum class PetBreedCat(val iconResId: Int?, val nameResId: Int) {
     CAT_58(null, R.string.pet_breed_cat_58),
     CAT_59(null, R.string.pet_breed_cat_59),
     CAT_60(null, R.string.pet_breed_cat_60),
+    CAT_61(null, R.string.pet_breed_cat_61),
+    CAT_62(null, R.string.pet_breed_cat_62),
+    CAT_63(null, R.string.pet_breed_cat_63),
+    CAT_64(null, R.string.pet_breed_cat_64),
+    CAT_65(null, R.string.pet_breed_cat_65),
+    CAT_66(null, R.string.pet_breed_cat_66),
+    CAT_67(null, R.string.pet_breed_cat_67),
+    CAT_68(null, R.string.pet_breed_cat_68),
+    CAT_69(null, R.string.pet_breed_cat_69),
+    CAT_70(null, R.string.pet_breed_cat_70),
+    CAT_71(null, R.string.pet_breed_cat_71),
+    CAT_72(null, R.string.pet_breed_cat_72),
+    CAT_73(null, R.string.pet_breed_cat_73),
+    CAT_74(null, R.string.pet_breed_cat_74),
+    CAT_75(null, R.string.pet_breed_cat_75),
+    CAT_76(null, R.string.pet_breed_cat_76),
+    CAT_77(null, R.string.pet_breed_cat_77),
+    CAT_78(null, R.string.pet_breed_cat_78),
+    CAT_79(null, R.string.pet_breed_cat_79),
+    CAT_80(null, R.string.pet_breed_cat_80),
+    CAT_81(null, R.string.pet_breed_cat_81),
+    CAT_82(null, R.string.pet_breed_cat_82),
+    CAT_83(null, R.string.pet_breed_cat_83),
+    CAT_84(null, R.string.pet_breed_cat_84),
+    CAT_85(null, R.string.pet_breed_cat_85),
+    CAT_86(null, R.string.pet_breed_cat_86),
 }
