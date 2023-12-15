@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.service
+package com.example.mypet.service.alarm
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -56,7 +56,7 @@ class AlarmServiceNotification(
             val text = alarmDescription
                 ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
 
-            return NotificationCompat.Builder(context, CHANNEL_ID)
+            val notification =  NotificationCompat.Builder(context, CHANNEL_ID)
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(petName)
@@ -76,13 +76,17 @@ class AlarmServiceNotification(
                     pendingIntentStartServiceStop
                 )
                 .build()
+
+                //            notification.flags = notification.flags and NO
+
+            return notification
         }
     }
 
     fun createNotificationChannel() {
         val importance =
             /*if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
-            else */NotificationManager.IMPORTANCE_HIGH
+            else */NotificationManager.IMPORTANCE_MAX
 
         val channel = NotificationChannel(
             CHANNEL_ID,

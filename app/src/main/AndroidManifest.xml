@@ -26,6 +26,10 @@
         android:theme="@style/Theme.MyPet">
 
         <receiver
+            android:name="com.example.mypet.broadcast.AlarmReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name="com.example.mypet.broadcast.BootCompletedReceiver"
             android:exported="false">
             <intent-filter>
@@ -34,13 +38,13 @@
         </receiver>
 
         <service
-            android:name="com.example.mypet.ui.alarm.service.AlarmService"
+            android:name="com.example.mypet.service.alarm.AlarmService"
             android:enabled="true" />
 
         <activity
             android:name="com.example.mypet.ui.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
