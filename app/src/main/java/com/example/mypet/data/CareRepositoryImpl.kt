@@ -15,9 +15,7 @@ import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
-import com.example.mypet.domain.care.alarm.CareAlarmDetailAddModel
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
-import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
@@ -96,14 +94,10 @@ class CareRepositoryImpl @Inject constructor(
 
     override suspend fun getCareAlarmModel(careId: Int, careTypeOrdinal: Int) =
         flow {
-            val mutableList = mutableListOf<CareAlarmDetailModel>()
-            mutableList.add(CareAlarmDetailAddModel())
-            mutableList.addAll(
-                localCareDao.getLocalAlarmEntities(careId)
-                    .map { it.toCareAlarmDetailModel() }
-            )
+            val careAlarmModels = localCareDao.getLocalAlarmEntities(careId)
+                .map { it.toCareAlarmDetailModel() }
 
-            val careAlarmModel = CareAlarmModel(alarms = mutableList.toList())
+            val careAlarmModel = CareAlarmModel(alarms = careAlarmModels)
             emit(careAlarmModel)
         }
 

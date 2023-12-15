@@ -32,11 +32,16 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (viewModel.careAlarmDetailMainModel == null)
+            viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
+    }
+
     override fun onStart() {
         super.onStart()
         initToolbar()
-        if (viewModel.careAlarmDetailMainModel == null)
-            viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
     }
 
     override fun onStop() {
@@ -47,7 +52,6 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar()
         initView()
         updateUI()
         initListeners()

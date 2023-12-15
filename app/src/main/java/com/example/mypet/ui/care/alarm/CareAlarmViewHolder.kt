@@ -19,6 +19,10 @@ class CareAlarmViewHolder(
 
     init {
         with(binding) {
+            binding.buttonCareRecyclerAlarmAdd.setOnClickListener {
+                callback.onClickAlarm()
+            }
+
             recyclerViewCareRecyclerAlarmRecycler.itemAnimator = null
             recyclerViewCareRecyclerAlarmRecycler.adapter = adapter
         }

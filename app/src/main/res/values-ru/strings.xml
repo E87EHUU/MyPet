@@ -111,7 +111,7 @@
         <item>каждый год</item>
     </string-array>
 
-    <string name="food_add_alarm_title">Добавить напоминание</string>
+    <string name="food_add_alarm_title">Добавить</string>
     <string name="food_detail_title_hint">Напоминание</string>
     <string name="food_detail_ration_hint">Рацион</string>
     <string name="food_detail_repeat_disable">Отключен</string>

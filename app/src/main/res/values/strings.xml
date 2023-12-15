@@ -122,7 +122,7 @@
         <item>every year</item>
     </string-array>
 
-    <string name="food_add_alarm_title">Add a reminder</string>
+    <string name="food_add_alarm_title">Add</string>
     <string name="food_detail_title_hint">Reminder</string>
     <string name="food_detail_ration_hint">Diet</string>
     <string name="food_detail_repeat_disable">Disabled</string>
