@@ -34,6 +34,7 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     override fun onStart() {
         super.onStart()
+        initToolbar()
         if (viewModel.careAlarmDetailMainModel == null)
             viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
     }
@@ -46,12 +47,13 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar()
         initView()
         updateUI()
         initListeners()
     }
 
-    private fun initView() {
+    private fun initToolbar() {
         getToolbar()?.let { toolbar ->
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
@@ -65,6 +67,9 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
                 }
             }
         }
+    }
+
+    private fun initView() {
         binding.timePickerCareAlarmDetail.setIs24HourView(requireContext().is24HourFormat)
     }
 
