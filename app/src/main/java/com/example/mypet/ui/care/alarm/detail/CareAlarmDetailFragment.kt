@@ -116,7 +116,6 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     private fun updateUI() {
         viewModel.careAlarmDetailMainModel?.let {
-            println(it)
             with(binding) {
                 timePickerCareAlarmDetail.hour = it.hour
                 timePickerCareAlarmDetail.minute = it.minute

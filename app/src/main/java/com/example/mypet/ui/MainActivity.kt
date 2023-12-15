@@ -3,7 +3,6 @@ package com.example.mypet.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,24 +36,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navHost.navController
     }
 
-    private val navOptions = NavOptions.Builder()
-        .setLaunchSingleTop(true)
-        .setEnterAnim(R.anim.slide_in_right)
-        .setExitAnim(R.anim.slide_out_left)
-        .setPopEnterAnim(R.anim.slide_in_left)
-        .setPopExitAnim(R.anim.slide_out_left)
-        .setPopUpTo(R.id.navigationUser, false, true)
-        .setRestoreState(true)
-        .build()
-
-    /*    private val toolbarOnDestinations = mapOf(
-            R.id.careFragment to R.menu.toolbar_pet_detail,
-        )
-
-        private val fabDestinations = setOf(
-            R.id.careFragment,
-        )*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyPreferences()
@@ -67,56 +48,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         binding.bottomNavigation.setupWithNavController(navController)
 
-
-/*        binding.bottomNavigation {
-            when (it.itemId) {
-                R.id.navigationPet -> {
-                    navController.navigate(R.id.navigationPet, null, navOptions)
-                    true
-                }
-
-                R.id.navigationMap -> {
-                    navController.navigate(R.id.navigationMap, null, navOptions)
-                    true
-                }
-
-                R.id.navigationUser -> {
-                    navController.navigate(R.id.navigationUser, null, navOptions)
-                    true
-                }
-
-                else -> false
-            }
-        }*/
-        //observeNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = Navigation.findNavController(this, R.id.navHostMain)
         return (navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp())
     }
-
-    /*    private fun observeNavigation() {
-            lifecycleScope.launch {
-                lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    navController.currentBackStack.collectLatest {
-                        val lastId = it.last().destination.id
-    //                    if (fabDestinations.contains(lastId))
-    //                        binding.floatingActionButton.hide()
-    //                    else
-    //                        binding.floatingActionButton.show()
-
-                        toolbarOnDestinations[lastId]?.let { menuId ->
-                            binding.toolbar.menu.clear()
-                            binding.toolbar.inflateMenu(menuId)
-                        } ?: run {
-                            binding.toolbar.menu.clear()
-                            binding.toolbar.inflateMenu(R.menu.toolbar_empty)
-                        }
-                    }
-                }
-            }
-        }*/
 
     private fun applyPreferences() {
         preferences.loadColor(this)

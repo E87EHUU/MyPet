@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import com.example.mypet.app.R
 import com.example.mypet.domain.pet.breed.PetBreedCat
 import com.example.mypet.domain.pet.breed.PetBreedChameleon
@@ -95,3 +96,10 @@ fun Fragment.getFloatingActionButton() =
 
 val Context.is24HourFormat
     get() = DateFormat.is24HourFormat(this)
+
+val navOptions = NavOptions.Builder()
+    .setEnterAnim(R.anim.slide_in_right)
+    .setExitAnim(R.anim.slide_out_left)
+    .setPopEnterAnim(R.anim.slide_in_left)
+    .setPopExitAnim(R.anim.slide_out_left)
+    .build()

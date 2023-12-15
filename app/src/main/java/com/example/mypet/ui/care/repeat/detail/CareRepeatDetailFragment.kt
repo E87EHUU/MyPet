@@ -24,14 +24,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private var isUnlockUI = true
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initView()
-        updateUI()
-        initListeners()
-    }
-
     override fun onPause() {
         super.onPause()
         viewModel.careRepeatModel?.let { careRepeatModel ->
@@ -43,12 +35,24 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
+    }
+
     override fun onStop() {
         super.onStop()
         getToolbar()
     }
 
-    private fun initView() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        updateUI()
+        initListeners()
+    }
+
+    private fun initToolbar() {
         getToolbar()?.let { toolbar ->
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
@@ -62,6 +66,10 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 }
             }
         }
+    }
+
+    private fun initView() {
+
     }
 
     private fun updateUI() {

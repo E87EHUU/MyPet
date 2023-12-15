@@ -37,13 +37,19 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        postponeEnterTransition()
         viewModel.updateCare(args.petId, args.careId, args.careTypeOrdinal)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
     }
 
     override fun onResume() {
         super.onResume()
+
         viewModel.careAlarmDetailMainModel = null
-        initToolbar()
     }
 
     override fun onStop() {
@@ -54,7 +60,6 @@ class CareFragment : Fragment(R.layout.fragment_care),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar()
         initView()
         initObserveCareAdapterModels()
     }
@@ -82,11 +87,12 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private fun initObserveCareAdapterModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careModels.collectLatest { mutableList ->
-                    adapter.submitList(mutableList)
+                viewModel.careModels.collectLatest { careModels ->
+                    adapter.submitList(careModels)
                     viewModel.careMainModel?.careType?.titleResId?.let {
                         getToolbar()?.title = getString(it)
                     }
+                    startPostponedEnterTransition()
                 }
             }
         }

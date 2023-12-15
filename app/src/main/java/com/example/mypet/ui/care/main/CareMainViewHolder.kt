@@ -44,11 +44,11 @@ class CareMainViewHolder(
         careMainModel?.let {
             this.careMainModel = careMainModel
 
-            /*            binding.imageViewCareRecyclerMainIcon.setImageResource(careMainModel.careType.iconResId)
-                        binding.textViewCareRecyclerMainTitle.text =
-                            context.getString(careMainModel.careType.titleResId)*/
-
             filterUI()
+
+            binding.textInputEditTextCareRecyclerMainTitle.setText(careMainModel.title)
+            binding.textInputEditTextCareRecyclerMainNote.setText(careMainModel.note)
+            binding.textInputEditTextCareRecyclerMainDose.setText(careMainModel.dose)
 
             binding.root.isVisible = true
         } ?: run {

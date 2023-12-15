@@ -31,9 +31,14 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private val adapter = PetAdapter(this, this, this)
 
+    override fun onStart() {
+        super.onStart()
+        getActionBar()?.hide()
+    }
+
     override fun onResume() {
         super.onResume()
-        getActionBar()?.hide()
+        postponeEnterTransition()
     }
 
     override fun onStop() {
@@ -48,6 +53,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         initObservePet()
         initObserveFood()
         initObserveCare()
+        startPostponedEnterTransition()
     }
 
     private fun initView() {

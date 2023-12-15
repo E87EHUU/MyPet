@@ -35,7 +35,9 @@ class CareRepositoryImpl @Inject constructor(
                 id = localCareEntity?.id ?: DEFAULT_ID,
                 petId = petId,
                 careType = CareTypes.values()[localCareEntity?.careTypeOrdinal ?: careTypeOrdinal],
+                title = localCareEntity?.title,
                 note = localCareEntity?.note,
+                dose = localCareEntity?.dose,
                 progress = localCareEntity?.progress
             )
 
