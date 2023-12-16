@@ -21,6 +21,7 @@ import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
+import com.example.mypet.ui.getPetsAge
 import com.example.mypet.ui.pet.care.PetCareAdapter
 import com.example.mypet.ui.pet.care.PetCareAdapterCallback
 import com.example.mypet.ui.pet.food.PetFoodAdapter
@@ -33,8 +34,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @AndroidEntryPoint
 class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
@@ -180,7 +179,7 @@ class PetFragment : Fragment(R.layout.fragment_pet), OnAddPetClickListener,
 
         petModel.age?.let {
             binding.textViewPetAgeText.text =
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(petModel.age.toLong())
+                getPetsAge(it.toLong())
             binding.materialCardViewPetAge.isVisible = true
         } ?: run {
             binding.materialCardViewPetAge.isVisible = false
