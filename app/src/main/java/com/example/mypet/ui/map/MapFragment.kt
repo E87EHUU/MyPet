@@ -1,44 +1,11 @@
 package com.example.mypet.ui.map
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.os.Bundle
-import android.text.TextWatcher
-import android.view.View
-import androidx.constraintlayout.motion.widget.Debug.getLocation
-import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
-import com.example.mypet.app.databinding.FragmentMapBinding
-import com.example.mypet.domain.map.MapSearchResponseItem
-import com.example.mypet.domain.map.MapSearchState
-import com.example.mypet.ui.snackMessage
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.yandex.mapkit.Animation
-import com.yandex.mapkit.GeoObject
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.CameraListener
-import com.yandex.mapkit.map.CameraPosition
-import com.yandex.mapkit.map.CameraUpdateReason
-import com.yandex.mapkit.map.IconStyle
-import com.yandex.mapkit.map.MapObjectTapListener
-import com.yandex.runtime.image.ImageProvider
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 class MapFragment : Fragment(R.layout.fragment_map) {
 
-    private val binding by viewBinding(FragmentMapBinding::bind)
+    /*private val binding by viewBinding(FragmentMapBinding::bind)
     private val map by lazy { binding.mapViewMap.mapWindow.map }
     private val viewModel: MapViewModel by viewModels()
     private lateinit var editQueryTextWatcher: TextWatcher
@@ -282,5 +249,5 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     override fun onDestroy() {
         super.onDestroy()
         println("map destroy")
-    }
+    }*/
 }

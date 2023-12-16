@@ -7,5 +7,5 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 @Dao
 interface LocalBootCompleteDao {
     @Query("SELECT * FROM alarm WHERE is_active = 1")
-    fun getAllAlarm(): List<LocalAlarmEntity>
+    fun getActiveAlarmModels(): List<LocalAlarmEntity>
 }

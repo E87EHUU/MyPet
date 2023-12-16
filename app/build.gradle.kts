@@ -61,6 +61,7 @@ dependencies {
     val androidxLifecycleVersion: String by System.getProperties()
     val androidxNavigationVersion: String by System.getProperties()
     val androidxRoomVersion: String by System.getProperties()
+    val androidxRecyclerViewVersion: String by System.getProperties()
 
     val viewBindingDelegateVersion: String by System.getProperties()
 
@@ -72,11 +73,11 @@ dependencies {
 
     val dataStoreVersion: String by System.getProperties()
 
+    val firebaseBomVersion: String by System.getProperties()
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.annotation:annotation:1.6.0")
-    implementation("com.google.firebase:firebase-auth:22.3.0")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     implementation("androidx.appcompat:appcompat:$androidxAppCompatVersion")
@@ -85,6 +86,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$androidxLifecycleVersion")
     implementation("androidx.navigation:navigation-fragment-ktx:$androidxNavigationVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion")
+    implementation("androidx.recyclerview:recyclerview:$androidxRecyclerViewVersion")
 
     implementation("androidx.room:room-runtime:$androidxRoomVersion")
     kapt("androidx.room:room-compiler:$androidxRoomVersion")
@@ -98,7 +100,10 @@ dependencies {
 
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewBindingDelegateVersion")
 
-    implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
+    //implementation("com.yandex.android:maps.mobile:$yandexMapVersion")
 
     implementation("androidx.datastore:datastore-preferences:$dataStoreVersion")
+
+    implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
+    implementation("com.google.firebase:firebase-auth")
 }

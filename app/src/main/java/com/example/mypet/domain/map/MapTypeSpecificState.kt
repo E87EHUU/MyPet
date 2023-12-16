@@ -1,5 +1,6 @@
 package com.example.mypet.domain.map
 
+/*
 sealed interface MapTypeSpecificState {
     data class Toponym(val address: String) : MapTypeSpecificState
 
@@ -12,4 +13,4 @@ sealed interface MapTypeSpecificState {
     ) : MapTypeSpecificState
 
     data object Undefined : MapTypeSpecificState
-}
+}*/

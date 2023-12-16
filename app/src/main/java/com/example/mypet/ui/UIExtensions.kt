@@ -8,6 +8,7 @@ import com.example.mypet.domain.pet.breed.PetBreedDog
 import com.example.mypet.domain.pet.breed.PetBreedSnake
 import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 
@@ -47,6 +48,10 @@ fun getAgeString(years: Int, months: Int): String {
     }
 
     return "$yearsString $monthsString"
+}
+
+fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, text, length).show()
 }
 
 fun getPetName(kindOrdinal: Int, breedOrdinal: Int?) =
@@ -106,3 +111,12 @@ private fun getPetBreedIcon(kindOrdinal: Int, breedOrdinal: Int?) =
 
 fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
+
+fun Fragment.getToolbar() =
+    (requireActivity() as? MainActivity)?.findViewById<Toolbar>(R.id.toolbar)
+
+fun Fragment.getFloatingActionButton() =
+    (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)
+
+val Context.is24HourFormat
+    get() = DateFormat.is24HourFormat(this)

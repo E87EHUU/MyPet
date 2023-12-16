@@ -4,13 +4,15 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AGE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.AVATAR_PATH
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.BREED_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.IS_ACTIVE
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.KIND_ORDINAL
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.SEX
-import com.example.mypet.data.local.room.entity.LocalPetMyEntity.Companion.WEIGHT
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
+import com.example.mypet.data.local.room.model.LocalAlarmMinModel
+import com.example.mypet.data.local.room.model.pet.LocalPetCareFoodModel
+import com.example.mypet.data.local.room.model.pet.LocalPetCareModel
 import com.example.mypet.data.local.room.model.pet.LocalPetModel
 import kotlinx.coroutines.flow.Flow
 
@@ -19,19 +21,46 @@ import kotlinx.coroutines.flow.Flow
 interface LocalPetDao {
     @Query(
         "SELECT " +
-                "m.id $ID, " +
-                "m.avatar_path $AVATAR_PATH, " +
-                "m.name $NAME, " +
-                "m.age $AGE, " +
-                "m.weight $WEIGHT, " +
-                "m.kind_ordinal $KIND_ORDINAL, " +
-                "m.breed_ordinal $BREED_ORDINAL, " +
-                "m.sex $SEX, "+
-                "m.is_active $IS_ACTIVE " +
-                "FROM pet_my m"
+                "id $ID, " +
+                "avatar_path $AVATAR_PATH, " +
+                "name $NAME, " +
+                "age $AGE, " +
+                "weight $WEIGHT, " +
+                "kind_ordinal $KIND_ORDINAL, " +
+                "breed_ordinal $BREED_ORDINAL, " +
+                "is_active $IS_ACTIVE " +
+                "FROM pet "
     )
-    fun getPetList(): Flow<List<LocalPetModel>>
+    fun getLocalPetModels(): Flow<List<LocalPetModel>>
 
-    @Query("DELETE FROM pet_my WHERE id = :petId")
+    @Query(
+        "SELECT " +
+                "c.id " +
+                "FROM care c " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal = :careFoodTypeOrdinal"
+    )
+    fun getLocalPetCareFoodModel(petId: Int, careFoodTypeOrdinal: Int): Flow<LocalPetCareFoodModel?>
+
+    @Query(
+        "SELECT " +
+                "a.id, a.hour, a.minute, a.is_active " +
+                "FROM pet p " +
+                "LEFT JOIN care c ON c.pet_id = p.id AND c.care_type_ordinal = :careFoodTypeOrdinal " +
+                "LEFT JOIN alarm a ON a.care_id = c.id " +
+                "WHERE p.id = :petId"
+    )
+    fun getLocalAlarmMinModels(petId: Int, careFoodTypeOrdinal: Int): Flow<List<LocalAlarmMinModel>>
+
+
+    @Query(
+        "SELECT " +
+                "c.id, c.care_type_ordinal, c.progress, a.next_start " +
+                "FROM care c " +
+                "LEFT JOIN alarm a ON a.id = (SELECT id FROM alarm WHERE care_id = c.id AND a.next_start > :currentTimeInMillis LIMIT 1) " +
+                "WHERE c.pet_id = :petId AND c.care_type_ordinal != 0"
+    )
+    fun getLocalPetCareModels(petId: Int, currentTimeInMillis: Long): Flow<List<LocalPetCareModel>>
+
+    @Query("DELETE FROM pet WHERE id = :petId")
     suspend fun deletePet(petId: Int)
 }

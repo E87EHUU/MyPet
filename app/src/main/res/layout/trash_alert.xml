@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:padding="@dimen/offset_8"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewSnippetAlertIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_notifications_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewSnippetAlertTitle"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_8"
+        android:text="@string/alarm_title"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewSnippetAlertIcon"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSnippetAlertSettings"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSnippetAlertIcon" />
+
+    <ImageView
+        android:id="@+id/imageViewSnippetAlertSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_settings_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewSnippetAlertIcon"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupSnippetAlert"
+        style="@style/Widget.Material3.ChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:checkedChip="@id/chipSnippetAlertNotification"
+        app:layout_constraintStart_toStartOf="@+id/textViewSnippetAlertTitle"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSnippetAlertIcon"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipSnippetAlertNotification"
+            style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_snippet_alert_notification" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipSnippetAlertAlarm"
+            style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_snippet_alert_alarm" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

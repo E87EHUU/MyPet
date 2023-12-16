@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.MyPet.ViewHolderContainer"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerRepeatIcon"
+        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+        android:contentDescription="@string/care_repeat_title"
+        android:src="@drawable/baseline_repeat_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerRepeatTitle"
+        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+        android:text="@string/care_repeat_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerRepeatIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerRepeatIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerRepeatIcon" />
+
+    <TextView
+        android:id="@+id/textViewCareRecyclerRepeatDescription"
+        style="@style/Theme.MyPet.CareTextView"
+        android:text="@string/care_repeat_interval_description_none"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerRepeatTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerRepeatTitle" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupCareRecyclerEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="imageViewCareRecyclerEndIcon,textViewCareRecyclerEndTitle,textViewCareRecyclerEndDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageViewCareRecyclerEndIcon"
+        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+        android:layout_marginTop="@dimen/offset_24"
+        android:contentDescription="@string/care_repeat_title"
+        android:src="@drawable/baseline_timer_off_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerRepeatDescription" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerEndTitle"
+        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+        android:text="@string/care_end_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerEndIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerEndIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerEndIcon" />
+
+    <TextView
+        android:id="@+id/textViewCareRecyclerEndDescription"
+        style="@style/Theme.MyPet.CareTextView"
+        android:text="@string/care_repeat_end_none"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerEndTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndTitle" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/materialDivider"
+        style="@style/Theme.MyPet.CareBottomDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

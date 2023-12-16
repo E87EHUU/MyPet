@@ -18,8 +18,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
-import com.example.mypet.domain.pet.detail.PetModel
 import com.example.mypet.domain.pet.kind.PetKind
+import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.snackMessage
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
@@ -56,9 +56,9 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun collectPetDetailsIfNeedsToUpdate() {
-        if (args.petMyId > DEFAULT_INTEGER_VALUE) {
-            viewModel.petId = args.petMyId
-            viewModel.getPetFromDbForUpdateDetails(args.petMyId)
+        if (args.petId > DEFAULT_INTEGER_VALUE) {
+            viewModel.petId = args.petId
+            viewModel.getPetFromDbForUpdateDetails(args.petId)
             startObservePetDetailsForUpdate()
         }
     }
@@ -81,7 +81,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun initPetDetailsForUpdate(localPetModel: PetModel) {
+    private fun initPetDetailsForUpdate(localPetModel: PetListModel) {
         fillViewModelFields(localPetModel)
         with(binding) {
             Glide.with(this@PetCreationAndUpdateFragment)
@@ -119,7 +119,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun fillViewModelFields(localPetModel: PetModel) {
+    private fun fillViewModelFields(localPetModel: PetListModel) {
         viewModel.dateOfBirth = localPetModel.age
         viewModel.avatarUri = localPetModel.avatarUri.toString()
         viewModel.kindOrdinal = localPetModel.kindOrdinal
@@ -205,7 +205,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 binding.textInputEditTextPetCreationWeight.text?.toString()?.toIntOrNull()
             with(viewModel) {
                 if (name.isEmpty() || kindOrdinal == null || sex == null) {
-                    view?.snackMessage(getString(R.string.fill_up_all_fields))
+                    view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
                 } else {
                     viewModel.addOrUpdatePetInDb()
                     findNavController().popBackStack()

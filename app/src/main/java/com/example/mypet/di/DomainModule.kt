@@ -1,17 +1,19 @@
 package com.example.mypet.di
 
+import com.example.mypet.data.AlarmRepositoryImpl
+import com.example.mypet.data.AlarmServiceRepositoryImpl
 import com.example.mypet.data.BootCompleteRepositoryImpl
-import com.example.mypet.data.FoodAlarmRepositoryImpl
-import com.example.mypet.data.FoodAlarmServiceRepositoryImpl
-import com.example.mypet.data.FoodRepositoryImpl
+import com.example.mypet.data.CareRepositoryImpl
 import com.example.mypet.data.PetCreationAndUpdateRepositoryImpl
 import com.example.mypet.data.PetRepositoryImpl
+import com.example.mypet.domain.AlarmRepository
+import com.example.mypet.domain.AlarmServiceRepository
 import com.example.mypet.domain.BootCompleteRepository
-import com.example.mypet.domain.FoodAlarmRepository
-import com.example.mypet.domain.FoodAlarmServiceRepository
-import com.example.mypet.domain.FoodRepository
+import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.PetCreationAndUpdateRepository
 import com.example.mypet.domain.PetRepository
+import com.example.mypet.ui.auth.data.AuthRepositoryImpl
+import com.example.mypet.ui.auth.data.model.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,18 +30,18 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun provideFoodRepository(foodRepositoryImpl: FoodRepositoryImpl): FoodRepository =
-        foodRepositoryImpl
+    fun provideCareRepository(careRepositoryImpl: CareRepositoryImpl): CareRepository =
+        careRepositoryImpl
 
     @Provides
     @Singleton
-    fun provideFoodAlarmRepository(foodAlarmRepositoryImpl: FoodAlarmRepositoryImpl): FoodAlarmRepository =
-        foodAlarmRepositoryImpl
+    fun provideAlarmRepository(alarmRepositoryImpl: AlarmRepositoryImpl): AlarmRepository =
+        alarmRepositoryImpl
 
     @Provides
     @Singleton
-    fun provideFoodAlarmServiceRepository(foodAlarmServiceRepositoryImpl: FoodAlarmServiceRepositoryImpl): FoodAlarmServiceRepository =
-        foodAlarmServiceRepositoryImpl
+    fun provideAlarmServiceRepository(alarmServiceRepositoryImpl: AlarmServiceRepositoryImpl): AlarmServiceRepository =
+        alarmServiceRepositoryImpl
 
     @Provides
     @Singleton
@@ -47,6 +49,11 @@ object DomainModule {
         bootCompleteRepositoryImpl
 
     @Provides
-    fun providePetCreationRepository(petCreationRepositoryImpl: PetCreationAndUpdateRepositoryImpl): PetCreationAndUpdateRepository =
-        petCreationRepositoryImpl
+    fun providePetCreationAndUpdateRepository(petCreationAndUpdateRepositoryImpl: PetCreationAndUpdateRepositoryImpl): PetCreationAndUpdateRepository =
+        petCreationAndUpdateRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository =
+        authRepositoryImpl
 }

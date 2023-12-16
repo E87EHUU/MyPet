@@ -9,92 +9,48 @@
         android:id="@+id/petFragment"
         android:name="com.example.mypet.ui.pet.PetFragment"
         tools:layout="@layout/fragment_pet">
-        <action
-            android:id="@+id/action_petFragment_to_foodFragment"
-            app:destination="@id/foodFragment" />
-        <action
-            android:id="@+id/action_petFragment_to_careFragment"
-            app:destination="@id/careFragment" />
-        <action
-            android:id="@+id/action_petFragment_to_foodDetailFragment"
-            app:destination="@id/foodDetailFragment" />
-        <action
-            android:id="@+id/action_petFragment_to_careDetailFragment"
-            app:destination="@id/careDetailFragment" />
 
         <action
-            android:id="@+id/action_petFragment_to_petCreationFragment"
-            app:destination="@id/petCreationFragment">
+            android:id="@+id/action_pet_to_petCreationAndUpdateFragment"
+            app:destination="@id/petCreationAndUpdateFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_petFragment_to_navigationPetCare"
+            app:destination="@id/navigationPetCare"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="pet_id"
+                app:argType="integer" />
+            <argument
+                android:name="care_id"
+                app:argType="integer" />
+            <argument
+                android:name="care_type_ordinal"
+                app:argType="integer" />
         </action>
+
     </fragment>
 
     <fragment
-        android:id="@+id/foodFragment"
-        android:name="com.example.mypet.ui.food.FoodFragment"
-        android:layout="@layout/fragment_food">
-
-        <action
-            android:id="@+id/action_foodFragment_to_navigationFoodAlarm"
-            app:destination="@id/navigationFoodAlarm">
-            <argument
-                android:name="petMyId"
-                app:argType="integer" />
-            <argument
-                android:name="petFoodId"
-                app:argType="integer" />
-        </action>
-        <argument
-            android:name="pet_my_id"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_foodFragment_to_foodDetailFragment"
-            app:destination="@id/foodDetailFragment" />
-    </fragment>
-
-    <include
-        android:id="@+id/navigationFoodAlarm"
-        app:graph="@navigation/navigation_food_alarm" />
-    <fragment
-        android:id="@+id/petCreationFragment"
+        android:id="@+id/petCreationAndUpdateFragment"
         android:name="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment"
-        android:label="@string/pet_creation_fragment_name"
         tools:layout="@layout/fragment_pet_creation">
         <argument
-            android:name="pet_my_id"
+            android:name="pet_id"
             app:argType="integer"
-            android:defaultValue="-1"/>
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <fragment
-        android:id="@+id/careFragment"
-        android:name="com.example.mypet.ui.care.CareFragment"
-        tools:layout="@layout/fragment_care" >
-        <argument
-            android:name="pet_my_id"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_careFragment_to_careDetailFragment"
-            app:destination="@id/careDetailFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/careDetailFragment"
-        android:name="com.example.mypet.ui.care.detail.CareDetailFragment"
-        android:label="fragment_care_detail"
-        tools:layout="@layout/fragment_care_detail" >
-        <argument
-            android:name="pet_care_id"
-            app:argType="integer" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/foodDetailFragment"
-        android:name="com.example.mypet.ui.food.detail.FoodDetailFragment"
-        android:label="fragment_food_detail"
-        tools:layout="@layout/fragment_food_detail" >
-        <argument
-            android:name="pet_food_id"
-            app:argType="integer" />
-    </fragment>
+    <include app:graph="@navigation/navigation_pet_care" />
 
 </navigation>

@@ -2,7 +2,6 @@ package com.example.mypet.domain.pet.breed
 
 import com.example.mypet.app.R
 
-
 enum class PetBreedDog(val iconResId: Int?, val nameResId: Int) {
     DOG_1(null, R.string.pet_breed_dog_1),
     DOG_2(null, R.string.pet_breed_dog_2),
@@ -156,4 +155,6 @@ enum class PetBreedDog(val iconResId: Int?, val nameResId: Int) {
     DOG_150(null, R.string.pet_breed_dog_150),
     DOG_151(null, R.string.pet_breed_dog_151),
     DOG_152(null, R.string.pet_breed_dog_152),
+    DOG_153(null, R.string.pet_breed_dog_153),
+    DOG_154(null, R.string.pet_breed_dog_154),
 }

@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,18 +36,18 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideLocalFoodDao(db: LocalDatabase) =
-        db.localFoodDao()
+    fun provideLocalCareDao(db: LocalDatabase) =
+        db.localCareDao()
 
     @Singleton
     @Provides
-    fun provideLocalFoodAlarmDao(db: LocalDatabase) =
-        db.localFoodAlarmDao()
+    fun provideLocalAlarmDao(db: LocalDatabase) =
+        db.localAlarmDao()
 
     @Singleton
     @Provides
-    fun provideLocalFoodAlarmServiceDao(db: LocalDatabase) =
-        db.localFoodAlarmServiceDao()
+    fun provideLocalAlarmServiceDao(db: LocalDatabase) =
+        db.localAlarmServiceDao()
 
     @Singleton
     @Provides
@@ -60,4 +63,9 @@ object DataModule {
     @Provides
     fun provideLocalPetCreationDao(db: LocalDatabase) =
         db.localPetCreationDao()
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth =
+        Firebase.auth
 }
