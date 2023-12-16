@@ -15,6 +15,7 @@ import com.example.mypet.domain.care.CareTypes
 
 class AlarmServiceNotification(
     private val context: Context,
+    private val alarmServiceModel: AlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
@@ -51,12 +52,12 @@ class AlarmServiceNotification(
             )
         }
 
-    fun getNotification(alarmServiceModel: AlarmServiceModel): Notification {
+    fun getNotification(): Notification {
         with(alarmServiceModel) {
             val text = alarmDescription
                 ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
 
-            val notification =  NotificationCompat.Builder(context, CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(petName)
@@ -77,7 +78,7 @@ class AlarmServiceNotification(
                 )
                 .build()
 
-                //            notification.flags = notification.flags and NO
+            notification.flags = notification.flags and Notification.FLAG_INSISTENT
 
             return notification
         }
@@ -85,8 +86,8 @@ class AlarmServiceNotification(
 
     fun createNotificationChannel() {
         val importance =
-            /*if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
-            else */NotificationManager.IMPORTANCE_MAX
+            if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
+            else NotificationManager.IMPORTANCE_HIGH
 
         val channel = NotificationChannel(
             CHANNEL_ID,

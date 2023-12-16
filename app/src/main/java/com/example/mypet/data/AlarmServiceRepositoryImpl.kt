@@ -1,6 +1,5 @@
 package com.example.mypet.data
 
-import androidx.room.Transaction
 import com.example.mypet.data.alarm.AlarmDao
 import com.example.mypet.data.alarm.AlarmNextStartCalculate
 import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
@@ -17,7 +16,6 @@ class AlarmServiceRepositoryImpl @Inject constructor(
     override suspend fun getAlarmServiceModel(alarmId: Int) =
         localAlarmServiceDao.getLocalAlarmServiceModel(alarmId)?.toAlarmServiceModel()
 
-    @Transaction
     override suspend fun stopAlarm(alarmId: Int) {
         localAlarmServiceDao.getLocalAlarmEntity(alarmId)?.let { localAlarmEntity ->
             var nextStart: Long? = null

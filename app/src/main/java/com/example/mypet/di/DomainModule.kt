@@ -1,11 +1,13 @@
 package com.example.mypet.di
 
+import com.example.mypet.data.AlarmReceiverRepositoryImpl
 import com.example.mypet.data.AlarmRepositoryImpl
 import com.example.mypet.data.AlarmServiceRepositoryImpl
 import com.example.mypet.data.BootCompleteRepositoryImpl
 import com.example.mypet.data.CareRepositoryImpl
 import com.example.mypet.data.PetCreationAndUpdateRepositoryImpl
 import com.example.mypet.data.PetRepositoryImpl
+import com.example.mypet.domain.AlarmReceiverRepository
 import com.example.mypet.domain.AlarmRepository
 import com.example.mypet.domain.AlarmServiceRepository
 import com.example.mypet.domain.BootCompleteRepository
@@ -37,6 +39,11 @@ object DomainModule {
     @Singleton
     fun provideAlarmRepository(alarmRepositoryImpl: AlarmRepositoryImpl): AlarmRepository =
         alarmRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideAlarmReceiverRepository(alarmReceiverRepositoryImpl: AlarmReceiverRepositoryImpl): AlarmReceiverRepository =
+        alarmReceiverRepositoryImpl
 
     @Provides
     @Singleton

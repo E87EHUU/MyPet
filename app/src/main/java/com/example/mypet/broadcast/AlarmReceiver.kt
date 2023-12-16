@@ -7,9 +7,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.mypet.domain.AlarmServiceRepository
+import com.example.mypet.domain.AlarmReceiverRepository
 import com.example.mypet.service.alarm.AlarmService
-import com.example.mypet.service.alarm.AlarmServiceNotification
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AlarmReceiver : BroadcastReceiver() {
     @Inject
-    lateinit var alarmServiceRepository: AlarmServiceRepository
+    lateinit var alarmReceiverRepository: AlarmReceiverRepository
 
     @ApplicationContext
     lateinit var context: Context
@@ -33,12 +32,12 @@ class AlarmReceiver : BroadcastReceiver() {
             intent.getId()?.let { id ->
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        alarmServiceRepository.getAlarmServiceModel(id)
+                        alarmReceiverRepository.getAlarmReceiverModel(id)
                             ?.let {
                                 val notificationManager = NotificationManagerCompat.from(context)
-                                val notification = AlarmServiceNotification(context)
+                                val notification = AlarmReceiverNotification(context, it)
                                 notification.createNotificationChannel()
-                                notificationManager.notify(it.alarmId, notification.getNotification(it))
+                                notificationManager.notify(it.alarmId, notification.getNotification())
                             }
                     }
                 }

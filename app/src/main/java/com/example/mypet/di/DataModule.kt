@@ -46,6 +46,11 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideLocalAlarmReceiverDao(db: LocalDatabase) =
+        db.localAlarmReceiverDao()
+
+    @Singleton
+    @Provides
     fun provideLocalAlarmServiceDao(db: LocalDatabase) =
         db.localAlarmServiceDao()
 

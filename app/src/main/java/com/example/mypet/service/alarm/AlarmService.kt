@@ -43,7 +43,7 @@ class AlarmService : Service() {
         get() = view?.findViewById<RecyclerView>(R.id.recyclerViewAlarmOverlay)
 
     private val alarmServiceModels = mutableMapOf<Int, AlarmServiceModel>()
-    private val notification by lazy { AlarmServiceNotification(this) }
+   // private val notification by lazy { AlarmServiceNotification(this) }
     private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
     private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
     private val adapter = AlarmServiceAdapter()
@@ -74,7 +74,7 @@ class AlarmService : Service() {
     }
 
     private fun start(intent: Intent) {
-        notification.createNotificationChannel()
+        //notification.createNotificationChannel()
 
         intent.getId()?.let { id ->
             if (!alarmServiceModels.containsKey(id)) {
@@ -87,7 +87,7 @@ class AlarmService : Service() {
             }
 
             alarmServiceModels[id]?.let { alarmModel ->
-                startForeground(alarmModel.alarmId, notification.getNotification(alarmModel))
+                //startForeground(alarmModel.alarmId, notification.getNotification(alarmModel))
 
                 playVibration(alarmModel)
                 playRingtone(alarmModel)
@@ -138,10 +138,10 @@ class AlarmService : Service() {
             clearUI()
 
             alarmServiceModels[id]?.let { alarmServiceModel ->
-                startForeground(
+/*                startForeground(
                     alarmServiceModel.alarmId,
                     notification.getNotification(alarmServiceModel)
-                )
+                )*/
 
                 runBlocking {
                     launch(Dispatchers.IO) {

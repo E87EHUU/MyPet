@@ -3,6 +3,7 @@ package com.example.mypet.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.mypet.data.local.room.dao.LocalAlarmDao
+import com.example.mypet.data.local.room.dao.LocalAlarmReceiverDao
 import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
 import com.example.mypet.data.local.room.dao.LocalBootCompleteDao
 import com.example.mypet.data.local.room.dao.LocalCareDao
@@ -30,6 +31,7 @@ abstract class LocalDatabase : RoomDatabase() {
     abstract fun localPetDao(): LocalPetDao
     abstract fun localCareDao(): LocalCareDao
     abstract fun localAlarmDao(): LocalAlarmDao
+    abstract fun localAlarmReceiverDao(): LocalAlarmReceiverDao
     abstract fun localAlarmServiceDao(): LocalAlarmServiceDao
     abstract fun localBootCompleteDao(): LocalBootCompleteDao
     abstract fun localPetCreationDao(): PetCreationAndUpdateDao
