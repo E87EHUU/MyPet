@@ -7,125 +7,132 @@
     android:layout_margin="@dimen/pet_creation_fragment_margin"
     tools:context="com.example.mypet.ui.pet.creation.PetCreationAndUpdateFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/app_compat_image_view_pet_creation_avatar"
-            android:layout_width="@dimen/avatar_creation_size"
-            android:layout_height="@dimen/avatar_creation_size"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/offset_16"
-            android:src="@drawable/baseline_add_photo_alternate_24" />
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:hint="@string/pet_creation_pet_name">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_edit_text_pet_creation_name"
+            <ImageView
+                android:id="@+id/app_compat_image_view_pet_creation_avatar"
+                android:layout_width="@dimen/avatar_creation_size"
+                android:layout_height="@dimen/avatar_creation_size"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/offset_16"
+                android:src="@drawable/baseline_add_photo_alternate_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pet_creation_text_input_layout_height" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
+                android:hint="@string/pet_creation_pet_name">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/pet_creation_chip_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:layerType="hardware"
-            app:selectionRequired="true"
-            app:singleSelection="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_edit_text_pet_creation_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pet_creation_text_input_layout_height" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/pet_creation_chip_male"
-                style="@style/Widget.Material3.Chip.Suggestion.Elevated"
-                android:layout_width="@dimen/pet_creation_chip_width"
-                android:layout_height="@dimen/pet_creation_chip_height"
-                android:text="@string/pet_creation_sex_male"
-                android:textAlignment="center" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/pet_creation_chip_female"
-                style="@style/Widget.Material3.Chip.Suggestion.Elevated"
-                android:layout_width="@dimen/pet_creation_chip_width"
-                android:layout_height="@dimen/pet_creation_chip_height"
-                android:text="@string/pet_creation_sex_female"
-                android:textAlignment="center" />
-        </com.google.android.material.chip.ChipGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_pet_creation_choice_pet_kind"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:hint="@string/pet_creation_choose_pet_kind">
-
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_text_view_pet_creation_kind_list"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pet_creation_text_input_layout_height"
-                android:dropDownHeight="@dimen/pet_creation_list_drop_down_height"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_pet_creation_choice_pet_breed"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:visibility="gone">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pet_creation_chip_male"
+                    style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pet_creation_chip_height"
+                    android:layout_weight="1"
+                    android:text="@string/pet_creation_sex_male"
+                    android:layout_marginEnd="@dimen/offset_8"
+                    android:textAlignment="center" />
 
-            <AutoCompleteTextView
-                android:id="@+id/auto_complete_text_view_pet_creation_breed_list"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pet_creation_chip_female"
+                    style="@style/Widget.Material3.Chip.Suggestion.Elevated"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/pet_creation_chip_height"
+                    android:layout_weight="1"
+                    android:text="@string/pet_creation_sex_female"
+                    android:layout_marginStart="@dimen/offset_8"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_pet_creation_choice_pet_kind"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pet_creation_text_input_layout_height"
-                android:dropDownHeight="@dimen/pet_creation_list_drop_down_height"
-                android:hint="@string/pet_creation_choose_breed"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
+                android:hint="@string/pet_creation_choose_pet_kind">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout_pet_creation_date_of_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:hint="@string/pet_creation_date_of_birth"
-            app:endIconDrawable="@drawable/baseline_calendar_month_24"
-            app:endIconMode="custom">
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_text_view_pet_creation_kind_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pet_creation_text_input_layout_height"
+                    android:dropDownHeight="@dimen/pet_creation_list_drop_down_height"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_edit_text_pet_creation_date_of_birth"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_pet_creation_choice_pet_breed"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pet_creation_text_input_layout_height"
-                android:focusable="false"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
+                android:visibility="gone">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
-            android:hint="@string/pet_creation_weight">
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_text_view_pet_creation_breed_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pet_creation_text_input_layout_height"
+                    android:dropDownHeight="@dimen/pet_creation_list_drop_down_height"
+                    android:hint="@string/pet_creation_choose_breed"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_edit_text_pet_creation_weight"
-                android:layout_width="@dimen/pet_creation_edit_text_width_of_weight"
-                android:layout_height="@dimen/pet_creation_text_input_layout_height"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_pet_creation_date_of_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/creation_fragment_margin_bottom_for_view"
+                android:hint="@string/pet_creation_date_of_birth"
+                app:endIconDrawable="@drawable/baseline_calendar_month_24"
+                app:endIconMode="custom">
 
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_edit_text_pet_creation_date_of_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pet_creation_text_input_layout_height"
+                    android:focusable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:hint="@string/pet_creation_weight">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_edit_text_pet_creation_weight"
+                    android:layout_width="@dimen/pet_creation_edit_text_width_of_weight"
+                    android:layout_height="@dimen/pet_creation_text_input_layout_height"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/app_compat_button_pet_creation_save"
