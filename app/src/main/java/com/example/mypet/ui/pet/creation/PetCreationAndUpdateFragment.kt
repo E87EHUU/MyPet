@@ -18,14 +18,16 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
+import com.example.mypet.domain.pet.PetSex
 import com.example.mypet.domain.pet.kind.PetKind
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetBreedList
+import com.example.mypet.ui.getPetIcon
+import com.example.mypet.ui.getToolbar
+import com.example.mypet.ui.pet.creation.PetCreationAndUpdateViewModel.Companion.DEFAULT_SEX_FEMALE_VALUE
+import com.example.mypet.ui.pet.creation.PetCreationAndUpdateViewModel.Companion.DEFAULT_SEX_MALE_VALUE
 import com.example.mypet.ui.snackMessage
-import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
-import com.example.mypet.utils.DEFAULT_NULL_VALUE
-import com.example.mypet.utils.DEFAULT_SEX_FEMALE_VALUE
-import com.example.mypet.utils.DEFAULT_SEX_MALE_VALUE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -43,21 +45,46 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val args: PetCreationAndUpdateFragmentArgs by navArgs()
 
+    override fun onStop() {
+        super.onStop()
+        getToolbar()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initKindListView()
+
         onChoosePhotoButtonClickListener()
         onWhichSexChipSelectedListener()
-        initKindListView()
         onChooseDateOfBirthClickListener()
-        onSaveNewPetButtonClickListener()
 
         collectPetDetailsIfNeedsToUpdate()
     }
 
+    private fun initToolbar() {
+        getToolbar()?.let { toolbar ->
+            toolbar.inflateMenu(R.menu.toolbar_save)
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.toolbarSave -> {
+                        onSaveNewPetButtonClickListener()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
+    }
+
     private fun collectPetDetailsIfNeedsToUpdate() {
-        if (args.petId > DEFAULT_INTEGER_VALUE) {
-            viewModel.petId = args.petId
+        if (args.petId != DEFAULT_ID) {
             viewModel.getPetFromDbForUpdateDetails(args.petId)
             startObservePetDetailsForUpdate()
         }
@@ -73,22 +100,26 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun onWhichSexChipSelectedListener() {
-        binding.petCreationChipMale.setOnClickListener {
+        binding.chipPetCreationMale.setOnClickListener {
             viewModel.sex = DEFAULT_SEX_MALE_VALUE
+            binding.chipPetCreationMale.isChecked = true
+            binding.chipPetCreationFemale.isChecked = false
         }
-        binding.petCreationChipFemale.setOnClickListener {
+
+        binding.chipPetCreationFemale.setOnClickListener {
             viewModel.sex = DEFAULT_SEX_FEMALE_VALUE
+            binding.chipPetCreationMale.isChecked = false
+            binding.chipPetCreationFemale.isChecked = true
         }
     }
 
     private fun initPetDetailsForUpdate(localPetModel: PetListModel) {
         fillViewModelFields(localPetModel)
+
         with(binding) {
-            Glide.with(this@PetCreationAndUpdateFragment)
-                .load(localPetModel.avatarUri)
-                .circleCrop()
-                .placeholder(R.drawable.baseline_add_photo_alternate_24)
-                .into(appCompatImageViewPetCreationAvatar)
+
+            updateUIAvatar()
+
             textInputEditTextPetCreationName.setText(localPetModel.name)
             autoCompleteTextViewPetCreationKindList.setText(
                 kindListAdapter.getItem(
@@ -112,10 +143,24 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 )
             }
         }
-        if (localPetModel.sex == DEFAULT_SEX_FEMALE_VALUE) {
-            binding.petCreationChipFemale.isChecked = true
-        } else if (localPetModel.sex == DEFAULT_SEX_MALE_VALUE) {
-            binding.petCreationChipMale.isChecked = true
+
+        if (localPetModel.sex == PetSex.FEMALE.ordinal) {
+            binding.chipPetCreationFemale.isChecked = true
+        } else if (localPetModel.sex == PetSex.MALE.ordinal) {
+            binding.chipPetCreationMale.isChecked = true
+        }
+    }
+
+    private fun updateUIAvatar() {
+        with(viewModel) {
+            val icon = kindOrdinal?.let { getPetIcon(it, breedOrdinal) }
+                ?: R.drawable.baseline_add_photo_alternate_24
+
+            Glide.with(this@PetCreationAndUpdateFragment)
+                .load(avatarUri)
+                .circleCrop()
+                .placeholder(icon)
+                .into(binding.imageViewPetCreationAvatar)
         }
     }
 
@@ -128,7 +173,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun onChoosePhotoButtonClickListener() {
-        binding.appCompatImageViewPetCreationAvatar.setOnClickListener {
+        binding.imageViewPetCreationAvatar.setOnClickListener {
             requestPermission()
         }
     }
@@ -144,7 +189,10 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun onKindItemSelectedListener() {
         binding.autoCompleteTextViewPetCreationKindList.setOnItemClickListener { _, _, position, _ ->
             viewModel.kindOrdinal = position
-            viewModel.breedOrdinal = DEFAULT_NULL_VALUE
+            viewModel.breedOrdinal = null
+
+            updateUIAvatar()
+
             initBreedListView(position)
         }
     }
@@ -157,6 +205,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 mutableListOf()
             )
             binding.autoCompleteTextViewPetCreationBreedList.setAdapter(breedListAdapter)
+            onBreedItemSelectedListener()
         }
         if (getPetBreedList(kindId) == null) {
             binding.textInputLayoutPetCreationChoicePetBreed.visibility = View.GONE
@@ -168,13 +217,13 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 breedListAdapter.notifyDataSetChanged()
             }
             binding.autoCompleteTextViewPetCreationBreedList.text.clear()
-            onBreedItemSelectedListener()
         }
     }
 
     private fun onBreedItemSelectedListener() {
         binding.autoCompleteTextViewPetCreationBreedList.setOnItemClickListener { _, _, position, _ ->
             viewModel.breedOrdinal = position
+            updateUIAvatar()
         }
     }
 
@@ -199,26 +248,25 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun onSaveNewPetButtonClickListener() {
-        binding.appCompatButtonPetCreationSave.setOnClickListener {
-            viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
-            viewModel.weight =
-                binding.textInputEditTextPetCreationWeight.text?.toString()?.toIntOrNull()
-            with(viewModel) {
-                if (name.isEmpty() || kindOrdinal == null || sex == null) {
-                    view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
-                } else {
-                    viewModel.addOrUpdatePetInDb()
-                    findNavController().popBackStack()
-                }
+        viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
+        viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toInt()
+
+        with(viewModel) {
+            if (name.isEmpty() || kindOrdinal == null) {
+                view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
+            } else {
+                viewModel.addOrUpdatePetInDb()
+                findNavController().popBackStack()
             }
         }
     }
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-            Glide.with(this).load(imageUri).circleCrop()
-                .into(binding.appCompatImageViewPetCreationAvatar)
-            viewModel.avatarUri = imageUri.toString()
+            imageUri?.let {
+                viewModel.avatarUri = imageUri.toString()
+                updateUIAvatar()
+            }
         }
 
     private fun pickImageFromGallery() {

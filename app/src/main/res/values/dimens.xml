@@ -8,6 +8,8 @@
 
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="default_form_height">64dp</dimen>
+
     <dimen name="pet_detail_avatar_padding">1dp</dimen>
     <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
     <dimen name="pet_detail_avatar_size">64dp</dimen>

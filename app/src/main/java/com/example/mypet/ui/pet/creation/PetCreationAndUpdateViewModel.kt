@@ -8,9 +8,6 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.PetCreationAndUpdateRepository
 import com.example.mypet.domain.pet.creation.PetCreationAndUpdateModel
 import com.example.mypet.domain.pet.list.PetListModel
-import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
-import com.example.mypet.utils.DEFAULT_NULL_VALUE
-import com.example.mypet.utils.DEFAULT_STRING_VALUE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,25 +18,22 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     private val petCreationAndUpdateRepository: PetCreationAndUpdateRepository
 ) : ViewModel() {
 
-    var avatarUri: String = DEFAULT_STRING_VALUE
-    var dateOfBirth: String? = DEFAULT_NULL_VALUE
+    var petId: Int = DEFAULT_ID
     var name: String = DEFAULT_STRING_VALUE
-    var kindOrdinal: Int? = DEFAULT_NULL_VALUE
-    var breedOrdinal: Int? = DEFAULT_NULL_VALUE
-    var weight: Int? = DEFAULT_NULL_VALUE
-    var sex: Int? = DEFAULT_NULL_VALUE
-    var petId: Int = DEFAULT_INTEGER_VALUE
+    var avatarUri: String? = null
+    var kindOrdinal: Int? = null
+    var breedOrdinal: Int? = null
+    var dateOfBirth: String? = null
+    var weight: Int? = null
+    var sex: Int? = null
 
     private val _localPetForUpdate = MutableLiveData<PetListModel>()
     val localPetForUpdate: LiveData<PetListModel>
         get() = _localPetForUpdate
 
     fun addOrUpdatePetInDb() {
-        if (petId > DEFAULT_INTEGER_VALUE) {
-            updatePetDetailsInDb()
-        } else {
-            addNewPetToDb()
-        }
+        if (petId == DEFAULT_ID) addNewPetToDb()
+        else updatePetDetailsInDb()
     }
 
     private fun addNewPetToDb() {
@@ -51,6 +45,8 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     }
 
     fun getPetFromDbForUpdateDetails(petId: Int) {
+        this.petId = petId
+
         viewModelScope.launch(Dispatchers.IO) {
             _localPetForUpdate.postValue(
                 petCreationAndUpdateRepository.getPetFromDbForUpdateDetails(petId)
@@ -77,4 +73,10 @@ class PetCreationAndUpdateViewModel @Inject constructor(
         isActive = false,
         sex = sex
     )
+
+    companion object {
+        const val DEFAULT_STRING_VALUE = ""
+        const val DEFAULT_SEX_MALE_VALUE = 1
+        const val DEFAULT_SEX_FEMALE_VALUE = 0
+    }
 }

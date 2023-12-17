@@ -39,8 +39,8 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
             viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         initToolbar()
     }
 

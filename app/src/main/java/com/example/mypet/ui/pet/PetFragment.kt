@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.list.PetListModel
@@ -18,7 +19,6 @@ import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
-import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -127,7 +127,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     override fun onClickPetAdd() {
         val directions =
-            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_INTEGER_VALUE)
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_ID)
         findNavController().navigate(directions)
     }
 

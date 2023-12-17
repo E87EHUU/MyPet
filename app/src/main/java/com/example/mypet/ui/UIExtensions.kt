@@ -5,7 +5,6 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import com.example.mypet.app.R
@@ -15,6 +14,7 @@ import com.example.mypet.domain.pet.breed.PetBreedDog
 import com.example.mypet.domain.pet.breed.PetBreedSnake
 import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
@@ -120,7 +120,7 @@ fun Fragment.getActionBar() =
     (requireActivity() as? MainActivity)?.supportActionBar
 
 fun Fragment.getToolbar() =
-    (requireActivity() as? MainActivity)?.findViewById<Toolbar>(R.id.toolbar)
+    (requireActivity() as? MainActivity)?.findViewById<MaterialToolbar>(R.id.toolbar)
         ?.apply {
             title = null
             menu.clear()
