@@ -5,7 +5,7 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.mypet.app.R
 import com.example.mypet.domain.pet.breed.PetBreedCat
@@ -16,9 +16,44 @@ import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import java.util.Calendar
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
+}
+
+fun getPetsAge(timeMillis: Long): String {
+    val birthDate = Calendar.getInstance()
+    birthDate.timeInMillis = timeMillis
+
+    val currentDate = Calendar.getInstance()
+
+    val years = currentDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
+    val months = currentDate.get(Calendar.MONTH) - birthDate.get(Calendar.MONTH)
+
+    return if (months < 0) {
+        val correctedYears = years - 1
+        val correctedMonths = months + 12
+        getAgeString(correctedYears, correctedMonths)
+    } else {
+        getAgeString(years, months)
+    }
+}
+
+fun getAgeString(years: Int, months: Int): String {
+    val yearsString = when {
+        years % 10 == 1 && years != 11 -> "$years год"
+        years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года"
+        else -> "$years лет"
+    }
+
+    val monthsString = when {
+        months % 10 == 1 && months != 11 -> "$months месяц"
+        months % 10 in 2..4 && (months % 100 < 10 || months % 100 >= 20) -> "$months месяца"
+        else -> "$months месяцев"
+    }
+
+    return "$yearsString $monthsString"
 }
 
 fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
