@@ -23,6 +23,7 @@ import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.snackMessage
 import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
+import com.example.mypet.utils.DEFAULT_NULL_VALUE
 import com.example.mypet.utils.DEFAULT_SEX_FEMALE_VALUE
 import com.example.mypet.utils.DEFAULT_SEX_MALE_VALUE
 import dagger.hilt.android.AndroidEntryPoint
@@ -143,6 +144,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun onKindItemSelectedListener() {
         binding.autoCompleteTextViewPetCreationKindList.setOnItemClickListener { _, _, position, _ ->
             viewModel.kindOrdinal = position
+            viewModel.breedOrdinal = DEFAULT_NULL_VALUE
             initBreedListView(position)
         }
     }
@@ -165,6 +167,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 breedListAdapter.addAll(listBreedNameId.map { getString(it) })
                 breedListAdapter.notifyDataSetChanged()
             }
+            binding.autoCompleteTextViewPetCreationBreedList.text.clear()
             onBreedItemSelectedListener()
         }
     }

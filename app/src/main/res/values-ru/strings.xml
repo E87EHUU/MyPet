@@ -133,10 +133,9 @@
     <string name="user_button">Кнопка</string>
     <string name="user_auth_button">Войти</string>
 
-    <string name="login_prompt_email">Email</string>
-    <string name="login_prompt_password">Пароль</string>
+    <string name="login_prompt_email">Введите email</string>
+    <string name="login_prompt_password">Введите пароль</string>
     <string name="login_action_sign_in">Войдите или зарегистрируйтесь</string>
-    <string name="login_action_sign_in_short">Войти</string>
     <string name="login_welcome">Добро пожаловать!</string>
     <string name="login_invalid_email">Недействительный адрес электронной почты</string>
     <string name="login_invalid_password">Пароль должен быть >5 символов</string>

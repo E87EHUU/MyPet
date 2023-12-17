@@ -11,6 +11,7 @@ import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
+import com.example.mypet.ui.getPetsAge
 import com.example.mypet.ui.pet.main.list.PetListAdapter
 import com.example.mypet.ui.pet.main.list.PetListCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -111,7 +112,7 @@ class PetMainViewHolder(
         }
 
         petListModel?.age?.let {
-            binding.textViewPetRecyclerMainAgeText.text = it
+            binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it.toLong())
             binding.linearLayoutPetRecyclerMainAge.isVisible = true
         } ?: run {
             binding.linearLayoutPetRecyclerMainAge.isVisible = false
