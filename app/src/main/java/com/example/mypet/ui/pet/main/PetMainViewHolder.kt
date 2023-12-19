@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
+import com.example.mypet.domain.pet.PetSex
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -79,7 +80,7 @@ class PetMainViewHolder(
     }
 
     fun bind(petListModels: List<PetListModel>?, activePetListId: Int?) {
-        petListModels?.let { petListModels ->
+        petListModels?.let {
             this.petListModels = petListModels
             petListAdapter.submitList(petListModels)
             onClickPet(petListModels.find { it.id == activePetListId }
@@ -91,38 +92,64 @@ class PetMainViewHolder(
         petListModel?.let {
             activePetListModel = petListModel
 
-            if (it.avatarUri != null) {
-                Glide.with(context)
-                    .load(it.avatarUri)
-                    .circleCrop()
-                    .into(binding.imageViewPetRecyclerMainAvatarIcon)
-            } else
-                binding.imageViewPetRecyclerMainAvatarIcon
-                    .setImageResource(getPetIcon(it.kindOrdinal, it.breedOrdinal))
+            with(binding) {
+                petListModel.avatarUri?.let {
+                    Glide.with(itemView)
+                        .load(it)
+                        .circleCrop()
+                        .into(binding.imageViewPetRecyclerMainAvatarIcon)
+                } ?: run {
+                    imageViewPetRecyclerMainAvatarIcon
+                        .setImageResource(
+                            getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal)
+                        )
+                }
 
-            binding.textViewPetRecyclerMainName.text = it.name
-            binding.textViewPetRecyclerMainBreedName.text =
-                context.getString(getPetName(it.kindOrdinal, it.breedOrdinal))
+                textViewPetRecyclerMainName.text = petListModel.name
+                textViewPetRecyclerMainBreedName.text =
+                    context.getString(
+                        getPetName(petListModel.kindOrdinal, petListModel.breedOrdinal)
+                    )
 
-            binding.imageViewPetRecyclerMainEmpty.isVisible = false
-            binding.groupPetRecyclerMain.isVisible = true
+                petListModel.age?.let {
+                    binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it.toLong())
+                    binding.linearLayoutPetRecyclerMainAge.isVisible = true
+                } ?: run {
+                    binding.linearLayoutPetRecyclerMainAge.isVisible = false
+                }
+
+                petListModel.weight?.let {
+                    binding.textViewPetRecyclerMainWeightText.text = it
+                    binding.linearLayoutPetRecyclerMainWeight.isVisible = true
+                } ?: run {
+                    binding.linearLayoutPetRecyclerMainWeight.isVisible = false
+                }
+
+                petListModel.sex?.let {
+                    when (it) {
+                        PetSex.MALE.ordinal -> {
+                            imageViewPetRecyclerMainSexMale.isVisible = true
+                            imageViewPetRecyclerMainSexFemale.isVisible = false
+                        }
+
+                        PetSex.FEMALE.ordinal -> {
+                            imageViewPetRecyclerMainSexMale.isVisible = false
+                            imageViewPetRecyclerMainSexFemale.isVisible = true
+                        }
+
+                        else -> {
+                            imageViewPetRecyclerMainSexMale.isVisible = false
+                            imageViewPetRecyclerMainSexFemale.isVisible = false
+                        }
+                    }
+                }
+
+                imageViewPetRecyclerMainEmpty.isVisible = false
+                groupPetRecyclerMain.isVisible = true
+            }
         } ?: run {
             binding.groupPetRecyclerMain.isVisible = false
             binding.imageViewPetRecyclerMainEmpty.isVisible = true
-        }
-
-        petListModel?.age?.let {
-            binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it.toLong())
-            binding.linearLayoutPetRecyclerMainAge.isVisible = true
-        } ?: run {
-            binding.linearLayoutPetRecyclerMainAge.isVisible = false
-        }
-
-        petListModel?.weight?.let {
-            binding.textViewPetRecyclerMainWeightText.text = it
-            binding.linearLayoutPetRecyclerMainWeight.isVisible = true
-        } ?: run {
-            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
         }
     }
 

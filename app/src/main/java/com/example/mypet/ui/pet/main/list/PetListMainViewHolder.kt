@@ -23,11 +23,14 @@ class PetListMainViewHolder(
             Glide.with(itemView)
                 .load(petListModel.avatarUri)
                 .circleCrop()
-                .into(binding.imageViewPetListItemIcon)
+                .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
         } ?: run {
-            binding.imageViewPetListItemIcon.setImageResource(
-                getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal)
-            )
+            Glide.with(itemView)
+                .load(getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal))
+                .circleCrop()
+                .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
         }
+
+        binding.textViewPetRecyclerMainRecyclerMainName.text = petListModel.name
     }
 }

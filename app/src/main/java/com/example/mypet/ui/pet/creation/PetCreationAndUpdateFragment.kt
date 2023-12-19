@@ -1,14 +1,11 @@
 package com.example.mypet.ui.pet.creation
 
-import android.Manifest
 import android.app.DatePickerDialog
-import android.content.pm.PackageManager
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -249,7 +246,11 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun onSaveNewPetButtonClickListener() {
         viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
-        viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toInt()
+        try {
+            viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toInt()
+        } catch (_: Exception) {
+
+        }
 
         with(viewModel) {
             if (name.isEmpty() || kindOrdinal == null) {
@@ -262,42 +263,16 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private val getContent =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-            imageUri?.let {
-                viewModel.avatarUri = imageUri.toString()
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            activityResult.data?.data?.let {
+                viewModel.avatarUri = it.toString()
                 updateUIAvatar()
             }
         }
 
-    private fun pickImageFromGallery() {
-        getContent.launch("image/*")
-    }
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) pickImageFromGallery()
-        }
-
     private fun requestPermission() {
-        IMAGE_SELECTION_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(
-                requireContext(), IMAGE_SELECTION_PERMISSION
-            ) -> {
-                pickImageFromGallery()
-            }
-
-            else -> {
-                requestPermissionLauncher.launch(IMAGE_SELECTION_PERMISSION)
-            }
-        }
-    }
-
-    companion object {
-        var IMAGE_SELECTION_PERMISSION = "image_selection_permission"
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+        getContent.launch(intent)
     }
 }

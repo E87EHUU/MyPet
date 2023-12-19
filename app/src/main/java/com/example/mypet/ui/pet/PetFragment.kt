@@ -48,6 +48,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initView()
 
         initObservePet()
@@ -61,6 +62,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
         binding.root.itemAnimator = null
         binding.root.adapter = adapter
+
     }
 
     private fun initObservePet() {
