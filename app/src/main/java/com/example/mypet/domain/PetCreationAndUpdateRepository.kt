@@ -7,7 +7,7 @@ interface PetCreationAndUpdateRepository {
 
     suspend fun addNewPetToDb(petCreationAndUpdateModel: PetCreationAndUpdateModel)
 
-    suspend fun getPetFromDbForUpdateDetails(petId: Int): PetListModel
+    suspend fun getPetFromDbForUpdateDetails(petId: Int): PetListModel?
 
     suspend fun updatePetDetailsInDb(updatedPet: PetCreationAndUpdateModel)
 }

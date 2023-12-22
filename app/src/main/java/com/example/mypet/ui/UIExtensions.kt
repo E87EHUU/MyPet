@@ -62,33 +62,35 @@ fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
 }
 
 fun getPetName(kindOrdinal: Int, breedOrdinal: Int?) =
-    getPetBreedName(kindOrdinal, breedOrdinal) ?: PetKind.values()[kindOrdinal].nameResId
+    getPetBreedName(kindOrdinal, breedOrdinal) ?: PetKind.entries[kindOrdinal].nameResId
 
 private fun getPetBreedName(kindOrdinal: Int, breedOrdinal: Int?) =
     breedOrdinal?.let {
-        try {
-            when (kindOrdinal) {
-                0 -> PetBreedCat.values()[breedOrdinal].nameResId
-                1 -> PetBreedDog.values()[breedOrdinal].nameResId
-                12 -> PetBreedChameleon.values()[breedOrdinal].nameResId
-                14 -> PetBreedSnake.values()[breedOrdinal].nameResId
-                17 -> PetBreedSpider.values()[breedOrdinal].nameResId
-                else -> null
+        if (breedOrdinal > 0) {
+            try {
+                when (kindOrdinal) {
+                    0 -> PetBreedCat.entries[breedOrdinal].nameResId
+                    1 -> PetBreedDog.entries[breedOrdinal].nameResId
+                    12 -> PetBreedChameleon.entries[breedOrdinal].nameResId
+                    14 -> PetBreedSnake.entries[breedOrdinal].nameResId
+                    17 -> PetBreedSpider.entries[breedOrdinal].nameResId
+                }
+            } catch (e: Exception) {
+                println("UIExtensions -> getPetBreedIcon(): ${e.message}")
             }
-        } catch (e: Exception) {
-            println("UIExtensions -> getPetBreedIcon(): ${e.message}")
-            null
         }
+
+        null
     }
 
 fun getPetBreedList(kindOrdinal: Int) =
     try {
         when (kindOrdinal) {
-            0 -> PetBreedCat.values().map { it.nameResId }
-            1 -> PetBreedDog.values().map { it.nameResId }
-            12 -> PetBreedChameleon.values().map { it.nameResId }
-            14 -> PetBreedSnake.values().map { it.nameResId }
-            17 -> PetBreedSpider.values().map { it.nameResId }
+            0 -> PetBreedCat.entries.map { it.nameResId }
+            1 -> PetBreedDog.entries.map { it.nameResId }
+            12 -> PetBreedChameleon.entries.map { it.nameResId }
+            14 -> PetBreedSnake.entries.map { it.nameResId }
+            17 -> PetBreedSpider.entries.map { it.nameResId }
             else -> null
         }
     } catch (e: Exception) {

@@ -35,7 +35,7 @@ class PetCreationAndUpdateRepositoryImpl @Inject constructor(
             breedOrdinal = breedOrdinal,
             avatarPath = avatarUri,
             name = name,
-            dateOfBirthTimeMillis = dateOfBirth?.toLong(),
+            dateOfBirth = dateOfBirth?.toLong(),
             weight = weight,
             sex = sex,
             isActive = isActive

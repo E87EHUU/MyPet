@@ -4,11 +4,12 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.DATE_OF_BIRTH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.SEX
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
 import com.example.mypet.data.local.room.model.LocalAlarmMinModel
 import com.example.mypet.data.local.room.model.pet.LocalPetCareFoodModel
@@ -24,10 +25,11 @@ interface LocalPetDao {
                 "id $ID, " +
                 "avatar_path $AVATAR_PATH, " +
                 "name $NAME, " +
-                "age $AGE, " +
+                "date_of_birth $DATE_OF_BIRTH, " +
                 "weight $WEIGHT, " +
                 "kind_ordinal $KIND_ORDINAL, " +
                 "breed_ordinal $BREED_ORDINAL, " +
+                "sex $SEX, " +
                 "is_active $IS_ACTIVE " +
                 "FROM pet "
     )

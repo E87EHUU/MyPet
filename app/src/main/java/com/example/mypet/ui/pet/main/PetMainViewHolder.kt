@@ -93,17 +93,11 @@ class PetMainViewHolder(
             activePetListModel = petListModel
 
             with(binding) {
-                petListModel.avatarUri?.let {
-                    Glide.with(itemView)
-                        .load(it)
-                        .circleCrop()
-                        .into(binding.imageViewPetRecyclerMainAvatarIcon)
-                } ?: run {
-                    imageViewPetRecyclerMainAvatarIcon
-                        .setImageResource(
-                            getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal)
-                        )
-                }
+                Glide.with(itemView)
+                    .load(petListModel.avatarUri)
+                    .circleCrop()
+                    .placeholder(getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal))
+                    .into(binding.imageViewPetRecyclerMainAvatarIcon)
 
                 textViewPetRecyclerMainName.text = petListModel.name
                 textViewPetRecyclerMainBreedName.text =
@@ -111,15 +105,15 @@ class PetMainViewHolder(
                         getPetName(petListModel.kindOrdinal, petListModel.breedOrdinal)
                     )
 
-                petListModel.age?.let {
-                    binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it.toLong())
+                petListModel.dateOfBirth?.let {
+                    binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it)
                     binding.linearLayoutPetRecyclerMainAge.isVisible = true
                 } ?: run {
                     binding.linearLayoutPetRecyclerMainAge.isVisible = false
                 }
 
                 petListModel.weight?.let {
-                    binding.textViewPetRecyclerMainWeightText.text = it
+                    binding.textViewPetRecyclerMainWeightText.text = it.toString()
                     binding.linearLayoutPetRecyclerMainWeight.isVisible = true
                 } ?: run {
                     binding.linearLayoutPetRecyclerMainWeight.isVisible = false
@@ -149,6 +143,11 @@ class PetMainViewHolder(
             }
         } ?: run {
             binding.groupPetRecyclerMain.isVisible = false
+            binding.imageViewPetRecyclerMainSexMale.isVisible = false
+            binding.imageViewPetRecyclerMainSexFemale.isVisible = false
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
+            binding.linearLayoutPetRecyclerMainAge.isVisible = false
+
             binding.imageViewPetRecyclerMainEmpty.isVisible = true
         }
     }

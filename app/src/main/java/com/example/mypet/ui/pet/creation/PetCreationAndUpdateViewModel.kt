@@ -23,7 +23,7 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     var avatarUri: String? = null
     var kindOrdinal: Int? = null
     var breedOrdinal: Int? = null
-    var dateOfBirth: String? = null
+    var dateOfBirth: Long? = null
     var weight: Int? = null
     var sex: Int? = null
 
@@ -48,31 +48,39 @@ class PetCreationAndUpdateViewModel @Inject constructor(
         this.petId = petId
 
         viewModelScope.launch(Dispatchers.IO) {
-            _localPetForUpdate.postValue(
-                petCreationAndUpdateRepository.getPetFromDbForUpdateDetails(petId)
-            )
+            petCreationAndUpdateRepository.getPetFromDbForUpdateDetails(petId)?.let {
+                _localPetForUpdate.postValue(it)
+                name = it.name
+                avatarUri = it.avatarUri
+                kindOrdinal = it.kindOrdinal
+                breedOrdinal = it.breedOrdinal
+                dateOfBirth = it.dateOfBirth
+                weight = it.weight
+                sex = it.sex
+            }
         }
     }
 
     private fun updatePetDetailsInDb() {
         viewModelScope.launch(Dispatchers.IO) {
-            petCreationAndUpdateRepository.updatePetDetailsInDb(
-                viewModelVariablesToPetCreationModel(petId)
-            )
+            val petCreationAndUpdateModel = viewModelVariablesToPetCreationModel(petId)
+            println(petCreationAndUpdateModel)
+            petCreationAndUpdateRepository.updatePetDetailsInDb(petCreationAndUpdateModel)
         }
     }
 
-    private fun viewModelVariablesToPetCreationModel(id: Int) = PetCreationAndUpdateModel(
-        id = id,
-        avatarUri = avatarUri,
-        name = name,
-        dateOfBirth = dateOfBirth,
-        weight = weight,
-        kindOrdinal = kindOrdinal!!,
-        breedOrdinal = breedOrdinal,
-        isActive = false,
-        sex = sex
-    )
+    private fun viewModelVariablesToPetCreationModel(id: Int) =
+        PetCreationAndUpdateModel(
+            id = id,
+            avatarUri = avatarUri,
+            name = name,
+            dateOfBirth = dateOfBirth,
+            weight = weight,
+            kindOrdinal = kindOrdinal!!,
+            breedOrdinal = breedOrdinal,
+            isActive = false,
+            sex = sex
+        )
 
     companion object {
         const val DEFAULT_STRING_VALUE = ""

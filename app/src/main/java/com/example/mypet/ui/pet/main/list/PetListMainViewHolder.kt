@@ -19,17 +19,11 @@ class PetListMainViewHolder(
     fun bind(petListModel: PetListModel) {
         this.petListModel = petListModel
 
-        petListModel.avatarUri?.let {
-            Glide.with(itemView)
-                .load(petListModel.avatarUri)
-                .circleCrop()
-                .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
-        } ?: run {
-            Glide.with(itemView)
-                .load(getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal))
-                .circleCrop()
-                .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
-        }
+        Glide.with(itemView)
+            .load(petListModel.avatarUri)
+            .circleCrop()
+            .placeholder(getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal))
+            .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
 
         binding.textViewPetRecyclerMainRecyclerMainName.text = petListModel.name
     }

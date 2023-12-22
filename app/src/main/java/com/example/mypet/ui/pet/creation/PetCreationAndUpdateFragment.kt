@@ -111,8 +111,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun initPetDetailsForUpdate(localPetModel: PetListModel) {
-        fillViewModelFields(localPetModel)
-
         with(binding) {
 
             updateUIAvatar()
@@ -123,6 +121,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                     localPetModel.kindOrdinal
                 ), false
             )
+
             localPetModel.breedOrdinal?.let {
                 autoCompleteTextViewPetCreationBreedList.setText(
                     breedListAdapter.getItem(
@@ -130,13 +129,17 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                     ), false
                 )
             }
-            textInputEditTextPetCreationWeight.setText(localPetModel.weight)
-            if (localPetModel.age != null) {
+
+            localPetModel.weight?.let {
+                textInputEditTextPetCreationWeight.setText(localPetModel.weight.toString())
+            }
+
+            if (localPetModel.dateOfBirth != null) {
                 textInputEditTextPetCreationDateOfBirth.setText(
                     SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()
-                    ).format(localPetModel.age.toLong())
+                    ).format(localPetModel.dateOfBirth.toLong())
                 )
             }
         }
@@ -161,14 +164,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun fillViewModelFields(localPetModel: PetListModel) {
-        viewModel.dateOfBirth = localPetModel.age
-        viewModel.avatarUri = localPetModel.avatarUri.toString()
-        viewModel.kindOrdinal = localPetModel.kindOrdinal
-        viewModel.breedOrdinal = localPetModel.breedOrdinal
-        viewModel.sex = localPetModel.sex
-    }
-
     private fun onChoosePhotoButtonClickListener() {
         binding.imageViewPetCreationAvatar.setOnClickListener {
             requestPermission()
@@ -178,7 +173,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun initKindListView() {
         kindListAdapter = ArrayAdapter(requireContext(),
             R.layout.fragment_pet_creation_custom_dropdown_item,
-            PetKind.values().map { getString(it.nameResId) })
+            PetKind.entries.map { getString(it.nameResId) })
         binding.autoCompleteTextViewPetCreationKindList.setAdapter(kindListAdapter)
         onKindItemSelectedListener()
     }
@@ -237,7 +232,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                     val selectedDate =
                         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
                     binding.textInputEditTextPetCreationDateOfBirth.setText(selectedDate)
-                    viewModel.dateOfBirth = calendar.timeInMillis.toString()
+                    viewModel.dateOfBirth = calendar.timeInMillis
                 }, year, month, day
             )
             datePickerDialog.show()
