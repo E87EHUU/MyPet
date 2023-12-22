@@ -39,12 +39,11 @@ class CareRepeatViewHolder(
         } ?: run {
             binding.root.isVisible = false
         }
-        //TODO дописать функуию отображения информации о повторе в зависимости от данных. Как пример, если установлены понедельник, вторник то "Каждый Пн, Вт", если через неделю то "Каждую 2 неделю по Пн, Вт". в таком роде, надо хорошо так подумать.
     }
 
     private fun updateUIEnd() {
         with(binding) {
-            if (careRepeatModel.endTypeOrdinal == CareRepeatEndTypes.NONE.ordinal) {
+            if (careRepeatModel.endTypeOrdinal == null || careRepeatModel.endTypeOrdinal == CareRepeatEndTypes.NONE.ordinal) {
                 textViewCareRecyclerEndTitle.isVisible = false
                 imageViewCareRecyclerEndIcon.isVisible = false
                 constraintLayoutCareRecyclerEnd.isVisible = false
@@ -53,10 +52,10 @@ class CareRepeatViewHolder(
                     when (careRepeatModel.endTypeOrdinal) {
                         CareRepeatEndTypes.AFTER_TIMES.ordinal -> context.getString(
                             R.string.care_repeat_end_after_times,
-                            careRepeatModel.endAfterTimes
+                            careRepeatModel.endAfterTimes.toString()
                         )
 
-                        CareRepeatEndTypes.AFTER_DATE.ordinal -> toAppDate(careRepeatModel.endAfterDate)
+                        CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> toAppDate(careRepeatModel.endAfterDate)
                         else -> context.getString(R.string.care_repeat_end_none)
                     }
 
@@ -100,7 +99,7 @@ class CareRepeatViewHolder(
     }
 
     private fun getIntervalTimes() =
-        if (careRepeatModel.intervalTimes != "1") careRepeatModel.intervalTimes
+        if (careRepeatModel.intervalTimes != 1) careRepeatModel.intervalTimes.toString()
         else ""
 
     private fun getCheckedDay(): String {
@@ -157,7 +156,7 @@ class CareRepeatViewHolder(
                 }
 
 
-                return " (${stringBuilder.toString()})"
+                return " ($stringBuilder)"
             }
         }
         return ""

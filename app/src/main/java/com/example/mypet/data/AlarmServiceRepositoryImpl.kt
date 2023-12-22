@@ -18,36 +18,31 @@ class AlarmServiceRepositoryImpl @Inject constructor(
 
     override suspend fun stopAlarm(alarmId: Int) {
         localAlarmServiceDao.getLocalAlarmEntity(alarmId)?.let { localAlarmEntity ->
-            var nextStart: Long? = null
-
             if (localAlarmEntity.isActive) {
                 localAlarmServiceDao.getLocalRepeatEntity(alarmId)?.let { localRepeatEntity ->
                     val localStartEntity = localAlarmServiceDao.getLocalStartEntity(alarmId)
-                    nextStart = AlarmNextStartCalculate().getNextStartTimeInMillis(
-                        localStartEntity,
-                        localRepeatEntity,
-                        localAlarmEntity.hour,
-                        localAlarmEntity.minute
-                    )
+                    val updatedLocalAlarmEntity =
+                        AlarmNextStartCalculate().getNextStartTimeInMillis(
+                            localAlarmEntity,
+                            localStartEntity,
+                            localRepeatEntity
+                        )
+
+                    localAlarmServiceDao.updateLocalAlarmEntity(updatedLocalAlarmEntity)
+                    updatedLocalAlarmEntity.nextStart?.let {
+                        alarmDao.setAlarm(localAlarmEntity.id, it)
+                    }
+
+                    return
                 }
             }
 
-            nextStart?.let {
-                localAlarmServiceDao.updateLocalAlarmEntity(
-                    localAlarmEntity.copy(
-                        nextStart = it,
-                        isActive = true
-                    )
+            localAlarmServiceDao.updateLocalAlarmEntity(
+                localAlarmEntity.copy(
+                    nextStart = null,
+                    isActive = false
                 )
-                alarmDao.setAlarm(localAlarmEntity.id, it)
-            } ?: run {
-                localAlarmServiceDao.updateLocalAlarmEntity(
-                    localAlarmEntity.copy(
-                        nextStart = null,
-                        isActive = false
-                    )
-                )
-            }
+            )
         }
     }
 

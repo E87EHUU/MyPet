@@ -11,6 +11,7 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
+import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import com.example.mypet.domain.toAppDate
@@ -28,10 +29,18 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         super.onPause()
         viewModel.careRepeatModel?.let { careRepeatModel ->
             careRepeatModel.intervalTimes =
-                binding.textInputEditTextCareRepeatIntervalTimes.text.toString()
+                try {
+                    binding.textInputEditTextCareRepeatIntervalTimes.text.toString().toInt()
+                } catch (_: Exception) {
+                    null
+                }
 
             careRepeatModel.endAfterTimes =
-                binding.textInputEditTextCareRepeatDetailEndAfterTimes.text.toString()
+                try {
+                    binding.textInputEditTextCareRepeatDetailEndAfterTimes.text.toString().toInt()
+                } catch (_: Exception) {
+                    null
+                }
         }
     }
 
@@ -74,23 +83,25 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     private fun updateUI() {
         viewModel.careRepeatModel?.let { careRepeatModel ->
-            binding.textInputEditTextCareRepeatIntervalTimes.setText(careRepeatModel.intervalTimes)
-            updateUIInterval()
+            careRepeatModel.updateUIInterval()
             updateUIWeekChips()
-            updateUIEnd()
-            binding.textInputEditTextCareRepeatDetailEndAfterTimes.setText(careRepeatModel.endAfterTimes)
+            careRepeatModel.updateUIEnd()
             updateUIEndAfterDateText()
         }
     }
 
-    private fun updateUIEnd() {
-        when (viewModel.careRepeatModel?.endTypeOrdinal) {
+    private fun CareRepeatModel.updateUIEnd() {
+        endAfterTimes?.let {
+            binding.textInputEditTextCareRepeatDetailEndAfterTimes.setText(it.toString())
+        }
+
+        when (endTypeOrdinal) {
             CareRepeatEndTypes.AFTER_TIMES.ordinal -> {
                 updateUIEndAfterTimes()
                 binding.radioButtonCareRepeatDetailEndAfterTimes.isChecked = true
             }
 
-            CareRepeatEndTypes.AFTER_DATE.ordinal -> {
+            CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
                 updateUIEndAfterDate()
                 binding.radioButtonCareRepeatDetailEndAfterDate.isChecked = true
             }
@@ -135,8 +146,12 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         }
     }
 
-    private fun updateUIInterval() {
-        when (viewModel.careRepeatModel?.intervalOrdinal) {
+    private fun CareRepeatModel.updateUIInterval() {
+        intervalTimes?.let {
+            binding.textInputEditTextCareRepeatIntervalTimes.setText(it.toString())
+        }
+
+        when (intervalOrdinal) {
             CareRepeatInterval.WEEK.ordinal -> {
                 updateUIIntervalText()
                 updateUIWeekDetail(isVisible = true)
@@ -162,7 +177,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     private fun updateUIIntervalText() {
         viewModel.careRepeatModel?.intervalOrdinal?.let {
             binding.textInputEditTextCareRepeatInterval.setText(
-                CareRepeatInterval.values()[it].titleResId
+                CareRepeatInterval.entries[it].titleResId
             )
         }
     }
@@ -230,7 +245,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
         binding.constraintLayoutCareRepeatDetailEndAfterDate.setOnClickListener {
             viewModel.careRepeatModel?.let { careRepeatModel ->
-                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_DATE.ordinal
+                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal
                 updateUIEndAfterDate()
             }
         }
@@ -255,7 +270,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 R.id.care_repeat_times_day -> {
                     viewModel.careRepeatModel?.let { careRepeatModel ->
                         careRepeatModel.intervalOrdinal = CareRepeatInterval.DAY.ordinal
-                        updateUIInterval()
+                        careRepeatModel.updateUIInterval()
                     }
                     true
                 }
@@ -263,7 +278,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 R.id.care_repeat_times_week -> {
                     viewModel.careRepeatModel?.let { careRepeatModel ->
                         careRepeatModel.intervalOrdinal = CareRepeatInterval.WEEK.ordinal
-                        updateUIInterval()
+                        careRepeatModel.updateUIInterval()
                     }
                     true
                 }
@@ -271,7 +286,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 R.id.care_repeat_times_month -> {
                     viewModel.careRepeatModel?.let { careRepeatModel ->
                         careRepeatModel.intervalOrdinal = CareRepeatInterval.MONTH.ordinal
-                        updateUIInterval()
+                        careRepeatModel.updateUIInterval()
                     }
 
                     true
@@ -280,7 +295,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 R.id.care_repeat_times_year -> {
                     viewModel.careRepeatModel?.let { careRepeatModel ->
                         careRepeatModel.intervalOrdinal = CareRepeatInterval.YEAR.ordinal
-                        updateUIInterval()
+                        careRepeatModel.updateUIInterval()
                     }
                     true
                 }

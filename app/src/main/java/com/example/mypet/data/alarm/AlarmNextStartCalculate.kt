@@ -1,46 +1,101 @@
 package com.example.mypet.data.alarm
 
+import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
+import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
+import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import java.util.Calendar
 
 class AlarmNextStartCalculate {
     fun getNextStartTimeInMillis(
+        localAlarmEntity: LocalAlarmEntity,
         localStartEntity: LocalStartEntity?,
         localRepeatEntity: LocalRepeatEntity?,
-        hour: Int,
-        minute: Int,
-    ): Long {
+    ): LocalAlarmEntity {
         val calendar = Calendar.getInstance()
+        val nowTimeInMillis = calendar.timeInMillis
 
-        localStartEntity?.timeInMillis?.let {
-            calendar.timeInMillis = it
-        }
+        if (isNotStart(nowTimeInMillis, localStartEntity))
+            return localAlarmEntity.copy(nextStart = null)
 
-        calendar[Calendar.HOUR_OF_DAY] = hour
-        calendar[Calendar.MINUTE] = minute
+        calendar[Calendar.HOUR_OF_DAY] = localAlarmEntity.hour
+        calendar[Calendar.MINUTE] = localAlarmEntity.minute
         calendar[Calendar.SECOND] = 0
         calendar[Calendar.MILLISECOND] = 0
 
+        if (calendar.timeInMillis <= nowTimeInMillis)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+
         localRepeatEntity?.let {
-/*            val calendarNow = Calendar.getInstance()
+            if (localRepeatEntity.counter > 0) {
+                calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
 
-            if (calendar.isHourEqualsAndMinuteLast(calendarNow)
-                || calendar.isHourLast(calendarNow)
-            ) calendar.add(Calendar.DATE, 1)
-
-            if (alarmModel.isRepeatable()) {
-                for (i in 1..7) {
-                    if (calendar.hasTodayAlarm(alarmModel) != null) break
-                    else calendar.add(Calendar.DATE, 1)
-                }
-            }*/
+                if (isEnd(nowTimeInMillis, localRepeatEntity))
+                    return localAlarmEntity.copy(nextStart = null)
+            }
         }
-    println(calendar.time)
-        return calendar.timeInMillis
+
+        println(calendar.time)
+
+        return localAlarmEntity.copy(nextStart = calendar.timeInMillis)
     }
 
-    private fun Calendar.hasTodayAlarm(localRepeatEntity: LocalRepeatEntity) =
+    private fun isNotStart(nowTimeInMillis: Long, localStartEntity: LocalStartEntity?) =
+        localStartEntity?.timeInMillis?.let {
+            nowTimeInMillis < localStartEntity.timeInMillis
+        } ?: false
+
+    private fun isEnd(nowTimeInMillis: Long, localRepeatEntity: LocalRepeatEntity) =
+        when (localRepeatEntity.endTypeOrdinal) {
+            CareRepeatEndTypes.NONE.ordinal -> false
+            CareRepeatEndTypes.AFTER_TIMES.ordinal -> {
+                localRepeatEntity.endAfterTimes?.let {
+                    localRepeatEntity.counter >= it
+                } ?: false
+            }
+
+            CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
+                localRepeatEntity.endAfterTimeInMillis?.let {
+                    nowTimeInMillis >= it
+                } ?: false
+            }
+
+            else -> false
+        }
+
+    private fun Calendar.calculateAndUpdateRepeatTimeInMillis(
+        localRepeatEntity: LocalRepeatEntity
+    ) {
+        val amount = localRepeatEntity.intervalTimes ?: 1
+        when (localRepeatEntity.intervalOrdinal) {
+            CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
+            CareRepeatInterval.WEEK.ordinal -> {
+                val start =
+                    if (this[Calendar.DAY_OF_WEEK] == 1) 8
+                    else this[Calendar.DAY_OF_WEEK]
+
+                for (i in start..8) {
+                    if (hasTodayRepeat(localRepeatEntity)) break
+                    else add(Calendar.DATE, 1)
+                }
+
+                if (this[Calendar.DAY_OF_WEEK] == 2) {
+                    add(Calendar.WEEK_OF_YEAR, amount)
+
+                    for (i in 2..8) {
+                        if (hasTodayRepeat(localRepeatEntity)) break
+                        else add(Calendar.DATE, 1)
+                    }
+                }
+            }
+
+            CareRepeatInterval.MONTH.ordinal -> add(Calendar.MONTH, amount)
+            CareRepeatInterval.YEAR.ordinal -> add(Calendar.YEAR, amount)
+        }
+    }
+
+    private fun Calendar.hasTodayRepeat(localRepeatEntity: LocalRepeatEntity) =
         when (this[Calendar.DAY_OF_WEEK]) {
             2 -> localRepeatEntity.isMonday
             3 -> localRepeatEntity.isTuesday

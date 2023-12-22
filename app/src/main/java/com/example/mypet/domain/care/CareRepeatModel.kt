@@ -3,7 +3,7 @@ package com.example.mypet.domain.care
 data class CareRepeatModel(
     val id: Int,
 
-    var intervalTimes: String,
+    var intervalTimes: Int?,
     var intervalOrdinal: Int?,
 
     var isMonday: Boolean,
@@ -14,7 +14,7 @@ data class CareRepeatModel(
     var isSaturday: Boolean,
     var isSunday: Boolean,
 
-    var endTypeOrdinal: Int,
-    var endAfterTimes: String,
-    var endAfterDate: Long,
+    var endTypeOrdinal: Int?,
+    var endAfterTimes: Int?,
+    var endAfterDate: Long?,
 ) : CareModel(CARE_ADAPTER_REPEAT_KEY)

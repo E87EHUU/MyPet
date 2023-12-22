@@ -17,37 +17,41 @@ data class LocalRepeatEntity(
     @ColumnInfo(name = "${CARE_TABLE}_$ID")
     val careId: Int,
 
+    @ColumnInfo(name = COUNTER)
+    val counter: Int = COUNTER_DEFAULT,
+
     @ColumnInfo(name = INTERVAL_ORDINAL)
     val intervalOrdinal: Int? = null,
     @ColumnInfo(name = INTERVAL_TIMES)
-    val intervalTimes: String? = null,
+    val intervalTimes: Int? = null,
 
     @ColumnInfo(name = IS_MONDAY)
-    val isMonday: Boolean? = null,
+    val isMonday: Boolean = false,
     @ColumnInfo(name = IS_TUESDAY)
-    val isTuesday: Boolean? = null,
+    val isTuesday: Boolean = false,
     @ColumnInfo(name = IS_WEDNESDAY)
-    val isWednesday: Boolean? = null,
+    val isWednesday: Boolean = false,
     @ColumnInfo(name = IS_THURSDAY)
-    val isThursday: Boolean? = null,
+    val isThursday: Boolean = false,
     @ColumnInfo(name = IS_FRIDAY)
-    val isFriday: Boolean? = null,
+    val isFriday: Boolean = false,
     @ColumnInfo(name = IS_SATURDAY)
-    val isSaturday: Boolean? = null,
+    val isSaturday: Boolean = false,
     @ColumnInfo(name = IS_SUNDAY)
-    val isSunday: Boolean? = null,
+    val isSunday: Boolean = false,
 
     @ColumnInfo(name = END_TYPE_ORDINAL)
     var endTypeOrdinal: Int?,
     @ColumnInfo(name = END_AFTER_TIMES)
-    var endAfterTimes: String?,
-    @ColumnInfo(name = END_AFTER_DATE)
-    var endAfterDate: Long?,
+    var endAfterTimes: Int?,
+    @ColumnInfo(name = END_AFTER_TIME_IN_MILLIS)
+    var endAfterTimeInMillis: Long?,
 ) {
     companion object {
-        const val TYPE_ORDINAL = "type_ordinal"
         const val INTERVAL_TIMES = "interval_times"
         const val INTERVAL_ORDINAL = "interval_ordinal"
+
+        const val COUNTER = "counter"
 
         const val IS_MONDAY = "is_monday"
         const val IS_TUESDAY = "is_tuesday"
@@ -59,6 +63,8 @@ data class LocalRepeatEntity(
 
         const val END_TYPE_ORDINAL = "end_type_ordinal"
         const val END_AFTER_TIMES = "end_after_times"
-        const val END_AFTER_DATE = "end_after_date"
+        const val END_AFTER_TIME_IN_MILLIS = "end_after_time_in_millis"
+
+        const val COUNTER_DEFAULT = 0
     }
 }
