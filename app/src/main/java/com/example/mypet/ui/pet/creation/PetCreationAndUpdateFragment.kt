@@ -22,8 +22,6 @@ import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getToolbar
-import com.example.mypet.ui.pet.creation.PetCreationAndUpdateViewModel.Companion.DEFAULT_SEX_FEMALE_VALUE
-import com.example.mypet.ui.pet.creation.PetCreationAndUpdateViewModel.Companion.DEFAULT_SEX_MALE_VALUE
 import com.example.mypet.ui.snackMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -98,13 +96,13 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun onWhichSexChipSelectedListener() {
         binding.chipPetCreationMale.setOnClickListener {
-            viewModel.sex = DEFAULT_SEX_MALE_VALUE
+            viewModel.sex = PetSex.MALE.ordinal
             binding.chipPetCreationMale.isChecked = true
             binding.chipPetCreationFemale.isChecked = false
         }
 
         binding.chipPetCreationFemale.setOnClickListener {
-            viewModel.sex = DEFAULT_SEX_FEMALE_VALUE
+            viewModel.sex = PetSex.FEMALE.ordinal
             binding.chipPetCreationMale.isChecked = false
             binding.chipPetCreationFemale.isChecked = true
         }
