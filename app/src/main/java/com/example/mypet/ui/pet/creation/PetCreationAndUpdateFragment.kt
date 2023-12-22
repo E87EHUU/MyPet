@@ -95,16 +95,28 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun onWhichSexChipSelectedListener() {
-        binding.chipPetCreationMale.setOnClickListener {
-            viewModel.sex = PetSex.MALE.ordinal
-            binding.chipPetCreationMale.isChecked = true
-            binding.chipPetCreationFemale.isChecked = false
-        }
+        with(binding) {
+            binding.chipPetCreationMale.setOnClickListener {
+                if (viewModel.sexOrdinal == PetSex.MALE.ordinal) {
+                    viewModel.sexOrdinal = null
+                    chipPetCreationMale.isChecked = false
+                } else {
+                    viewModel.sexOrdinal = PetSex.MALE.ordinal
+                    chipPetCreationMale.isChecked = true
+                    chipPetCreationFemale.isChecked = false
+                }
+            }
 
-        binding.chipPetCreationFemale.setOnClickListener {
-            viewModel.sex = PetSex.FEMALE.ordinal
-            binding.chipPetCreationMale.isChecked = false
-            binding.chipPetCreationFemale.isChecked = true
+            binding.chipPetCreationFemale.setOnClickListener {
+                if (viewModel.sexOrdinal == PetSex.FEMALE.ordinal) {
+                    viewModel.sexOrdinal = null
+                    chipPetCreationFemale.isChecked = false
+                } else {
+                    viewModel.sexOrdinal = PetSex.FEMALE.ordinal
+                    chipPetCreationMale.isChecked = false
+                    chipPetCreationFemale.isChecked = true
+                }
+            }
         }
     }
 

@@ -119,22 +119,20 @@ class PetMainViewHolder(
                     binding.linearLayoutPetRecyclerMainWeight.isVisible = false
                 }
 
-                petListModel.sex?.let {
-                    when (it) {
-                        PetSex.MALE.ordinal -> {
-                            imageViewPetRecyclerMainSexMale.isVisible = true
-                            imageViewPetRecyclerMainSexFemale.isVisible = false
-                        }
+                when (petListModel.sex) {
+                    PetSex.MALE.ordinal -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = true
+                        imageViewPetRecyclerMainSexFemale.isVisible = false
+                    }
 
-                        PetSex.FEMALE.ordinal -> {
-                            imageViewPetRecyclerMainSexMale.isVisible = false
-                            imageViewPetRecyclerMainSexFemale.isVisible = true
-                        }
+                    PetSex.FEMALE.ordinal -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = false
+                        imageViewPetRecyclerMainSexFemale.isVisible = true
+                    }
 
-                        else -> {
-                            imageViewPetRecyclerMainSexMale.isVisible = false
-                            imageViewPetRecyclerMainSexFemale.isVisible = false
-                        }
+                    else -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = false
+                        imageViewPetRecyclerMainSexFemale.isVisible = false
                     }
                 }
 

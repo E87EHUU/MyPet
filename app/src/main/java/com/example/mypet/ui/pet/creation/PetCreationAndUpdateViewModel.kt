@@ -25,7 +25,7 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     var breedOrdinal: Int? = null
     var dateOfBirth: Long? = null
     var weight: Int? = null
-    var sex: Int? = null
+    var sexOrdinal: Int? = null
 
     private val _localPetForUpdate = MutableLiveData<PetListModel>()
     val localPetForUpdate: LiveData<PetListModel>
@@ -56,7 +56,7 @@ class PetCreationAndUpdateViewModel @Inject constructor(
                 breedOrdinal = it.breedOrdinal
                 dateOfBirth = it.dateOfBirth
                 weight = it.weight
-                sex = it.sex
+                sexOrdinal = it.sex
             }
         }
     }
@@ -79,12 +79,10 @@ class PetCreationAndUpdateViewModel @Inject constructor(
             kindOrdinal = kindOrdinal!!,
             breedOrdinal = breedOrdinal,
             isActive = false,
-            sex = sex
+            sex = sexOrdinal
         )
 
     companion object {
         const val DEFAULT_STRING_VALUE = ""
-        const val DEFAULT_SEX_MALE_VALUE = 1
-        const val DEFAULT_SEX_FEMALE_VALUE = 0
     }
 }
