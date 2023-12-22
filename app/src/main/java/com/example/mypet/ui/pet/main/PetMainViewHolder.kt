@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
 import com.example.mypet.domain.pet.PetSex
+import com.example.mypet.domain.pet.list.PetListAddModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -22,10 +24,10 @@ class PetMainViewHolder(
     private val callback: PetMainCallback,
 ) : RecyclerView.ViewHolder(binding.root), PetListCallback {
     private val context = binding.root.context
-    private lateinit var petListModels: List<PetListModel>
+    private var petListMainModels: List<PetListMainModel>? = null
     private val petListAdapter: PetListAdapter =
         PetListAdapter(this)
-    private var activePetListModel: PetListModel? = null
+    private var activePetListMainModel: PetListMainModel? = null
 
     init {
         binding.recyclerViewPetRecyclerMain.itemAnimator = null
@@ -41,7 +43,7 @@ class PetMainViewHolder(
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.pet_menu_item_edit_pet -> {
-                        activePetListModel?.let { callback.onClickPetEdit(it) }
+                        activePetListMainModel?.let { callback.onClickPetEdit(it) }
                         true
                     }
 
@@ -58,7 +60,7 @@ class PetMainViewHolder(
     }
 
     private fun showDeletePetDialog() {
-        activePetListModel?.let { petListModel ->
+        activePetListMainModel?.let { petListModel ->
             val deletePetAlertDialog =
                 LayoutInflater.from(context).inflate(R.layout.alert_dialog_delete_pet, null)
 
@@ -79,47 +81,62 @@ class PetMainViewHolder(
         }
     }
 
-    fun bind(petListModels: List<PetListModel>?, activePetListId: Int?) {
-        petListModels?.let {
-            this.petListModels = petListModels
-            petListAdapter.submitList(petListModels)
-            onClickPet(petListModels.find { it.id == activePetListId }
-                ?: petListModels.firstOrNull())
+    fun bind(petListMainModels: List<PetListMainModel>?) {
+        petListMainModels?.let {
+            this.petListMainModels = petListMainModels
+
+            onClickPet(findActivePetListModel())
         }
     }
 
-    private fun updatePet(petListModel: PetListModel?) {
-        petListModel?.let {
-            activePetListModel = petListModel
+    private fun findActivePetListModel(): PetListMainModel? {
+        petListMainModels?.let { petListModels ->
+            for (petListModel in petListModels) {
+                if (petListModel.isActive) return petListModel
+            }
+            return petListModels.firstOrNull()
+        }
+
+        return null
+    }
+
+    private fun updatePet(petListMainModel: PetListMainModel?) {
+        petListMainModel?.let {
+            activePetListMainModel = petListMainModel
 
             with(binding) {
                 Glide.with(itemView)
-                    .load(petListModel.avatarUri)
+                    .load(petListMainModel.avatarUri)
                     .circleCrop()
-                    .placeholder(getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal))
+                    .placeholder(
+                        getPetIcon(
+                            petListMainModel.kindOrdinal,
+                            petListMainModel.breedOrdinal
+                        )
+                    )
                     .into(binding.imageViewPetRecyclerMainAvatarIcon)
 
-                textViewPetRecyclerMainName.text = petListModel.name
+                textViewPetRecyclerMainName.text = petListMainModel.name
                 textViewPetRecyclerMainBreedName.text =
                     context.getString(
-                        getPetName(petListModel.kindOrdinal, petListModel.breedOrdinal)
+                        getPetName(petListMainModel.kindOrdinal, petListMainModel.breedOrdinal)
                     )
 
-                petListModel.dateOfBirth?.let {
-                    binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it)
-                    binding.linearLayoutPetRecyclerMainAge.isVisible = true
+                petListMainModel.dateOfBirth?.let {
+                    textViewPetRecyclerMainAgeText.text = getPetsAge(it)
+                    linearLayoutPetRecyclerMainAge.isVisible = true
                 } ?: run {
-                    binding.linearLayoutPetRecyclerMainAge.isVisible = false
+                    linearLayoutPetRecyclerMainAge.isVisible = false
                 }
 
-                petListModel.weight?.let {
-                    binding.textViewPetRecyclerMainWeightText.text = it.toString()
-                    binding.linearLayoutPetRecyclerMainWeight.isVisible = true
+                petListMainModel.weight?.let {
+                    textViewPetRecyclerMainWeightText.text = it.toString()
+                    linearLayoutPetRecyclerMainWeight.isVisible = true
                 } ?: run {
-                    binding.linearLayoutPetRecyclerMainWeight.isVisible = false
+                    linearLayoutPetRecyclerMainWeight.isVisible = false
                 }
 
-                when (petListModel.sex) {
+                when (petListMainModel.sex) {
                     PetSex.MALE.ordinal -> {
                         imageViewPetRecyclerMainSexMale.isVisible = true
                         imageViewPetRecyclerMainSexFemale.isVisible = false
@@ -139,6 +156,8 @@ class PetMainViewHolder(
                 imageViewPetRecyclerMainEmpty.isVisible = false
                 groupPetRecyclerMain.isVisible = true
             }
+
+            updateUIActivePet(petListMainModel)
         } ?: run {
             binding.groupPetRecyclerMain.isVisible = false
             binding.imageViewPetRecyclerMainSexMale.isVisible = false
@@ -150,12 +169,26 @@ class PetMainViewHolder(
         }
     }
 
+    private fun updateUIActivePet(activePetListMainModel: PetListMainModel) {
+        val mutablePetListModels = mutableListOf<PetListModel>()
+        mutablePetListModels.add(PetListAddModel)
+
+        petListMainModels?.let { petListMainModels ->
+            val updatedPetListMainModels = petListMainModels.map { petListModel ->
+                petListModel.copy(isActive = petListModel == activePetListMainModel)
+            }
+            mutablePetListModels.addAll(updatedPetListMainModels)
+        }
+
+        petListAdapter.submitList(mutablePetListModels)
+    }
+
     override fun onClickPetAdd() {
         callback.onClickPetAdd()
     }
 
-    override fun onClickPet(petListModel: PetListModel?) {
-        callback.onClickPet(petListModel)
-        updatePet(petListModel)
+    override fun onClickPet(petListMainModel: PetListMainModel?) {
+        callback.onClickPet(petListMainModel)
+        updatePet(petListMainModel)
     }
 }

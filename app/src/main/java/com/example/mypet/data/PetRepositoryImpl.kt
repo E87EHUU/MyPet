@@ -19,9 +19,9 @@ import javax.inject.Inject
 class PetRepositoryImpl @Inject constructor(
     private val localPetDao: LocalPetDao,
 ) : PetRepository {
-    override fun getPetListModels() =
+    override fun getPetListMainModels() =
         localPetDao.getLocalPetModels()
-            .mapNotNull { its -> its.map { it.toPetListModel() } }
+            .mapNotNull { its -> its.map { it.toPetListMainModel() } }
 
     @Transaction
     override fun getPetFoodModel(petId: Int) =

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.PetCreationAndUpdateRepository
 import com.example.mypet.domain.pet.creation.PetCreationAndUpdateModel
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,8 +27,8 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     var weight: Int? = null
     var sexOrdinal: Int? = null
 
-    private val _localPetForUpdate = MutableLiveData<PetListModel>()
-    val localPetForUpdate: LiveData<PetListModel>
+    private val _localPetForUpdate = MutableLiveData<PetListMainModel>()
+    val localPetForUpdate: LiveData<PetListMainModel>
         get() = _localPetForUpdate
 
     fun addOrUpdatePetInDb() {

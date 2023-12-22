@@ -18,7 +18,7 @@ import com.example.mypet.app.databinding.FragmentPetCreationBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.pet.PetSex
 import com.example.mypet.domain.pet.kind.PetKind
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getToolbar
@@ -120,43 +120,43 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
-    private fun initPetDetailsForUpdate(localPetModel: PetListModel) {
+    private fun initPetDetailsForUpdate(petListMainModel: PetListMainModel) {
         with(binding) {
 
             updateUIAvatar()
 
-            textInputEditTextPetCreationName.setText(localPetModel.name)
+            textInputEditTextPetCreationName.setText(petListMainModel.name)
             autoCompleteTextViewPetCreationKindList.setText(
                 kindListAdapter.getItem(
-                    localPetModel.kindOrdinal
+                    petListMainModel.kindOrdinal
                 ), false
             )
 
-            localPetModel.breedOrdinal?.let {
+            petListMainModel.breedOrdinal?.let {
                 autoCompleteTextViewPetCreationBreedList.setText(
                     breedListAdapter.getItem(
-                        localPetModel.breedOrdinal
+                        petListMainModel.breedOrdinal
                     ), false
                 )
             }
 
-            localPetModel.weight?.let {
-                textInputEditTextPetCreationWeight.setText(localPetModel.weight.toString())
+            petListMainModel.weight?.let {
+                textInputEditTextPetCreationWeight.setText(petListMainModel.weight.toString())
             }
 
-            if (localPetModel.dateOfBirth != null) {
+            if (petListMainModel.dateOfBirth != null) {
                 textInputEditTextPetCreationDateOfBirth.setText(
                     SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()
-                    ).format(localPetModel.dateOfBirth.toLong())
+                    ).format(petListMainModel.dateOfBirth.toLong())
                 )
             }
         }
 
-        if (localPetModel.sex == PetSex.FEMALE.ordinal) {
+        if (petListMainModel.sex == PetSex.FEMALE.ordinal) {
             binding.chipPetCreationFemale.isChecked = true
-        } else if (localPetModel.sex == PetSex.MALE.ordinal) {
+        } else if (petListMainModel.sex == PetSex.MALE.ordinal) {
             binding.chipPetCreationMale.isChecked = true
         }
     }

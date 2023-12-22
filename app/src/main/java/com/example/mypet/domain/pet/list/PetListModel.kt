@@ -1,7 +1,11 @@
 package com.example.mypet.domain.pet.list
 
-data class PetListModel(
-    val id: Int,
+private const val PET_LIST_ADD_ID = -1
+
+sealed class PetListModel(open val id: Int)
+
+data class PetListMainModel(
+    override val id: Int,
     val avatarUri: String?,
     val name: String,
     val dateOfBirth: Long?,
@@ -9,5 +13,7 @@ data class PetListModel(
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
     val sex: Int?,
-    val isActive: Boolean,
-)
+    var isActive: Boolean,
+) : PetListModel(id)
+
+data object PetListAddModel : PetListModel(PET_LIST_ADD_ID)

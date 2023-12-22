@@ -8,7 +8,7 @@ import com.example.mypet.app.databinding.FragmentPetRecyclerFoodBinding
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodModel
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.ui.pet.care.PetCareViewHolder
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 import com.example.mypet.ui.pet.food.PetFoodViewHolder
@@ -21,7 +21,7 @@ class PetAdapter(
     private val petFoodCallback: PetFoodAlarmCallback,
     private val petCareCallback: PetCareMainCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var petListModel: List<PetListModel>? = null
+    var petListMainModel: List<PetListMainModel>? = null
     var petFoodModel: PetFoodModel? = null
     var petCareModels: List<PetCareModel>? = null
     var activePetListId: Int? = null
@@ -42,7 +42,7 @@ class PetAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (position) {
-            PET_POSITION -> (holder as PetMainViewHolder).bind(petListModel, activePetListId)
+            PET_POSITION -> (holder as PetMainViewHolder).bind(petListMainModel)
             FOOD_POSITION -> (holder as PetFoodViewHolder).bind(petFoodModel)
             else -> (holder as PetCareViewHolder).bind(petCareModels)
         }

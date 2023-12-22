@@ -14,7 +14,7 @@ import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
@@ -68,8 +68,8 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     private fun initObservePet() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.pet.collectLatest { petListModels ->
-                    adapter.petListModel = petListModels
+                viewModel.pet.collectLatest { petListMainModels ->
+                    adapter.petListMainModel = petListMainModels
                     adapter.notifyItemChanged(PetAdapter.PET_POSITION)
                 }
             }
@@ -133,19 +133,19 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         findNavController().navigate(directions)
     }
 
-    override fun onClickPet(petListModel: PetListModel?) {
-        viewModel.updatePetDetail(petListModel)
+    override fun onClickPet(petListMainModel: PetListMainModel?) {
+        viewModel.updatePetDetail(petListMainModel)
         adapter.activePetListId = viewModel.activePetListId
     }
 
-    override fun onClickPetDelete(petListModel: PetListModel) {
+    override fun onClickPetDelete(petListMainModel: PetListMainModel) {
         adapter.activePetListId = null
-        viewModel.deletePet(petListModel.id)
+        viewModel.deletePet(petListMainModel.id)
     }
 
-    override fun onClickPetEdit(petListModel: PetListModel) {
+    override fun onClickPetEdit(petListMainModel: PetListMainModel) {
         val directions =
-            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListModel.id)
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListMainModel.id)
         findNavController().navigate(directions)
     }
 }

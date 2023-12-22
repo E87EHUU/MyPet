@@ -7,7 +7,7 @@ import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.pet.care.PetCareModel
 import com.example.mypet.domain.pet.food.PetFoodModel
 import com.example.mypet.domain.pet.kind.PetKind
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class PetViewModel @Inject constructor(
     private val petRepository: PetRepository,
 ) : ViewModel() {
-    private val _pet = MutableStateFlow<List<PetListModel>?>(null)
+    private val _pet = MutableStateFlow<List<PetListMainModel>?>(null)
     val pet = _pet.asStateFlow()
 
     private val _food = MutableStateFlow<PetFoodModel?>(null)
@@ -36,7 +36,7 @@ class PetViewModel @Inject constructor(
     }
 
     private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getPetListModels()
+        petRepository.getPetListMainModels()
             .collectLatest {
                 if (it.isEmpty()) {
                     _food.value = null
@@ -47,8 +47,8 @@ class PetViewModel @Inject constructor(
             }
     }
 
-    fun updatePetDetail(petListModel: PetListModel?) {
-        petListModel?.let {
+    fun updatePetDetail(activePetListMainModel: PetListMainModel?) {
+        activePetListMainModel?.let {
             activePetListId = it.id
             updateFood(it.id)
             updateCare(it)
@@ -63,13 +63,13 @@ class PetViewModel @Inject constructor(
             .collectLatest { _food.value = it }
     }
 
-    private fun updateCare(petListModel: PetListModel) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getCareModels(petListModel.id)
-            .collectLatest { _care.value = getCares(petListModel, it) }
+    private fun updateCare(petListMainModel: PetListMainModel) = viewModelScope.launch(Dispatchers.IO) {
+        petRepository.getCareModels(petListMainModel.id)
+            .collectLatest { _care.value = getCares(petListMainModel, it) }
     }
 
     private fun getCares(
-        petListModel: PetListModel,
+        petListMainModel: PetListMainModel,
         petCareModel: List<PetCareModel>
     ): MutableList<PetCareModel> {
         val petCares = mutableListOf<PetCareModel>()
@@ -82,7 +82,7 @@ class PetViewModel @Inject constructor(
         petCares.add(petCareModel.getCare(CareTypes.VACCINATION))
         petCares.add(petCareModel.getCare(CareTypes.VITAMIN))
 
-        when (petListModel.kindOrdinal) {
+        when (petListMainModel.kindOrdinal) {
             PetKind.CAT.ordinal -> {
                 petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_WORMS))
                 petCares.add(petCareModel.getCare(CareTypes.AGAINST_FLEAS_AND_TICKS))
