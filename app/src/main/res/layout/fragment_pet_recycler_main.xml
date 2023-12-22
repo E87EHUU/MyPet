@@ -131,7 +131,7 @@
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/offset_8"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
         app:layout_constraintEnd_toStartOf="@+id/buttonPetRecyclerMainMore"
         app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainName"
@@ -160,7 +160,7 @@
             android:id="@+id/textViewPetRecyclerMainWeightText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
             tools:text="1 кг 100 г" />
 
     </LinearLayout>
@@ -186,7 +186,7 @@
             android:id="@+id/textViewPetRecyclerMainAgeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
             tools:text="24 месяца" />
 
     </LinearLayout>
