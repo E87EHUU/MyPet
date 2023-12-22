@@ -74,13 +74,13 @@ private fun getPetBreedName(kindOrdinal: Int, breedOrdinal: Int?) =
                     12 -> PetBreedChameleon.entries[breedOrdinal].nameResId
                     14 -> PetBreedSnake.entries[breedOrdinal].nameResId
                     17 -> PetBreedSpider.entries[breedOrdinal].nameResId
+                    else -> null
                 }
             } catch (e: Exception) {
                 println("UIExtensions -> getPetBreedIcon(): ${e.message}")
+                null
             }
-        }
-
-        null
+        } else null
     }
 
 fun getPetBreedList(kindOrdinal: Int) =
