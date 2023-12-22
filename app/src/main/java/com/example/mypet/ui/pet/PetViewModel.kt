@@ -37,7 +37,14 @@ class PetViewModel @Inject constructor(
 
     private fun updatePet() = viewModelScope.launch(Dispatchers.IO) {
         petRepository.getPetListModels()
-            .collectLatest { _pet.value = it }
+            .collectLatest {
+                if (it.isEmpty()) {
+                    _food.value = null
+                    _care.value = null
+                }
+
+                _pet.value = it
+            }
     }
 
     fun updatePetDetail(petListModel: PetListModel?) {
@@ -61,7 +68,10 @@ class PetViewModel @Inject constructor(
             .collectLatest { _care.value = getCares(petListModel, it) }
     }
 
-    private fun getCares(petListModel: PetListModel, petCareModel: List<PetCareModel>): MutableList<PetCareModel> {
+    private fun getCares(
+        petListModel: PetListModel,
+        petCareModel: List<PetCareModel>
+    ): MutableList<PetCareModel> {
         val petCares = mutableListOf<PetCareModel>()
 
         petCares.add(petCareModel.getCare(CareTypes.BATH))

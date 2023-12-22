@@ -41,12 +41,12 @@ class PetRepositoryImpl @Inject constructor(
 
     override suspend fun deletePet(petId: Int) {
         localPetDao.deletePet(petId)
-    }
+   }
 
     private fun LocalPetCareModel.toPetCareDetailModel() =
         PetCareModel(
             id = id,
-            careType = CareTypes.values()[careTypeOrdinal],
+            careType = CareTypes.entries[careTypeOrdinal],
             progress = progress,
             nextStart = nextStart
         )

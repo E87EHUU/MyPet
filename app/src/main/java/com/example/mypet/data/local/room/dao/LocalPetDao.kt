@@ -2,6 +2,7 @@ package com.example.mypet.data.local.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
@@ -62,6 +63,35 @@ interface LocalPetDao {
     )
     fun getLocalPetCareModels(petId: Int, currentTimeInMillis: Long): Flow<List<LocalPetCareModel>>
 
+    @Query("SELECT id FROM care WHERE pet_id = :petId")
+    fun getPetCareIds(petId: Int): List<Int>
+
+    @Query("DELETE FROM start WHERE care_id IN (:careIds)")
+    fun deleteStarts(careIds: List<Int>)
+
+    @Query("DELETE FROM repeat WHERE care_id IN (:careIds)")
+    fun deleteRepeats(careIds: List<Int>)
+
+    @Query("DELETE FROM alarm WHERE care_id IN (:careIds)")
+    fun deleteAlarms(careIds: List<Int>)
+
+    @Query("DELETE FROM care WHERE id IN (:careIds)")
+    fun deleteCares(careIds: List<Int>)
+
     @Query("DELETE FROM pet WHERE id = :petId")
-    suspend fun deletePet(petId: Int)
+    suspend fun deleteLocalPetEntities(petId: Int)
+
+    @Transaction
+    suspend fun deletePet(petId: Int) {
+        val petCareIds = getPetCareIds(petId)
+
+        if (petCareIds.isNotEmpty()) {
+            deleteStarts(petCareIds)
+            deleteRepeats(petCareIds)
+            deleteAlarms(petCareIds)
+            deleteCares(petCareIds)
+        }
+
+        deleteLocalPetEntities(petId)
+    }
 }
