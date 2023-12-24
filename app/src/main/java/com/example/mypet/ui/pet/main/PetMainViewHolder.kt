@@ -176,9 +176,9 @@ class PetMainViewHolder(
                 if (petListModel.isActive) {
                     petListModel.isActive = false
                     petListModel
-//                    petListModel.copy(isActive = false)
                 } else if (petListModel == activePetListMainModel) {
-                    val newActivePetListModel = petListModel.copy(isActive = petListModel == activePetListMainModel)
+                    val newActivePetListModel =
+                        petListModel.copy(isActive = petListModel == activePetListMainModel)
                     this.activePetListMainModel = newActivePetListModel
                     newActivePetListModel
                 } else {
@@ -196,8 +196,6 @@ class PetMainViewHolder(
     }
 
     override fun onClickPet(petListMainModel: PetListMainModel?) {
-        println("$petListMainModel = $activePetListMainModel")
-        println(petListMainModel == activePetListMainModel)
         if (activePetListMainModel != petListMainModel) {
             updatePet(petListMainModel)
             callback.onClickPet(petListMainModel)
