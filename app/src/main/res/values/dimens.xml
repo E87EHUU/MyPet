@@ -8,6 +8,8 @@
 
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="default_form_height">64dp</dimen>
+
     <dimen name="pet_detail_avatar_padding">1dp</dimen>
     <dimen name="pet_detail_avatar_stroke_width">1dp</dimen>
     <dimen name="pet_detail_avatar_size">64dp</dimen>
@@ -29,7 +31,8 @@
     <dimen name="_25dp">25dp</dimen>
 
     <dimen name="alarm_icon_size">64dp</dimen>
-    <dimen name="pet_avatar_size">64dp</dimen>
+    <dimen name="pet_avatar_size">80dp</dimen>
+    <dimen name="pet_list_avatar_size">56dp</dimen>
     <dimen name="offset_2">2dp</dimen>
     <dimen name="offset_32">32dp</dimen>
     <dimen name="pet_sex_offset_vertical">-8dp</dimen>
@@ -74,5 +77,9 @@
     <dimen name="login_fragment_password_layout_margin_top">8dp</dimen>
     <dimen name="text_input_layout_spinner_icon_size">44dp</dimen>
     <dimen name="care_recycler_alarm_recycler_offset_start">64dp</dimen>
+
+    <dimen name="care_item_min_height">56dp</dimen>
+    <dimen name="care_alarm_detail_item_min_height">64dp</dimen>
+    <dimen name="care_item_offset_start">48dp</dimen>
 
 </resources>

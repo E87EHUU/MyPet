@@ -13,10 +13,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.CareViewModel
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
+import java.util.Calendar
 
 
 class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
@@ -25,16 +26,27 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     override fun onPause() {
         super.onPause()
-        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+        viewModel.careAlarmDetailMainModel?.let { careAlarmDetailModel ->
             careAlarmDetailModel.isDelay = binding.switchCareAlarmDetailDelay.isChecked
             careAlarmDetailModel.isVibration = binding.switchCareAlarmDetailVibration.isChecked
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (viewModel.careAlarmDetailModel == null)
-            viewModel.careAlarmDetailModel = CareAlarmDetailModel()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (viewModel.careAlarmDetailMainModel == null)
+            viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initToolbar()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        getToolbar()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,10 +57,8 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         initListeners()
     }
 
-    private fun initView() {
+    private fun initToolbar() {
         getToolbar()?.let { toolbar ->
-            toolbar.title = null
-            toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -61,57 +71,65 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
                 }
             }
         }
+    }
+
+    private fun initView() {
         binding.timePickerCareAlarmDetail.setIs24HourView(requireContext().is24HourFormat)
     }
 
     private fun initListeners() {
-        binding.layerCareAlarmDetailVibration.setOnClickListener {
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                careAlarmDetailModel.isVibration = !careAlarmDetailModel.isVibration
+        with(binding) {
+            timePickerCareAlarmDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
+                viewModel.careAlarmDetailMainModel?.let {
+                    it.hour = hourOfDay
+                    it.minute = minute
+                }
             }
-        }
 
-        binding.switchCareAlarmDetailVibration.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                careAlarmDetailModel.isVibration = isChecked
+            constraintLayoutCareAlarmDetailRingtone.setOnClickListener { launchChooserRingtoneIntent() }
+
+            constraintLayoutCareAlarmDetailVibration.setOnClickListener {
+                viewModel.careAlarmDetailMainModel?.let {
+                    val isChecked = !switchCareAlarmDetailVibration.isChecked
+                    switchCareAlarmDetailVibration.isChecked = isChecked
+                    it.isVibration = isChecked
+                }
             }
-        }
 
-        binding.layerCareAlarmDetailCareDelay.setOnClickListener {
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                careAlarmDetailModel.isDelay = !careAlarmDetailModel.isDelay
+            constraintLayoutCareAlarmDetailDelay.setOnClickListener {
+                viewModel.careAlarmDetailMainModel?.let {
+                    val isChecked = !switchCareAlarmDetailDelay.isChecked
+                    switchCareAlarmDetailDelay.isChecked = isChecked
+                    it.isDelay = isChecked
+                }
             }
-        }
 
-        binding.switchCareAlarmDetailDelay.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                careAlarmDetailModel.isDelay = isChecked
-            }
-        }
-
-        binding.layerCareAlarmDetailRingtone.setOnClickListener { launchChooserRingtoneIntent() }
-
-        binding.timePickerCareAlarmDetail.setOnTimeChangedListener { _, hourOfDay, minute ->
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
-                careAlarmDetailModel.hour = hourOfDay
-                careAlarmDetailModel.minute = minute
+            constraintLayoutCareAlarmDetailNotification.setOnClickListener {
+                viewModel.careAlarmDetailMainModel?.let {
+                    val isChecked = !switchCareAlarmDetailNotification.isChecked
+                    switchCareAlarmDetailNotification.isChecked = isChecked
+                    it.isActive = isChecked
+                }
             }
         }
     }
 
     private fun updateUI() {
-        viewModel.careAlarmDetailModel?.let {
-            binding.timePickerCareAlarmDetail.hour = it.hour
-            binding.timePickerCareAlarmDetail.minute = it.minute
-            binding.switchCareAlarmDetailVibration.isChecked = it.isVibration
-            binding.switchCareAlarmDetailDelay.isChecked = it.isDelay
+        viewModel.careAlarmDetailMainModel?.let {
+            with(binding) {
+                timePickerCareAlarmDetail.hour = it.hour
+                timePickerCareAlarmDetail.minute = it.minute
+                switchCareAlarmDetailVibration.isChecked = it.isVibration
+                switchCareAlarmDetailDelay.isChecked = it.isDelay
+                switchCareAlarmDetailNotification.isChecked = it.isActive
+            }
         }
 
         updateUIRingtoneDescription()
     }
 
     private fun updateUIRingtoneDescription() {
-        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+        viewModel.careAlarmDetailMainModel?.let { careAlarmDetailModel ->
             careAlarmDetailModel.ringtonePath?.let {
                 val uri = Uri.parse(it)
                 val title = RingtoneManager.getRingtone(requireContext(), uri).getTitle(context)
@@ -123,7 +141,7 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     private val chooserRingtoneRegisterForActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+            viewModel.careAlarmDetailMainModel?.let { careAlarmDetailModel ->
                 val uri =
                     activityResult.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
                 careAlarmDetailModel.ringtonePath = uri?.toString()
@@ -144,11 +162,12 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     }
 
     private fun saveAndPopBack() {
-        viewModel.careAlarmDetailModel?.let { careAlarmDetailModel ->
+        viewModel.careAlarmDetailMainModel?.let { careAlarmDetailModel ->
             if (careAlarmDetailModel.id == DEFAULT_ID) {
                 viewModel.careAlarmModel?.let { careAlarmModel ->
+                    val genId = (Calendar.getInstance().timeInMillis * -1).toInt()
                     val mutableList = careAlarmModel.alarms.toMutableList()
-                    mutableList.add(careAlarmDetailModel)
+                    mutableList.add(careAlarmDetailModel.copy(id = genId))
                     careAlarmModel.alarms = mutableList
                 }
             }

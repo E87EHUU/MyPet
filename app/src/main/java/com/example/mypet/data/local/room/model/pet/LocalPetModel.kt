@@ -1,17 +1,16 @@
 package com.example.mypet.data.local.room.model.pet
 
-import android.net.Uri
 import androidx.room.ColumnInfo
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
-import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AGE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.DATE_OF_BIRTH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.SEX
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.WEIGHT
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 
 data class LocalPetModel(
     @ColumnInfo(name = ID)
@@ -20,10 +19,10 @@ data class LocalPetModel(
     val avatarPath: String?,
     @ColumnInfo(name = NAME)
     val name: String,
-    @ColumnInfo(name = AGE)
-    val age: String?,
+    @ColumnInfo(name = DATE_OF_BIRTH)
+    val dateOfBirth: Long?,
     @ColumnInfo(name = WEIGHT)
-    val weight: String?,
+    val weight: Int?,
     @ColumnInfo(name = KIND_ORDINAL)
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)
@@ -33,12 +32,12 @@ data class LocalPetModel(
     @ColumnInfo(name = IS_ACTIVE)
     val isActive: Boolean,
 ) {
-    fun toPetListModel() =
-        PetListModel(
+    fun toPetListMainModel() =
+        PetListMainModel(
             id = id,
-            avatarUri = avatarPath?.let { Uri.parse(avatarPath) },
+            avatarUri = avatarPath,
             name = name,
-            age = age,
+            dateOfBirth = dateOfBirth,
             weight = weight,
             kindOrdinal = kindOrdinal,
             breedOrdinal = breedOrdinal,

@@ -71,6 +71,17 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
     </style>
 
+    <style name="Theme.MyPet.CareItemContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/care_item_min_height</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:paddingEnd">@dimen/offset_32</item>
+        <item name="android:paddingStart">@dimen/care_item_offset_start</item>
+        <item name="android:paddingVertical">@dimen/offset_8</item>
+        <item name="android:layout_marginTop">@dimen/offset_8</item>
+    </style>
+
     <style name="Theme.MyPet.CareEndRadio">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/care_end_radio_height</item>
@@ -78,10 +89,7 @@
 
     <style name="Theme.MyPet.CareTextView">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/item_height_default</item>
-        <item name="android:layout_marginTop">@dimen/offset_8</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingHorizontal">@dimen/offset_16</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.TitleMedium</item>
     </style>
 
@@ -99,9 +107,15 @@
         <item name="android:layout_marginTop">@dimen/offset_8</item>
     </style>
 
-    <style name="Theme.MyPet.TextInputLayout" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+    <style name="Theme.MyPet.TextInputLayoutWrap" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Theme.MyPet.TextInputLayoutZero" parent="@style/Widget.Material3.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/offset_16</item>
     </style>
 
     <style name="Theme.MyPet.TextInputEditText">
@@ -119,7 +133,7 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="Theme.MyPet.TextInputLayoutSpinner" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+    <style name="Theme.MyPet.TextInputLayoutSpinner" parent="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="endIconDrawable">@drawable/baseline_arrow_drop_down_24</item>
@@ -133,6 +147,43 @@
         <item name="chipEndPadding">2dp</item>
         <item name="chipStartPadding">2dp</item>
         <item name="android:checkable">true</item>
+    </style>
+
+    <style name="Theme.MyPet.CareAlarmItemContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/care_alarm_detail_item_min_height</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:paddingHorizontal">@dimen/offset_32</item>
+        <item name="android:paddingVertical">@dimen/offset_8</item>
+    </style>
+
+    <style name="Theme.MyPet.CareAlarmItemTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleMedium</item>
+    </style>
+
+    <style name="Theme.MyPet.CareAlarmItemHint">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelMedium</item>
+    </style>
+
+    <style name="Theme.MyPet.CareAlarmItemSwitch" parent="@style/Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="Theme.MyPet.DefaultForm">
+    </style>
+
+    <style name="Theme.MyPet.DefaultForm.Chip" parent="@style/Widget.Material3.Chip.Suggestion.Elevated">
+        <item name="android:layout_height">@dimen/default_form_height</item>
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:textAlignment">center</item>
+        <item name="chipIconSize">@dimen/offset_24</item>
     </style>
 
 </resources>

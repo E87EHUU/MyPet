@@ -12,40 +12,50 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
-import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
+import com.example.mypet.ui.care.end.CareEndCallback
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
 import com.example.mypet.ui.getToolbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
-import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CareFragment : Fragment(R.layout.fragment_care),
-    CareMainCallback, CareStartCallback, CareRepeatCallback, CareAlarmCallback {
+    CareMainCallback, CareStartCallback, CareRepeatCallback, CareEndCallback, CareAlarmCallback {
     private val binding by viewBinding(FragmentCareBinding::bind)
 
     private val viewModel by navGraphViewModels<CareViewModel>(R.id.navigationPetCare) { defaultViewModelProviderFactory }
     private val args by navArgs<CareFragmentArgs>()
 
-    private val adapter = CareAdapter(this, this, this, this)
+    private val adapter = CareAdapter(this, this, this, this, this)
     private var isUnlockUI = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        postponeEnterTransition()
         viewModel.updateCare(args.petId, args.careId, args.careTypeOrdinal)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.careAlarmDetailModel = null
+
+        viewModel.careAlarmDetailMainModel = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        getToolbar()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,9 +66,11 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     private fun initView() {
+        binding.root.adapter = adapter
+    }
+
+    private fun initToolbar() {
         getToolbar()?.let { toolbar ->
-            toolbar.title = null
-            toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -70,23 +82,27 @@ class CareFragment : Fragment(R.layout.fragment_care),
                     else -> false
                 }
             }
+            updateToolbarTitle()
         }
-        binding.root.adapter = adapter
     }
 
     private fun initObserveCareAdapterModels() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.careModels.collectLatest { mutableList ->
-                    adapter.submitList(mutableList)
-                    viewModel.careMainModel?.careType?.titleResId?.let {
-                        getToolbar()?.title = getString(it)
-                    }
+                viewModel.careModels.collectLatest { careModels ->
+                    adapter.submitList(careModels)
+                    startPostponedEnterTransition()
+                    updateToolbarTitle()
                 }
             }
         }
     }
 
+    private fun updateToolbarTitle() {
+        viewModel.careMainModel?.careType?.titleResId?.let {
+            getToolbar()?.title = getString(it)
+        }
+    }
 
     private val datePicker by lazy {
         val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -107,36 +123,11 @@ class CareFragment : Fragment(R.layout.fragment_care),
         datePicker
     }
 
-    private val is24HourFormat by lazy {
-        android.text.format.DateFormat.is24HourFormat(requireContext())
-    }
-
-    private val timePicker by lazy {
-        val timePicker = MaterialTimePicker.Builder()
-            .setTitleText(getString(R.string.time_picker_title))
-            .setInputMode(INPUT_MODE_CLOCK)
-            .setTimeFormat(if (is24HourFormat) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
-            .apply {
-                viewModel.careStartModel?.hour?.let {
-                    setHour(it)
-                }
-
-                viewModel.careStartModel?.minute?.let {
-                    setMinute(it)
-                }
-            }
-            .build()
-
-        timePicker.addOnDismissListener { isUnlockUI = true }
-        timePicker.addOnPositiveButtonClickListener {
-            viewModel.careStartModel?.hour = timePicker.hour
-            viewModel.careStartModel?.minute = timePicker.minute
-            adapter.startViewHolder?.updateTime()
-        }
-        timePicker
-    }
-
     private fun navToRepeat() {
+        findNavController().navigate(R.id.action_careFragment_to_careRepeatDetailFragment)
+    }
+
+    private fun navToEnd() {
         findNavController().navigate(R.id.action_careFragment_to_careRepeatDetailFragment)
     }
 
@@ -144,17 +135,21 @@ class CareFragment : Fragment(R.layout.fragment_care),
         findNavController().navigate(R.id.action_careFragment_to_alarmDetailFragment)
     }
 
-    override fun onClickAlarm(careAlarmDetailModel: CareAlarmDetailModel?) {
-        viewModel.careAlarmDetailModel = careAlarmDetailModel
+    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
+        viewModel.careAlarmDetailMainModel = careAlarmDetailMainModel
         navToAlarmDetail()
     }
 
-    override fun onSwitchAlarmStart(careAlarmDetailModel: CareAlarmDetailModel) {
-        //viewModel.switchAlarmState(alarmMinModel)
+    override fun onClickDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+        viewModel.alarmDelete(careAlarmDetailMainModel)
     }
 
     override fun onClickRepeat() {
         navToRepeat()
+    }
+
+    override fun generateDayAlarm(dayTimes: Int) {
+        viewModel.generateDayAlarm(dayTimes)
     }
 
     override fun showDatePicker() {
@@ -165,16 +160,12 @@ class CareFragment : Fragment(R.layout.fragment_care),
             }
     }
 
-    override fun showTimePicker() {
-        if (isUnlockUI)
-            activity?.supportFragmentManager?.let { fragmentManager ->
-                isUnlockUI = false
-                timePicker.show(fragmentManager, timePicker.toString())
-            }
-    }
-
     private fun saveAndPopBack() {
         viewModel.saveCare()
         findNavController().popBackStack()
+    }
+
+    override fun onClickEnd() {
+        navToEnd()
     }
 }

@@ -1,15 +1,19 @@
 package com.example.mypet.domain.pet.list
 
-import android.net.Uri
+private const val PET_LIST_ADD_ID = -1
 
-data class PetListModel(
-    val id: Int,
-    val avatarUri: Uri?,
+sealed class PetListModel(open val id: Int)
+
+data class PetListMainModel(
+    override val id: Int,
+    val avatarUri: String?,
     val name: String,
-    val age: String?,
-    val weight: String?,
+    val dateOfBirth: Long?,
+    val weight: Int?,
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
     val sex: Int?,
-    val isActive: Boolean,
-)
+    var isActive: Boolean,
+) : PetListModel(id)
+
+data object PetListAddModel : PetListModel(PET_LIST_ADD_ID)

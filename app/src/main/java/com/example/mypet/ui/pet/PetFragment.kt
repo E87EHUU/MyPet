@@ -11,16 +11,15 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
+import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.pet.list.PetListModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
 import com.example.mypet.ui.pet.food.alarm.PetFoodAlarmCallback
 import com.example.mypet.ui.pet.main.PetMainCallback
-import com.example.mypet.utils.DEFAULT_INTEGER_VALUE
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -32,9 +31,14 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     private val adapter = PetAdapter(this, this, this)
 
+    override fun onStart() {
+        super.onStart()
+        getActionBar()?.hide()
+    }
+
     override fun onResume() {
         super.onResume()
-        getActionBar()?.hide()
+        postponeEnterTransition()
     }
 
     override fun onStop() {
@@ -44,14 +48,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initView()
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            // FIXME Ничего лучше не придумал. Необходимо чтобы не дергался интерфейс при переходе между фрагментами.
-            initObservePet()
-            initObserveFood()
-            initObserveCare()
-        }
+        initObservePet()
+        initObserveFood()
+        initObserveCare()
+        startPostponedEnterTransition()
     }
 
     private fun initView() {
@@ -59,16 +62,15 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
         binding.root.itemAnimator = null
         binding.root.adapter = adapter
+
     }
 
     private fun initObservePet() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.pet.collectLatest { petListModels ->
-                    petListModels?.let {
-                        adapter.petListModel = it
-                        adapter.notifyItemChanged(PetAdapter.PET_POSITION)
-                    }
+                viewModel.pet.collectLatest { petListMainModels ->
+                    adapter.petListMainModel = petListMainModels
+                    adapter.notifyItemChanged(PetAdapter.PET_POSITION)
                 }
             }
         }
@@ -78,8 +80,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.food.collectLatest {
-                    it?.let {
-                        adapter.petFoodModel = it
+                    adapter.petFoodModel = it
+
+                    binding.root.post {
                         adapter.notifyItemChanged(PetAdapter.FOOD_POSITION)
                     }
                 }
@@ -91,8 +94,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.care.collectLatest {
-                    it?.let {
-                        adapter.care = it
+                    adapter.petCareModels = it
+
+                    binding.root.post {
                         adapter.notifyItemChanged(PetAdapter.CARE_POSITION)
                     }
                 }
@@ -101,9 +105,9 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     private fun navToCare(petCareModel: PetCareModel) {
-        viewModel.activePetListModel?.let {
+        viewModel.activePetListId?.let {
             val directions = PetFragmentDirections.actionPetFragmentToNavigationPetCare(
-                petId = it.id,
+                petId = it,
                 careId = petCareModel.id,
                 careTypeOrdinal = petCareModel.careType.ordinal
             )
@@ -125,22 +129,23 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     override fun onClickPetAdd() {
         val directions =
-            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_INTEGER_VALUE)
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_ID)
         findNavController().navigate(directions)
     }
 
-    override fun onClickPet(petListModel: PetListModel?) {
-        viewModel.updatePetDetail(petListModel)
-        adapter.activePetListModel = viewModel.activePetListModel
+    override fun onClickPet(petListMainModel: PetListMainModel?) {
+        viewModel.updatePetDetail(petListMainModel)
+        adapter.activePetListId = viewModel.activePetListId
     }
 
-    override fun onClickPetDelete(petListModel: PetListModel) {
-        viewModel.deletePet(petListModel.id)
+    override fun onClickPetDelete(petListMainModel: PetListMainModel) {
+        adapter.activePetListId = null
+        viewModel.deletePet(petListMainModel.id)
     }
 
-    override fun onClickPetEdit(petListModel: PetListModel) {
+    override fun onClickPetEdit(petListMainModel: PetListMainModel) {
         val directions =
-            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListModel.id)
+            PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListMainModel.id)
         findNavController().navigate(directions)
     }
 }

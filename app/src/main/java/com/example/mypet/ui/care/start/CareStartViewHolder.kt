@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.toAppDate
-import com.example.mypet.domain.toAppTime
 
 class CareStartViewHolder(
     private val binding: FragmentCareRecyclerStartBinding,
@@ -14,12 +13,8 @@ class CareStartViewHolder(
     private lateinit var careStartModel: CareStartModel
 
     init {
-        binding.textViewCareRecyclerStartDate.setOnClickListener {
+        binding.constraintLayoutCareRecyclerStart.setOnClickListener {
             callback.showDatePicker()
-        }
-
-        binding.textViewCareRecyclerStartTime.setOnClickListener {
-            callback.showTimePicker()
         }
     }
 
@@ -28,7 +23,6 @@ class CareStartViewHolder(
             this.careStartModel = careStartModel
 
             updateDate()
-            updateTime()
 
             binding.root.isVisible = true
         } ?: run {
@@ -39,10 +33,5 @@ class CareStartViewHolder(
     fun updateDate() {
         binding.textViewCareRecyclerStartDate.text =
             toAppDate(careStartModel.timeInMillis)
-    }
-
-    fun updateTime() {
-        binding.textViewCareRecyclerStartTime.text =
-            toAppTime(careStartModel.hour, careStartModel.minute)
     }
 }

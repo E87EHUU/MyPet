@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.service
+package com.example.mypet.service.alarm
 
 import android.app.Service
 import android.content.Context
@@ -42,8 +42,8 @@ class AlarmService : Service() {
     private val recycler
         get() = view?.findViewById<RecyclerView>(R.id.recyclerViewAlarmOverlay)
 
-    private val alarmModels = mutableMapOf<Int, AlarmServiceModel>()
-    private lateinit var notification: AlarmServiceNotification
+    private val alarmServiceModels = mutableMapOf<Int, AlarmServiceModel>()
+   // private val notification by lazy { AlarmServiceNotification(this) }
     private val ringtonePlayer: RingtonePlayer = RingtonePlayer(this)
     private val vibrationPlayer: VibrationPlayer = VibrationPlayer(this)
     private val adapter = AlarmServiceAdapter()
@@ -51,16 +51,16 @@ class AlarmService : Service() {
     override fun onBind(intent: Intent) = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        intent?.let {
-            when (intent.action) {
-                ALARM_OVERLAY_ACTION_START -> start(intent)
-                ALARM_OVERLAY_ACTION_STOP -> stop(intent)
-                ALARM_OVERLAY_ACTION_DELAY -> delay(intent)
-                ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
-            }
+        if (intent == null) return START_STICKY_COMPATIBILITY
+
+        when (intent.action) {
+            ALARM_OVERLAY_ACTION_START -> start(intent)
+            ALARM_OVERLAY_ACTION_STOP -> stop(intent)
+            ALARM_OVERLAY_ACTION_DELAY -> delay(intent)
+            ALARM_OVERLAY_ACTION_NAV_TO_DETAIL -> navToDetail()
         }
 
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onDestroy() {
@@ -69,24 +69,25 @@ class AlarmService : Service() {
         ringtonePlayer.onDestroy()
         vibrationPlayer.onDestroy()
 
-        alarmModels.clear()
+        alarmServiceModels.clear()
         windowManager = null
     }
 
     private fun start(intent: Intent) {
+        //notification.createNotificationChannel()
+
         intent.getId()?.let { id ->
-            if (!alarmModels.containsKey(id)) {
+            if (!alarmServiceModels.containsKey(id)) {
                 runBlocking {
                     launch(Dispatchers.IO) {
                         alarmServiceRepository.getAlarmServiceModel(id)
-                            ?.let { alarmModels[id] = it }
+                            ?.let { alarmServiceModels[id] = it }
                     }
                 }
             }
 
-            alarmModels[id]?.let { alarmModel ->
-                notification = AlarmServiceNotification(this, alarmModel)
-                startForeground(alarmModel.alarmId, notification.getNotification())
+            alarmServiceModels[id]?.let { alarmModel ->
+                //startForeground(alarmModel.alarmId, notification.getNotification(alarmModel))
 
                 playVibration(alarmModel)
                 playRingtone(alarmModel)
@@ -96,7 +97,7 @@ class AlarmService : Service() {
                     initOverlayParams()
                     initViewListeners(intent)
                     showOverlay()
-                    adapter.submitList(alarmModels.map { it.value })
+                    adapter.submitList(alarmServiceModels.map { it.value })
                 } else navToDetail()
             }
         } ?: stop(intent)
@@ -116,13 +117,13 @@ class AlarmService : Service() {
         clearUI()
 
         intent.getId()?.let { id ->
-            alarmModels[id]?.let { alarmModel ->
-                with(alarmModel) {
+            alarmServiceModels[id]?.let { alarmServiceModel ->
+                with(alarmServiceModel) {
                     stopForeground(STOP_FOREGROUND_REMOVE)
 
                     runBlocking {
                         launch(Dispatchers.IO) {
-                            alarmServiceRepository.stopAlarm(alarmModel.alarmId)
+                            alarmServiceRepository.stopAlarm(alarmServiceModel.alarmId)
                         }
                     }
                 }
@@ -136,15 +137,15 @@ class AlarmService : Service() {
         intent.getId()?.let { id ->
             clearUI()
 
-            alarmModels[id]?.let { alarmModel ->
-                startForeground(
-                    alarmModel.alarmId,
-                    notification.getDelayNotification()
-                )
+            alarmServiceModels[id]?.let { alarmServiceModel ->
+/*                startForeground(
+                    alarmServiceModel.alarmId,
+                    notification.getNotification(alarmServiceModel)
+                )*/
 
                 runBlocking {
                     launch(Dispatchers.IO) {
-                        alarmServiceRepository.setDelayAlarm(alarmModel.alarmId)
+                        alarmServiceRepository.setDelayAlarm(alarmServiceModel.alarmId)
                     }
                 }
             }
@@ -152,10 +153,8 @@ class AlarmService : Service() {
     }
 
     private fun Intent.getId(): Int? {
-        val foodId = getIntExtra(ALARM_ID, 0)
-        if (foodId > 0) return foodId
-
-        return null
+        val alarmId = getIntExtra(ALARM_ID, 0)
+        return if (alarmId != 0) return alarmId else null
     }
 
     private fun navToDetail() {
@@ -201,7 +200,7 @@ class AlarmService : Service() {
     }
 
     private fun showOverlay() {
-        if (alarmModels.size == 1)
+        if (alarmServiceModels.size == 1)
             windowManager?.addView(view, params)
     }
 

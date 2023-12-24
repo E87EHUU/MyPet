@@ -6,16 +6,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
+import com.example.mypet.app.databinding.FragmentCareRecyclerEndBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerMainBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.app.databinding.FragmentCareRecyclerStartBinding
-import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareEndModel
 import com.example.mypet.domain.care.CareMainModel
+import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.alarm.CareAlarmViewHolder
+import com.example.mypet.ui.care.end.CareEndCallback
+import com.example.mypet.ui.care.end.CareEndViewHolder
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.main.CareMainViewHolder
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
@@ -28,12 +32,17 @@ class CareAdapter(
     private val careRepeatCallback: CareRepeatCallback,
     private val careAlarmCallback: CareAlarmCallback,
     private val careStartCallback: CareStartCallback,
+    private val careEndCallback: CareEndCallback,
 ) : ListAdapter<CareModel, RecyclerView.ViewHolder>(DiffCallback()) {
     var mainBinding: FragmentCareRecyclerMainBinding? = null
         private set
     var startViewHolder: CareStartViewHolder? = null
         private set
     var repeatBinding: FragmentCareRecyclerRepeatBinding? = null
+        private set
+    var endBinding: FragmentCareRecyclerEndBinding? = null
+        private set
+    var alarmBinding: FragmentCareRecyclerAlarmBinding? = null
         private set
 
     override fun getItemViewType(position: Int) = position
@@ -45,6 +54,7 @@ class CareAdapter(
             is CareMainModel -> mainViewHolder(parent)
             is CareStartModel -> startViewHolder(parent)
             is CareRepeatModel -> repeatViewHolder(parent)
+            is CareEndModel -> endViewHolder(parent)
             is CareAlarmModel -> alarmViewHolder(parent)
         }
     }
@@ -54,6 +64,7 @@ class CareAdapter(
             is CareMainModel -> (holder as CareMainViewHolder).bind(item)
             is CareStartModel -> (holder as CareStartViewHolder).bind(item)
             is CareRepeatModel -> (holder as CareRepeatViewHolder).bind(item)
+            is CareEndModel -> (holder as CareEndViewHolder).bind(item)
             is CareAlarmModel -> (holder as CareAlarmViewHolder).bind(item)
         }
     }
@@ -77,10 +88,16 @@ class CareAdapter(
         return CareRepeatViewHolder(repeatBinding!!, careRepeatCallback)
     }
 
+    private fun endViewHolder(parent: ViewGroup): CareEndViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        endBinding = FragmentCareRecyclerEndBinding.inflate(inflater, parent, false)
+        return CareEndViewHolder(endBinding!!, careEndCallback)
+    }
+
     private fun alarmViewHolder(parent: ViewGroup): CareAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
-        return CareAlarmViewHolder(binding, careAlarmCallback)
+        alarmBinding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
+        return CareAlarmViewHolder(alarmBinding!!, careAlarmCallback)
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/Widget.Material3.Button.IconButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/care_recycler_alarm_recycler_offset_start"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Theme.MyPet.CareItemContainer"
+    android:gravity="center_vertical"
     android:text="@string/care_recycler_alarm_recycler_add"
-    android:layout_marginTop="@dimen/offset_8"
-    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-    app:icon="@drawable/baseline_add_24"
-    app:iconPadding="@dimen/offset_8" />
+    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />

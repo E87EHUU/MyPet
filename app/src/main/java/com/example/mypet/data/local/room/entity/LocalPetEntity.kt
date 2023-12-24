@@ -18,8 +18,8 @@ data class LocalPetEntity(
     val avatarPath: String?,
     @ColumnInfo(name = NAME)
     val name: String,
-    @ColumnInfo(name = AGE)
-    val dateOfBirthTimeMillis: Long?,
+    @ColumnInfo(name = DATE_OF_BIRTH)
+    val dateOfBirth: Long?,
     @ColumnInfo(name = WEIGHT)
     val weight: Int?,
     @ColumnInfo(name = SEX)
@@ -33,7 +33,7 @@ data class LocalPetEntity(
 ) {
     companion object {
         const val AVATAR_PATH = "avatar_path"
-        const val AGE = "age"
+        const val DATE_OF_BIRTH = "date_of_birth"
         const val WEIGHT = "weight"
         const val SEX = "sex"
         const val IS_ACTIVE = "is_active"

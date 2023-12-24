@@ -4,10 +4,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.example.mypet.broadcast.AlarmReceiver
+import com.example.mypet.service.alarm.AlarmService.Companion.ALARM_ID
+import com.example.mypet.service.alarm.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import com.example.mypet.ui.MainActivity
-import com.example.mypet.ui.alarm.service.AlarmService
-import com.example.mypet.ui.alarm.service.AlarmService.Companion.ALARM_ID
-import com.example.mypet.ui.alarm.service.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -47,10 +47,11 @@ class AlarmDao @Inject constructor(
 
     private fun getStartAlarmServicePendingIntent(id: Int) =
         let {
-            val intent = Intent(context, AlarmService::class.java)
+            val intent = Intent(context, AlarmReceiver::class.java)
             intent.action = ALARM_OVERLAY_ACTION_START
             intent.putExtra(ALARM_ID, id)
-            PendingIntent.getForegroundService(
+
+            PendingIntent.getBroadcast(
                 context,
                 id,
                 intent,

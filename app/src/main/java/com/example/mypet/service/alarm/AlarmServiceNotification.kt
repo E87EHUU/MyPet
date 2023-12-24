@@ -1,4 +1,4 @@
-package com.example.mypet.ui.alarm.service
+package com.example.mypet.service.alarm
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -10,11 +10,12 @@ import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import com.example.mypet.app.R
 import com.example.mypet.domain.alarm.service.AlarmServiceModel
+import com.example.mypet.domain.care.CareTypes
 
 
 class AlarmServiceNotification(
     private val context: Context,
-    private val alarmModel: AlarmServiceModel,
+    private val alarmServiceModel: AlarmServiceModel,
 ) {
     private val intentToService = Intent(context, AlarmService::class.java)
     private val pendingIntentStartServiceNavToDetail: PendingIntent =
@@ -51,50 +52,47 @@ class AlarmServiceNotification(
             )
         }
 
-    init {
-        createNotificationChannel()
+    fun getNotification(): Notification {
+        with(alarmServiceModel) {
+            val text = alarmDescription
+                ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
+
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle(petName)
+                .setContentText(text)
+                .setContentIntent(pendingIntentStartServiceNavToDetail)
+                .apply {
+                    if (alarmIsDelay)
+                        addAction(
+                            R.drawable.baseline_repeat_24,
+                            context.getString(R.string.alarm_notification_chanel_action_delay),
+                            pendingIntentStartServiceDelay
+                        )
+                }
+                .addAction(
+                    R.drawable.baseline_close_24,
+                    context.getString(R.string.alarm_notification_chanel_action_stop),
+                    pendingIntentStartServiceStop
+                )
+                .build()
+
+            notification.flags = notification.flags and Notification.FLAG_INSISTENT
+
+            return notification
+        }
     }
 
-    fun getDelayNotification() =
-        NotificationCompat.Builder(context, CHANNEL_ID)
-            .setAutoCancel(true)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            //.setContentTitle(alarmModel.anyTitle)
-            .setContentIntent(pendingIntentStartServiceNavToDetail)
-            .setContentText(context.getString(R.string.alarm_delay_message))
-            .addAction(
-                R.drawable.baseline_close_24,
-                context.getString(R.string.alarm_notification_chanel_action_stop),
-                pendingIntentStartServiceStop
-            )
-            .build()
-    fun getNotification() =
-        NotificationCompat.Builder(context, CHANNEL_ID)
-            .setAutoCancel(true)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-           // .setContentTitle(alarmModel.anyTitle)
-            .setContentText("")
-            .setContentIntent(pendingIntentStartServiceNavToDetail)
-            .apply {
-                if (alarmModel.alarmIsDelay)
-                    addAction(
-                        R.drawable.baseline_repeat_24,
-                        context.getString(R.string.alarm_notification_chanel_action_delay),
-                        pendingIntentStartServiceDelay
-                    )
-            }
-            .addAction(
-                R.drawable.baseline_close_24,
-                context.getString(R.string.alarm_notification_chanel_action_stop),
-                pendingIntentStartServiceStop
-            )
-            .build()
+    fun createNotificationChannel() {
+        val importance =
+            if (alarmServiceModel.isOverlayEnable) NotificationManager.IMPORTANCE_DEFAULT
+            else NotificationManager.IMPORTANCE_HIGH
 
-    private fun createNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,
             context.getString(R.string.app_name),
-            NotificationManager.IMPORTANCE_DEFAULT
+            importance
         )
             .apply {
                 lightColor = Color.BLUE

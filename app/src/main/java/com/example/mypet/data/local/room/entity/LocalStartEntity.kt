@@ -21,6 +21,7 @@ data class LocalStartEntity(
 
     @ColumnInfo(name = TIME_IN_MILLIS)
     val timeInMillis: Long? = null,
+    // FIXME час и минуты стартовые не используются
     @ColumnInfo(name = HOUR)
     val hour: Int? = null,
     @ColumnInfo(name = MINUTE)

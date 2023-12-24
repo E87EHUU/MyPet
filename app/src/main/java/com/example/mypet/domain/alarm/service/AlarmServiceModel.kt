@@ -2,9 +2,12 @@ package com.example.mypet.domain.alarm.service
 
 data class AlarmServiceModel(
     val petId: Int,
+    val petName: String,
     val petAvatarPath: String?,
     val petKindOrdinal: Int,
     val petBreedOrdinal: Int?,
+
+    val careTypeOrdinal: Int,
 
     val alarmId: Int,
     val alarmDescription: String?,
@@ -15,4 +18,6 @@ data class AlarmServiceModel(
     val alarmIsVibration: Boolean,
     val alarmIsDelay: Boolean,
     val alarmIsActive: Boolean,
+
+    val isOverlayEnable: Boolean = false,
 )

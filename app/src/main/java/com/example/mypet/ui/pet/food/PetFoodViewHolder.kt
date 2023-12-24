@@ -12,19 +12,21 @@ class PetFoodViewHolder(
     private val callback: PetFoodAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private val context = binding.root.context
-    private lateinit var petFoodModel: PetFoodModel
     private val petFoodAdapter = PetFoodAlarmAdapter(callback)
+
+    private var petFoodModel: PetFoodModel? = null
 
     init {
         binding.recyclerViewPetRecyclerFood.itemAnimator = null
         binding.recyclerViewPetRecyclerFood.adapter = petFoodAdapter
-        binding.root.setOnClickListener { callback.onClickPetFood(petFoodModel.care) }
+        binding.root.setOnClickListener { petFoodModel?.let { callback.onClickPetFood(it.care) } }
     }
 
     fun bind(petFoodModel: PetFoodModel?) {
+        this.petFoodModel = petFoodModel
+        petFoodAdapter.submitList(petFoodModel?.alarmModels)
+
         petFoodModel?.let {
-            this.petFoodModel = petFoodModel
-            petFoodAdapter.submitList(petFoodModel.alarmModels)
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false

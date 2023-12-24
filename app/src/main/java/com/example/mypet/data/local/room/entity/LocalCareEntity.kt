@@ -19,8 +19,12 @@ data class LocalCareEntity(
     @ColumnInfo(name = CARE_TYPE_ORDINAL)
     val careTypeOrdinal: Int,
 
+    @ColumnInfo(name = TITLE)
+    val title: String?,
     @ColumnInfo(name = NOTE)
     val note: String?,
+    @ColumnInfo(name = DOSE)
+    val dose: String?,
 
     @ColumnInfo(name = PROGRESS)
     val progress: Int?,
@@ -28,7 +32,9 @@ data class LocalCareEntity(
     companion object {
         const val CARE_TYPE_ORDINAL = "care_type_ordinal"
 
+        const val TITLE = "title"
         const val NOTE = "note"
+        const val DOSE = "dose"
         const val PROGRESS = "progress"
     }
 }

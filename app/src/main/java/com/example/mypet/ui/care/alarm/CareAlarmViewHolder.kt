@@ -4,18 +4,28 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.alarm.main.CareAlarmMainAdapter
+import com.example.mypet.ui.care.alarm.main.CareAlarmMainCallback
 
 class CareAlarmViewHolder(
     private val binding: FragmentCareRecyclerAlarmBinding,
     private val callback: CareAlarmCallback,
-) : RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root), CareAlarmMainCallback {
     private val context = binding.root.context
     private lateinit var careAlarmModel: CareAlarmModel
-    private val adapter = CareAlarmMainAdapter(callback)
+
+    private val adapter = CareAlarmMainAdapter(this)
 
     init {
-        binding.recyclerViewCareRecyclerAlarmRecycler.adapter = adapter
+        with(binding) {
+            binding.buttonCareRecyclerAlarmAdd.setOnClickListener {
+                callback.onClickAlarm()
+            }
+
+            recyclerViewCareRecyclerAlarmRecycler.itemAnimator = null
+            recyclerViewCareRecyclerAlarmRecycler.adapter = adapter
+        }
     }
 
     fun bind(careAlarmModel: CareAlarmModel?) {
@@ -24,22 +34,18 @@ class CareAlarmViewHolder(
 
             adapter.submitList(careAlarmModel.alarms)
 
-            // binding.textViewCareRecyclerAlarmDescription.text = a
-
-//            binding.textViewCareRecyclerAlarmTime.text = time
-
-//            binding.switchFoodItemActive.isVisible = alarmId != null
-//            binding.switchFoodItemActive.isChecked = alarmIsActive ?: false
-
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false
         }
+    }
 
-        // TODO добавить меню по трем точкам - Удаление, отключение\включение, изменить(дублирование тапа по общей плитке)
+    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
+        callback.onClickAlarm(careAlarmDetailMainModel ?: CareAlarmDetailMainModel())
+    }
 
-        // TODO добавить кнопку "добавить" внизу списка будильников, или еще как. Общий фаб не очень понятен, и возможно несколько добавлений в фрагменте. либо мультифаб.. надо думать.
-
-        // TODO добавить ограничение на вводимые данные в поле количества раз до разумного. Больше 0 и меньше 10 ???
+    override fun onClickDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+        callback.onClickDelete(careAlarmDetailMainModel)
+        adapter.submitList(careAlarmModel.alarms)
     }
 }

@@ -8,21 +8,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/offset_16"
-        android:paddingTop="@dimen/offset_16">
+        android:paddingVertical="@dimen/offset_16">
 
         <TextView
             android:id="@+id/textInputLayoutsCareRepeatIntervalTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_24"
             android:text="@string/care_repeat_times"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutsCareRepeatIntervalTimes"
-            style="@style/Theme.MyPet.TextInputLayout"
+            style="@style/Theme.MyPet.TextInputLayoutWrap"
             android:layout_marginStart="@dimen/offset_8"
+            android:layout_marginTop="@dimen/offset_8"
             android:maxEms="3"
             app:layout_constraintStart_toStartOf="@+id/textInputLayoutsCareRepeatIntervalTitle"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRepeatIntervalTitle">
@@ -99,100 +100,6 @@
                 android:text="@string/alarm_sunday_short" />
 
         </com.google.android.material.chip.ChipGroup>
-
-        <TextView
-            android:id="@+id/radioGroupCareRepeatEndTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_24"
-            android:text="@string/care_end_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroupCareRepeatWeek" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupCareRepeatEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_8"
-            android:checkedButton="@id/radioButtonCareRepeatEndNone"
-            app:layout_constraintStart_toStartOf="@+id/radioGroupCareRepeatEndTitle"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupCareRepeatEndTitle">
-
-            <RadioButton
-                android:id="@+id/radioButtonCareRepeatEndNone"
-                style="@style/Theme.MyPet.CareEndRadio" />
-
-            <RadioButton
-                android:id="@+id/radioButtonCareRepeatEndAfterTimes"
-                style="@style/Theme.MyPet.CareEndRadio" />
-
-            <RadioButton
-                android:id="@+id/radioButtonCareRepeatEndAfterDate"
-                style="@style/Theme.MyPet.CareEndRadio" />
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/textViewCareRepeatEndNone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_16"
-            android:layout_marginTop="@dimen/offset_24"
-            android:text="@string/care_repeat_end_none"
-            app:layout_constraintStart_toEndOf="@+id/radioGroupCareRepeatEnd"
-            app:layout_constraintTop_toTopOf="@+id/radioGroupCareRepeatEnd" />
-
-        <TextView
-            android:id="@+id/textViewCareRepeatEndTimesTitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/care_repeat_end_times_title_1"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes"
-            app:layout_constraintStart_toStartOf="@+id/textViewCareRepeatEndNone"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutsCareRepeatEndTimes"
-            style="@style/Theme.MyPet.TextInputLayout"
-            android:layout_marginStart="@dimen/offset_8"
-            android:layout_marginTop="@dimen/offset_24"
-            android:maxEms="3"
-            app:layout_constraintStart_toEndOf="@+id/textViewCareRepeatEndTimesTitle1"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCareRepeatEndNone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditTextCareRepeatEndAfterTimes"
-                style="@style/Theme.MyPet.TextInputEditText"
-                android:inputType="numberSigned"
-                android:text="@string/care_repeat_end_times_default"
-                app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerMainTitle"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewFoodRecyclerRepeatIcon" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/textViewCareRepeatEndTimesTitle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/offset_8"
-            android:text="@string/care_repeat_end_times_title_2"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRepeatEndTimes"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRepeatEndTimes" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutsCareRepeatEndDate"
-            style="@style/Theme.MyPet.TextInputLayout"
-            android:layout_marginTop="@dimen/offset_16"
-            app:layout_constraintStart_toStartOf="@+id/textViewCareRepeatEndNone"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutsCareRepeatEndTimes">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditTextCareRepeatEndDate"
-                style="@style/Theme.MyPet.TextInputEditTextPicker"
-                android:text="@string/care_date_default" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

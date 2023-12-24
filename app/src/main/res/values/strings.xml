@@ -47,10 +47,13 @@
     <string name="alarm_repeat_title">Repeat</string>
     <string name="alarm_repeat_once">Once</string>
     <string name="alarm_repeat_everyday">Every day</string>
-    <string name="alarm_melody_title">Ringtone</string>
-    <string name="alarm_melody_description_default">Select</string>
-    <string name="alarm_vibration_title">Vibration</string>
-    <string name="alarm_delay_title">Postpone</string>
+
+    <string name="care_alarm_detail_ringtone_title">Ringtone</string>
+    <string name="care_alarm_detail_vibration_title">Vibration</string>
+    <string name="care_alarm_detail_delay_title">Postpone</string>
+    <string name="care_alarm_detail_hint_mute">Mute</string>
+    <string name="care_alarm_detail_notification_title">Notification</string>
+
     <string name="alarm_delay_message">Alarm is postponed</string>
     <string name="alarm_service_overlay_delay">Postpone</string>
     <string name="alarm_service_overlay_stop">Stop</string>
@@ -88,6 +91,15 @@
     <string name="care_food_title">Feeding</string>
     <string name="care_food_times">time(s)</string>
     <string name="care_bath_title">Bathing</string>
+
+    <string name="care_medicine_title">Medicine</string>
+    <string name="care_grooming_title">Grooming</string>
+    <string name="care_training_title">Training</string>
+    <string name="care_vaccination_title">Vaccination</string>
+    <string name="care_vitamin_title">Vitamin</string>
+    <string name="care_checkup_title">Check up</string>
+    <string name="care_toothbrushing_title">Toothbrushing</string>
+
     <string name="care_combing_the_wool_title">Wool combing</string>
     <string name="care_against_fleas_and_ticks_title">Against fleas and ticks</string>
     <string name="care_against_worms_title">Against worms</string>
@@ -110,7 +122,7 @@
         <item>every year</item>
     </string-array>
 
-    <string name="food_add_alarm_title">Add a reminder</string>
+    <string name="food_add_alarm_title">Add</string>
     <string name="food_detail_title_hint">Reminder</string>
     <string name="food_detail_ration_hint">Diet</string>
     <string name="food_detail_repeat_disable">Disabled</string>
@@ -191,5 +203,10 @@
     <string name="care_repeat_interval_description_week">Каждую %1$s неделю%2$s</string>
     <string name="care_repeat_interval_description_month">Каждый %1$s месяц</string>
     <string name="care_repeat_interval_description_year">Каждый %1$s год</string>
+    <string name="care_recycler_main_dose_hint">Дозировка</string>
+    <string name="care_recycler_main_note_hint">Заметки</string>
+    <string name="care_recycler_main_title_hint">Название</string>
+    <string name="care_recycler_repeat_day_text">раз в день</string>
+    <string name="care_recycler_repeat_day_default">2</string>
 
 </resources>

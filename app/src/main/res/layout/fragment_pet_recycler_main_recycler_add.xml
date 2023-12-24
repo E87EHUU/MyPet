@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.imageview.ShapeableImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/imageViewPetListAddItem"
-    android:layout_width="@dimen/pet_avatar_size"
-    android:layout_height="@dimen/pet_avatar_size"
-    android:padding="@dimen/pet_detail_avatar_padding"
+    style="@style/Widget.Material3.Button.IconButton.Filled"
+    android:layout_width="@dimen/pet_list_avatar_size"
+    android:layout_height="@dimen/pet_list_avatar_size"
     android:layout_marginEnd="@dimen/offset_16"
-    android:src="@drawable/baseline_add_24"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/recyclerViewPetRecyclerMain"
-    app:shapeAppearance="@style/Theme.MyPet.ImageCircle" />
+    app:icon="@drawable/baseline_add_24"
+    app:iconGravity="textTop"
+    app:iconSize="@dimen/offset_32" />

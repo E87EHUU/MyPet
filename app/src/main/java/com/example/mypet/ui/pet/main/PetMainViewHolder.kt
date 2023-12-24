@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
+import com.example.mypet.domain.pet.PetSex
+import com.example.mypet.domain.pet.list.PetListAddModel
+import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
@@ -21,10 +24,10 @@ class PetMainViewHolder(
     private val callback: PetMainCallback,
 ) : RecyclerView.ViewHolder(binding.root), PetListCallback {
     private val context = binding.root.context
-    private lateinit var petListModels: List<PetListModel>
+    private var petListMainModels: List<PetListMainModel>? = null
     private val petListAdapter: PetListAdapter =
         PetListAdapter(this)
-    private var activePetListModel: PetListModel? = null
+    private var activePetListMainModel: PetListMainModel? = null
 
     init {
         binding.recyclerViewPetRecyclerMain.itemAnimator = null
@@ -40,7 +43,7 @@ class PetMainViewHolder(
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.pet_menu_item_edit_pet -> {
-                        activePetListModel?.let { callback.onClickPetEdit(it) }
+                        activePetListMainModel?.let { callback.onClickPetEdit(it) }
                         true
                     }
 
@@ -57,7 +60,7 @@ class PetMainViewHolder(
     }
 
     private fun showDeletePetDialog() {
-        activePetListModel?.let { petListModel ->
+        activePetListMainModel?.let { petListModel ->
             val deletePetAlertDialog =
                 LayoutInflater.from(context).inflate(R.layout.alert_dialog_delete_pet, null)
 
@@ -78,61 +81,113 @@ class PetMainViewHolder(
         }
     }
 
-    fun bind(petListModels: List<PetListModel>?, activePetListModel: PetListModel?) {
-        petListModels?.let {
-            this.petListModels = it
-            petListAdapter.submitList(petListModels)
-            onClickPet(activePetListModel ?: petListModels.firstOrNull())
+    fun bind(petListMainModels: List<PetListMainModel>?) {
+        this.petListMainModels = petListMainModels
+
+        petListMainModels?.let {
+            onClickPet(findActivePetListModel())
+        } ?: updateUIActivePetInPetList()
+    }
+
+    private fun findActivePetListModel(): PetListMainModel? {
+        petListMainModels?.let { petListModels ->
+            for (petListModel in petListModels) {
+                if (petListModel.isActive) return petListModel
+            }
+            return petListModels.firstOrNull()
+        }
+
+        return null
+    }
+
+    private fun updatePet(petListMainModel: PetListMainModel?) {
+        petListMainModel?.let {
+            with(binding) {
+                Glide.with(itemView)
+                    .load(petListMainModel.avatarUri)
+                    .circleCrop()
+                    .placeholder(
+                        getPetIcon(
+                            petListMainModel.kindOrdinal,
+                            petListMainModel.breedOrdinal
+                        )
+                    )
+                    .into(binding.imageViewPetRecyclerMainAvatarIcon)
+
+                textViewPetRecyclerMainName.text = petListMainModel.name
+                textViewPetRecyclerMainBreedName.text =
+                    context.getString(
+                        getPetName(petListMainModel.kindOrdinal, petListMainModel.breedOrdinal)
+                    )
+
+                petListMainModel.dateOfBirth?.let {
+                    textViewPetRecyclerMainAgeText.text = getPetsAge(it)
+                    linearLayoutPetRecyclerMainAge.isVisible = true
+                } ?: run {
+                    linearLayoutPetRecyclerMainAge.isVisible = false
+                }
+
+                petListMainModel.weight?.let {
+                    textViewPetRecyclerMainWeightText.text = it.toString()
+                    linearLayoutPetRecyclerMainWeight.isVisible = true
+                } ?: run {
+                    linearLayoutPetRecyclerMainWeight.isVisible = false
+                }
+
+                when (petListMainModel.sex) {
+                    PetSex.MALE.ordinal -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = true
+                        imageViewPetRecyclerMainSexFemale.isVisible = false
+                    }
+
+                    PetSex.FEMALE.ordinal -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = false
+                        imageViewPetRecyclerMainSexFemale.isVisible = true
+                    }
+
+                    else -> {
+                        imageViewPetRecyclerMainSexMale.isVisible = false
+                        imageViewPetRecyclerMainSexFemale.isVisible = false
+                    }
+                }
+
+                imageViewPetRecyclerMainEmpty.isVisible = false
+                groupPetRecyclerMain.isVisible = true
+            }
+
+            updateUIActivePetInPetList(petListMainModel)
+        } ?: run {
+            binding.groupPetRecyclerMain.isVisible = false
+            binding.imageViewPetRecyclerMainSexMale.isVisible = false
+            binding.imageViewPetRecyclerMainSexFemale.isVisible = false
+            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
+            binding.linearLayoutPetRecyclerMainAge.isVisible = false
+
+            binding.imageViewPetRecyclerMainEmpty.isVisible = true
         }
     }
 
-    private fun updatePet(petListModel: PetListModel?) {
+    private fun updateUIActivePetInPetList(activePetListMainModel: PetListMainModel? = null) {
+        val mutablePetListModels = mutableListOf<PetListModel>()
+        mutablePetListModels.add(PetListAddModel)
 
-
-        petListModel?.let {
-            activePetListModel = petListModel
-
-            if (it.avatarUri != null) {
-                Glide.with(context)
-                    .load(it.avatarUri)
-                    .circleCrop()
-                    .into(binding.imageViewPetRecyclerMainAvatarIcon)
-            } else
-                binding.imageViewPetRecyclerMainAvatarIcon
-                    .setImageResource(getPetIcon(it.kindOrdinal, it.breedOrdinal))
-
-            binding.textViewPetRecyclerMainName.text = it.name
-            binding.textViewPetRecyclerMainBreedName.text =
-                context.getString(getPetName(it.kindOrdinal, it.breedOrdinal))
-
-            binding.imageViewPetRecyclerMainEmpty.isVisible = false
-            binding.groupPetRecyclerMain.isVisible = true
-        } ?: run {
-            binding.groupPetRecyclerMain.isVisible = false
-            binding.imageViewPetRecyclerMainEmpty.isVisible = true
+        petListMainModels?.let { petListMainModels ->
+            val updatedPetListMainModels = petListMainModels.map { petListModel ->
+                petListModel.copy(isActive = petListModel == activePetListMainModel)
+            }
+            mutablePetListModels.addAll(updatedPetListMainModels)
         }
 
-        petListModel?.age?.let {
-            binding.textViewPetRecyclerMainAgeText.text = getPetsAge(it.toLong())
-            binding.linearLayoutPetRecyclerMainAge.isVisible = true
-        } ?: run {
-            binding.linearLayoutPetRecyclerMainAge.isVisible = false
-        }
-
-        petListModel?.weight?.let {
-            binding.textViewPetRecyclerMainWeightText.text = it
-            binding.linearLayoutPetRecyclerMainWeight.isVisible = true
-        } ?: run {
-            binding.linearLayoutPetRecyclerMainWeight.isVisible = false
-        }
+        petListAdapter.submitList(mutablePetListModels)
     }
 
     override fun onClickPetAdd() {
         callback.onClickPetAdd()
     }
 
-    override fun onClickPet(petListModel: PetListModel?) {
-        callback.onClickPet(petListModel)
-        updatePet(petListModel)
+    override fun onClickPet(petListMainModel: PetListMainModel?) {
+        activePetListMainModel = petListMainModel
+        updatePet(petListMainModel)
+        callback.onClickPet(petListMainModel)
     }
 }

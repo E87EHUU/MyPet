@@ -12,7 +12,7 @@ class PetCareViewHolder(
     private val callback: PetCareMainCallback,
 ) : RecyclerView.ViewHolder(binding.root), PetCareMainCallback {
     private val context = binding.root.context
-    private lateinit var petCareModels: List<PetCareModel>
+    private var petCareModels: List<PetCareModel>? = null
 
     private val petCareAdapter = PetCareMainAdapter(this)
 
@@ -22,10 +22,10 @@ class PetCareViewHolder(
     }
 
     fun bind(petCareModels: List<PetCareModel>?) {
-        petCareModels?.let {
-            this.petCareModels = petCareModels
-            petCareAdapter.submitList(petCareModels)
+        this.petCareModels = petCareModels
+        petCareAdapter.submitList(petCareModels)
 
+        petCareModels?.let {
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false

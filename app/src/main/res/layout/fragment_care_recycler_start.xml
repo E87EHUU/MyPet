@@ -23,25 +23,26 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerStartIcon"
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerStartIcon" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewCareRecyclerStartDate"
-        style="@style/Theme.MyPet.CareTextView.Date"
-        android:text="@string/care_date_default"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerStartTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerStartTitle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCareRecyclerStart"
+        style="@style/Theme.MyPet.CareItemContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerStartIcon">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewCareRecyclerStartTime"
-        style="@style/Theme.MyPet.CareTextView.Time"
-        android:text="@string/care_time_default"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/textViewCareRecyclerStartTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerStartTitle" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewCareRecyclerStartDate"
+            style="@style/Theme.MyPet.CareTextView.Date"
+            android:text="@string/care_date_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.divider.MaterialDivider
         style="@style/Theme.MyPet.CareBottomDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerStartDate" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareRecyclerStart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

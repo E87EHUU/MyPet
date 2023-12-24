@@ -2,28 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer"
-    android:paddingBottom="@dimen/offset_8">
+    style="@style/Theme.MyPet.CareItemContainer">
 
     <TextView
         android:id="@+id/textViewCareRecyclerAlarmTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/care_recycler_alarm_recycler_offset_start"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
         android:textColor="?attr/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonCareRecyclerAlarmActive"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonCareRecyclerAlarmDelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonCareRecyclerAlarmActive"
+        app:layout_constraintTop_toTopOf="@+id/buttonCareRecyclerAlarmDelete"
         tools:text="10:00" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonCareRecyclerAlarmActive"
-        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:id="@+id/buttonCareRecyclerAlarmDelete"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/offset_24"
-        app:icon="@drawable/baseline_notifications_off_24"
+        app:icon="@drawable/baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,12 +28,11 @@
         android:id="@+id/textViewCareRecyclerAlarmDescription"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_8"
         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/buttonCareRecyclerAlarmActive"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCareRecyclerAlarmDelete"
         app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerAlarmTime"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCareRecyclerAlarmActive"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCareRecyclerAlarmDelete"
         tools:text="Влажный корм 100 грамм"
         tools:visibility="visible" />
 

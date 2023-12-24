@@ -23,54 +23,57 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerRepeatIcon"
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerRepeatIcon" />
 
-    <TextView
-        android:id="@+id/textViewCareRecyclerRepeatDescription"
-        style="@style/Theme.MyPet.CareTextView"
-        android:text="@string/care_repeat_interval_description_none"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerRepeatTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerRepeatTitle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCareRecyclerRepeat"
+        style="@style/Theme.MyPet.CareItemContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerRepeatIcon">
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupCareRecyclerEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/textViewCareRecyclerRepeatDescription"
+            style="@style/Theme.MyPet.CareTextView"
+            android:text="@string/care_repeat_interval_description_none"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCareRecyclerRepeatDayTimes"
+        style="@style/Theme.MyPet.CareItemContainer"
         android:visibility="gone"
-        app:constraint_referenced_ids="imageViewCareRecyclerEndIcon,textViewCareRecyclerEndTitle,textViewCareRecyclerEndDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareRecyclerRepeat"
+        tools:visibility="visible">
 
-    <ImageView
-        android:id="@+id/imageViewCareRecyclerEndIcon"
-        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
-        android:layout_marginTop="@dimen/offset_24"
-        android:contentDescription="@string/care_repeat_title"
-        android:src="@drawable/baseline_timer_off_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerRepeatDescription" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutsCareRecyclerRepeatDayTimes"
+            style="@style/Theme.MyPet.TextInputLayoutWrap"
+            android:maxEms="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewCareRecyclerEndTitle"
-        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
-        android:text="@string/care_end_title"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerEndIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerEndIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerEndIcon" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextCareRecyclerRepeatDayTimes"
+                style="@style/Theme.MyPet.TextInputEditText"
+                android:inputType="numberSigned"
+                android:text="@string/care_recycler_repeat_day_default"
+                android:textAlignment="center" />
 
-    <TextView
-        android:id="@+id/textViewCareRecyclerEndDescription"
-        style="@style/Theme.MyPet.CareTextView"
-        android:text="@string/care_repeat_end_none"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerEndTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndTitle" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/materialDivider"
-        style="@style/Theme.MyPet.CareBottomDivider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndDescription" />
+        <TextView
+            android:id="@+id/textInputLayoutsCareRecyclerRepeatDayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/offset_8"
+            android:text="@string/care_recycler_repeat_day_text"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareRecyclerRepeatDayTimes"
+            app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareRecyclerRepeatDayTimes"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareRecyclerRepeatDayTimes" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

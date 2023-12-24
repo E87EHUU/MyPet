@@ -5,11 +5,14 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
+import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
+import com.example.mypet.data.local.room.entity.CARE_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DELAY
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
@@ -18,12 +21,17 @@ import com.example.mypet.data.local.room.entity.PET_TABLE
 data class LocalAlarmServiceModel(
     @ColumnInfo(name = "${PET_TABLE}_$ID")
     val petId: Int,
+    @ColumnInfo(name = "${PET_TABLE}_$NAME")
+    val petName: String,
     @ColumnInfo(name = "${PET_TABLE}_$AVATAR_PATH")
     val petAvatarPath: String?,
     @ColumnInfo(name = "${PET_TABLE}_$KIND_ORDINAL")
     val petKindOrdinal: Int,
     @ColumnInfo(name = "${PET_TABLE}_$BREED_ORDINAL")
     val petBreedOrdinal: Int?,
+
+    @ColumnInfo(name = "${CARE_TABLE}_$CARE_TYPE_ORDINAL")
+    val careTypeOrdinal: Int,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,

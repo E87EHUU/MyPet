@@ -19,9 +19,9 @@ import javax.inject.Inject
 class PetRepositoryImpl @Inject constructor(
     private val localPetDao: LocalPetDao,
 ) : PetRepository {
-    override fun getPetListModels() =
+    override fun getPetListMainModels() =
         localPetDao.getLocalPetModels()
-            .mapNotNull { its -> its.map { it.toPetListModel() } }
+            .mapNotNull { its -> its.map { it.toPetListMainModel() } }
 
     @Transaction
     override fun getPetFoodModel(petId: Int) =
@@ -29,10 +29,10 @@ class PetRepositoryImpl @Inject constructor(
             localPetDao.getLocalPetCareFoodModel(petId, CareTypes.FOOD.ordinal),
             localPetDao.getLocalAlarmMinModels(petId, CareTypes.FOOD.ordinal)
         ) { localPetCareModel, localAlarmMinModels ->
-            PetFoodModel(
-                care = localPetCareModel.toPetCareDetailModel(),
-                alarmModels = localAlarmMinModels.map { it.toAlarmMinModel() }
-            )
+                PetFoodModel(
+                    care = localPetCareModel.toPetCareDetailModel(),
+                    alarmModels = localAlarmMinModels.map { it.toAlarmMinModel() }
+                )
         }
 
     override fun getCareModels(petId: Int) =
@@ -41,12 +41,12 @@ class PetRepositoryImpl @Inject constructor(
 
     override suspend fun deletePet(petId: Int) {
         localPetDao.deletePet(petId)
-    }
+   }
 
     private fun LocalPetCareModel.toPetCareDetailModel() =
         PetCareModel(
             id = id,
-            careType = CareTypes.values()[careTypeOrdinal],
+            careType = CareTypes.entries[careTypeOrdinal],
             progress = progress,
             nextStart = nextStart
         )

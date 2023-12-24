@@ -9,9 +9,9 @@ private fun Int.formatDateTime(): String = dateTimeFormatter.format(this)
 fun toAppTime(hour: Int, minute: Int) =
     "${hour.formatDateTime()}:${minute.formatDateTime()}"
 
-fun toAppDate(timeInMillis: Long): String {
+fun toAppDate(timeInMillis: Long?): String {
     val calendar = Calendar.getInstance()
-    calendar.timeInMillis = timeInMillis
+    timeInMillis?.let { calendar.timeInMillis = it }
     val rDay = calendar[Calendar.DAY_OF_MONTH]
     val rMonth = calendar[Calendar.MONTH] + 1
     val rYear = calendar[Calendar.YEAR]

@@ -74,7 +74,7 @@
             android:id="@+id/imageViewPetRecyclerMainAvatarIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/offset_8"
+            android:padding="@dimen/offset_2"
             android:src="@drawable/ic_pet_kind_dog" />
 
     </FrameLayout>
@@ -118,7 +118,7 @@
         android:id="@+id/textViewPetRecyclerMainName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/offset_16"
+        android:layout_marginStart="@dimen/offset_24"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:layout_constraintBottom_toTopOf="@+id/textViewPetRecyclerMainBreedName"
         app:layout_constraintStart_toEndOf="@+id/imageViewPetRecyclerMainAvatar"
@@ -131,7 +131,7 @@
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/offset_8"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
         app:layout_constraintEnd_toStartOf="@+id/buttonPetRecyclerMainMore"
         app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainName"
@@ -142,7 +142,7 @@
         android:id="@+id/linearLayoutPetRecyclerMainWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/offset_16"
+        android:paddingEnd="@dimen/offset_16"
         android:minWidth="@dimen/pet_card_detail_min_width"
         android:orientation="vertical"
         android:visibility="gone"
@@ -160,7 +160,7 @@
             android:id="@+id/textViewPetRecyclerMainWeightText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
             tools:text="1 кг 100 г" />
 
     </LinearLayout>
@@ -169,14 +169,11 @@
         android:id="@+id/linearLayoutPetRecyclerMainAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/offset_16"
-        android:layout_marginStart="@dimen/offset_16"
-        android:layout_marginTop="@dimen/offset_16"
         android:minWidth="@dimen/pet_card_detail_min_width"
         android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/linearLayoutPetRecyclerMainWeight"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintTop_toTopOf="@+id/linearLayoutPetRecyclerMainWeight"
         tools:visibility="visible">
 
         <TextView
@@ -189,7 +186,7 @@
             android:id="@+id/textViewPetRecyclerMainAgeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
             tools:text="24 месяца" />
 
     </LinearLayout>
