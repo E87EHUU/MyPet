@@ -62,7 +62,6 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
         binding.root.itemAnimator = null
         binding.root.adapter = adapter
-
     }
 
     private fun initObservePet() {
