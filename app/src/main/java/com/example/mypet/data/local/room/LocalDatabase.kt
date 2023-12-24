@@ -11,6 +11,7 @@ import com.example.mypet.data.local.room.dao.LocalPetDao
 import com.example.mypet.data.local.room.dao.PetCreationAndUpdateDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
+import com.example.mypet.data.local.room.entity.LocalEndEntity
 import com.example.mypet.data.local.room.entity.LocalPetEntity
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
@@ -22,6 +23,7 @@ import com.example.mypet.data.local.room.entity.LocalStartEntity
         LocalCareEntity::class,
         LocalStartEntity::class,
         LocalRepeatEntity::class,
+        LocalEndEntity::class,
         LocalAlarmEntity::class,
     ],
     version = 1,

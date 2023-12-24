@@ -21,11 +21,13 @@ class AlarmServiceRepositoryImpl @Inject constructor(
             if (localAlarmEntity.isActive) {
                 localAlarmServiceDao.getLocalRepeatEntity(alarmId)?.let { localRepeatEntity ->
                     val localStartEntity = localAlarmServiceDao.getLocalStartEntity(alarmId)
+                    val localEndEntity = localAlarmServiceDao.getLocalEndEntity(alarmId)
                     val updatedLocalAlarmEntity =
                         AlarmNextStartCalculate().getNextStartTimeInMillis(
                             localAlarmEntity,
                             localStartEntity,
-                            localRepeatEntity
+                            localRepeatEntity,
+                            localEndEntity
                         )
 
                     localAlarmServiceDao.updateLocalAlarmEntity(updatedLocalAlarmEntity)

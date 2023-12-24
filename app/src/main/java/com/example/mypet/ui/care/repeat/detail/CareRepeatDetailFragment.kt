@@ -12,12 +12,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
 import com.example.mypet.domain.care.CareRepeatModel
-import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
-import com.example.mypet.domain.toAppDate
 import com.example.mypet.ui.care.CareViewModel
 import com.example.mypet.ui.getToolbar
-import com.google.android.material.datepicker.MaterialDatePicker
 
 class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) {
     private val binding by viewBinding(FragmentCareRepeatDetailBinding::bind)
@@ -31,13 +28,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             careRepeatModel.intervalTimes =
                 try {
                     binding.textInputEditTextCareRepeatIntervalTimes.text.toString().toInt()
-                } catch (_: Exception) {
-                    null
-                }
-
-            careRepeatModel.endAfterTimes =
-                try {
-                    binding.textInputEditTextCareRepeatDetailEndAfterTimes.text.toString().toInt()
                 } catch (_: Exception) {
                     null
                 }
@@ -85,64 +75,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         viewModel.careRepeatModel?.let { careRepeatModel ->
             careRepeatModel.updateUIInterval()
             updateUIWeekChips()
-            careRepeatModel.updateUIEnd()
-            updateUIEndAfterDateText()
-        }
-    }
-
-    private fun CareRepeatModel.updateUIEnd() {
-        endAfterTimes?.let {
-            binding.textInputEditTextCareRepeatDetailEndAfterTimes.setText(it.toString())
-        }
-
-        when (endTypeOrdinal) {
-            CareRepeatEndTypes.AFTER_TIMES.ordinal -> {
-                updateUIEndAfterTimes()
-                binding.radioButtonCareRepeatDetailEndAfterTimes.isChecked = true
-            }
-
-            CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
-                updateUIEndAfterDate()
-                binding.radioButtonCareRepeatDetailEndAfterDate.isChecked = true
-            }
-
-            else -> {
-                updateUIEndNone()
-                binding.radioButtonCareRepeatDetailEndNone.isChecked = true
-            }
-        }
-    }
-
-    private fun updateUIEndAfterTimes() {
-        with(binding) {
-            radioButtonCareRepeatDetailEndNone.isChecked = false
-            radioButtonCareRepeatDetailEndAfterTimes.isChecked = true
-            radioButtonCareRepeatDetailEndAfterDate.isChecked = false
-
-            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = true
-            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = false
-        }
-    }
-
-    private fun updateUIEndAfterDate() {
-        with(binding) {
-            radioButtonCareRepeatDetailEndNone.isChecked = false
-            radioButtonCareRepeatDetailEndAfterTimes.isChecked = false
-            radioButtonCareRepeatDetailEndAfterDate.isChecked = true
-
-            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = false
-            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = true
-        }
-    }
-
-    private fun updateUIEndNone() {
-        with(binding) {
-            radioButtonCareRepeatDetailEndNone.isChecked = true
-            radioButtonCareRepeatDetailEndAfterTimes.isChecked = false
-            radioButtonCareRepeatDetailEndAfterDate.isChecked = false
-
-            textInputEditTextCareRepeatDetailEndAfterTimes.isEnabled = false
-            binding.textInputEditTextCareRepeatEndAfterDate.isEnabled = false
         }
     }
 
@@ -186,12 +118,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
         binding.chipGroupCareRepeatWeek.isVisible = isVisible
     }
 
-    private fun updateUIEndAfterDateText() {
-        viewModel.careRepeatModel?.endAfterDate?.let {
-            binding.textInputEditTextCareRepeatEndAfterDate.setText(toAppDate(it))
-        }
-    }
-
     private fun updateUIWeekChips() {
         viewModel.careRepeatModel?.let { careRepeatModel ->
             binding.chipCareRepeatMonday.isChecked = careRepeatModel.isMonday
@@ -213,52 +139,23 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             }
         )
 
-        val inputFilterEndAfterTimes = arrayOf(
-            InputFilter { source, _, _, dest, _, _ ->
-                if (dest.isEmpty() && source == "0") "1"
-                else if (dest.length < 2) source
-                else ""
-            }
-        )
+        with(binding) {
+            textInputEditTextCareRepeatIntervalTimes.filters = inputFilterIntervalTimes
 
-        binding.textInputEditTextCareRepeatIntervalTimes.filters = inputFilterIntervalTimes
-        binding.textInputEditTextCareRepeatDetailEndAfterTimes.filters = inputFilterEndAfterTimes
-
-        binding.chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { _, checkedIds ->
-            viewModel.careRepeatModel?.let { careRepeatModel ->
-                careRepeatModel.isMonday = checkedIds.contains(R.id.chipCareRepeatMonday)
-                careRepeatModel.isTuesday = checkedIds.contains(R.id.chipCareRepeatTuesday)
-                careRepeatModel.isWednesday = checkedIds.contains(R.id.chipCareRepeatWednesday)
-                careRepeatModel.isThursday = checkedIds.contains(R.id.chipCareRepeatThursday)
-                careRepeatModel.isFriday = checkedIds.contains(R.id.chipCareRepeatFriday)
-                careRepeatModel.isSaturday = checkedIds.contains(R.id.chipCareRepeatSaturday)
-                careRepeatModel.isSunday = checkedIds.contains(R.id.chipCareRepeatSunday)
+            chipGroupCareRepeatWeek.setOnCheckedStateChangeListener { _, checkedIds ->
+                viewModel.careRepeatModel?.let { careRepeatModel ->
+                    careRepeatModel.isMonday = checkedIds.contains(R.id.chipCareRepeatMonday)
+                    careRepeatModel.isTuesday = checkedIds.contains(R.id.chipCareRepeatTuesday)
+                    careRepeatModel.isWednesday = checkedIds.contains(R.id.chipCareRepeatWednesday)
+                    careRepeatModel.isThursday = checkedIds.contains(R.id.chipCareRepeatThursday)
+                    careRepeatModel.isFriday = checkedIds.contains(R.id.chipCareRepeatFriday)
+                    careRepeatModel.isSaturday = checkedIds.contains(R.id.chipCareRepeatSaturday)
+                    careRepeatModel.isSunday = checkedIds.contains(R.id.chipCareRepeatSunday)
+                }
             }
+
+            textInputEditTextCareRepeatInterval.setOnClickListener { showPopUpRepeatTimes() }
         }
-
-        binding.constraintLayoutCareRepeatDetailEndAfterTimes.setOnClickListener {
-            viewModel.careRepeatModel?.let { careRepeatModel ->
-                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_TIMES.ordinal
-                updateUIEndAfterTimes()
-            }
-        }
-
-        binding.constraintLayoutCareRepeatDetailEndAfterDate.setOnClickListener {
-            viewModel.careRepeatModel?.let { careRepeatModel ->
-                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal
-                updateUIEndAfterDate()
-            }
-        }
-
-        binding.constraintLayoutCareRepeatDetailEndNone.setOnClickListener {
-            viewModel.careRepeatModel?.let { careRepeatModel ->
-                careRepeatModel.endTypeOrdinal = CareRepeatEndTypes.NONE.ordinal
-                updateUIEndNone()
-            }
-        }
-
-        binding.textInputEditTextCareRepeatInterval.setOnClickListener { showPopUpRepeatTimes() }
-        binding.textInputEditTextCareRepeatEndAfterDate.setOnClickListener { showDatePicker() }
     }
 
     private fun showPopUpRepeatTimes() {
@@ -304,35 +201,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
             }
         }
         popupMenu.show()
-    }
-
-    private val datePicker by lazy {
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText(getString(R.string.care_date_picker_title))
-            .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
-            .apply {
-                viewModel.careRepeatModel?.let {
-                    setSelection(it.endAfterDate)
-                }
-            }
-            .build()
-
-        datePicker.addOnDismissListener { isUnlockUI = true }
-        datePicker.addOnPositiveButtonClickListener { timeInMillis ->
-            viewModel.careRepeatModel?.let {
-                it.endAfterDate = timeInMillis
-                updateUIEndAfterDateText()
-            }
-        }
-        datePicker
-    }
-
-    private fun showDatePicker() {
-        if (isUnlockUI)
-            activity?.supportFragmentManager?.let { fragmentManager ->
-                isUnlockUI = false
-                datePicker.show(fragmentManager, datePicker.toString())
-            }
     }
 
     private fun saveAndPopBack() {

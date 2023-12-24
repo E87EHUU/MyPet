@@ -6,18 +6,21 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
+import com.example.mypet.data.local.room.entity.LocalEndEntity
+import com.example.mypet.data.local.room.entity.LocalEndEntity.Companion.DEFAULT_COUNTER
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
-import com.example.mypet.data.local.room.entity.LocalRepeatEntity.Companion.COUNTER_DEFAULT
 import com.example.mypet.data.local.room.entity.LocalStartEntity
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareEndModel
 import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
-import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
+import com.example.mypet.domain.care.end.CareEndTypes
+import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -48,7 +51,10 @@ class CareRepositoryImpl @Inject constructor(
     override suspend fun getCareStartModel(careId: Int, careTypeOrdinal: Int) =
         flow {
             when (careTypeOrdinal) {
-                CareTypes.FOOD.ordinal -> emit(null)
+                CareTypes.FOOD.ordinal,
+                CareTypes.BATH.ordinal,
+                CareTypes.WALK.ordinal -> emit(null)
+
                 else -> {
                     val localStartEntity = localCareDao.getLocalStartEntity(careId)
 
@@ -68,29 +74,35 @@ class CareRepositoryImpl @Inject constructor(
 
     override suspend fun getCareRepeatModel(careId: Int, careTypeOrdinal: Int) =
         flow {
-            when (careTypeOrdinal) {
-                CareTypes.FOOD.ordinal -> emit(null)
-                else -> {
-                    val localRepeatEntity = localCareDao.getLocalRepeatEntity(careId)
+            val localRepeatEntity = localCareDao.getLocalRepeatEntity(careId)
 
-                    val careRepeatModel = CareRepeatModel(
-                        id = localRepeatEntity?.id ?: DEFAULT_ID,
-                        intervalTimes = localRepeatEntity?.intervalTimes,
-                        intervalOrdinal = localRepeatEntity?.intervalOrdinal,
-                        isMonday = localRepeatEntity?.isMonday ?: false,
-                        isTuesday = localRepeatEntity?.isTuesday ?: false,
-                        isWednesday = localRepeatEntity?.isWednesday ?: false,
-                        isThursday = localRepeatEntity?.isThursday ?: false,
-                        isFriday = localRepeatEntity?.isFriday ?: false,
-                        isSaturday = localRepeatEntity?.isSaturday ?: false,
-                        isSunday = localRepeatEntity?.isSunday ?: false,
-                        endTypeOrdinal = localRepeatEntity?.endTypeOrdinal?.let { CareRepeatEndTypes.entries[it].ordinal },
-                        endAfterTimes = localRepeatEntity?.endAfterTimes,
-                        endAfterDate = localRepeatEntity?.endAfterTimeInMillis
-                    )
-                    emit(careRepeatModel)
-                }
-            }
+            val careRepeatModel = CareRepeatModel(
+                id = localRepeatEntity?.id ?: DEFAULT_ID,
+                intervalTimes = getDefaultIntervalTimes(careTypeOrdinal),
+                intervalOrdinal = getDefaultIntervalOrdinal(careTypeOrdinal),
+                isMonday = localRepeatEntity?.isMonday ?: false,
+                isTuesday = localRepeatEntity?.isTuesday ?: false,
+                isWednesday = localRepeatEntity?.isWednesday ?: false,
+                isThursday = localRepeatEntity?.isThursday ?: false,
+                isFriday = localRepeatEntity?.isFriday ?: false,
+                isSaturday = localRepeatEntity?.isSaturday ?: false,
+                isSunday = localRepeatEntity?.isSunday ?: false,
+            )
+            emit(careRepeatModel)
+        }
+
+    override suspend fun getCareEndModel(careId: Int, careTypeOrdinal: Int) =
+        flow {
+            val localRepeatEntity = localCareDao.getLocalEndEntity(careId)
+
+            val careRepeatModel = CareEndModel(
+                id = localRepeatEntity?.id ?: DEFAULT_ID,
+                counter = localRepeatEntity?.counter ?: DEFAULT_COUNTER,
+                typeOrdinal = localRepeatEntity?.typeOrdinal?.let { CareEndTypes.entries[it].ordinal },
+                afterTimes = localRepeatEntity?.afterTimes,
+                afterDate = localRepeatEntity?.afterDate,
+            )
+            emit(careRepeatModel)
         }
 
     override suspend fun getCareAlarmModel(careId: Int, careTypeOrdinal: Int) =
@@ -107,6 +119,7 @@ class CareRepositoryImpl @Inject constructor(
             var careId: Int? = null
             var localStartEntity: LocalStartEntity? = null
             var localRepeatEntity: LocalRepeatEntity? = null
+            var localEndEntity: LocalEndEntity? = null
             val alarmNextStartCalculate = AlarmNextStartCalculate()
 
             careModels.forEach { careModel ->
@@ -126,6 +139,12 @@ class CareRepositoryImpl @Inject constructor(
                             localCareDao.saveLocalRepeatEntity(localRepeatEntity!!)
                         }
 
+                    is CareEndModel ->
+                        careId?.let {
+                            localEndEntity = careModel.toLocalEndEntity(it)
+                            localCareDao.saveLocalEndEntity(localEndEntity!!)
+                        }
+
                     is CareAlarmModel ->
                         careId?.let { careId ->
                             careModel.deletedAlarmIds.forEach {
@@ -141,7 +160,8 @@ class CareRepositoryImpl @Inject constructor(
                                             alarmNextStartCalculate.getNextStartTimeInMillis(
                                                 careAlarmDetailModel.toLocalAlarmEntity(careId),
                                                 localStartEntity,
-                                                localRepeatEntity
+                                                localRepeatEntity,
+                                                localEndEntity
                                             )
 
                                         localCareDao.saveLocalAlarmEntity(localAlarmEntity)
@@ -162,6 +182,22 @@ class CareRepositoryImpl @Inject constructor(
             }
 
             emit(Unit)
+        }
+
+    private fun getDefaultIntervalTimes(careTypeOrdinal: Int) =
+        when (CareTypes.entries[careTypeOrdinal]) {
+            CareTypes.FOOD,
+            CareTypes.WALK -> 1
+
+            else -> null
+        }
+
+    private fun getDefaultIntervalOrdinal(careTypeOrdinal: Int) =
+        when (CareTypes.entries[careTypeOrdinal]) {
+            CareTypes.FOOD,
+            CareTypes.WALK -> CareRepeatInterval.DAY.ordinal
+
+            else -> null
         }
 
     private fun CareMainModel.save() =
@@ -191,7 +227,6 @@ class CareRepositoryImpl @Inject constructor(
         LocalRepeatEntity(
             id = id,
             careId = careId,
-            counter = COUNTER_DEFAULT,
             intervalOrdinal = intervalOrdinal,
             intervalTimes = intervalTimes,
             isMonday,
@@ -201,9 +236,16 @@ class CareRepositoryImpl @Inject constructor(
             isFriday,
             isSaturday,
             isSunday,
-            endTypeOrdinal,
-            endAfterTimes,
-            endAfterDate
+        )
+
+    private fun CareEndModel.toLocalEndEntity(careId: Int) =
+        LocalEndEntity(
+            id = id,
+            careId = careId,
+            counter = DEFAULT_COUNTER,
+            typeOrdinal = typeOrdinal,
+            afterTimes = afterTimes,
+            afterDate = afterDate
         )
 
     private fun CareAlarmDetailMainModel.toLocalAlarmEntity(careId: Int) =

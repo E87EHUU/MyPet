@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="care_alarm_chooser_food_1">1 раз в день</string>
+    <string name="care_alarm_chooser_food_2">2 раза в день</string>
+    <string name="care_alarm_chooser_food_3">3 раза в день</string>
+    <string name="care_alarm_chooser_food_4">4 раза в день</string>
+    <string name="care_alarm_chooser_food_5">5 раз в день</string>
+
+    <string-array name="care_alarm_chooser_food">
+        <item>@string/care_alarm_chooser_food_1</item>
+        <item>@string/care_alarm_chooser_food_2</item>
+        <item>@string/care_alarm_chooser_food_3</item>
+        <item>@string/care_alarm_chooser_food_4</item>
+        <item>@string/care_alarm_chooser_food_5</item>
+    </string-array>
+</resources>

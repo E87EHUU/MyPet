@@ -14,6 +14,7 @@ import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
+import com.example.mypet.ui.care.end.CareEndCallback
 import com.example.mypet.ui.care.main.CareMainCallback
 import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
@@ -26,13 +27,13 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CareFragment : Fragment(R.layout.fragment_care),
-    CareMainCallback, CareStartCallback, CareRepeatCallback, CareAlarmCallback {
+    CareMainCallback, CareStartCallback, CareRepeatCallback, CareEndCallback, CareAlarmCallback {
     private val binding by viewBinding(FragmentCareBinding::bind)
 
     private val viewModel by navGraphViewModels<CareViewModel>(R.id.navigationPetCare) { defaultViewModelProviderFactory }
     private val args by navArgs<CareFragmentArgs>()
 
-    private val adapter = CareAdapter(this, this, this, this)
+    private val adapter = CareAdapter(this, this, this, this, this)
     private var isUnlockUI = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +82,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
                     else -> false
                 }
             }
+            updateToolbarTitle()
         }
     }
 
@@ -89,12 +91,16 @@ class CareFragment : Fragment(R.layout.fragment_care),
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.careModels.collectLatest { careModels ->
                     adapter.submitList(careModels)
-                    viewModel.careMainModel?.careType?.titleResId?.let {
-                        getToolbar()?.title = getString(it)
-                    }
                     startPostponedEnterTransition()
+                    updateToolbarTitle()
                 }
             }
+        }
+    }
+
+    private fun updateToolbarTitle() {
+        viewModel.careMainModel?.careType?.titleResId?.let {
+            getToolbar()?.title = getString(it)
         }
     }
 
@@ -121,6 +127,10 @@ class CareFragment : Fragment(R.layout.fragment_care),
         findNavController().navigate(R.id.action_careFragment_to_careRepeatDetailFragment)
     }
 
+    private fun navToEnd() {
+        findNavController().navigate(R.id.action_careFragment_to_careRepeatDetailFragment)
+    }
+
     private fun navToAlarmDetail() {
         findNavController().navigate(R.id.action_careFragment_to_alarmDetailFragment)
     }
@@ -138,6 +148,10 @@ class CareFragment : Fragment(R.layout.fragment_care),
         navToRepeat()
     }
 
+    override fun generateDayAlarm(dayTimes: Int) {
+        viewModel.generateDayAlarm(dayTimes)
+    }
+
     override fun showDatePicker() {
         if (isUnlockUI)
             activity?.supportFragmentManager?.let { fragmentManager ->
@@ -149,5 +163,9 @@ class CareFragment : Fragment(R.layout.fragment_care),
     private fun saveAndPopBack() {
         viewModel.saveCare()
         findNavController().popBackStack()
+    }
+
+    override fun onClickEnd() {
+        navToEnd()
     }
 }

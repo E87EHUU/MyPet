@@ -5,105 +5,103 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareRecyclerRepeatBinding
 import com.example.mypet.domain.care.CareRepeatModel
-import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
-import com.example.mypet.domain.toAppDate
 
 class CareRepeatViewHolder(
     private val binding: FragmentCareRecyclerRepeatBinding,
     private val callback: CareRepeatCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     private val context = binding.root.context
-    private lateinit var careRepeatModel: CareRepeatModel
+    private var careRepeatModel: CareRepeatModel? = null
 
     init {
         with(binding) {
             constraintLayoutCareRecyclerRepeat.setOnClickListener {
                 callback.onClickRepeat()
             }
-
-            constraintLayoutCareRecyclerEnd.setOnClickListener {
-                callback.onClickRepeat()
-            }
         }
     }
 
     fun bind(careRepeatModel: CareRepeatModel?) {
+        this.careRepeatModel = careRepeatModel
+
         careRepeatModel?.let {
-            this.careRepeatModel = careRepeatModel
-
-            updateUIInterval()
-            updateUIEnd()
-
+            updateUI()
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false
         }
     }
 
-    private fun updateUIEnd() {
-        with(binding) {
-            if (careRepeatModel.endTypeOrdinal == null || careRepeatModel.endTypeOrdinal == CareRepeatEndTypes.NONE.ordinal) {
-                textViewCareRecyclerEndTitle.isVisible = false
-                imageViewCareRecyclerEndIcon.isVisible = false
-                constraintLayoutCareRecyclerEnd.isVisible = false
-            } else {
-                binding.textViewCareRecyclerEndDescription.text =
-                    when (careRepeatModel.endTypeOrdinal) {
-                        CareRepeatEndTypes.AFTER_TIMES.ordinal -> context.getString(
-                            R.string.care_repeat_end_after_times,
-                            careRepeatModel.endAfterTimes.toString()
-                        )
+    private fun updateUI() {
+        careRepeatModel?.let { careRepeatModel ->
+            binding.textViewCareRecyclerRepeatDescription.text =
+                when (careRepeatModel.intervalOrdinal) {
+                    CareRepeatInterval.DAY.ordinal -> {
+                        binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = true
+                        generateAlarmWithDayTimes()
 
-                        CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> toAppDate(careRepeatModel.endAfterDate)
-                        else -> context.getString(R.string.care_repeat_end_none)
+                        context.getString(
+                            R.string.care_repeat_interval_description_day,
+                            getIntervalTimes()
+                        )
                     }
 
-                textViewCareRecyclerEndTitle.isVisible = true
-                imageViewCareRecyclerEndIcon.isVisible = true
-                constraintLayoutCareRecyclerEnd.isVisible = true
-            }
+                    CareRepeatInterval.WEEK.ordinal -> {
+                        binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
+
+                        context.getString(
+                            R.string.care_repeat_interval_description_week,
+                            getIntervalTimes(),
+                            getCheckedDay()
+                        )
+                    }
+
+                    CareRepeatInterval.MONTH.ordinal -> {
+                        binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
+
+                        context.getString(
+                            R.string.care_repeat_interval_description_month,
+                            getIntervalTimes()
+                        )
+                    }
+
+                    CareRepeatInterval.YEAR.ordinal -> {
+                        binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
+
+                        context.getString(
+                            R.string.care_repeat_interval_description_year,
+                            getIntervalTimes()
+                        )
+                    }
+
+                    else -> {
+                        binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
+
+                        context.getString(R.string.care_repeat_interval_description_none)
+                    }
+                }
         }
     }
 
-    private fun updateUIInterval() {
-        binding.textViewCareRecyclerRepeatDescription.text =
-            when (careRepeatModel.intervalOrdinal) {
-                CareRepeatInterval.DAY.ordinal ->
-                    context.getString(
-                        R.string.care_repeat_interval_description_day,
-                        getIntervalTimes()
-                    )
+    private fun generateAlarmWithDayTimes() {
+        try {
+            val dayTimes =
+                binding.textInputEditTextCareRecyclerRepeatDayTimes.text.toString().toInt()
+            callback.generateDayAlarm(dayTimes)
+        } catch (_: Exception) {
 
-                CareRepeatInterval.WEEK.ordinal ->
-                    context.getString(
-                        R.string.care_repeat_interval_description_week,
-                        getIntervalTimes(),
-                        getCheckedDay()
-                    )
-
-                CareRepeatInterval.MONTH.ordinal ->
-                    context.getString(
-                        R.string.care_repeat_interval_description_month,
-                        getIntervalTimes()
-                    )
-
-                CareRepeatInterval.YEAR.ordinal ->
-                    context.getString(
-                        R.string.care_repeat_interval_description_year,
-                        getIntervalTimes()
-                    )
-
-                else -> context.getString(R.string.care_repeat_interval_description_none)
-            }
+        }
     }
 
     private fun getIntervalTimes() =
-        if (careRepeatModel.intervalTimes != 1) careRepeatModel.intervalTimes.toString()
-        else ""
+        careRepeatModel?.let { careRepeatModel ->
+            if (careRepeatModel.intervalTimes != 1) careRepeatModel.intervalTimes.toString()
+            else ""
+        } ?: ""
 
     private fun getCheckedDay(): String {
-        with(careRepeatModel) {
+        careRepeatModel?.run {
             if (isMonday || isTuesday || isWednesday
                 || isThursday || isFriday || isSaturday || isSunday
             ) {
@@ -159,6 +157,7 @@ class CareRepeatViewHolder(
                 return " ($stringBuilder)"
             }
         }
+
         return ""
     }
 }

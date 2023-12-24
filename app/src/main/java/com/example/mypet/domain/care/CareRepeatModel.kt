@@ -13,8 +13,4 @@ data class CareRepeatModel(
     var isFriday: Boolean,
     var isSaturday: Boolean,
     var isSunday: Boolean,
-
-    var endTypeOrdinal: Int?,
-    var endAfterTimes: Int?,
-    var endAfterDate: Long?,
 ) : CareModel(CARE_ADAPTER_REPEAT_KEY)

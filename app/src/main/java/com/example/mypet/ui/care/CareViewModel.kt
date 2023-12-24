@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypet.domain.CareRepository
 import com.example.mypet.domain.care.CareAlarmModel
+import com.example.mypet.domain.care.CareEndModel
 import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
@@ -30,6 +31,7 @@ class CareViewModel @Inject constructor(
     var careMainModel: CareMainModel? = null
     var careStartModel: CareStartModel? = null
     var careRepeatModel: CareRepeatModel? = null
+    var careEndModel: CareEndModel? = null
     var careAlarmModel: CareAlarmModel? = null
     var careAlarmDetailMainModel: CareAlarmDetailMainModel? = null
 
@@ -71,6 +73,55 @@ class CareViewModel @Inject constructor(
             val mutableList = it.alarms.toMutableList()
             mutableList.remove(careAlarmDetailModel)
             it.alarms = mutableList
+        }
+    }
+
+    private val list = listOf(
+        8,
+        20,
+        12,
+        16,
+        22
+    )
+
+    fun generateDayAlarm(dayTimes: Int) {
+        careAlarmModel?.let { careAlarmModel ->
+            if (careAlarmModel.alarms.isEmpty()) {
+                careAlarmModel.alarms =
+                    when (dayTimes) {
+                        1 -> listOf(
+                            CareAlarmDetailMainModel(hour = list[0])
+                        )
+
+                        2 -> listOf(
+                            CareAlarmDetailMainModel(hour = list[0]),
+                            CareAlarmDetailMainModel(hour = list[1])
+                        )
+
+                        3 -> listOf(
+                            CareAlarmDetailMainModel(hour = list[0]),
+                            CareAlarmDetailMainModel(hour = list[1]),
+                            CareAlarmDetailMainModel(hour = list[2]),
+                        )
+
+                        4 -> listOf(
+                            CareAlarmDetailMainModel(hour = list[0]),
+                            CareAlarmDetailMainModel(hour = list[1]),
+                            CareAlarmDetailMainModel(hour = list[2]),
+                            CareAlarmDetailMainModel(hour = list[3]),
+                        )
+
+                        5 -> listOf(
+                            CareAlarmDetailMainModel(hour = list[0]),
+                            CareAlarmDetailMainModel(hour = list[1]),
+                            CareAlarmDetailMainModel(hour = list[2]),
+                            CareAlarmDetailMainModel(hour = list[3]),
+                            CareAlarmDetailMainModel(hour = list[4]),
+                        )
+
+                        else -> emptyList()
+                    }
+            }
         }
     }
 }

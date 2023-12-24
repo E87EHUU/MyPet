@@ -1,9 +1,10 @@
 package com.example.mypet.data.alarm
 
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
+import com.example.mypet.data.local.room.entity.LocalEndEntity
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
-import com.example.mypet.domain.care.repeat.CareRepeatEndTypes
+import com.example.mypet.domain.care.end.CareEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import java.util.Calendar
 
@@ -12,6 +13,7 @@ class AlarmNextStartCalculate {
         localAlarmEntity: LocalAlarmEntity,
         localStartEntity: LocalStartEntity?,
         localRepeatEntity: LocalRepeatEntity?,
+        localEndEntity: LocalEndEntity?,
     ): LocalAlarmEntity {
         val calendar = Calendar.getInstance()
         val nowTimeInMillis = calendar.timeInMillis
@@ -28,11 +30,13 @@ class AlarmNextStartCalculate {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
 
         localRepeatEntity?.let {
-            if (localRepeatEntity.counter > 0) {
-                calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
+            localEndEntity?.let {
+                if (localEndEntity.counter > 0) {
+                    calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
 
-                if (isEnd(nowTimeInMillis, localRepeatEntity))
-                    return localAlarmEntity.copy(nextStart = null)
+                    if (isEnd(nowTimeInMillis, localEndEntity))
+                        return localAlarmEntity.copy(nextStart = null)
+                }
             }
         }
 
@@ -46,17 +50,17 @@ class AlarmNextStartCalculate {
             nowTimeInMillis < localStartEntity.timeInMillis
         } ?: false
 
-    private fun isEnd(nowTimeInMillis: Long, localRepeatEntity: LocalRepeatEntity) =
-        when (localRepeatEntity.endTypeOrdinal) {
-            CareRepeatEndTypes.NONE.ordinal -> false
-            CareRepeatEndTypes.AFTER_TIMES.ordinal -> {
-                localRepeatEntity.endAfterTimes?.let {
-                    localRepeatEntity.counter >= it
+    private fun isEnd(nowTimeInMillis: Long, localEndEntity: LocalEndEntity) =
+        when (localEndEntity.typeOrdinal) {
+            CareEndTypes.NONE.ordinal -> false
+            CareEndTypes.AFTER_TIMES.ordinal -> {
+                localEndEntity.afterTimes?.let {
+                    localEndEntity.counter >= it
                 } ?: false
             }
 
-            CareRepeatEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
-                localRepeatEntity.endAfterTimeInMillis?.let {
+            CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
+                localEndEntity.afterDate?.let {
                     nowTimeInMillis >= it
                 } ?: false
             }

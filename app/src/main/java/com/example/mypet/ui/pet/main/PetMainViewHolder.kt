@@ -82,11 +82,11 @@ class PetMainViewHolder(
     }
 
     fun bind(petListMainModels: List<PetListMainModel>?) {
-        petListMainModels?.let {
-            this.petListMainModels = petListMainModels
+        this.petListMainModels = petListMainModels
 
+        petListMainModels?.let {
             onClickPet(findActivePetListModel())
-        }
+        } ?: updateUIActivePetInPetList()
     }
 
     private fun findActivePetListModel(): PetListMainModel? {
@@ -102,8 +102,6 @@ class PetMainViewHolder(
 
     private fun updatePet(petListMainModel: PetListMainModel?) {
         petListMainModel?.let {
-            activePetListMainModel = petListMainModel
-
             with(binding) {
                 Glide.with(itemView)
                     .load(petListMainModel.avatarUri)
@@ -157,7 +155,7 @@ class PetMainViewHolder(
                 groupPetRecyclerMain.isVisible = true
             }
 
-            updateUIActivePet(petListMainModel)
+            updateUIActivePetInPetList(petListMainModel)
         } ?: run {
             binding.groupPetRecyclerMain.isVisible = false
             binding.imageViewPetRecyclerMainSexMale.isVisible = false
@@ -169,7 +167,7 @@ class PetMainViewHolder(
         }
     }
 
-    private fun updateUIActivePet(activePetListMainModel: PetListMainModel) {
+    private fun updateUIActivePetInPetList(activePetListMainModel: PetListMainModel? = null) {
         val mutablePetListModels = mutableListOf<PetListModel>()
         mutablePetListModels.add(PetListAddModel)
 
@@ -188,7 +186,8 @@ class PetMainViewHolder(
     }
 
     override fun onClickPet(petListMainModel: PetListMainModel?) {
-        callback.onClickPet(petListMainModel)
+        activePetListMainModel = petListMainModel
         updatePet(petListMainModel)
+        callback.onClickPet(petListMainModel)
     }
 }

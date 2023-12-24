@@ -16,6 +16,7 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalEndEntity
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
@@ -67,6 +68,13 @@ interface LocalAlarmServiceDao {
                 " WHERE a.id = :alarmId"
     )
     fun getLocalRepeatEntity(alarmId: Int): LocalRepeatEntity?
+
+    @Query(
+        "SELECT e.* FROM alarm a " +
+                "LEFT JOIN ending e ON e.care_id = a.care_id " +
+                " WHERE a.id = :alarmId"
+    )
+    fun getLocalEndEntity(alarmId: Int): LocalEndEntity?
 
     @Update
     fun updateLocalAlarmEntity(localAlarmEntity: LocalAlarmEntity): Int
