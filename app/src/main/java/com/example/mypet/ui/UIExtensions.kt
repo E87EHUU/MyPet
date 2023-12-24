@@ -41,7 +41,7 @@ fun getPetsAge(timeMillis: Long): String {
     }
 }
 
-fun getAgeString(years: Int, months: Int): String {
+private fun getAgeString(years: Int, months: Int): String {
     val yearsString = when {
         years % 10 == 1 && years != 11 -> "$years год"
         years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года"
