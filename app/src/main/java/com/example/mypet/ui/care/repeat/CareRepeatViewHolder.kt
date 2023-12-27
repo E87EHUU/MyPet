@@ -39,7 +39,7 @@ class CareRepeatViewHolder(
                 when (careRepeatModel.intervalOrdinal) {
                     CareRepeatInterval.DAY.ordinal -> {
                         binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = true
-                        generateAlarmWithDayTimes()
+                        //generateAlarmWithDayTimes()
 
                         context.getString(
                             R.string.care_repeat_interval_description_day,
