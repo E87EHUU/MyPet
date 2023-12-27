@@ -14,6 +14,7 @@ import com.example.mypet.app.databinding.FragmentCareRepeatDetailBinding
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import com.example.mypet.ui.care.CareViewModel
+import com.example.mypet.ui.clear
 import com.example.mypet.ui.getToolbar
 
 class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) {
@@ -41,7 +42,7 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     override fun onStop() {
         super.onStop()
-        getToolbar()
+        getToolbar()?.clear()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +53,9 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     }
 
     private fun initToolbar() {
-        getToolbar()?.let { toolbar ->
+        getToolbar()
+            ?.clear()
+            ?.let { toolbar ->
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {

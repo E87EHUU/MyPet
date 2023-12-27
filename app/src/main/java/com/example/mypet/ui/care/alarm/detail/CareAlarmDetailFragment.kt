@@ -15,6 +15,7 @@ import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
 import com.example.mypet.ui.care.CareViewModel
+import com.example.mypet.ui.clear
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.is24HourFormat
 import java.util.Calendar
@@ -46,7 +47,7 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
 
     override fun onStop() {
         super.onStop()
-        getToolbar()
+        getToolbar()?.clear()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +59,9 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
     }
 
     private fun initToolbar() {
-        getToolbar()?.let { toolbar ->
+        getToolbar()
+            ?.clear()
+            ?.let { toolbar ->
             toolbar.inflateMenu(R.menu.toolbar_save)
             toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {

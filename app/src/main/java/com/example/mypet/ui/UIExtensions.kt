@@ -123,10 +123,12 @@ fun Fragment.getActionBar() =
 
 fun Fragment.getToolbar() =
     (requireActivity() as? MainActivity)?.findViewById<MaterialToolbar>(R.id.toolbar)
-        ?.apply {
-            title = null
-            menu.clear()
-        }
+
+fun MaterialToolbar?.clear() =
+    this?.apply {
+        title = null
+        menu.clear()
+    }
 
 fun Fragment.getFloatingActionButton() =
     (requireActivity() as? MainActivity)?.findViewById<FloatingActionButton>(R.id.floatingActionButton)
