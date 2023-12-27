@@ -138,8 +138,8 @@ class PetFragment : Fragment(R.layout.fragment_pet),
     }
 
     override fun onClickPetDelete(petListMainModel: PetListMainModel) {
-        adapter.activePetListId = null
         viewModel.deletePet(petListMainModel.id)
+        adapter.activePetListId = null
     }
 
     override fun onClickPetEdit(petListMainModel: PetListMainModel) {

@@ -84,9 +84,8 @@ class PetMainViewHolder(
     fun bind(petListMainModels: List<PetListMainModel>?) {
         this.petListMainModels = petListMainModels
 
-        petListMainModels?.let {
-            onClickPet(findActivePetListModel())
-        } ?: updateUIActivePetInPetList()
+        updateUIActivePetInPetList()
+        onClickPet(findActivePetListModel())
     }
 
     private fun findActivePetListModel(): PetListMainModel? {
