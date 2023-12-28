@@ -27,6 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/offset_16"
             android:hint="@string/pet_creation_pet_name"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPetCreationAvatar">
 
@@ -35,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +46,6 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_16"
             android:hint="@string/pet_creation_choose_pet_kind"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPetCreationName">

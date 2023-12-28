@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +29,7 @@ import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.snackMessage
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -60,6 +60,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupTextInputEditTextWithCounter(binding.textInputEditTextPetCreationName)
         setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
 
         initKindListView()
@@ -270,11 +271,11 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
             if (name.isEmpty() || kindOrdinal == null || sexOrdinal == null) {
                 view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
             } else if (getPetBreedList(kindOrdinal!!) != null && breedOrdinal == null) {
-            view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
-        } else {
-            viewModel.addOrUpdatePetInDb()
-            findNavController().popBackStack()
-        }
+                view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
+            } else {
+                viewModel.addOrUpdatePetInDb()
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -312,6 +313,32 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
+    private fun setupTextInputEditTextWithCounter(editText: TextInputEditText) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Не требуется реализация
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Не требуется реализация
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editable?.let {
+                    if (it.length > MAX_TEXT_INPUT_LENGTH) {
+                        editText.setText(
+                            it.subSequence(
+                                FIRST_INSERTION_INDEX,
+                                MAX_TEXT_INPUT_LENGTH
+                            )
+                        )
+                        editText.setSelection(MAX_TEXT_INPUT_LENGTH)
+                    }
+                }
+            }
+        })
+    }
+
     private fun setDecimalInputFilter(editText: EditText) {
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
@@ -337,12 +364,12 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                     val text = it.toString()
                     val dotIndex = text.indexOf(getString(R.string.dot))
 
-                    if (dotIndex == DECIMAL_FIRST_INSERTION_INDEX) {
-                        it.insert(DECIMAL_FIRST_INSERTION_INDEX, getString(R.string.zero))
-                        it.insert(DECIMAL_SECOND_INSERTION_INDEX, getString(R.string.dot))
+                    if (dotIndex == FIRST_INSERTION_INDEX) {
+                        it.insert(FIRST_INSERTION_INDEX, getString(R.string.zero))
+                        it.insert(SECOND_INSERTION_INDEX, getString(R.string.dot))
                     }
 
-                    if (dotIndex != DECIMAL_NON_ISSUED_INSERTION_INDEX) {
+                    if (dotIndex != NON_ISSUED_INSERTION_INDEX) {
                         val decimalPart = text.substring(dotIndex)
                         if (decimalPart.length == DECIMAL_THRESHOLD) {
                             it.delete(it.length - 1, it.length)
@@ -356,8 +383,9 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     companion object {
         private var IMAGE_SELECTION_PERMISSION = "image_selection_permission"
         private const val DECIMAL_THRESHOLD = 4
-        private const val DECIMAL_FIRST_INSERTION_INDEX = 0
-        private const val DECIMAL_SECOND_INSERTION_INDEX = 0
-        private const val DECIMAL_NON_ISSUED_INSERTION_INDEX = -1
+        private const val FIRST_INSERTION_INDEX = 0
+        private const val SECOND_INSERTION_INDEX = 0
+        private const val NON_ISSUED_INSERTION_INDEX = -1
+        private const val MAX_TEXT_INPUT_LENGTH = 16
     }
 }
