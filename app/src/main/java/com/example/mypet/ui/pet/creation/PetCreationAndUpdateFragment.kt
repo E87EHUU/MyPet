@@ -5,8 +5,11 @@ import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -55,6 +58,8 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
 
         initKindListView()
 
@@ -228,6 +233,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun onBreedItemSelectedListener() {
         binding.autoCompleteTextViewPetCreationBreedList.setOnItemClickListener { _, _, position, _ ->
             viewModel.breedOrdinal = position
+            updateUIAvatar()
         }
     }
 
@@ -254,7 +260,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun onSaveNewPetButtonClickListener() {
         viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
         try {
-            viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toInt()
+            viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toFloat()
         } catch (_: Exception) {
 
         }
@@ -303,7 +309,52 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
     }
 
+    private fun setDecimalInputFilter(editText: EditText) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // Этот метод не используется
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                // Этот метод не используется
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editable?.let {
+                    val text = it.toString()
+                    val dotIndex = text.indexOf(getString(R.string.dot))
+
+                    if (dotIndex == DECIMAL_FIRST_INSERTION_INDEX) {
+                        it.insert(DECIMAL_FIRST_INSERTION_INDEX, getString(R.string.zero))
+                        it.insert(DECIMAL_SECOND_INSERTION_INDEX, getString(R.string.dot))
+                    }
+
+                    if (dotIndex != DECIMAL_NON_ISSUED_INSERTION_INDEX) {
+                        val decimalPart = text.substring(dotIndex)
+                        if (decimalPart.length == DECIMAL_THRESHOLD) {
+                            it.delete(it.length - 1, it.length)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
     companion object {
-        var IMAGE_SELECTION_PERMISSION = "image_selection_permission"
+        private var IMAGE_SELECTION_PERMISSION = "image_selection_permission"
+        private const val DECIMAL_THRESHOLD = 4
+        private const val DECIMAL_FIRST_INSERTION_INDEX = 0
+        private const val DECIMAL_SECOND_INSERTION_INDEX = 0
+        private const val DECIMAL_NON_ISSUED_INSERTION_INDEX = -1
     }
 }

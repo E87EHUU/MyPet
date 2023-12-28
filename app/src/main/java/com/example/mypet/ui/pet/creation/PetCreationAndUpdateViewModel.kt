@@ -24,7 +24,7 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     var kindOrdinal: Int? = null
     var breedOrdinal: Int? = null
     var dateOfBirth: Long? = null
-    var weight: Int? = null
+    var weight: Float? = null
     var sexOrdinal: Int? = null
 
     private val _localPetForUpdate = MutableLiveData<PetListMainModel>()

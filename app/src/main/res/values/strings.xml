@@ -208,5 +208,7 @@
     <string name="care_recycler_main_title_hint">Название</string>
     <string name="care_recycler_repeat_day_text">раз в день</string>
     <string name="care_recycler_repeat_day_default">2</string>
+    <string name="dot">.</string>
+    <string name="zero">0</string>
 
 </resources>
