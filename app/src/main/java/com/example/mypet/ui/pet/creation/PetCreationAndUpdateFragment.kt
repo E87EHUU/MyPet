@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -266,12 +267,14 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
 
         with(viewModel) {
-            if (name.isEmpty() || kindOrdinal == null) {
+            if (name.isEmpty() || kindOrdinal == null || sexOrdinal == null) {
                 view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
-            } else {
-                viewModel.addOrUpdatePetInDb()
-                findNavController().popBackStack()
-            }
+            } else if (getPetBreedList(kindOrdinal!!) != null && breedOrdinal == null) {
+            view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
+        } else {
+            viewModel.addOrUpdatePetInDb()
+            findNavController().popBackStack()
+        }
         }
     }
 
