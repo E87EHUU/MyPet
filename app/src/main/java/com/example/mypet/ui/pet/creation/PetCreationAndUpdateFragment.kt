@@ -63,6 +63,9 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         setupTextInputEditTextWithCounter(binding.textInputEditTextPetCreationName)
         setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
 
+        onDeleteAvatarImageListener()
+        onChangeAvatarImageListener()
+
         initKindListView()
 
         onChoosePhotoButtonClickListener()
@@ -173,6 +176,11 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun updateUIAvatar() {
         with(viewModel) {
+            if (avatarUri != null){
+                binding.imageViewPetCreationDeleteAvatar.visibility = View.VISIBLE
+            } else {
+                binding.imageViewPetCreationDeleteAvatar.visibility = View.GONE
+            }
             val icon = kindOrdinal?.let { getPetIcon(it, breedOrdinal) }
                 ?: R.drawable.baseline_add_photo_alternate_24
 
@@ -181,6 +189,19 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 .circleCrop()
                 .placeholder(icon)
                 .into(binding.imageViewPetCreationAvatar)
+        }
+    }
+
+    private fun onDeleteAvatarImageListener(){
+        binding.imageViewPetCreationDeleteAvatar.setOnClickListener {
+            viewModel.avatarUri = null
+            updateUIAvatar()
+        }
+    }
+
+    private fun onChangeAvatarImageListener(){
+        binding.imageViewPetCreationChangeAvatar.setOnClickListener {
+            requestPermission()
         }
     }
 

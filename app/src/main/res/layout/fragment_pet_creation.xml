@@ -20,6 +20,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/imageViewPetCreationDeleteAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginStart="@dimen/offset_8"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPetCreationAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPetCreationAvatar"
+            app:layout_constraintBottom_toTopOf="@id/imageViewPetCreationChangeAvatar" />
+
+        <ImageView
+            android:id="@+id/imageViewPetCreationChangeAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_autorenew_24"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:layout_marginStart="@dimen/offset_8"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewPetCreationAvatar"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPetCreationAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPetCreationDeleteAvatar" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPetCreationName"
             style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
