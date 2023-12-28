@@ -39,7 +39,7 @@ class PetCreationAndUpdateViewModel @Inject constructor(
     private fun addNewPetToDb() {
         viewModelScope.launch(Dispatchers.IO) {
             petCreationAndUpdateRepository.addNewPetToDb(
-                viewModelVariablesToPetCreationModel(DEFAULT_ID)
+                viewModelVariablesToPetCreationModel()
             )
         }
     }
@@ -63,15 +63,15 @@ class PetCreationAndUpdateViewModel @Inject constructor(
 
     private fun updatePetDetailsInDb() {
         viewModelScope.launch(Dispatchers.IO) {
-            val petCreationAndUpdateModel = viewModelVariablesToPetCreationModel(petId)
-            println(petCreationAndUpdateModel)
-            petCreationAndUpdateRepository.updatePetDetailsInDb(petCreationAndUpdateModel)
+            petCreationAndUpdateRepository.updatePetDetailsInDb(
+                viewModelVariablesToPetCreationModel()
+            )
         }
     }
 
-    private fun viewModelVariablesToPetCreationModel(id: Int) =
+    private fun viewModelVariablesToPetCreationModel() =
         PetCreationAndUpdateModel(
-            id = id,
+            id = petId,
             avatarUri = avatarUri,
             name = name,
             dateOfBirth = dateOfBirth,

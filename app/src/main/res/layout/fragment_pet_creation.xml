@@ -134,7 +134,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextPetCreationWeight"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/pet_creation_edit_text_width_of_weight"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal" />
 
