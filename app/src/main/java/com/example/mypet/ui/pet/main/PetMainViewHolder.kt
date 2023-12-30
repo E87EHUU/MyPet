@@ -157,6 +157,8 @@ class PetMainViewHolder(
 
             updateUIActivePetInPetList(petListMainModel)
         } ?: run {
+            updateUIActivePetInPetList()
+
             binding.groupPetRecyclerMain.isVisible = false
             binding.imageViewPetRecyclerMainSexMale.isVisible = false
             binding.imageViewPetRecyclerMainSexFemale.isVisible = false
