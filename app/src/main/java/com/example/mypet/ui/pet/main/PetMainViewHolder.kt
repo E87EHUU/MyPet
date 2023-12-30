@@ -188,8 +188,10 @@ class PetMainViewHolder(
     }
 
     override fun onClickPet(petListMainModel: PetListMainModel?) {
-        activePetListMainModel = petListMainModel
-        updatePet(petListMainModel)
-        callback.onClickPet(petListMainModel)
+        if (petListMainModel?.isActive != true) {
+            activePetListMainModel = petListMainModel
+            updatePet(petListMainModel)
+            callback.onClickPet(petListMainModel)
+        }
     }
 }
