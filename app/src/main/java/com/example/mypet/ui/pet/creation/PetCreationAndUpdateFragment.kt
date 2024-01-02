@@ -19,6 +19,7 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.domain.pet.PetSex
 import com.example.mypet.domain.pet.kind.PetKind
 import com.example.mypet.domain.pet.list.PetListMainModel
+import com.example.mypet.ui.clear
 import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getToolbar
@@ -42,7 +43,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     override fun onStop() {
         super.onStop()
-        getToolbar()
+        getToolbar()?.clear()
     }
 
     override fun onStart() {
@@ -63,19 +64,21 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private fun initToolbar() {
-        getToolbar()?.let { toolbar ->
-            toolbar.inflateMenu(R.menu.toolbar_save)
-            toolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.toolbarSave -> {
-                        onSaveNewPetButtonClickListener()
-                        true
-                    }
+        getToolbar()
+            ?.clear()
+            ?.let { toolbar ->
+                toolbar.inflateMenu(R.menu.toolbar_save)
+                toolbar.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.toolbarSave -> {
+                            onSaveNewPetButtonClickListener()
+                            true
+                        }
 
-                    else -> false
+                        else -> false
+                    }
                 }
             }
-        }
     }
 
     private fun collectPetDetailsIfNeedsToUpdate() {

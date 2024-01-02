@@ -37,7 +37,10 @@ class AlarmReceiver : BroadcastReceiver() {
                                 val notificationManager = NotificationManagerCompat.from(context)
                                 val notification = AlarmReceiverNotification(context, it)
                                 notification.createNotificationChannel()
-                                notificationManager.notify(it.alarmId, notification.getNotification())
+                                notificationManager.notify(
+                                    it.alarmId, notification.getNotification()
+                                )
+                                alarmReceiverRepository.stopOrStartRepeatAlarm(id)
                             }
                     }
                 }
