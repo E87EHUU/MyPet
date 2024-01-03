@@ -21,7 +21,7 @@ data class LocalPetEntity(
     @ColumnInfo(name = DATE_OF_BIRTH)
     val dateOfBirth: Long?,
     @ColumnInfo(name = WEIGHT)
-    val weight: Int?,
+    val weight: Float?,
     @ColumnInfo(name = SEX)
     val sex: Int?,
     @ColumnInfo(name = KIND_ORDINAL)

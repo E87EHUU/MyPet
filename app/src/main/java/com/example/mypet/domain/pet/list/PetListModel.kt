@@ -9,7 +9,7 @@ data class PetListMainModel(
     val avatarUri: String?,
     val name: String,
     val dateOfBirth: Long?,
-    val weight: Int?,
+    val weight: Float?,
     val kindOrdinal: Int,
     val breedOrdinal: Int?,
     val sex: Int?,

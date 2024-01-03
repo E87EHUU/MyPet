@@ -31,8 +31,11 @@ fun getPetsAge(timeMillis: Long): String {
 
     val years = currentDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
     val months = currentDate.get(Calendar.MONTH) - birthDate.get(Calendar.MONTH)
+    val days = currentDate.get(Calendar.DAY_OF_MONTH) - birthDate.get(Calendar.DAY_OF_MONTH)
 
-    return if (months < 0) {
+    return if (years == 0 && months == 0) {
+        getDaysString(days)
+    } else if (months < 0) {
         val correctedYears = years - 1
         val correctedMonths = months + 12
         getAgeString(correctedYears, correctedMonths)
@@ -41,8 +44,18 @@ fun getPetsAge(timeMillis: Long): String {
     }
 }
 
+private fun getDaysString(days: Int): String {
+    return when (days) {
+        0 -> "Сегодня родился"
+        1 -> "$days день"
+        in 2..4 -> "$days дня"
+        else -> "$days дней"
+    }
+}
+
 private fun getAgeString(years: Int, months: Int): String {
     val yearsString = when {
+        years == 0 -> ""
         years % 10 == 1 && years != 11 -> "$years год"
         years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года"
         else -> "$years лет"
