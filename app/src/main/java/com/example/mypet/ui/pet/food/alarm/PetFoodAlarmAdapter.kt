@@ -10,6 +10,14 @@ import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 class PetFoodAlarmAdapter(
     private val callback: PetFoodAlarmCallback,
 ) : ListAdapter<PetFoodAlarmModel, PetFoodAlarmViewHolder>(DiffCallback()) {
+    override fun submitList(list: List<PetFoodAlarmModel>?) {
+        val mutableList = list?.toMutableList()
+            ?.apply {
+                sortBy { it.hour * 60 + it.minute }
+            }
+        super.submitList(mutableList)
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

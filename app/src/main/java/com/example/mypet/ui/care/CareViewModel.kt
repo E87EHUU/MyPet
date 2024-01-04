@@ -84,10 +84,6 @@ class CareViewModel @Inject constructor(
             val mutableList = careAlarmModel.alarms.toMutableList()
             mutableList.remove(careAlarmDetailMainModel)
             mutableList.add(savable)
-            mutableList.sortBy {
-                val sum = it.hour * 60 + it.minute
-                sum
-            }
             careAlarmModel.alarms = mutableList
         }
     }

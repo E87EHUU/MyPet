@@ -14,6 +14,17 @@ import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 class CareAlarmMainAdapter(
     private val callback: CareAlarmMainCallback,
 ) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
+    override fun submitList(list: List<CareAlarmDetailModel>?) {
+        val mutableList = list?.toMutableList()
+            ?.apply {
+                sortBy {
+                    val sum = it.hour * 60 + it.minute
+                    sum
+                }
+            }
+        super.submitList(mutableList)
+    }
+
     override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         return when (getItem(position)) {

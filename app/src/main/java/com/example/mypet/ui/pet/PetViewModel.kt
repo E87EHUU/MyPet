@@ -61,15 +61,7 @@ class PetViewModel @Inject constructor(
     private fun updateFood(petId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             petRepository.getPetFoodModel(petId)
-                .collectLatest { petFoodModel ->
-                    val mutableList = petFoodModel.alarms.toMutableList()
-                    mutableList.sortBy { it.hour * 60 + it.minute }
-                    _food.value =
-                        PetFoodModel(
-                            care = petFoodModel.care,
-                            alarms = mutableList
-                        )
-                }
+                .collectLatest { _food.value = it }
         }
 
     private fun updateCare(petListMainModel: PetListMainModel) =
