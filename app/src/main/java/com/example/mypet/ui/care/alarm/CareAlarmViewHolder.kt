@@ -13,14 +13,14 @@ class CareAlarmViewHolder(
     private val callback: CareAlarmCallback,
 ) : RecyclerView.ViewHolder(binding.root), CareAlarmMainCallback {
     private val context = binding.root.context
-    private lateinit var careAlarmModel: CareAlarmModel
+    private var careAlarmModel: CareAlarmModel? = null
 
     private val adapter = CareAlarmMainAdapter(this)
 
     init {
         with(binding) {
             binding.buttonCareRecyclerAlarmAdd.setOnClickListener {
-                callback.onClickAlarm()
+                onClickAlarmAdd()
             }
 
             recyclerViewCareRecyclerAlarmRecycler.itemAnimator = null
@@ -28,24 +28,31 @@ class CareAlarmViewHolder(
         }
     }
 
-    fun bind(careAlarmModel: CareAlarmModel?) {
+    fun bind(careAlarmModel: CareAlarmModel? = null) {
+        this.careAlarmModel = careAlarmModel
+        updateUI()
+    }
+
+    fun updateUI() {
+        adapter.submitList(careAlarmModel?.alarms)
+
         careAlarmModel?.let {
-            this.careAlarmModel = careAlarmModel
-
-            adapter.submitList(careAlarmModel.alarms)
-
             binding.root.isVisible = true
         } ?: run {
             binding.root.isVisible = false
         }
     }
 
-    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
-        callback.onClickAlarm(careAlarmDetailMainModel ?: CareAlarmDetailMainModel())
+    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+        callback.onClickAlarm(careAlarmDetailMainModel)
     }
 
-    override fun onClickDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
-        callback.onClickDelete(careAlarmDetailMainModel)
-        adapter.submitList(careAlarmModel.alarms)
+    override fun onClickAlarmAdd() {
+        callback.onClickAlarm()
+    }
+
+    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+        callback.onClickAlarmDelete(careAlarmDetailMainModel)
+        updateUI()
     }
 }

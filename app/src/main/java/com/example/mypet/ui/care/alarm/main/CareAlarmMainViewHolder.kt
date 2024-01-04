@@ -17,7 +17,7 @@ class CareAlarmMainViewHolder(
             root.setOnClickListener { callback.onClickAlarm(careAlarmDetailMainModel) }
 
             buttonCareRecyclerAlarmDelete.setOnClickListener {
-                callback.onClickDelete(careAlarmDetailMainModel)
+                callback.onClickAlarmDelete(careAlarmDetailMainModel)
             }
         }
     }

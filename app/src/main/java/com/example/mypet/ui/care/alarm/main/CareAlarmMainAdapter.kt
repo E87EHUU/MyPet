@@ -14,16 +14,6 @@ import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 class CareAlarmMainAdapter(
     private val callback: CareAlarmMainCallback,
 ) : ListAdapter<CareAlarmDetailModel, RecyclerView.ViewHolder>(DiffCallback()) {
-    //TODO реализовать сортировку
-/*    override fun submitList(list: List<CareAlarmDetailModel>?) {
-        println(list)
-        val mutableList = list?.toMutableList()
-        mutableList?.sortBy { it.hour }
-        mutableList?.sortBy { it.minute }
-        println(mutableList)
-        super.submitList(mutableList)
-    }*/
-
     override fun getItemViewType(position: Int) = position
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         return when (getItem(position)) {
@@ -55,7 +45,7 @@ class CareAlarmMainAdapter(
         override fun areItemsTheSame(
             oldItem: CareAlarmDetailModel,
             newItem: CareAlarmDetailModel
-        ) = oldItem.id == newItem.id
+        ) = (oldItem.hour * 60 + oldItem.minute) == (newItem.hour * 60 + newItem.minute)
 
         override fun areContentsTheSame(
             oldItem: CareAlarmDetailModel,
