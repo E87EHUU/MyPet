@@ -22,7 +22,7 @@ data class LocalPetModel(
     @ColumnInfo(name = DATE_OF_BIRTH)
     val dateOfBirth: Long?,
     @ColumnInfo(name = WEIGHT)
-    val weight: Int?,
+    val weight: Float?,
     @ColumnInfo(name = KIND_ORDINAL)
     val kindOrdinal: Int,
     @ColumnInfo(name = BREED_ORDINAL)

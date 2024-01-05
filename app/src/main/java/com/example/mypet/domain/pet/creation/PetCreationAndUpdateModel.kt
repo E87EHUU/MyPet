@@ -5,7 +5,7 @@ data class PetCreationAndUpdateModel(
     val avatarUri: String?,
     val name: String,
     val dateOfBirth: Long?,
-    val weight: Int?,
+    val weight: Float?,
     val sex: Int?,
     val kindOrdinal: Int,
     val breedOrdinal: Int?,

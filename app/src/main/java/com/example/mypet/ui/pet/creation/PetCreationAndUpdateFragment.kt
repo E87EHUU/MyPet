@@ -1,11 +1,17 @@
 package com.example.mypet.ui.pet.creation
 
+import android.Manifest
 import android.app.DatePickerDialog
-import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +30,7 @@ import com.example.mypet.ui.getPetBreedList
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getToolbar
 import com.example.mypet.ui.snackMessage
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -53,6 +60,12 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupTextInputEditTextWithCounter(binding.textInputEditTextPetCreationName)
+        setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
+
+        onDeleteAvatarImageListener()
+        onChangeAvatarImageListener()
 
         initKindListView()
 
@@ -99,7 +112,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun onWhichSexChipSelectedListener() {
         with(binding) {
-            binding.chipPetCreationMale.setOnClickListener {
+            chipPetCreationMale.setOnClickListener {
                 if (viewModel.sexOrdinal == PetSex.MALE.ordinal) {
                     viewModel.sexOrdinal = null
                     chipPetCreationMale.isChecked = false
@@ -110,7 +123,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 }
             }
 
-            binding.chipPetCreationFemale.setOnClickListener {
+            chipPetCreationFemale.setOnClickListener {
                 if (viewModel.sexOrdinal == PetSex.FEMALE.ordinal) {
                     viewModel.sexOrdinal = null
                     chipPetCreationFemale.isChecked = false
@@ -166,6 +179,11 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun updateUIAvatar() {
         with(viewModel) {
+            if (avatarUri != null){
+                binding.imageViewPetCreationDeleteAvatar.visibility = View.VISIBLE
+            } else {
+                binding.imageViewPetCreationDeleteAvatar.visibility = View.GONE
+            }
             val icon = kindOrdinal?.let { getPetIcon(it, breedOrdinal) }
                 ?: R.drawable.baseline_add_photo_alternate_24
 
@@ -174,6 +192,19 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 .circleCrop()
                 .placeholder(icon)
                 .into(binding.imageViewPetCreationAvatar)
+        }
+    }
+
+    private fun onDeleteAvatarImageListener(){
+        binding.imageViewPetCreationDeleteAvatar.setOnClickListener {
+            viewModel.avatarUri = null
+            updateUIAvatar()
+        }
+    }
+
+    private fun onChangeAvatarImageListener(){
+        binding.imageViewPetCreationChangeAvatar.setOnClickListener {
+            requestPermission()
         }
     }
 
@@ -255,13 +286,15 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     private fun onSaveNewPetButtonClickListener() {
         viewModel.name = binding.textInputEditTextPetCreationName.text.toString()
         try {
-            viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toInt()
+            viewModel.weight = binding.textInputEditTextPetCreationWeight.text.toString().toFloat()
         } catch (_: Exception) {
 
         }
 
         with(viewModel) {
-            if (name.isEmpty() || kindOrdinal == null) {
+            if (name.isEmpty() || kindOrdinal == null || sexOrdinal == null) {
+                view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
+            } else if (getPetBreedList(kindOrdinal!!) != null && breedOrdinal == null) {
                 view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
             } else {
                 viewModel.addOrUpdatePetInDb()
@@ -271,16 +304,112 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
     }
 
     private val getContent =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            activityResult.data?.data?.let {
-                viewModel.avatarUri = it.toString()
-                updateUIAvatar()
-            }
+        registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
+            viewModel.avatarUri = imageUri.toString()
+            updateUIAvatar()
+        }
+
+    private fun pickImageFromGallery() {
+        getContent.launch("image/*")
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) pickImageFromGallery()
         }
 
     private fun requestPermission() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
-        getContent.launch(intent)
+        IMAGE_SELECTION_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireContext(), IMAGE_SELECTION_PERMISSION
+            ) -> {
+                pickImageFromGallery()
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(IMAGE_SELECTION_PERMISSION)
+            }
+        }
+    }
+
+    private fun setupTextInputEditTextWithCounter(editText: TextInputEditText) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Не требуется реализация
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Не требуется реализация
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editable?.let {
+                    if (it.length > MAX_TEXT_INPUT_LENGTH) {
+                        editText.setText(
+                            it.subSequence(
+                                FIRST_INSERTION_INDEX,
+                                MAX_TEXT_INPUT_LENGTH
+                            )
+                        )
+                        editText.setSelection(MAX_TEXT_INPUT_LENGTH)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setDecimalInputFilter(editText: EditText) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // Этот метод не используется
+            }
+
+            override fun onTextChanged(
+                charSequence: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                // Этот метод не используется
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editable?.let {
+                    val text = it.toString()
+                    val dotIndex = text.indexOf(getString(R.string.dot))
+
+                    if (dotIndex == FIRST_INSERTION_INDEX) {
+                        it.insert(FIRST_INSERTION_INDEX, getString(R.string.zero))
+                        it.insert(SECOND_INSERTION_INDEX, getString(R.string.dot))
+                    }
+
+                    if (dotIndex != NON_ISSUED_INSERTION_INDEX) {
+                        val decimalPart = text.substring(dotIndex)
+                        if (decimalPart.length == DECIMAL_THRESHOLD) {
+                            it.delete(it.length - 1, it.length)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    companion object {
+        private var IMAGE_SELECTION_PERMISSION = "image_selection_permission"
+        private const val DECIMAL_THRESHOLD = 4
+        private const val FIRST_INSERTION_INDEX = 0
+        private const val SECOND_INSERTION_INDEX = 0
+        private const val NON_ISSUED_INSERTION_INDEX = -1
+        private const val MAX_TEXT_INPUT_LENGTH = 16
     }
 }
