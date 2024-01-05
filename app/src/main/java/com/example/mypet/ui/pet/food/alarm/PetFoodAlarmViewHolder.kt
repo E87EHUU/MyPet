@@ -12,12 +12,6 @@ class PetFoodAlarmViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var petFoodAlarmModel: PetFoodAlarmModel
 
-    init {
-        binding.root.setOnClickListener {
-            callback.onClickPetFoodAlarm(petFoodAlarmModel)
-        }
-    }
-
     fun bind(petFoodAlarmModel: PetFoodAlarmModel) {
         this.petFoodAlarmModel = petFoodAlarmModel
 
