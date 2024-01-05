@@ -12,7 +12,10 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
+import com.example.mypet.domain.POST_NOTIFICATIONS
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.isNotGrantedPermission
+import com.example.mypet.domain.requestPermission
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.end.CareEndCallback
 import com.example.mypet.ui.care.main.CareMainCallback
@@ -138,6 +141,9 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
+        if (requireActivity().isNotGrantedPermission(POST_NOTIFICATIONS))
+            requireActivity().requestPermission(POST_NOTIFICATIONS)
+
         val alarmModel = careAlarmDetailMainModel ?: CareAlarmDetailMainModel()
         showTimePicker(alarmModel)
     }

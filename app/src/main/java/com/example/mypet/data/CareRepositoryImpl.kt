@@ -164,11 +164,13 @@ class CareRepositoryImpl @Inject constructor(
                                                 localEndEntity
                                             )
 
-                                        localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                        val alarmId =
+                                            localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                                .toInt()
 
                                         localAlarmEntity.nextStart?.let {
                                             alarmDao.setAlarm(
-                                                careAlarmDetailModel.id,
+                                                alarmId,
                                                 localAlarmEntity.nextStart
                                             )
                                         }

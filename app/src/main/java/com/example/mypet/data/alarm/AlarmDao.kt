@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.example.mypet.broadcast.AlarmReceiver
+import com.example.mypet.domain.POST_NOTIFICATIONS
+import com.example.mypet.domain.isGrantedPermission
 import com.example.mypet.service.alarm.AlarmService.Companion.ALARM_ID
 import com.example.mypet.service.alarm.AlarmService.Companion.ALARM_OVERLAY_ACTION_START
 import com.example.mypet.ui.MainActivity
@@ -18,15 +20,17 @@ class AlarmDao @Inject constructor(
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     override suspend fun setAlarm(alarmId: Int, alarmTime: Long) {
-        val clockInfo = AlarmManager.AlarmClockInfo(
-            alarmTime,
-            getStartMainActivityPendingIntent(alarmId)
-        )
+        if (context.isGrantedPermission(POST_NOTIFICATIONS)) {
+            val clockInfo = AlarmManager.AlarmClockInfo(
+                alarmTime,
+                getStartMainActivityPendingIntent(alarmId)
+            )
 
-        alarmManager.setAlarmClock(
-            clockInfo,
-            getStartAlarmServicePendingIntent(alarmId)
-        )
+            alarmManager.setAlarmClock(
+                clockInfo,
+                getStartAlarmServicePendingIntent(alarmId)
+            )
+        }
     }
 
     override suspend fun removeAlarm(alarmId: Int) {
