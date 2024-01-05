@@ -294,8 +294,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         with(viewModel) {
             if (name.isEmpty() || kindOrdinal == null) {
                 view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
-            } else if (getPetBreedList(kindOrdinal!!) != null && breedOrdinal == null) {
-                view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
             } else {
                 viewModel.addOrUpdatePetInDb()
                 findNavController().popBackStack()
