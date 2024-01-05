@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
@@ -179,7 +180,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun updateUIAvatar() {
         with(viewModel) {
-            if (avatarUri != null){
+            if (avatarUri != null) {
                 binding.imageViewPetCreationDeleteAvatar.visibility = View.VISIBLE
             } else {
                 binding.imageViewPetCreationDeleteAvatar.visibility = View.GONE
@@ -191,18 +192,19 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 .load(avatarUri)
                 .circleCrop()
                 .placeholder(icon)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageViewPetCreationAvatar)
         }
     }
 
-    private fun onDeleteAvatarImageListener(){
+    private fun onDeleteAvatarImageListener() {
         binding.imageViewPetCreationDeleteAvatar.setOnClickListener {
             viewModel.avatarUri = null
             updateUIAvatar()
         }
     }
 
-    private fun onChangeAvatarImageListener(){
+    private fun onChangeAvatarImageListener() {
         binding.imageViewPetCreationChangeAvatar.setOnClickListener {
             requestPermission()
         }

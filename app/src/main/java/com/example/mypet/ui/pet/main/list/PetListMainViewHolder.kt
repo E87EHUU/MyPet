@@ -2,6 +2,7 @@ package com.example.mypet.ui.pet.main.list
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainRecyclerMainBinding
 import com.example.mypet.domain.pet.list.PetListMainModel
@@ -30,11 +31,12 @@ class PetListMainViewHolder(
         }
 
         Glide.with(itemView)
-            .load(this.petListMainModel.avatarUri)
+            .load(petListMainModel.avatarUri)
             .circleCrop()
-            .placeholder(getPetIcon(this.petListMainModel.kindOrdinal, this.petListMainModel.breedOrdinal))
+            .placeholder(getPetIcon(petListMainModel.kindOrdinal, petListMainModel.breedOrdinal))
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.imageViewPetRecyclerMainRecyclerMainAvatarIcon)
 
-        binding.textViewPetRecyclerMainRecyclerMainName.text = this.petListMainModel.name
+        binding.textViewPetRecyclerMainRecyclerMainName.text = petListMainModel.name
     }
 }

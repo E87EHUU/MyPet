@@ -6,6 +6,7 @@ import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetRecyclerMainBinding
 import com.example.mypet.domain.pet.PetSex
@@ -18,6 +19,7 @@ import com.example.mypet.ui.getPetsAge
 import com.example.mypet.ui.pet.main.list.PetListAdapter
 import com.example.mypet.ui.pet.main.list.PetListCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 
 class PetMainViewHolder(
     private val binding: FragmentPetRecyclerMainBinding,
@@ -114,6 +116,7 @@ class PetMainViewHolder(
                             petListMainModel.breedOrdinal
                         )
                     )
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imageViewPetRecyclerMainAvatarIcon)
 
                 textViewPetRecyclerMainName.text = petListMainModel.name
