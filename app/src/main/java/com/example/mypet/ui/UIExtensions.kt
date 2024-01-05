@@ -56,9 +56,9 @@ private fun getDaysString(days: Int): String {
 private fun getAgeString(years: Int, months: Int): String {
     val yearsString = when {
         years == 0 -> ""
-        years % 10 == 1 && years != 11 -> "$years год"
-        years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года"
-        else -> "$years лет"
+        years % 10 == 1 && years != 11 -> "$years год "
+        years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года "
+        else -> "$years лет "
     }
 
     val monthsString = when {
@@ -67,7 +67,7 @@ private fun getAgeString(years: Int, months: Int): String {
         else -> "$months месяцев"
     }
 
-    return "$yearsString $monthsString"
+    return "$yearsString$monthsString"
 }
 
 fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {
