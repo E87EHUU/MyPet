@@ -30,6 +30,9 @@ class PetMainViewHolder(
     private var activePetListMainModel: PetListMainModel? = null
 
     init {
+        binding.imageViewPetRecyclerMainAvatar.setOnClickListener {
+            activePetListMainModel?.let { callback.onClickPetEdit(it) }
+        }
         binding.recyclerViewPetRecyclerMain.itemAnimator = null
         binding.recyclerViewPetRecyclerMain.adapter = petListAdapter
         initMenuPetAction()
