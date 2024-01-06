@@ -29,7 +29,13 @@ class AuthRepositoryImpl @Inject constructor(private val auth: FirebaseAuth) : A
         }
     }
 
-    override suspend fun logout() {
-        auth.signOut()
+    override suspend fun logoutCurrentUser(): AuthResult {
+        return try {
+            auth.signOut()
+            AuthResult.SuccessOut(LoggedInUser.Empty)
+        } catch (e: Exception) {
+            AuthResult.Error(e)
+        }
     }
+
 }

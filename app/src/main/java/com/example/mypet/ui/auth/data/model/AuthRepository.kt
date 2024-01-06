@@ -7,5 +7,5 @@ interface AuthRepository {
 
     suspend fun createUserWithEmailAndPassword(email: String, password: String): AuthResult
 
-    suspend fun logout() {}
+    suspend fun logoutCurrentUser(): AuthResult
 }

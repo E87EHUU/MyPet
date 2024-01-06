@@ -72,7 +72,28 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     binding.loading.visibility = View.GONE
                     Toast.makeText(requireContext(), R.string.login_welcome, Toast.LENGTH_LONG)
                         .show()
+                    with(binding) {
+                        buttonSignIn.visibility = View.GONE
+                        buttonCreateUser.visibility = View.GONE
+                        emailLayout.visibility = View.GONE
+                        passwordLayout.visibility = View.GONE
+                        buttonSignOut.visibility = View.VISIBLE
+                    }
                 }
+
+                is AuthResult.SuccessOut -> {
+                    binding.loading.visibility = View.GONE
+                    Toast.makeText(requireContext(), R.string.login_signed_out, Toast.LENGTH_LONG)
+                        .show()
+                    with(binding) {
+                        buttonSignIn.visibility = View.VISIBLE
+                        buttonCreateUser.visibility = View.VISIBLE
+                        emailLayout.visibility = View.VISIBLE
+                        passwordLayout.visibility = View.VISIBLE
+                        buttonSignOut.visibility = View.GONE
+                    }
+                }
+
             }
         }
     }
@@ -114,6 +135,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     email.text.toString(),
                     password.text.toString()
                 )
+            }
+
+            buttonSignOut.setOnClickListener {
+                loginViewModel.logoutCurrentUser()
             }
         }
     }

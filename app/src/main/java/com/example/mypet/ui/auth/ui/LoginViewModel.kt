@@ -39,6 +39,15 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         }
     }
 
+    fun logoutCurrentUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _authState.postValue(AuthResult.Loading)
+
+            val result = authRepository.logoutCurrentUser()
+            _authState.postValue(result)
+        }
+    }
+
     fun loginDataChanged(email: String, password: String) {
         if (!isEmailValid(email)) {
             _loginForm.value = LoginFormState(emailError = R.string.login_invalid_email)
