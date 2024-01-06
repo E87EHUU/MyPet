@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentLoginBinding
+import com.example.mypet.ui.clear
+import com.example.mypet.ui.getToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
     private val loginViewModel: LoginViewModel by viewModels()
+
+    override fun onStop() {
+        super.onStop()
+        getToolbar()?.clear()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initToolbar()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,10 +41,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 if (loginFormState == null) {
                     return@Observer
                 }
-                binding.chipGroupLogin.isEnabled = loginFormState.isDataValid
+
+                binding.buttonSignIn.isEnabled = loginFormState.isDataValid
+                binding.buttonCreateUser.isEnabled = loginFormState.isDataValid
+
                 loginFormState.emailError?.let {
                     binding.email.error = getString(it)
                 }
+
                 loginFormState.passwordError?.let {
                     binding.password.error = getString(it)
                 }
@@ -65,6 +81,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         with(binding) {
 
             val afterTextChangedListener = object : TextWatcher {
+
                 override fun beforeTextChanged(
                     s: CharSequence,
                     start: Int,
@@ -85,14 +102,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             email.addTextChangedListener(afterTextChangedListener)
             password.addTextChangedListener(afterTextChangedListener)
 
-            chipSignIn.setOnClickListener {
+            buttonSignIn.setOnClickListener {
                 loginViewModel.sendCredentialsForSignIn(
                     email.text.toString(),
                     password.text.toString()
                 )
             }
 
-            chipCreateUser.setOnClickListener {
+            buttonCreateUser.setOnClickListener {
                 loginViewModel.sendCredentialsForCreateUser(
                     email.text.toString(),
                     password.text.toString()
@@ -100,4 +117,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
     }
+
+    private fun initToolbar() {
+        getToolbar()
+            ?.clear()
+            ?.let { toolbar ->
+                toolbar.title = getString(R.string.login_toolbar_title)
+            }
+    }
+
 }

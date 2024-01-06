@@ -136,12 +136,13 @@
     <string name="login_prompt_email">Введите email</string>
     <string name="login_prompt_password">Введите пароль</string>
     <string name="login_action_sign_in">Войдите или зарегистрируйтесь</string>
-    <string name="login_welcome">Добро пожаловать!</string>
+    <string name="login_welcome">Вход выполнен успешно!</string>
     <string name="login_invalid_email">Недействительный адрес электронной почты</string>
     <string name="login_invalid_password">Пароль должен быть >5 символов</string>
     <string name="login_failed">Ошибка входа</string>
-    <string name="login_chip_sign_in_label">Войти</string>
-    <string name="login_chip_create_user_label">Зарегистрироваться</string>
+    <string name="login_button_sign_in_label">Войти</string>
+    <string name="login_button_create_user_label">Зарегистрироваться</string>
+    <string name="login_toolbar_title">Вход / Регистрация</string>
 
     <string name="preferences_theme">Тема приложения</string>
     <string name="preferences_light_theme">Светлая</string>

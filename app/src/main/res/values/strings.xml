@@ -147,13 +147,14 @@
 
     <string name="login_prompt_email">Enter email</string>
     <string name="login_prompt_password">Enter password</string>
-    <string name="login_action_sign_in">Sign in or register</string>
+    <string name="login_action_sign_in">Sign in or sign up</string>
     <string name="login_welcome">Welcome!</string>
     <string name="login_invalid_email">Not a valid email</string>
     <string name="login_invalid_password">Password must be >5 characters</string>
     <string name="login_failed">Login failed</string>
-    <string name="login_chip_sign_in_label">Sign in</string>
-    <string name="login_chip_create_user_label">Register</string>
+    <string name="login_button_sign_in_label">Sign in</string>
+    <string name="login_button_create_user_label">Sign up</string>
+    <string name="login_toolbar_title">Sign in / Sign up</string>
 
     <string name="preferences_theme">Application theme</string>
     <string name="preferences_light_theme">Light</string>
