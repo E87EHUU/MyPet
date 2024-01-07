@@ -31,7 +31,7 @@
     <string name="pet_creation_save">Save</string>
     <string name="pet_creation_weight">Weight</string>
     <string name="pet_creation_choose_pet_kind">Select pet\'s type*</string>
-    <string name="pet_creation_choose_breed">Select pet\'s breed*</string>
+    <string name="pet_creation_choose_breed">Select pet\'s breed</string>
     <string name="pet_creation_sex_male">Male</string>
     <string name="pet_creation_sex_female">Female</string>
     <string name="pet_creation_fragment_name">Pet\'s information</string>

@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_32"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayoutPetRecyclerMainShadow"
@@ -73,8 +72,8 @@
         <ImageView
             android:id="@+id/imageViewPetRecyclerMainAvatarIcon"
             android:layout_width="wrap_content"
+            android:padding="@dimen/offset_2"
             android:layout_height="wrap_content"
-            android:padding="@dimen/offset_8"
             android:src="@drawable/ic_pet_kind_dog" />
 
     </FrameLayout>
@@ -116,24 +115,23 @@
 
     <TextView
         android:id="@+id/textViewPetRecyclerMainName"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_24"
+        android:layout_marginTop="@dimen/offset_8"
+        android:layout_marginEnd="@dimen/offset_8"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPetRecyclerMainBreedName"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPetRecyclerMainMore"
         app:layout_constraintStart_toEndOf="@+id/imageViewPetRecyclerMainAvatar"
         app:layout_constraintTop_toTopOf="@+id/imageViewPetRecyclerMainAvatar"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:text="Бобик" />
 
     <TextView
         android:id="@+id/textViewPetRecyclerMainBreedName"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/offset_8"
         android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonPetRecyclerMainMore"
+        app:layout_constraintEnd_toEndOf="@+id/textViewPetRecyclerMainName"
         app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainName"
         app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerMainName"
         tools:text="Карликовая домашняя свинья" />
@@ -142,12 +140,13 @@
         android:id="@+id/linearLayoutPetRecyclerMainWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/offset_16"
+        android:layout_marginTop="@dimen/offset_8"
         android:minWidth="@dimen/pet_card_detail_min_width"
         android:orientation="vertical"
+        android:paddingEnd="@dimen/offset_16"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/textViewPetRecyclerMainBreedName"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewPetRecyclerMainAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPetRecyclerMainBreedName"
         tools:visibility="visible">
 
         <TextView

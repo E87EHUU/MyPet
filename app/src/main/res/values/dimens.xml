@@ -26,7 +26,6 @@
     <dimen name="map_milli_margin">12dp</dimen>
     <dimen name="map_deca_margin">16dp</dimen>
     <dimen name="spinner_200dp">200dp</dimen>
-    <dimen name="avatar_creation_size">100dp</dimen>
     <dimen name="pet_creation_edit_text_width_of_weight">95dp</dimen>
     <dimen name="_25dp">25dp</dimen>
 
