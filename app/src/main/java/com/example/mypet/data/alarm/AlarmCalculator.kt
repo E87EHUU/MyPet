@@ -31,13 +31,11 @@ class AlarmCalculator(
             calendar.add(Calendar.DAY_OF_MONTH, 1)
 
         localRepeatEntity?.let {
-            localEndEntity?.let {
-                if (localEndEntity.counter > 0) {
-                    calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
+            calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
 
-                    if (isEnd(nowTimeInMillis, localEndEntity))
-                        return localAlarmEntity.copy(beforeStart = null, nextStart = null)
-                }
+            localEndEntity?.let {
+                if (isEnd(nowTimeInMillis, localEndEntity))
+                    return localAlarmEntity.copy(beforeStart = null, nextStart = null)
             }
         }
 
@@ -59,8 +57,8 @@ class AlarmCalculator(
             CareEndTypes.NONE.ordinal -> false
             CareEndTypes.AFTER_TIMES.ordinal -> {
                 localEndEntity.afterTimes?.let {
-                    localEndEntity.counter >= it
-                } ?: false
+                    it < 1
+                } ?: true
             }
 
             CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
@@ -76,6 +74,9 @@ class AlarmCalculator(
         localRepeatEntity: LocalRepeatEntity
     ) {
         val amount = localRepeatEntity.intervalTimes ?: 1
+
+        println(localRepeatEntity)
+
         when (localRepeatEntity.intervalOrdinal) {
             CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
             CareRepeatInterval.WEEK.ordinal -> {

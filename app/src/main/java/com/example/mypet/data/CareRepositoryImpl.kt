@@ -7,7 +7,6 @@ import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
 import com.example.mypet.data.local.room.entity.LocalEndEntity
-import com.example.mypet.data.local.room.entity.LocalEndEntity.Companion.DEFAULT_COUNTER
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
 import com.example.mypet.domain.CareRepository
@@ -98,7 +97,6 @@ class CareRepositoryImpl @Inject constructor(
 
             val careRepeatModel = CareEndModel(
                 id = localRepeatEntity?.id ?: DEFAULT_ID,
-                counter = localRepeatEntity?.counter ?: DEFAULT_COUNTER,
                 typeOrdinal = localRepeatEntity?.typeOrdinal?.let { CareEndTypes.entries[it].ordinal },
                 afterTimes = localRepeatEntity?.afterTimes,
                 afterDate = localRepeatEntity?.afterDate,
@@ -228,8 +226,14 @@ class CareRepositoryImpl @Inject constructor(
             minute = minute
         )
 
-    private fun CareRepeatModel.toLocalRepeatEntity(careId: Int) =
-        LocalRepeatEntity(
+    private fun CareRepeatModel.toLocalRepeatEntity(careId: Int): LocalRepeatEntity {
+        if (intervalOrdinal == CareRepeatInterval.WEEK.ordinal) {
+            if (isNotCheckedDayOfWeek())
+                checkTodayDayOfWeek()
+        } else
+            uncheckedDaysOfWeek()
+
+        return LocalRepeatEntity(
             id = id,
             careId = careId,
             intervalOrdinal = intervalOrdinal,
@@ -242,12 +246,12 @@ class CareRepositoryImpl @Inject constructor(
             isSaturday,
             isSunday,
         )
+    }
 
     private fun CareEndModel.toLocalEndEntity(careId: Int) =
         LocalEndEntity(
             id = id,
             careId = careId,
-            counter = DEFAULT_COUNTER,
             typeOrdinal = typeOrdinal,
             afterTimes = afterTimes,
             afterDate = afterDate
@@ -279,4 +283,32 @@ class CareRepositoryImpl @Inject constructor(
             isDelay = isDelay ?: false,
             isActive = isActive
         )
+
+    private fun CareRepeatModel.isNotCheckedDayOfWeek() =
+        !isMonday && !isTuesday && !isWednesday && !isThursday
+                && !isFriday && !isSaturday && !isSunday
+
+    private fun CareRepeatModel.checkTodayDayOfWeek() {
+        val calendar = Calendar.getInstance()
+
+        when (calendar[Calendar.DAY_OF_WEEK]) {
+            2 -> isMonday = true
+            3 -> isTuesday = true
+            4 -> isWednesday = true
+            5 -> isThursday = true
+            6 -> isFriday = true
+            7 -> isSaturday = true
+            1 -> isSunday = true
+        }
+    }
+
+    private fun CareRepeatModel.uncheckedDaysOfWeek() {
+        isMonday = false
+        isTuesday = false
+        isWednesday = false
+        isThursday = false
+        isFriday = false
+        isSaturday = false
+        isSunday = false
+    }
 }
