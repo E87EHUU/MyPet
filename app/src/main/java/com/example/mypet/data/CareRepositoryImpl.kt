@@ -110,7 +110,7 @@ class CareRepositoryImpl @Inject constructor(
             val careAlarmModels = localCareDao.getLocalAlarmEntities(careId)
                 .map { it.toCareAlarmDetailModel() }
 
-            val careAlarmModel = CareAlarmModel(alarms = careAlarmModels)
+            val careAlarmModel = CareAlarmModel(alarms = careAlarmModels.toMutableList())
             emit(careAlarmModel)
         }
 
@@ -164,11 +164,13 @@ class CareRepositoryImpl @Inject constructor(
                                                 localEndEntity
                                             )
 
-                                        localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                        val alarmId =
+                                            localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                                .toInt()
 
                                         localAlarmEntity.nextStart?.let {
                                             alarmDao.setAlarm(
-                                                careAlarmDetailModel.id,
+                                                alarmId,
                                                 localAlarmEntity.nextStart
                                             )
                                         }

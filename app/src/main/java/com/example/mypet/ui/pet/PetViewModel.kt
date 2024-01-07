@@ -58,15 +58,17 @@ class PetViewModel @Inject constructor(
         }
     }
 
-    private fun updateFood(petId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getPetFoodModel(petId)
-            .collectLatest { _food.value = it }
-    }
+    private fun updateFood(petId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            petRepository.getPetFoodModel(petId)
+                .collectLatest { _food.value = it }
+        }
 
-    private fun updateCare(petListMainModel: PetListMainModel) = viewModelScope.launch(Dispatchers.IO) {
-        petRepository.getCareModels(petListMainModel.id)
-            .collectLatest { _care.value = getCares(petListMainModel, it) }
-    }
+    private fun updateCare(petListMainModel: PetListMainModel) =
+        viewModelScope.launch(Dispatchers.IO) {
+            petRepository.getCareModels(petListMainModel.id)
+                .collectLatest { _care.value = getCares(petListMainModel, it) }
+        }
 
     private fun getCares(
         petListMainModel: PetListMainModel,

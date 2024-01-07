@@ -12,7 +12,10 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
+import com.example.mypet.domain.POST_NOTIFICATIONS
 import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.isNotGrantedPermission
+import com.example.mypet.domain.requestPermission
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
 import com.example.mypet.ui.care.end.CareEndCallback
 import com.example.mypet.ui.care.main.CareMainCallback
@@ -20,8 +23,12 @@ import com.example.mypet.ui.care.repeat.CareRepeatCallback
 import com.example.mypet.ui.care.start.CareStartCallback
 import com.example.mypet.ui.clear
 import com.example.mypet.ui.getToolbar
+import com.example.mypet.ui.is24HourFormat
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -134,11 +141,14 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
-        viewModel.careAlarmDetailMainModel = careAlarmDetailMainModel
-        navToAlarmDetail()
+        if (requireActivity().isNotGrantedPermission(POST_NOTIFICATIONS))
+            requireActivity().requestPermission(POST_NOTIFICATIONS)
+
+        val alarmModel = careAlarmDetailMainModel ?: CareAlarmDetailMainModel()
+        showTimePicker(alarmModel)
     }
 
-    override fun onClickDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
         viewModel.alarmDelete(careAlarmDetailMainModel)
     }
 
@@ -147,7 +157,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
     }
 
     override fun generateDayAlarm(dayTimes: Int) {
-        viewModel.generateDayAlarm(dayTimes)
+        //viewModel.generateDayAlarm(dayTimes)
     }
 
     override fun showDatePicker() {
@@ -155,6 +165,33 @@ class CareFragment : Fragment(R.layout.fragment_care),
             activity?.supportFragmentManager?.let { fragmentManager ->
                 isUnlockUI = false
                 datePicker.show(fragmentManager, datePicker.toString())
+            }
+    }
+
+    private fun showTimePicker(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+        if (isUnlockUI)
+            activity?.supportFragmentManager?.let { fragmentManager ->
+                isUnlockUI = false
+
+                val timePicker = MaterialTimePicker.Builder()
+                    .setTitleText(getString(R.string.care_time_picker_title))
+                    .setInputMode(INPUT_MODE_CLOCK)
+                    .setHour(careAlarmDetailMainModel.hour)
+                    .setMinute(careAlarmDetailMainModel.minute)
+                    .setTimeFormat(if (requireActivity().is24HourFormat) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H)
+                    .build()
+
+                timePicker.addOnDismissListener { isUnlockUI = true }
+                timePicker.addOnPositiveButtonClickListener {
+                    viewModel.saveAlarm(
+                        careAlarmDetailMainModel = careAlarmDetailMainModel,
+                        hour = timePicker.hour,
+                        minute = timePicker.minute
+                    )
+                    adapter.alarmViewHolder?.updateUI()
+                }
+
+                timePicker.show(fragmentManager, timePicker.toString())
             }
     }
 

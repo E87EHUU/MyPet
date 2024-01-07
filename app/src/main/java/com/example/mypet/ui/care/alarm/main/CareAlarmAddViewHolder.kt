@@ -8,6 +8,6 @@ class CareAlarmAddViewHolder(
     private val callback: CareAlarmMainCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
-        binding.root.setOnClickListener { callback.onClickAlarm() }
+        binding.root.setOnClickListener { callback.onClickAlarmAdd() }
     }
 }

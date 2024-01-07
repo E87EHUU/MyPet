@@ -31,7 +31,7 @@
     <string name="pet_creation_save">Сохранить</string>
     <string name="pet_creation_weight">Вес (кг)</string>
     <string name="pet_creation_choose_pet_kind">Выбрать вид питомца*</string>
-    <string name="pet_creation_choose_breed">Выбрать породу питомца*</string>
+    <string name="pet_creation_choose_breed">Выбрать породу питомца</string>
     <string name="pet_creation_sex_male">Самец</string>
     <string name="pet_creation_sex_female">Самка</string>
     <string name="pet_creation_fragment_name">Информация о питомце</string>

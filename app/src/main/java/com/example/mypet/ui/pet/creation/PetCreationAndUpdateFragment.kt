@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetCreationBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
@@ -65,7 +67,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
 
         onDeleteAvatarImageListener()
-        onChangeAvatarImageListener()
 
         initKindListView()
 
@@ -179,11 +180,8 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun updateUIAvatar() {
         with(viewModel) {
-            if (avatarUri != null){
-                binding.imageViewPetCreationDeleteAvatar.visibility = View.VISIBLE
-            } else {
-                binding.imageViewPetCreationDeleteAvatar.visibility = View.GONE
-            }
+            binding.buttonPetCreationAvatarReset.isVisible = avatarUri != null
+
             val icon = kindOrdinal?.let { getPetIcon(it, breedOrdinal) }
                 ?: R.drawable.baseline_add_photo_alternate_24
 
@@ -191,20 +189,16 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 .load(avatarUri)
                 .circleCrop()
                 .placeholder(icon)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageViewPetCreationAvatar)
+
         }
     }
 
-    private fun onDeleteAvatarImageListener(){
-        binding.imageViewPetCreationDeleteAvatar.setOnClickListener {
+    private fun onDeleteAvatarImageListener() {
+        binding.buttonPetCreationAvatarReset.setOnClickListener {
             viewModel.avatarUri = null
             updateUIAvatar()
-        }
-    }
-
-    private fun onChangeAvatarImageListener(){
-        binding.imageViewPetCreationChangeAvatar.setOnClickListener {
-            requestPermission()
         }
     }
 
@@ -292,9 +286,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         }
 
         with(viewModel) {
-            if (name.isEmpty() || kindOrdinal == null || sexOrdinal == null) {
-                view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
-            } else if (getPetBreedList(kindOrdinal!!) != null && breedOrdinal == null) {
+            if (name.isEmpty() || kindOrdinal == null) {
                 view?.snackMessage(getString(R.string.pet_creation_fill_all_fields))
             } else {
                 viewModel.addOrUpdatePetInDb()
@@ -305,7 +297,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-            viewModel.avatarUri = imageUri.toString()
+            viewModel.avatarUri = imageUri?.toString()
             updateUIAvatar()
         }
 

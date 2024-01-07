@@ -12,8 +12,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentPetBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.domain.alarm.AlarmMinModel
 import com.example.mypet.domain.pet.care.PetCareModel
+import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.ui.getActionBar
 import com.example.mypet.ui.pet.care.main.PetCareMainCallback
@@ -118,7 +118,7 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         navToCare(petCareModel)
     }
 
-    override fun onClickAlarm(alarmMinModel: AlarmMinModel) {
+    override fun onClickPetFoodAlarm(petFoodAlarmModel: PetFoodAlarmModel) {
 
     }
 

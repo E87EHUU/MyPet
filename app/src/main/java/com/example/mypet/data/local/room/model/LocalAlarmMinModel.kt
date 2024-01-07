@@ -6,6 +6,7 @@ import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_ACTIVE
 import com.example.mypet.domain.alarm.AlarmMinModel
+import com.example.mypet.domain.pet.food.PetFoodAlarmModel
 import com.example.mypet.domain.toAppTime
 
 data class LocalAlarmMinModel(
@@ -22,6 +23,14 @@ data class LocalAlarmMinModel(
         AlarmMinModel(
             id = id,
             time = toAppTime(hour, minute),
+            isActive = isActive
+        )
+
+    fun toPetFoodAlarmModel() =
+        PetFoodAlarmModel(
+            id = id,
+            hour = hour,
+            minute = minute,
             isActive = isActive
         )
 }

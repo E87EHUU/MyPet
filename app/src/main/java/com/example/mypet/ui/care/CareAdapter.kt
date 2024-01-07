@@ -42,7 +42,7 @@ class CareAdapter(
         private set
     var endBinding: FragmentCareRecyclerEndBinding? = null
         private set
-    var alarmBinding: FragmentCareRecyclerAlarmBinding? = null
+    var alarmViewHolder: CareAlarmViewHolder? = null
         private set
 
     override fun getItemViewType(position: Int) = position
@@ -96,8 +96,9 @@ class CareAdapter(
 
     private fun alarmViewHolder(parent: ViewGroup): CareAlarmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        alarmBinding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
-        return CareAlarmViewHolder(alarmBinding!!, careAlarmCallback)
+        val alarmBinding = FragmentCareRecyclerAlarmBinding.inflate(inflater, parent, false)
+        alarmViewHolder = CareAlarmViewHolder(alarmBinding, careAlarmCallback)
+        return alarmViewHolder!!
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<CareModel>() {
