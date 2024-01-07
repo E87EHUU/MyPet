@@ -23,8 +23,7 @@ import javax.inject.Inject
 class CareViewModel @Inject constructor(
     private val careRepository: CareRepository
 ) : ViewModel() {
-    private val _careModels =
-        MutableStateFlow<MutableList<CareModel>>(mutableListOf())
+    private val _careModels = MutableStateFlow<MutableList<CareModel>>(mutableListOf())
     val careModels = _careModels.asStateFlow()
 
     var careMainModel: CareMainModel? = null

@@ -30,7 +30,7 @@ fun toAppNextDateTime(timeInMillis: Long, context: Context? = null): String {
     calendarNext.timeInMillis = timeInMillis
 
     return if (calendarNow[Calendar.DAY_OF_MONTH] == calendarNext[Calendar.DAY_OF_MONTH])
-        toAppTime(calendarNext[Calendar.HOUR], calendarNext[Calendar.MINUTE])
+        toAppTime(calendarNext[Calendar.HOUR_OF_DAY], calendarNext[Calendar.MINUTE])
     else if (calendarNow[Calendar.DAY_OF_MONTH] + 1 == calendarNext[Calendar.DAY_OF_MONTH])
         context?.getString(R.string.tomorrow)
             ?: toAppDate(calendarNext[Calendar.DAY_OF_MONTH], calendarNext[Calendar.MONTH])

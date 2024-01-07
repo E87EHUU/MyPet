@@ -42,8 +42,6 @@ class AlarmCalculator(
         }
 
         println("Next alarm ${calendar.time}")
-        println("before ${calendar.timeInMillis - nowTimeInMillis}")
-        println("next ${calendar.timeInMillis}")
 
         return localAlarmEntity.copy(
             beforeStart = calendar.timeInMillis - nowTimeInMillis,
@@ -78,6 +76,38 @@ class AlarmCalculator(
         localRepeatEntity: LocalRepeatEntity
     ) {
         val amount = localRepeatEntity.intervalTimes ?: 1
+        when (localRepeatEntity.intervalOrdinal) {
+            CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
+            CareRepeatInterval.WEEK.ordinal -> {
+                val start =
+                    if (this[Calendar.DAY_OF_WEEK] == 1) 8
+                    else this[Calendar.DAY_OF_WEEK]
+
+                for (i in start..8) {
+                    if (hasTodayRepeat(localRepeatEntity)) break
+                    else add(Calendar.DATE, 1)
+                }
+
+                if (this[Calendar.DAY_OF_WEEK] == 2) {
+                    add(Calendar.WEEK_OF_YEAR, amount)
+
+                    for (i in 2..8) {
+                        if (hasTodayRepeat(localRepeatEntity)) break
+                        else add(Calendar.DATE, 1)
+                    }
+                }
+            }
+
+            CareRepeatInterval.MONTH.ordinal -> add(Calendar.MONTH, amount)
+            CareRepeatInterval.YEAR.ordinal -> add(Calendar.YEAR, amount)
+        }
+    }
+
+    private fun Calendar.getBeforeTimeInMillis(
+        localRepeatEntity: LocalRepeatEntity
+    ) {
+        val amount = (localRepeatEntity.intervalTimes ?: 1) * -1
+
         when (localRepeatEntity.intervalOrdinal) {
             CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
             CareRepeatInterval.WEEK.ordinal -> {

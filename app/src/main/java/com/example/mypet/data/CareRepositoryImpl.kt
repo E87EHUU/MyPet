@@ -77,8 +77,10 @@ class CareRepositoryImpl @Inject constructor(
 
             val careRepeatModel = CareRepeatModel(
                 id = localRepeatEntity?.id ?: DEFAULT_ID,
-                intervalTimes = getDefaultIntervalTimes(careTypeOrdinal),
-                intervalOrdinal = getDefaultIntervalOrdinal(careTypeOrdinal),
+                intervalTimes = localRepeatEntity?.intervalTimes
+                    ?: getDefaultIntervalTimes(careTypeOrdinal),
+                intervalOrdinal = localRepeatEntity?.intervalOrdinal
+                    ?: getDefaultIntervalOrdinal(careTypeOrdinal),
                 isMonday = localRepeatEntity?.isMonday ?: false,
                 isTuesday = localRepeatEntity?.isTuesday ?: false,
                 isWednesday = localRepeatEntity?.isWednesday ?: false,
@@ -162,9 +164,9 @@ class CareRepositoryImpl @Inject constructor(
                                 when (careAlarmDetailModel) {
                                     is CareAlarmDetailMainModel -> {
                                         val localAlarmEntity = alarmNextStartCalculate
-                                                .calculate(
-                                                    careAlarmDetailModel.toLocalAlarmEntity(careId)
-                                                )
+                                            .calculate(
+                                                careAlarmDetailModel.toLocalAlarmEntity(careId)
+                                            )
 
                                         val alarmId =
                                             localCareDao.saveLocalAlarmEntity(localAlarmEntity)
