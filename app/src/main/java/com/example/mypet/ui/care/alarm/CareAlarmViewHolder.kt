@@ -4,7 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmBinding
 import com.example.mypet.domain.care.CareAlarmModel
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.alarm.main.CareAlarmMainAdapter
 import com.example.mypet.ui.care.alarm.main.CareAlarmMainCallback
 
@@ -43,7 +43,7 @@ class CareAlarmViewHolder(
         }
     }
 
-    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailModel) {
         callback.onClickAlarm(careAlarmDetailMainModel)
     }
 
@@ -51,7 +51,7 @@ class CareAlarmViewHolder(
         callback.onClickAlarm()
     }
 
-    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailModel) {
         callback.onClickAlarmDelete(careAlarmDetailMainModel)
         updateUI()
     }

@@ -4,9 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
 
 const val START_TABLE = "start"
 
@@ -20,12 +18,7 @@ data class LocalStartEntity(
     val careId: Int,
 
     @ColumnInfo(name = TIME_IN_MILLIS)
-    val timeInMillis: Long? = null,
-    // FIXME час и минуты стартовые не используются
-    @ColumnInfo(name = HOUR)
-    val hour: Int? = null,
-    @ColumnInfo(name = MINUTE)
-    val minute: Int? = null,
+    val timeInMillis: Long,
 ) {
     companion object {
         const val TIME_IN_MILLIS = "time_in_millis"
