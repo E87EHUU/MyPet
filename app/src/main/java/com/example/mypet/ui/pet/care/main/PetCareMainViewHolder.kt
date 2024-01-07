@@ -1,9 +1,12 @@
 package com.example.mypet.ui.pet.care.main
 
+import android.icu.util.Calendar
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentPetRecyclerCareMainBinding
+import com.example.mypet.domain.DAY_IN_MILLIS
 import com.example.mypet.domain.pet.care.PetCareModel
-import com.example.mypet.domain.toAppDate
+import com.example.mypet.domain.toAppNextDateTime
 
 class PetCareMainViewHolder(
     private val binding: FragmentPetRecyclerCareMainBinding,
@@ -25,11 +28,19 @@ class PetCareMainViewHolder(
         binding.textViewPetCareRecyclerMainTitle.text =
             context.getString(petCareModel.careType.titleResId)
 
-        binding.textViewPetCareRecyclerMainDate.text =
-            petCareModel.nextStart?.let { toAppDate(it) } ?: "не установлено"
-        petCareModel.progress?.let {
-            binding.progressBarPetCareRecyclerMain.progress = petCareModel.progress
-        } ?: run {
+        petCareModel.nextStart?.let {
+            binding.textViewPetCareRecyclerMainDate.text = toAppNextDateTime(it, context)
         }
+
+        binding.textViewPetCareRecyclerMainDate.visibility =
+            petCareModel.nextStart?.let { View.VISIBLE } ?: run { View.INVISIBLE }
+
+        binding.progressBarPetCareRecyclerMain.progress =
+            petCareModel.nextStart?.let {
+                val calendar = Calendar.getInstance()
+                println(it - calendar.timeInMillis)
+                println(((it - calendar.timeInMillis) * 100 / DAY_IN_MILLIS).toInt())
+                ((it - calendar.timeInMillis) * 100 / DAY_IN_MILLIS).toInt()
+            } ?: run { 0 }
     }
 }
