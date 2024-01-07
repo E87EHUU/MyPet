@@ -48,26 +48,20 @@ class CareRepositoryImpl @Inject constructor(
 
     override suspend fun getCareStartModel(careId: Int, careTypeOrdinal: Int) =
         flow {
-            when (careTypeOrdinal) {
-                CareTypes.FOOD.ordinal,
-                CareTypes.BATH.ordinal,
-                CareTypes.WALK.ordinal -> emit(null)
+            val localStartEntity = localCareDao.getLocalStartEntity(careId)
+            val localDateTime = LocalDateTime.now()
 
-                else -> {
-                    val localStartEntity = localCareDao.getLocalStartEntity(careId)
+            val careStartModel = CareStartModel(
+                id = localStartEntity?.id ?: DEFAULT_ID,
+                timeInMillis = localStartEntity?.timeInMillis
+                    ?: Calendar.getInstance().timeInMillis,
+                hour = localStartEntity?.hour
+                    ?: localDateTime.hour,
+                minute = localStartEntity?.minute
+                    ?: localDateTime.minute
+            )
 
-                    val careStartModel = CareStartModel(
-                        id = localStartEntity?.id ?: DEFAULT_ID,
-                        timeInMillis = localStartEntity?.timeInMillis
-                            ?: Calendar.getInstance().timeInMillis,
-                        hour = localStartEntity?.hour
-                            ?: LocalDateTime.now().hour,
-                        minute = localStartEntity?.minute
-                            ?: LocalDateTime.now().minute
-                    )
-                    emit(careStartModel)
-                }
-            }
+            emit(careStartModel)
         }
 
     override suspend fun getCareRepeatModel(careId: Int, careTypeOrdinal: Int) =

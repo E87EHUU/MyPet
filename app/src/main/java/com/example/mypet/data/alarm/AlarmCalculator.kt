@@ -27,11 +27,8 @@ class AlarmCalculator(
         calendar[Calendar.SECOND] = 0
         calendar[Calendar.MILLISECOND] = 0
 
-        if (calendar.timeInMillis <= nowTimeInMillis)
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
-
         localRepeatEntity?.let {
-            calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
+            calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity, nowTimeInMillis)
 
             localEndEntity?.let {
                 if (isEnd(nowTimeInMillis, localEndEntity))
@@ -71,16 +68,19 @@ class AlarmCalculator(
         }
 
     private fun Calendar.calculateAndUpdateRepeatTimeInMillis(
-        localRepeatEntity: LocalRepeatEntity
+        localRepeatEntity: LocalRepeatEntity,
+        nowTimeInMillis: Long
     ) {
         val amount = localRepeatEntity.intervalTimes ?: 1
 
-        println(this.time)
-        println(localRepeatEntity)
-
         when (localRepeatEntity.intervalOrdinal) {
-            CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
+            CareRepeatInterval.DAY.ordinal ->
+                if (timeInMillis <= nowTimeInMillis) add(Calendar.DAY_OF_MONTH, 1)
+                else add(Calendar.DAY_OF_MONTH, amount)
+
             CareRepeatInterval.WEEK.ordinal -> {
+                if (timeInMillis <= nowTimeInMillis) add(Calendar.DAY_OF_MONTH, 1)
+
                 val start =
                     if (this[Calendar.DAY_OF_WEEK] == 1) 8
                     else this[Calendar.DAY_OF_WEEK]
