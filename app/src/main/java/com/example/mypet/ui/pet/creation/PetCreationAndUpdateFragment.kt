@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -66,7 +67,6 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
         setDecimalInputFilter(binding.textInputEditTextPetCreationWeight)
 
         onDeleteAvatarImageListener()
-        onChangeAvatarImageListener()
 
         initKindListView()
 
@@ -180,11 +180,8 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private fun updateUIAvatar() {
         with(viewModel) {
-            if (avatarUri != null) {
-                binding.imageViewPetCreationDeleteAvatar.visibility = View.VISIBLE
-            } else {
-                binding.imageViewPetCreationDeleteAvatar.visibility = View.GONE
-            }
+            binding.buttonPetCreationAvatarReset.isVisible = avatarUri != null
+
             val icon = kindOrdinal?.let { getPetIcon(it, breedOrdinal) }
                 ?: R.drawable.baseline_add_photo_alternate_24
 
@@ -194,19 +191,14 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                 .placeholder(icon)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageViewPetCreationAvatar)
+
         }
     }
 
     private fun onDeleteAvatarImageListener() {
-        binding.imageViewPetCreationDeleteAvatar.setOnClickListener {
+        binding.buttonPetCreationAvatarReset.setOnClickListener {
             viewModel.avatarUri = null
             updateUIAvatar()
-        }
-    }
-
-    private fun onChangeAvatarImageListener() {
-        binding.imageViewPetCreationChangeAvatar.setOnClickListener {
-            requestPermission()
         }
     }
 
@@ -305,7 +297,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri ->
-            viewModel.avatarUri = imageUri.toString()
+            viewModel.avatarUri = imageUri?.toString()
             updateUIAvatar()
         }
 

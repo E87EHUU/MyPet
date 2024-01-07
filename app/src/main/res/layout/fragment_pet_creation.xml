@@ -13,34 +13,23 @@
 
         <ImageView
             android:id="@+id/imageViewPetCreationAvatar"
-            android:layout_width="@dimen/avatar_creation_size"
-            android:layout_height="@dimen/avatar_creation_size"
+            android:layout_width="@dimen/pet_avatar_size"
+            android:layout_height="@dimen/pet_avatar_size"
             android:src="@drawable/baseline_add_photo_alternate_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageViewPetCreationDeleteAvatar"
+        <Button
+            android:id="@+id/buttonPetCreationAvatarReset"
+            style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_delete_24"
-            android:layout_marginTop="@dimen/offset_8"
-            android:layout_marginStart="@dimen/offset_8"
+            android:visibility="gone"
+            app:icon="@drawable/baseline_close_24"
             app:layout_constraintStart_toEndOf="@+id/imageViewPetCreationAvatar"
             app:layout_constraintTop_toTopOf="@+id/imageViewPetCreationAvatar"
-            app:layout_constraintBottom_toTopOf="@id/imageViewPetCreationChangeAvatar" />
-
-        <ImageView
-            android:id="@+id/imageViewPetCreationChangeAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_autorenew_24"
-            android:layout_marginBottom="@dimen/offset_8"
-            android:layout_marginStart="@dimen/offset_8"
-            app:layout_constraintBottom_toBottomOf="@id/imageViewPetCreationAvatar"
-            app:layout_constraintStart_toEndOf="@+id/imageViewPetCreationAvatar"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPetCreationDeleteAvatar" />
+            tools:visibility="visible" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPetCreationName"
