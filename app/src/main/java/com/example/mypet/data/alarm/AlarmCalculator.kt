@@ -75,6 +75,7 @@ class AlarmCalculator(
     ) {
         val amount = localRepeatEntity.intervalTimes ?: 1
 
+        println(this.time)
         println(localRepeatEntity)
 
         when (localRepeatEntity.intervalOrdinal) {
@@ -85,7 +86,7 @@ class AlarmCalculator(
                     else this[Calendar.DAY_OF_WEEK]
 
                 for (i in start..8) {
-                    if (hasTodayRepeat(localRepeatEntity)) break
+                    if (hasTodayRepeat(localRepeatEntity)) return
                     else add(Calendar.DATE, 1)
                 }
 
