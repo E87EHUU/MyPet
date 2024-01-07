@@ -72,7 +72,7 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatTuesday"
                 style="@style/Theme.MyPet.ChipWeek"
-                android:text="@string/alarm_thursday_short" />
+                android:text="@string/alarm_tuesday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipCareRepeatWednesday"
