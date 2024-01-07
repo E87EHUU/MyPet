@@ -8,18 +8,19 @@ import com.example.mypet.domain.care.end.CareEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import java.util.Calendar
 
-class AlarmNextStartCalculate {
-    fun getNextStartTimeInMillis(
+class AlarmCalculator(
+    private val localStartEntity: LocalStartEntity?,
+    private val localRepeatEntity: LocalRepeatEntity?,
+    private val localEndEntity: LocalEndEntity?,
+) {
+    fun calculate(
         localAlarmEntity: LocalAlarmEntity,
-        localStartEntity: LocalStartEntity?,
-        localRepeatEntity: LocalRepeatEntity?,
-        localEndEntity: LocalEndEntity?,
     ): LocalAlarmEntity {
         val calendar = Calendar.getInstance()
         val nowTimeInMillis = calendar.timeInMillis
 
         if (isNotStart(nowTimeInMillis, localStartEntity))
-            return localAlarmEntity.copy(nextStart = null)
+            return localAlarmEntity.copy(beforeStart = null, nextStart = null)
 
         calendar[Calendar.HOUR_OF_DAY] = localAlarmEntity.hour
         calendar[Calendar.MINUTE] = localAlarmEntity.minute
@@ -35,14 +36,19 @@ class AlarmNextStartCalculate {
                     calendar.calculateAndUpdateRepeatTimeInMillis(localRepeatEntity)
 
                     if (isEnd(nowTimeInMillis, localEndEntity))
-                        return localAlarmEntity.copy(nextStart = null)
+                        return localAlarmEntity.copy(beforeStart = null, nextStart = null)
                 }
             }
         }
 
-        println(calendar.time)
+        println("Next alarm ${calendar.time}")
+        println("before ${calendar.timeInMillis - nowTimeInMillis}")
+        println("next ${calendar.timeInMillis}")
 
-        return localAlarmEntity.copy(nextStart = calendar.timeInMillis)
+        return localAlarmEntity.copy(
+            beforeStart = calendar.timeInMillis - nowTimeInMillis,
+            nextStart = calendar.timeInMillis
+        )
     }
 
     private fun isNotStart(nowTimeInMillis: Long, localStartEntity: LocalStartEntity?) =
@@ -110,12 +116,4 @@ class AlarmNextStartCalculate {
             1 -> localRepeatEntity.isSunday
             else -> false
         }
-
-    private fun Calendar.isHourEqualsAndMinuteLast(nowCalendar: Calendar) =
-        nowCalendar[Calendar.HOUR] == this[Calendar.HOUR]
-                && nowCalendar[Calendar.MINUTE] > this[Calendar.MINUTE]
-
-    private fun Calendar.isHourLast(nowCalendar: Calendar) =
-        nowCalendar[Calendar.HOUR] > this[Calendar.HOUR]
-
 }

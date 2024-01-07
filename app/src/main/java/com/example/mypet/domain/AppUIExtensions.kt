@@ -24,7 +24,6 @@ fun toAppDate(timeInMillis: Long?): String {
 fun toAppDate(day: Int, month: Int) =
     "$day.$month"
 
-const val DAY_IN_MILLIS = 86400000
 fun toAppNextDateTime(timeInMillis: Long, context: Context? = null): String {
     val calendarNow = Calendar.getInstance()
     val calendarNext = Calendar.getInstance()

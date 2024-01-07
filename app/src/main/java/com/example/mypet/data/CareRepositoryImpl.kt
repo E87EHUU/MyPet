@@ -1,6 +1,6 @@
 package com.example.mypet.data
 
-import com.example.mypet.data.alarm.AlarmNextStartCalculate
+import com.example.mypet.data.alarm.AlarmCalculator
 import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.dao.LocalCareDao
@@ -42,7 +42,6 @@ class CareRepositoryImpl @Inject constructor(
                 title = localCareEntity?.title,
                 note = localCareEntity?.note,
                 dose = localCareEntity?.dose,
-                progress = localCareEntity?.progress
             )
 
             emit(careMainModel)
@@ -120,7 +119,6 @@ class CareRepositoryImpl @Inject constructor(
             var localStartEntity: LocalStartEntity? = null
             var localRepeatEntity: LocalRepeatEntity? = null
             var localEndEntity: LocalEndEntity? = null
-            val alarmNextStartCalculate = AlarmNextStartCalculate()
 
             careModels.forEach { careModel ->
                 when (careModel) {
@@ -153,16 +151,20 @@ class CareRepositoryImpl @Inject constructor(
 
                             localCareDao.deleteLocalAlarmEntities(careModel.deletedAlarmIds)
 
+                            val alarmNextStartCalculate =
+                                AlarmCalculator(
+                                    localStartEntity,
+                                    localRepeatEntity,
+                                    localEndEntity
+                                )
+
                             careModel.alarms.forEach { careAlarmDetailModel ->
                                 when (careAlarmDetailModel) {
                                     is CareAlarmDetailMainModel -> {
-                                        val localAlarmEntity =
-                                            alarmNextStartCalculate.getNextStartTimeInMillis(
-                                                careAlarmDetailModel.toLocalAlarmEntity(careId),
-                                                localStartEntity,
-                                                localRepeatEntity,
-                                                localEndEntity
-                                            )
+                                        val localAlarmEntity = alarmNextStartCalculate
+                                                .calculate(
+                                                    careAlarmDetailModel.toLocalAlarmEntity(careId)
+                                                )
 
                                         val alarmId =
                                             localCareDao.saveLocalAlarmEntity(localAlarmEntity)
@@ -213,7 +215,6 @@ class CareRepositoryImpl @Inject constructor(
             title = title,
             note = note,
             dose = dose,
-            progress = progress
         )
 
     private fun CareStartModel.toLocalStartEntity(careId: Int) =
@@ -252,16 +253,17 @@ class CareRepositoryImpl @Inject constructor(
 
     private fun CareAlarmDetailMainModel.toLocalAlarmEntity(careId: Int) =
         LocalAlarmEntity(
-            id,
-            careId,
+            id = id,
+            careId = careId,
+            beforeStart = null,
             nextStart = null,
-            description,
-            hour,
-            minute,
-            ringtonePath,
-            isVibration,
-            isDelay,
-            isActive
+            description = description,
+            hour = hour,
+            minute = minute,
+            ringtonePath = ringtonePath,
+            isVibration = isVibration,
+            isDelay = isDelay,
+            isActive = isActive
         )
 
     private fun LocalAlarmEntity.toCareAlarmDetailModel() =

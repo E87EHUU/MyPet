@@ -45,7 +45,7 @@ class PetRepositoryImpl @Inject constructor(
         PetCareModel(
             id = id,
             careType = CareTypes.entries[careTypeOrdinal],
-            progress = progress,
+            beforeStart = beforeStart,
             nextStart = nextStart
         )
 

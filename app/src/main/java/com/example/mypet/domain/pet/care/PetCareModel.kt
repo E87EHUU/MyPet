@@ -6,6 +6,6 @@ import com.example.mypet.domain.care.CareTypes
 data class PetCareModel(
     val id: Int = DEFAULT_ID,
     val careType: CareTypes,
-    val progress: Int? = null,
+    val beforeStart: Long? = null,
     val nextStart: Long? = null,
 )

@@ -1,7 +1,7 @@
 package com.example.mypet.data
 
+import com.example.mypet.data.alarm.AlarmCalculator
 import com.example.mypet.data.alarm.AlarmDao
-import com.example.mypet.data.alarm.AlarmNextStartCalculate
 import com.example.mypet.data.local.room.dao.LocalAlarmServiceDao
 import com.example.mypet.data.local.room.model.alarm.LocalAlarmServiceModel
 import com.example.mypet.domain.AlarmServiceRepository
@@ -23,12 +23,11 @@ class AlarmServiceRepositoryImpl @Inject constructor(
                     val localStartEntity = localAlarmServiceDao.getLocalStartEntity(alarmId)
                     val localEndEntity = localAlarmServiceDao.getLocalEndEntity(alarmId)
                     val updatedLocalAlarmEntity =
-                        AlarmNextStartCalculate().getNextStartTimeInMillis(
-                            localAlarmEntity,
+                        AlarmCalculator(
                             localStartEntity,
                             localRepeatEntity,
                             localEndEntity
-                        )
+                        ).calculate(localAlarmEntity)
 
                     localAlarmServiceDao.updateLocalAlarmEntity(updatedLocalAlarmEntity)
                     updatedLocalAlarmEntity.nextStart?.let {
