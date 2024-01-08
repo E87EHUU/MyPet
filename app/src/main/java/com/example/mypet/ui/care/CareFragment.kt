@@ -158,7 +158,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
 
     override fun onClickReset() {
         viewModel.resetRepeat()
-        adapter.repeatViewHolder?.reset()
+        adapter.repeatViewHolder?.updateUI()
     }
 
     override fun generateDayAlarm(dayTimes: Int) {

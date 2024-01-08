@@ -98,6 +98,10 @@ class AlarmCalculator(
 
                 CareRepeatInterval.YEAR.ordinal ->
                     updateWithIntervalYear(localAlarmEntity, amount, nowCalendar)
+
+                else ->
+                    if (timeInMillis <= nowCalendar.timeInMillis)
+                        add(Calendar.DAY_OF_MONTH, 1)
             }
         }
     }

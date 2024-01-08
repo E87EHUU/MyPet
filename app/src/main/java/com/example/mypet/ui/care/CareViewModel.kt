@@ -104,7 +104,7 @@ class CareViewModel @Inject constructor(
     }
 
     fun resetRepeat() {
-        careRepeatModel = null
+        careRepeatModel?.reset()
     }
 
     /*    private val list = listOf(
