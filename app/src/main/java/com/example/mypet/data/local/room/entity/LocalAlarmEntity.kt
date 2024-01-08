@@ -22,6 +22,8 @@ data class LocalAlarmEntity(
 
     @ColumnInfo(name = NEXT_START)
     val nextStart: Long?,
+    @ColumnInfo(name = INTERVAL_START)
+    val intervalStart: Long?,
 
     @ColumnInfo(name = DESCRIPTION)
     val description: String?,
@@ -43,6 +45,7 @@ data class LocalAlarmEntity(
 ) {
     companion object {
         const val NEXT_START = "next_start"
+        const val INTERVAL_START = "interval_start"
 
         const val RINGTONE_PATH = "ringtone_path"
 

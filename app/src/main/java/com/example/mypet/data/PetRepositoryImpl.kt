@@ -45,8 +45,8 @@ class PetRepositoryImpl @Inject constructor(
         PetCareModel(
             id = id,
             careType = CareTypes.entries[careTypeOrdinal],
-            progress = progress,
-            nextStart = nextStart
+            nextStart = nextStart,
+            intervalStart = intervalStart,
         )
 
     private fun LocalPetCareFoodModel?.toPetCareDetailModel() =

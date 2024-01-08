@@ -1,13 +1,12 @@
 package com.example.mypet.data
 
-import com.example.mypet.data.alarm.AlarmNextStartCalculate
+import com.example.mypet.data.alarm.AlarmCalculator
 import com.example.mypet.data.alarm.IAlarmDao
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
 import com.example.mypet.data.local.room.dao.LocalCareDao
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
 import com.example.mypet.data.local.room.entity.LocalEndEntity
-import com.example.mypet.data.local.room.entity.LocalEndEntity.Companion.DEFAULT_COUNTER
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
 import com.example.mypet.domain.CareRepository
@@ -18,11 +17,10 @@ import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
 import com.example.mypet.domain.care.CareTypes
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.care.end.CareEndTypes
 import com.example.mypet.domain.care.repeat.CareRepeatInterval
 import kotlinx.coroutines.flow.flow
-import java.time.LocalDateTime
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -42,7 +40,6 @@ class CareRepositoryImpl @Inject constructor(
                 title = localCareEntity?.title,
                 note = localCareEntity?.note,
                 dose = localCareEntity?.dose,
-                progress = localCareEntity?.progress
             )
 
             emit(careMainModel)
@@ -50,26 +47,15 @@ class CareRepositoryImpl @Inject constructor(
 
     override suspend fun getCareStartModel(careId: Int, careTypeOrdinal: Int) =
         flow {
-            when (careTypeOrdinal) {
-                CareTypes.FOOD.ordinal,
-                CareTypes.BATH.ordinal,
-                CareTypes.WALK.ordinal -> emit(null)
+            val localStartEntity = localCareDao.getLocalStartEntity(careId)
 
-                else -> {
-                    val localStartEntity = localCareDao.getLocalStartEntity(careId)
+            val careStartModel = CareStartModel(
+                id = localStartEntity?.id ?: DEFAULT_ID,
+                timeInMillis = localStartEntity?.timeInMillis
+                    ?: Calendar.getInstance().timeInMillis
+            )
 
-                    val careStartModel = CareStartModel(
-                        id = localStartEntity?.id ?: DEFAULT_ID,
-                        timeInMillis = localStartEntity?.timeInMillis
-                            ?: Calendar.getInstance().timeInMillis,
-                        hour = localStartEntity?.hour
-                            ?: LocalDateTime.now().hour,
-                        minute = localStartEntity?.minute
-                            ?: LocalDateTime.now().minute
-                    )
-                    emit(careStartModel)
-                }
-            }
+            emit(careStartModel)
         }
 
     override suspend fun getCareRepeatModel(careId: Int, careTypeOrdinal: Int) =
@@ -78,8 +64,10 @@ class CareRepositoryImpl @Inject constructor(
 
             val careRepeatModel = CareRepeatModel(
                 id = localRepeatEntity?.id ?: DEFAULT_ID,
-                intervalTimes = getDefaultIntervalTimes(careTypeOrdinal),
-                intervalOrdinal = getDefaultIntervalOrdinal(careTypeOrdinal),
+                intervalTimes = localRepeatEntity?.intervalTimes
+                    ?: getDefaultIntervalTimes(careTypeOrdinal),
+                intervalOrdinal = localRepeatEntity?.intervalOrdinal
+                    ?: getDefaultIntervalOrdinal(careTypeOrdinal),
                 isMonday = localRepeatEntity?.isMonday ?: false,
                 isTuesday = localRepeatEntity?.isTuesday ?: false,
                 isWednesday = localRepeatEntity?.isWednesday ?: false,
@@ -97,7 +85,6 @@ class CareRepositoryImpl @Inject constructor(
 
             val careRepeatModel = CareEndModel(
                 id = localRepeatEntity?.id ?: DEFAULT_ID,
-                counter = localRepeatEntity?.counter ?: DEFAULT_COUNTER,
                 typeOrdinal = localRepeatEntity?.typeOrdinal?.let { CareEndTypes.entries[it].ordinal },
                 afterTimes = localRepeatEntity?.afterTimes,
                 afterDate = localRepeatEntity?.afterDate,
@@ -120,7 +107,6 @@ class CareRepositoryImpl @Inject constructor(
             var localStartEntity: LocalStartEntity? = null
             var localRepeatEntity: LocalRepeatEntity? = null
             var localEndEntity: LocalEndEntity? = null
-            val alarmNextStartCalculate = AlarmNextStartCalculate()
 
             careModels.forEach { careModel ->
                 when (careModel) {
@@ -153,30 +139,25 @@ class CareRepositoryImpl @Inject constructor(
 
                             localCareDao.deleteLocalAlarmEntities(careModel.deletedAlarmIds)
 
+                            val alarmCalculator =
+                                AlarmCalculator(
+                                    localStartEntity!!,
+                                    localRepeatEntity,
+                                    localEndEntity
+                                )
+
                             careModel.alarms.forEach { careAlarmDetailModel ->
-                                when (careAlarmDetailModel) {
-                                    is CareAlarmDetailMainModel -> {
-                                        val localAlarmEntity =
-                                            alarmNextStartCalculate.getNextStartTimeInMillis(
-                                                careAlarmDetailModel.toLocalAlarmEntity(careId),
-                                                localStartEntity,
-                                                localRepeatEntity,
-                                                localEndEntity
-                                            )
+                                with(careAlarmDetailModel) {
+                                    val localAlarmEntity =
+                                        alarmCalculator.calculate(toLocalAlarmEntity(careId))
 
-                                        val alarmId =
-                                            localCareDao.saveLocalAlarmEntity(localAlarmEntity)
-                                                .toInt()
+                                    val alarmId =
+                                        localCareDao.saveLocalAlarmEntity(localAlarmEntity)
+                                            .toInt()
 
-                                        localAlarmEntity.nextStart?.let {
-                                            alarmDao.setAlarm(
-                                                alarmId,
-                                                localAlarmEntity.nextStart
-                                            )
-                                        }
+                                    localAlarmEntity.nextStart?.let {
+                                        alarmDao.setAlarm(alarmId, it)
                                     }
-
-                                    else -> {}
                                 }
                             }
                         }
@@ -213,7 +194,6 @@ class CareRepositoryImpl @Inject constructor(
             title = title,
             note = note,
             dose = dose,
-            progress = progress
         )
 
     private fun CareStartModel.toLocalStartEntity(careId: Int) =
@@ -221,12 +201,16 @@ class CareRepositoryImpl @Inject constructor(
             id = id,
             careId = careId,
             timeInMillis = timeInMillis,
-            hour = hour,
-            minute = minute
         )
 
-    private fun CareRepeatModel.toLocalRepeatEntity(careId: Int) =
-        LocalRepeatEntity(
+    private fun CareRepeatModel.toLocalRepeatEntity(careId: Int): LocalRepeatEntity {
+        if (intervalOrdinal == CareRepeatInterval.WEEK.ordinal) {
+            if (isNotCheckedDayOfWeek())
+                checkTodayDayOfWeek()
+        } else
+            uncheckedDaysOfWeek()
+
+        return LocalRepeatEntity(
             id = id,
             careId = careId,
             intervalOrdinal = intervalOrdinal,
@@ -239,33 +223,34 @@ class CareRepositoryImpl @Inject constructor(
             isSaturday,
             isSunday,
         )
+    }
 
     private fun CareEndModel.toLocalEndEntity(careId: Int) =
         LocalEndEntity(
             id = id,
             careId = careId,
-            counter = DEFAULT_COUNTER,
             typeOrdinal = typeOrdinal,
             afterTimes = afterTimes,
             afterDate = afterDate
         )
 
-    private fun CareAlarmDetailMainModel.toLocalAlarmEntity(careId: Int) =
+    private fun CareAlarmDetailModel.toLocalAlarmEntity(careId: Int) =
         LocalAlarmEntity(
-            id,
-            careId,
+            id = id,
+            careId = careId,
+            intervalStart = null,
             nextStart = null,
-            description,
-            hour,
-            minute,
-            ringtonePath,
-            isVibration,
-            isDelay,
-            isActive
+            description = description,
+            hour = hour,
+            minute = minute,
+            ringtonePath = ringtonePath,
+            isVibration = isVibration,
+            isDelay = isDelay,
+            isActive = isActive
         )
 
     private fun LocalAlarmEntity.toCareAlarmDetailModel() =
-        CareAlarmDetailMainModel(
+        CareAlarmDetailModel(
             id = id,
             hour = hour,
             minute = minute,
@@ -275,4 +260,32 @@ class CareRepositoryImpl @Inject constructor(
             isDelay = isDelay ?: false,
             isActive = isActive
         )
+
+    private fun CareRepeatModel.isNotCheckedDayOfWeek() =
+        !isMonday && !isTuesday && !isWednesday && !isThursday
+                && !isFriday && !isSaturday && !isSunday
+
+    private fun CareRepeatModel.checkTodayDayOfWeek() {
+        val calendar = Calendar.getInstance()
+
+        when (calendar[Calendar.DAY_OF_WEEK]) {
+            2 -> isMonday = true
+            3 -> isTuesday = true
+            4 -> isWednesday = true
+            5 -> isThursday = true
+            6 -> isFriday = true
+            7 -> isSaturday = true
+            1 -> isSunday = true
+        }
+    }
+
+    private fun CareRepeatModel.uncheckedDaysOfWeek() {
+        isMonday = false
+        isTuesday = false
+        isWednesday = false
+        isThursday = false
+        isFriday = false
+        isSaturday = false
+        isSunday = false
+    }
 }

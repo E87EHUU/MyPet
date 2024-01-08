@@ -21,10 +21,9 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
     private val binding by viewBinding(FragmentCareRepeatDetailBinding::bind)
     private val viewModel by navGraphViewModels<CareViewModel>(R.id.navigationPetCare) { defaultViewModelProviderFactory }
 
-    private var isUnlockUI = true
-
     override fun onPause() {
         super.onPause()
+
         viewModel.careRepeatModel?.let { careRepeatModel ->
             careRepeatModel.intervalTimes =
                 try {
@@ -47,7 +46,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
         updateUI()
         initListeners()
     }
@@ -68,10 +66,6 @@ class CareRepeatDetailFragment : Fragment(R.layout.fragment_care_repeat_detail) 
                 }
             }
         }
-    }
-
-    private fun initView() {
-
     }
 
     private fun updateUI() {

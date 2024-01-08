@@ -1,8 +1,8 @@
 package com.example.mypet.ui.care.alarm
 
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 
 interface CareAlarmCallback {
-    fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel? = null)
-    fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel)
+    fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailModel? = null)
+    fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailModel)
 }

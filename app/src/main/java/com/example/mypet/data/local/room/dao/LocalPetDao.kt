@@ -56,7 +56,7 @@ interface LocalPetDao {
 
     @Query(
         "SELECT " +
-                "c.id, c.care_type_ordinal, c.progress, a.next_start " +
+                "c.id, c.care_type_ordinal, a.next_start, a.interval_start " +
                 "FROM care c " +
                 "LEFT JOIN alarm a ON a.id = (SELECT id FROM alarm WHERE care_id = c.id AND a.next_start > :currentTimeInMillis LIMIT 1) " +
                 "WHERE c.pet_id = :petId AND c.care_type_ordinal != 0"

@@ -13,7 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareAlarmDetailBinding
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.ui.care.CareViewModel
 import com.example.mypet.ui.clear
 import com.example.mypet.ui.getToolbar
@@ -37,7 +37,7 @@ class CareAlarmDetailFragment : Fragment(R.layout.fragment_care_alarm_detail) {
         super.onCreate(savedInstanceState)
 
         if (viewModel.careAlarmDetailMainModel == null)
-            viewModel.careAlarmDetailMainModel = CareAlarmDetailMainModel()
+            viewModel.careAlarmDetailMainModel = CareAlarmDetailModel()
     }
 
     override fun onResume() {

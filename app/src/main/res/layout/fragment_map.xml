@@ -16,9 +16,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mapSearchBox"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/offset_24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/mapButtonSearch"

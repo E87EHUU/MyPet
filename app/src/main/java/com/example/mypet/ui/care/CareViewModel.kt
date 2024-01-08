@@ -9,7 +9,7 @@ import com.example.mypet.domain.care.CareMainModel
 import com.example.mypet.domain.care.CareModel
 import com.example.mypet.domain.care.CareRepeatModel
 import com.example.mypet.domain.care.CareStartModel
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +23,7 @@ import javax.inject.Inject
 class CareViewModel @Inject constructor(
     private val careRepository: CareRepository
 ) : ViewModel() {
-    private val _careModels =
-        MutableStateFlow<MutableList<CareModel>>(mutableListOf())
+    private val _careModels = MutableStateFlow<MutableList<CareModel>>(mutableListOf())
     val careModels = _careModels.asStateFlow()
 
     var careMainModel: CareMainModel? = null
@@ -32,7 +31,7 @@ class CareViewModel @Inject constructor(
     var careRepeatModel: CareRepeatModel? = null
     var careEndModel: CareEndModel? = null
     var careAlarmModel: CareAlarmModel? = null
-    var careAlarmDetailMainModel: CareAlarmDetailMainModel? = null
+    var careAlarmDetailMainModel: CareAlarmDetailModel? = null
 
     fun updateCare(petId: Int, careId: Int, careTypeOrdinal: Int) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -66,7 +65,7 @@ class CareViewModel @Inject constructor(
             .collect()
     }
 
-    fun alarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    fun alarmDelete(careAlarmDetailMainModel: CareAlarmDetailModel) {
         careAlarmModel?.let { careAlarmModel ->
             careAlarmModel.deletedAlarmIds.add(careAlarmDetailMainModel.id)
 
@@ -77,7 +76,7 @@ class CareViewModel @Inject constructor(
         }
     }
 
-    fun saveAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel, hour: Int, minute: Int) {
+    fun saveAlarm(careAlarmDetailMainModel: CareAlarmDetailModel, hour: Int, minute: Int) {
         careAlarmModel?.let { careAlarmModel ->
             val savable = careAlarmDetailMainModel.copy(hour = hour, minute = minute)
 

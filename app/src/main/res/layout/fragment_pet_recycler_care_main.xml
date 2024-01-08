@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/offset_8">
+    android:layout_margin="@dimen/offset_4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,9 +12,9 @@
 
         <ImageView
             android:id="@+id/imageViewPetCareRecyclerMainIcon"
+            android:layout_marginTop="@dimen/offset_2"
             android:layout_width="@dimen/pet_care_recycler_item_icon"
             android:layout_height="@dimen/pet_care_recycler_item_icon"
-            android:layout_marginTop="@dimen/offset_4"
             android:src="@drawable/baseline_female_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +24,13 @@
             android:id="@+id/textViewPetCareRecyclerMainTitle"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="@dimen/offset_2"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:gravity="center"
+            android:lines="2"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            app:layout_constraintBottom_toTopOf="@+id/progressBarPetCareRecyclerMain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPetCareRecyclerMainIcon"
@@ -38,33 +41,27 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/offset_24"
-            android:layout_marginTop="8dp"
             android:max="100"
-            android:progress="100"
             android:progressBackgroundTint="@color/pet_care_recycler_item_progress_background"
             android:progressBackgroundTintMode="add"
             android:progressTint="@color/pet_care_recycler_item_progress_line"
             android:progressTintMode="multiply"
-            android:scaleY="2.5"
-            android:visibility="invisible"
+            android:scaleY="6"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewPetCareRecyclerMainIcon"
             tools:progress="40" />
 
         <TextView
             android:id="@+id/textViewPetCareRecyclerMainDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/offset_8"
-            android:layout_marginBottom="@dimen/offset_4"
-            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-            android:visibility="invisible"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="@color/pet_care_recycler_item_progress_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/progressBarPetCareRecyclerMain"
             app:layout_constraintStart_toStartOf="@+id/progressBarPetCareRecyclerMain"
-            app:layout_constraintTop_toBottomOf="@+id/progressBarPetCareRecyclerMain"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPetCareRecyclerMainTitle"
             tools:text="10|11|23" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

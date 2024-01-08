@@ -13,7 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentCareBinding
 import com.example.mypet.domain.POST_NOTIFICATIONS
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.isNotGrantedPermission
 import com.example.mypet.domain.requestPermission
 import com.example.mypet.ui.care.alarm.CareAlarmCallback
@@ -140,15 +140,15 @@ class CareFragment : Fragment(R.layout.fragment_care),
         findNavController().navigate(R.id.action_careFragment_to_alarmDetailFragment)
     }
 
-    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailMainModel?) {
+    override fun onClickAlarm(careAlarmDetailMainModel: CareAlarmDetailModel?) {
         if (requireActivity().isNotGrantedPermission(POST_NOTIFICATIONS))
             requireActivity().requestPermission(POST_NOTIFICATIONS)
 
-        val alarmModel = careAlarmDetailMainModel ?: CareAlarmDetailMainModel()
+        val alarmModel = careAlarmDetailMainModel ?: CareAlarmDetailModel()
         showTimePicker(alarmModel)
     }
 
-    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    override fun onClickAlarmDelete(careAlarmDetailMainModel: CareAlarmDetailModel) {
         viewModel.alarmDelete(careAlarmDetailMainModel)
     }
 
@@ -168,7 +168,7 @@ class CareFragment : Fragment(R.layout.fragment_care),
             }
     }
 
-    private fun showTimePicker(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    private fun showTimePicker(careAlarmDetailMainModel: CareAlarmDetailModel) {
         if (isUnlockUI)
             activity?.supportFragmentManager?.let { fragmentManager ->
                 isUnlockUI = false

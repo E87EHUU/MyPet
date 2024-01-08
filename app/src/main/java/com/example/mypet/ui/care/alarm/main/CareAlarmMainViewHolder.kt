@@ -3,14 +3,14 @@ package com.example.mypet.ui.care.alarm.main
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
-import com.example.mypet.domain.care.alarm.CareAlarmDetailMainModel
+import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
 import com.example.mypet.domain.toAppTime
 
 class CareAlarmMainViewHolder(
     private val binding: FragmentCareRecyclerAlarmRecyclerMainBinding,
     private val callback: CareAlarmMainCallback,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private lateinit var careAlarmDetailMainModel: CareAlarmDetailMainModel
+    private lateinit var careAlarmDetailMainModel: CareAlarmDetailModel
 
     init {
         with(binding) {
@@ -22,7 +22,7 @@ class CareAlarmMainViewHolder(
         }
     }
 
-    fun bind(careAlarmDetailMainModel: CareAlarmDetailMainModel) {
+    fun bind(careAlarmDetailMainModel: CareAlarmDetailModel) {
         this.careAlarmDetailMainModel = careAlarmDetailMainModel
 
         with(careAlarmDetailMainModel) {
