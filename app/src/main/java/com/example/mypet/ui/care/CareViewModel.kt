@@ -48,7 +48,6 @@ class CareViewModel @Inject constructor(
                 val mutableList = mutableListOf<CareModel>()
 
                 careMainModel = mainModel
-                    .also { mutableList.add(it) }
 
                 careStartModel = startModel
                     .also { mutableList.add(it) }
@@ -102,6 +101,10 @@ class CareViewModel @Inject constructor(
             mutableList.add(savable)
             careAlarmModel.alarms = mutableList
         }
+    }
+
+    fun resetRepeat() {
+        careRepeatModel = null
     }
 
     /*    private val list = listOf(

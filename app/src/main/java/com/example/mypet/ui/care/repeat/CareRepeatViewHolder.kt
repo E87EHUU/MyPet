@@ -19,6 +19,10 @@ class CareRepeatViewHolder(
             root.setOnClickListener {
                 callback.onClickRepeat()
             }
+
+            buttonCareRecyclerRepeatReset.setOnClickListener {
+                callback.onClickReset()
+            }
         }
     }
 
@@ -31,6 +35,11 @@ class CareRepeatViewHolder(
         } ?: run {
             binding.root.isVisible = false
         }
+    }
+
+    fun reset() {
+        careRepeatModel = null
+        updateUI()
     }
 
     private fun updateUI() {
@@ -81,6 +90,12 @@ class CareRepeatViewHolder(
                         context.getString(R.string.care_repeat_description_none)
                     }
                 }
+
+            binding.buttonCareRecyclerRepeatReset.isVisible = true
+        } ?: run {
+            binding.textViewCareRecyclerRepeatDescription.text =
+                context.getString(R.string.care_repeat_description_none)
+            binding.buttonCareRecyclerRepeatReset.isVisible = false
         }
     }
 

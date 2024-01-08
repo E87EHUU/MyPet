@@ -56,7 +56,6 @@
     <style name="Theme.MyPet.Care.Container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingHorizontal">@dimen/offset_16</item>
         <item name="android:paddingVertical">@dimen/offset_8</item>
         <item name="android:minHeight">@dimen/care_item_min_height</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
