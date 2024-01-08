@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.mypet.app.R
 import com.example.mypet.app.databinding.FragmentLoginBinding
+import com.example.mypet.ui.clear
+import com.example.mypet.ui.getToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,19 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
     private val loginViewModel: LoginViewModel by viewModels()
+
+    override fun onStop() {
+        super.onStop()
+        getToolbar()?.clear()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        initToolbar()
+
+        checkIfUserIsSignedIn()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,10 +44,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 if (loginFormState == null) {
                     return@Observer
                 }
-                binding.chipGroupLogin.isEnabled = loginFormState.isDataValid
+
+                binding.buttonSignIn.isEnabled = loginFormState.isDataValid
+                binding.buttonCreateUser.isEnabled = loginFormState.isDataValid
+
                 loginFormState.emailError?.let {
                     binding.email.error = getString(it)
                 }
+
                 loginFormState.passwordError?.let {
                     binding.password.error = getString(it)
                 }
@@ -44,6 +63,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 is AuthResult.Error -> {
                     binding.loading.visibility = View.GONE
+
                     Toast.makeText(
                         requireContext(),
                         it.exception.message.toString(),
@@ -54,8 +74,28 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 is AuthResult.Success -> {
                     binding.loading.visibility = View.GONE
-                    Toast.makeText(requireContext(), R.string.login_welcome, Toast.LENGTH_LONG)
+
+                    Toast.makeText(
+                        requireContext(),
+                        (getString(R.string.login_welcome) + it.user.email),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
+
+                    updateUIWithUser()
+                }
+
+                is AuthResult.SuccessOut -> {
+                    binding.loading.visibility = View.GONE
+
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.login_signed_out),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+
+                    updateUIWithSignedOutUser()
                 }
             }
         }
@@ -65,6 +105,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         with(binding) {
 
             val afterTextChangedListener = object : TextWatcher {
+
                 override fun beforeTextChanged(
                     s: CharSequence,
                     start: Int,
@@ -85,19 +126,60 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             email.addTextChangedListener(afterTextChangedListener)
             password.addTextChangedListener(afterTextChangedListener)
 
-            chipSignIn.setOnClickListener {
+            buttonSignIn.setOnClickListener {
                 loginViewModel.sendCredentialsForSignIn(
                     email.text.toString(),
                     password.text.toString()
                 )
             }
 
-            chipCreateUser.setOnClickListener {
+            buttonCreateUser.setOnClickListener {
                 loginViewModel.sendCredentialsForCreateUser(
                     email.text.toString(),
                     password.text.toString()
                 )
             }
+
+            buttonSignOut.setOnClickListener {
+                loginViewModel.logoutCurrentUser()
+            }
         }
     }
+
+    private fun initToolbar() {
+        getToolbar()
+            ?.clear()
+            ?.let { toolbar ->
+                toolbar.title = getString(R.string.login_toolbar_title)
+            }
+    }
+
+    private fun updateUIWithUser() {
+        with(binding) {
+            buttonSignIn.visibility = View.GONE
+            buttonCreateUser.visibility = View.GONE
+            emailLayout.visibility = View.GONE
+            passwordLayout.visibility = View.GONE
+            buttonSignOut.visibility = View.VISIBLE
+        }
+    }
+
+    private fun updateUIWithSignedOutUser() {
+        with(binding) {
+            buttonSignIn.visibility = View.VISIBLE
+            buttonCreateUser.visibility = View.VISIBLE
+            emailLayout.visibility = View.VISIBLE
+            email.text?.clear()
+            passwordLayout.visibility = View.VISIBLE
+            password.text?.clear()
+            buttonSignOut.visibility = View.GONE
+        }
+    }
+
+    private fun checkIfUserIsSignedIn() {
+        if (loginViewModel.isLoggedIn()) {
+            updateUIWithUser()
+        }
+    }
+
 }
