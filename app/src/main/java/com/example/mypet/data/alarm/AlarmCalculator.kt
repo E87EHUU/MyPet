@@ -43,6 +43,7 @@ class AlarmCalculator(
             beforeCalendar.getBeforeTimeInMillis(localRepeatEntity)
         }
 
+        println("AlarmCalculator calculate()")
         println("Before alarm ${beforeCalendar.time}")
         println("Next alarm ${calendar.time}")
 
