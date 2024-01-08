@@ -34,12 +34,18 @@ class PetCareMainViewHolder(
         binding.textViewPetCareRecyclerMainDate.visibility =
             petCareModel.nextStart?.let { View.VISIBLE } ?: run { View.INVISIBLE }
 
-        binding.progressBarPetCareRecyclerMain.progress =
-            petCareModel.nextStart?.let {
-                petCareModel.intervalStart?.let {
-                    val calendar = Calendar.getInstance()
-                    ((petCareModel.nextStart - calendar.timeInMillis) * 100 / petCareModel.intervalStart).toInt()
-                } ?: run { 0 }
-            } ?: run { 0 }
+        binding.progressBarPetCareRecyclerMain.progress = calculateProgress()
     }
+
+    private fun calculateProgress() =
+        petCareModel.nextStart?.let { nextStart ->
+            petCareModel.intervalStart?.let { intervalStart ->
+                try {
+                    val calendar = Calendar.getInstance()
+                    ((nextStart - calendar.timeInMillis) * 100 / intervalStart).toInt()
+                } catch (_:Exception) {
+                    0
+                }
+            } ?: run { 0 }
+        } ?: run { 0 }
 }
