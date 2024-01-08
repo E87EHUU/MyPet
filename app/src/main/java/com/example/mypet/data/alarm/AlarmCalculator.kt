@@ -18,6 +18,7 @@ class AlarmCalculator(
     ): LocalAlarmEntity {
         val calendar = Calendar.getInstance()
         val nowCalendar = Calendar.getInstance()
+        val beforeCalendar = Calendar.getInstance()
 
         if (isNotStart(nowCalendar, localStartEntity))
             localStartEntity?.let { calendar.timeInMillis = it.timeInMillis }
@@ -37,8 +38,12 @@ class AlarmCalculator(
                 if (isEnd(nowCalendar, localEndEntity))
                     return localAlarmEntity.copy(beforeStart = null, nextStart = null)
             }
+
+            beforeCalendar.timeInMillis = calendar.timeInMillis
+            beforeCalendar.getBeforeTimeInMillis(localRepeatEntity)
         }
 
+        println("Before alarm ${beforeCalendar.time}")
         println("Next alarm ${calendar.time}")
 
         return localAlarmEntity.copy(
@@ -101,22 +106,11 @@ class AlarmCalculator(
         when (localRepeatEntity.intervalOrdinal) {
             CareRepeatInterval.DAY.ordinal -> add(Calendar.DAY_OF_MONTH, amount)
             CareRepeatInterval.WEEK.ordinal -> {
-                val start =
-                    if (this[Calendar.DAY_OF_WEEK] == 1) 8
-                    else this[Calendar.DAY_OF_WEEK]
+                add(Calendar.WEEK_OF_YEAR, amount)
 
-                for (i in start..8) {
+                for (i in 2..8) {
                     if (hasTodayRepeat(localRepeatEntity)) break
                     else add(Calendar.DATE, 1)
-                }
-
-                if (this[Calendar.DAY_OF_WEEK] == 2) {
-                    add(Calendar.WEEK_OF_YEAR, amount)
-
-                    for (i in 2..8) {
-                        if (hasTodayRepeat(localRepeatEntity)) break
-                        else add(Calendar.DATE, 1)
-                    }
                 }
             }
 
@@ -136,11 +130,6 @@ class AlarmCalculator(
             1 -> localRepeatEntity.isSunday
             else -> false
         }
-
-    private fun Calendar.equalsDate(calendar: Calendar) =
-        this[Calendar.DAY_OF_MONTH] == calendar[Calendar.DAY_OF_MONTH]
-                && this[Calendar.MONTH] == calendar[Calendar.MONTH]
-                && this[Calendar.YEAR] == calendar[Calendar.YEAR]
 
     private fun Calendar.equalsWeek(calendar: Calendar) =
         this[Calendar.WEEK_OF_YEAR] == calendar[Calendar.WEEK_OF_YEAR]
