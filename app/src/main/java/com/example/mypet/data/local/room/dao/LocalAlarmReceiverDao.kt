@@ -3,13 +3,14 @@ package com.example.mypet.data.local.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.CARE_TABLE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.DOSE
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.TITLE
 import com.example.mypet.data.local.room.entity.LocalEndEntity
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
@@ -30,8 +31,9 @@ interface LocalAlarmReceiverDao {
                 "p.kind_ordinal ${PET_TABLE}_$KIND_ORDINAL, " +
                 "p.breed_ordinal ${PET_TABLE}_$BREED_ORDINAL, " +
                 "c.care_type_ordinal ${CARE_TABLE}_$CARE_TYPE_ORDINAL, " +
-                "a.id ${ALARM_TABLE}_$ID, " +
-                "a.description ${ALARM_TABLE}_$DESCRIPTION " +
+                "c.title ${CARE_TABLE}_$TITLE, " +
+                "c.dose ${CARE_TABLE}_$DOSE, " +
+                "a.id ${ALARM_TABLE}_$ID " +
                 "FROM alarm a " +
                 "LEFT JOIN care c ON c.id = a.care_id " +
                 "LEFT JOIN pet p ON p.id = c.pet_id " +

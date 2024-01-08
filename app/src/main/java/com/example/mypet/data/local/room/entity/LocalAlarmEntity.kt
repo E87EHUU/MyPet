@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.mypet.data.local.room.LocalDatabase.Companion.DEFAULT_ID
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
@@ -24,9 +23,6 @@ data class LocalAlarmEntity(
     val nextStart: Long?,
     @ColumnInfo(name = INTERVAL_START)
     val intervalStart: Long?,
-
-    @ColumnInfo(name = DESCRIPTION)
-    val description: String?,
 
     @ColumnInfo(name = HOUR)
     val hour: Int,

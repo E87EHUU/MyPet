@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer">
+    style="@style/Theme.MyPet.Care.Container">
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerAlarmIcon"
-        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+        style="@style/Theme.MyPet.Care.HeaderIcon"
         android:contentDescription="@string/care_alarm_title"
         android:src="@drawable/baseline_notifications_24"
         app:layout_constraintStart_toStartOf="parent"
@@ -14,9 +14,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewCareRecyclerAlarmTitle"
-        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+        style="@style/Theme.MyPet.Care.HeaderTitle"
         android:text="@string/care_alarm_title"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCareRecyclerAlarmAdd"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerAlarmIcon"
         app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerAlarmIcon"
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerAlarmIcon" />
 

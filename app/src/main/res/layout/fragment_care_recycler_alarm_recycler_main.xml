@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.CareItemContainer">
+    style="@style/Theme.MyPet.Care.ItemContainer">
 
     <TextView
         android:id="@+id/textViewCareRecyclerAlarmTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="@+id/buttonCareRecyclerAlarmDelete"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,17 +23,5 @@
         app:icon="@drawable/baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewCareRecyclerAlarmDescription"
-        android:layout_width="@dimen/zero"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCareRecyclerAlarmDelete"
-        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerAlarmTime"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCareRecyclerAlarmDelete"
-        tools:text="Влажный корм 100 грамм"
-        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

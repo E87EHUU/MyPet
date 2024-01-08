@@ -54,7 +54,8 @@ class AlarmReceiverRepositoryImpl @Inject constructor(
             petKindOrdinal,
             petBreedOrdinal,
             careTypeOrdinal,
+            careTitle,
+            careDose,
             alarmId,
-            alarmDescription,
         )
 }

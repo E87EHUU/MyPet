@@ -29,7 +29,7 @@ class CareEndDetailFragment : Fragment(R.layout.fragment_care_end_detail) {
         viewModel.careEndModel?.let { careEndModel ->
             careEndModel.afterTimes =
                 try {
-                    binding.textInputEditTextCareEndDetailEndAfterTimes.text.toString().toInt()
+                    binding.textInputEditTextCareEndDetailAfterTimes.text.toString().toInt()
                 } catch (_: Exception) {
                     null
                 }
@@ -57,18 +57,18 @@ class CareEndDetailFragment : Fragment(R.layout.fragment_care_end_detail) {
         getToolbar()
             ?.clear()
             ?.let { toolbar ->
-            toolbar.inflateMenu(R.menu.toolbar_save)
-            toolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.toolbarSave -> {
-                        saveAndPopBack()
-                        true
-                    }
+                toolbar.inflateMenu(R.menu.toolbar_save)
+                toolbar.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.toolbarSave -> {
+                            saveAndPopBack()
+                            true
+                        }
 
-                    else -> false
+                        else -> false
+                    }
                 }
             }
-        }
     }
 
     private fun initView() {
@@ -84,63 +84,63 @@ class CareEndDetailFragment : Fragment(R.layout.fragment_care_end_detail) {
 
     private fun CareEndModel.updateUI() {
         afterTimes?.let {
-            binding.textInputEditTextCareEndDetailEndAfterTimes.setText(it.toString())
+            binding.textInputEditTextCareEndDetailAfterTimes.setText(it.toString())
         }
 
         when (typeOrdinal) {
             CareEndTypes.AFTER_TIMES.ordinal -> {
                 updateUIAfterTimes()
-                binding.radioButtonCareEndDetailEndAfterTimes.isChecked = true
+                binding.radioButtonCareEndDetailAfterTimes.isChecked = true
             }
 
             CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> {
                 updateUIEndAfterDate()
-                binding.radioButtonCareEndDetailEndAfterDate.isChecked = true
+                binding.radioButtonCareEndDetailAfterDate.isChecked = true
             }
 
             else -> {
                 updateUIEndNone()
-                binding.radioButtonCareEndDetailEndNone.isChecked = true
+                binding.radioButtonCareEndDetailNone.isChecked = true
             }
         }
     }
 
     private fun updateUIAfterTimes() {
         with(binding) {
-            radioButtonCareEndDetailEndNone.isChecked = false
-            radioButtonCareEndDetailEndAfterTimes.isChecked = true
-            radioButtonCareEndDetailEndAfterDate.isChecked = false
+            radioButtonCareEndDetailNone.isChecked = false
+            radioButtonCareEndDetailAfterTimes.isChecked = true
+            radioButtonCareEndDetailAfterDate.isChecked = false
 
-            textInputEditTextCareEndDetailEndAfterTimes.isEnabled = true
-            textInputEditTextCareEndDetailEndAfterDate.isEnabled = false
+            textInputEditTextCareEndDetailAfterTimes.isEnabled = true
+            textInputEditTextCareEndDetailAfterDate.isEnabled = false
         }
     }
 
     private fun updateUIEndAfterDate() {
         with(binding) {
-            radioButtonCareEndDetailEndNone.isChecked = false
-            radioButtonCareEndDetailEndAfterTimes.isChecked = false
-            radioButtonCareEndDetailEndAfterDate.isChecked = true
+            radioButtonCareEndDetailNone.isChecked = false
+            radioButtonCareEndDetailAfterTimes.isChecked = false
+            radioButtonCareEndDetailAfterDate.isChecked = true
 
-            textInputEditTextCareEndDetailEndAfterTimes.isEnabled = false
-            textInputEditTextCareEndDetailEndAfterDate.isEnabled = true
+            textInputEditTextCareEndDetailAfterTimes.isEnabled = false
+            textInputEditTextCareEndDetailAfterDate.isEnabled = true
         }
     }
 
     private fun updateUIEndNone() {
         with(binding) {
-            radioButtonCareEndDetailEndNone.isChecked = true
-            radioButtonCareEndDetailEndAfterTimes.isChecked = false
-            radioButtonCareEndDetailEndAfterTimes.isChecked = false
+            radioButtonCareEndDetailNone.isChecked = true
+            radioButtonCareEndDetailAfterTimes.isChecked = false
+            radioButtonCareEndDetailAfterTimes.isChecked = false
 
-            textInputEditTextCareEndDetailEndAfterTimes.isEnabled = false
-            textInputEditTextCareEndDetailEndAfterDate.isEnabled = false
+            textInputEditTextCareEndDetailAfterTimes.isEnabled = false
+            textInputEditTextCareEndDetailAfterDate.isEnabled = false
         }
     }
 
     private fun updateUIAfterDate() {
         viewModel.careEndModel?.afterDate?.let {
-            binding.textInputEditTextCareEndDetailEndAfterDate.setText(toAppDate(it))
+            binding.textInputEditTextCareEndDetailAfterDate.setText(toAppDate(it))
         }
     }
 
@@ -154,30 +154,30 @@ class CareEndDetailFragment : Fragment(R.layout.fragment_care_end_detail) {
         )
 
         with(binding) {
-            textInputEditTextCareEndDetailEndAfterTimes.filters = inputFilterAfterTimes
+            textInputEditTextCareEndDetailAfterTimes.filters = inputFilterAfterTimes
 
-            constraintLayoutCareEndDetailEndAfterTimes.setOnClickListener {
+            constraintLayoutCareEndDetailAfterTimes.setOnClickListener {
                 viewModel.careEndModel?.let { careEndModel ->
                     careEndModel.typeOrdinal = CareEndTypes.AFTER_TIMES.ordinal
                     updateUIAfterTimes()
                 }
             }
 
-            constraintLayoutCareEndDetailEndAfterDate.setOnClickListener {
+            constraintLayoutCareEndDetailAfterDate.setOnClickListener {
                 viewModel.careEndModel?.let { careEndModel ->
                     careEndModel.typeOrdinal = CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal
                     updateUIEndAfterDate()
                 }
             }
 
-            constraintLayoutCareEndDetailEndNone.setOnClickListener {
+            constraintLayoutCareEndDetailNone.setOnClickListener {
                 viewModel.careEndModel?.let { careEndModel ->
                     careEndModel.typeOrdinal = CareEndTypes.NONE.ordinal
                     updateUIEndNone()
                 }
             }
 
-            textInputEditTextCareEndDetailEndAfterDate.setOnClickListener { showDatePicker() }
+            textInputEditTextCareEndDetailAfterDate.setOnClickListener { showDatePicker() }
         }
     }
 

@@ -54,8 +54,8 @@ class AlarmServiceNotification(
 
     fun getNotification(): Notification {
         with(alarmServiceModel) {
-            val text = alarmDescription
-                ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
+            val text = careTitle ?: careDose
+            ?: context.getString(CareTypes.entries[careTypeOrdinal].titleResId)
 
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setAutoCancel(true)

@@ -21,7 +21,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutsCareRepeatIntervalTimes"
-            style="@style/Theme.MyPet.TextInputLayoutWrap"
+            style="@style/Theme.MyPet.Care.TextInputLayoutWrap"
             android:layout_marginStart="@dimen/offset_8"
             android:layout_marginTop="@dimen/offset_8"
             android:maxEms="3"

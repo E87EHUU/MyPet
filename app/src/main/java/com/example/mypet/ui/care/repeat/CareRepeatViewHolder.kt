@@ -16,7 +16,7 @@ class CareRepeatViewHolder(
 
     init {
         with(binding) {
-            constraintLayoutCareRecyclerRepeat.setOnClickListener {
+            root.setOnClickListener {
                 callback.onClickRepeat()
             }
         }
@@ -78,21 +78,21 @@ class CareRepeatViewHolder(
                     else -> {
                         //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
 
-                        context.getString(R.string.care_repeat_interval_description_none)
+                        context.getString(R.string.care_repeat_description_none)
                     }
                 }
         }
     }
 
-/*    private fun generateAlarmWithDayTimes() {
-        try {
-            val dayTimes =
-                binding.textInputEditTextCareRecyclerRepeatDayTimes.text.toString().toInt()
-            callback.generateDayAlarm(dayTimes)
-        } catch (_: Exception) {
+    /*    private fun generateAlarmWithDayTimes() {
+            try {
+                val dayTimes =
+                    binding.textInputEditTextCareRecyclerRepeatDayTimes.text.toString().toInt()
+                callback.generateDayAlarm(dayTimes)
+            } catch (_: Exception) {
 
-        }
-    }*/
+            }
+        }*/
 
     private fun getIntervalTimes() =
         careRepeatModel?.let { careRepeatModel ->

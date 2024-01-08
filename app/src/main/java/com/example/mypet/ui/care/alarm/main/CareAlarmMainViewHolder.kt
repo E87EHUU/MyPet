@@ -1,6 +1,5 @@
 package com.example.mypet.ui.care.alarm.main
 
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mypet.app.databinding.FragmentCareRecyclerAlarmRecyclerMainBinding
 import com.example.mypet.domain.care.alarm.CareAlarmDetailModel
@@ -27,13 +26,6 @@ class CareAlarmMainViewHolder(
 
         with(careAlarmDetailMainModel) {
             binding.textViewCareRecyclerAlarmTime.text = toAppTime(hour, minute)
-
-            description?.let {
-                binding.textViewCareRecyclerAlarmDescription.text = it
-                binding.textViewCareRecyclerAlarmDescription.isVisible = true
-            } ?: run {
-                binding.textViewCareRecyclerAlarmDescription.isVisible = false
-            }
         }
     }
 }

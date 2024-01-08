@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Theme.MyPet.CareItemContainer"
-    android:gravity="center_vertical"
-    android:text="@string/care_recycler_alarm_recycler_add"
-    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />

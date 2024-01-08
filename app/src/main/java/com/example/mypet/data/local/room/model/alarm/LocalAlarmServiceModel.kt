@@ -1,7 +1,6 @@
 package com.example.mypet.data.local.room.model.alarm
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
@@ -13,6 +12,8 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.DOSE
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.TITLE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
@@ -32,11 +33,13 @@ data class LocalAlarmServiceModel(
 
     @ColumnInfo(name = "${CARE_TABLE}_$CARE_TYPE_ORDINAL")
     val careTypeOrdinal: Int,
+    @ColumnInfo(name = "${CARE_TABLE}_$TITLE")
+    val careTitle: String,
+    @ColumnInfo(name = "${CARE_TABLE}_$DOSE")
+    val careDose: String,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
-    @ColumnInfo(name = "${ALARM_TABLE}_$DESCRIPTION")
-    val alarmDescription: String?,
     @ColumnInfo(name = "${ALARM_TABLE}_$HOUR")
     val alarmHour: Int,
     @ColumnInfo(name = "${ALARM_TABLE}_$MINUTE")
