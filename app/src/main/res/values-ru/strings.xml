@@ -131,17 +131,20 @@
     <string name="user_feedback_choose_app">Выберите приложение для отправки email разработчику</string>
     <string name="user_feedback_email_error">Невозможно отправить email</string>
     <string name="user_button">Кнопка</string>
-    <string name="user_auth_button">Войти</string>
+    <string name="user_log_in">Управление аккаунтом</string>
 
-    <string name="login_prompt_email">Введите email</string>
-    <string name="login_prompt_password">Введите пароль</string>
+    <string name="login_prompt_email">Email</string>
+    <string name="login_prompt_password">Пароль</string>
     <string name="login_action_sign_in">Войдите или зарегистрируйтесь</string>
-    <string name="login_welcome">Добро пожаловать!</string>
+    <string name="login_welcome">Вход выполнен успешно!</string>
     <string name="login_invalid_email">Недействительный адрес электронной почты</string>
     <string name="login_invalid_password">Пароль должен быть >5 символов</string>
     <string name="login_failed">Ошибка входа</string>
-    <string name="login_chip_sign_in_label">Войти</string>
-    <string name="login_chip_create_user_label">Зарегистрироваться</string>
+    <string name="login_button_sign_in_label">Войти</string>
+    <string name="login_button_create_user_label">Зарегистрироваться</string>
+    <string name="login_toolbar_title">Вход / Регистрация</string>
+    <string name="login_button_sign_out_label">Выйти</string>
+    <string name="login_signed_out">Вы вышли из аккаунта!</string>
 
     <string name="preferences_theme">Тема приложения</string>
     <string name="preferences_light_theme">Светлая</string>

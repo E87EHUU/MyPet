@@ -39,8 +39,21 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         }
     }
 
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
+    fun logoutCurrentUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _authState.postValue(AuthResult.Loading)
+
+            val result = authRepository.logoutCurrentUser()
+            _authState.postValue(result)
+        }
+    }
+
+    fun isLoggedIn(): Boolean {
+        return authRepository.isLoggedIn()
+    }
+
+    fun loginDataChanged(email: String, password: String) {
+        if (!isEmailValid(email)) {
             _loginForm.value = LoginFormState(emailError = R.string.login_invalid_email)
         } else if (!isPasswordValid(password)) {
             _loginForm.value = LoginFormState(passwordError = R.string.login_invalid_password)
@@ -49,11 +62,11 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         }
     }
 
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains("@")) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
+    private fun isEmailValid(email: String): Boolean {
+        return if (email.contains("@")) {
+            Patterns.EMAIL_ADDRESS.matcher(email).matches()
         } else {
-            username.isNotBlank()
+            email.isNotBlank()
         }
     }
 

@@ -6,4 +6,5 @@ sealed class AuthResult {
     data class Success(val user: LoggedInUser) : AuthResult()
     data class Error(val exception: Exception) : AuthResult()
     object Loading : AuthResult()
+    data class SuccessOut(val user: LoggedInUser) : AuthResult()
 }

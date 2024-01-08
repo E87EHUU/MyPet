@@ -6,4 +6,9 @@ abstract class LoggedInUser {
     abstract val id: String
 
     class Base(override val email: String, override val id: String) : LoggedInUser()
+
+    object Empty : LoggedInUser() {
+        override val email = "Empty"
+        override val id = "Empty_id"
+    }
 }
