@@ -7,8 +7,6 @@
     android:clipToPadding="false"
     android:overScrollMode="never"
     android:paddingHorizontal="@dimen/offset_24"
-    android:visibility="gone"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
     app:spanCount="3"
-    tools:listitem="@layout/fragment_pet_recycler_care_main"
-    tools:visibility="visible" />
+    tools:listitem="@layout/fragment_pet_recycler_care_main" />

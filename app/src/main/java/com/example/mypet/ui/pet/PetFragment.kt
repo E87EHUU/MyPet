@@ -122,10 +122,6 @@ class PetFragment : Fragment(R.layout.fragment_pet),
 
     }
 
-    override fun onPetCareClick(petCareModel: PetCareModel) {
-        navToCare(petCareModel)
-    }
-
     override fun onClickPetAdd() {
         val directions =
             PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(DEFAULT_ID)
@@ -146,5 +142,13 @@ class PetFragment : Fragment(R.layout.fragment_pet),
         val directions =
             PetFragmentDirections.actionPetToPetCreationAndUpdateFragment(petListMainModel.id)
         findNavController().navigate(directions)
+    }
+
+    override fun onClickPetCare(petCareModel: PetCareModel) {
+        navToCare(petCareModel)
+    }
+
+    override fun onClickPetCareAdd() {
+        TODO("Not yet implemented")
     }
 }

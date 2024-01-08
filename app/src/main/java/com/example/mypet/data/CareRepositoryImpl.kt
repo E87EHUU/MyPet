@@ -118,19 +118,19 @@ class CareRepositoryImpl @Inject constructor(
     override suspend fun saveCareModels(careSaveModel: CareSaveModel) =
         flow {
             with(careSaveModel) {
-                localCareDao.saveLocalCareEntity(main.toLocalCareEntity())
+                val careId = localCareDao.saveLocalCareEntity(main.toLocalCareEntity()).toInt()
 
                 note?.run {
-                    localCareDao.saveLocalNoteEntity(toLocalNoteEntity(main.id))
+                    localCareDao.saveLocalNoteEntity(toLocalNoteEntity(careId))
                 }
 
-                val localStartEntity = start?.toLocalStartEntity(main.id)
+                val localStartEntity = start?.toLocalStartEntity(careId)
                     ?.also { localCareDao.saveLocalStartEntity(it) }
 
-                val localRepeatEntity = repeat?.toLocalRepeatEntity(main.id)
+                val localRepeatEntity = repeat?.toLocalRepeatEntity(careId)
                     ?.also { localCareDao.saveLocalRepeatEntity(it) }
 
-                val localEndEntity = end?.toLocalEndEntity(main.id)
+                val localEndEntity = end?.toLocalEndEntity(careId)
                     ?.also { localCareDao.saveLocalEndEntity(it) }
 
                 alarm?.run {
@@ -143,7 +143,7 @@ class CareRepositoryImpl @Inject constructor(
                     alarms.forEach { careAlarmDetailModel ->
                         with(careAlarmDetailModel) {
                             val localAlarmEntity =
-                                alarmCalculator.calculate(toLocalAlarmEntity(main.id))
+                                alarmCalculator.calculate(toLocalAlarmEntity(careId))
 
                             val alarmId =
                                 localCareDao.saveLocalAlarmEntity(localAlarmEntity).toInt()
