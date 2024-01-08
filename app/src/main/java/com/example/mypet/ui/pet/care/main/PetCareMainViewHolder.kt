@@ -16,7 +16,7 @@ class PetCareMainViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            callback.onPetCareClick(petCareModel)
+            callback.onClickPetCare(petCareModel)
         }
     }
 
@@ -46,6 +46,6 @@ class PetCareMainViewHolder(
                 } catch (_:Exception) {
                     0
                 }
-            } ?: run { 0 }
-        } ?: run { 0 }
+            } ?: 0
+        } ?: 0
 }
