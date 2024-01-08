@@ -2,9 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.Care.Container"
-    android:visibility="gone"
-    tools:visibility="visible">
+    style="@style/Theme.MyPet.Care.Container.Clickable">
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerStartIcon"

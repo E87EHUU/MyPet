@@ -57,14 +57,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingVertical">@dimen/offset_8</item>
-        <item name="android:minHeight">@dimen/care_item_min_height</item>
+    </style>
+
+    <style name="Theme.MyPet.Care.Container.Clickable">
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:layout_marginTop">@dimen/offset_8</item>
     </style>
 
     <style name="Theme.MyPet.Care.HeaderIcon">
         <item name="android:layout_width">@dimen/care_header_icon_size</item>
         <item name="android:layout_height">@dimen/care_header_icon_size</item>
+        <item name="android:layout_marginStart">@dimen/offset_16</item>
+        <item name="android:layout_marginTop">@dimen/offset_8</item>
     </style>
 
     <style name="Theme.MyPet.Care.HeaderTitle">
@@ -102,12 +105,8 @@
     <style name="Theme.MyPet.Care.ItemContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/care_item_min_height</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
-        <item name="android:paddingEnd">@dimen/offset_32</item>
-        <item name="android:paddingStart">@dimen/care_item_offset_start</item>
-        <item name="android:paddingVertical">@dimen/offset_8</item>
-        <item name="android:layout_marginTop">@dimen/offset_8</item>
+        <item name="android:paddingStart">@dimen/offset_32</item>
     </style>
 
     <style name="Theme.MyPet.CareEndRadio">

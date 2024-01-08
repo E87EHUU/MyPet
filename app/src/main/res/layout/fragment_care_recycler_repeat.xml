@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.Care.ItemContainer" >
+    style="@style/Theme.MyPet.Care.Container.Clickable" >
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerRepeatIcon"
@@ -34,8 +34,9 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:icon="@drawable/baseline_close_24"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerRepeatIcon"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

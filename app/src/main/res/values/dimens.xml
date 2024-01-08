@@ -74,8 +74,6 @@
     <dimen name="text_input_layout_spinner_icon_size">44dp</dimen>
     <dimen name="care_recycler_alarm_recycler_offset_start">64dp</dimen>
 
-    <dimen name="care_item_min_height">56dp</dimen>
     <dimen name="care_alarm_detail_item_min_height">64dp</dimen>
-    <dimen name="care_item_offset_start">48dp</dimen>
 
 </resources>

@@ -19,7 +19,7 @@ class CareAlarmViewHolder(
 
     init {
         with(binding) {
-            binding.buttonCareRecyclerAlarmAdd.setOnClickListener {
+            binding.constraintLayoutCareRecyclerAlarmHeader.setOnClickListener {
                 onClickAlarmAdd()
             }
 

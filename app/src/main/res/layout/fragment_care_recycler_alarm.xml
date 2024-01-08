@@ -4,41 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.MyPet.Care.Container">
 
-    <ImageView
-        android:id="@+id/imageViewCareRecyclerAlarmIcon"
-        style="@style/Theme.MyPet.Care.HeaderIcon"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/care_alarm_title"
-        android:src="@drawable/baseline_notifications_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textViewCareRecyclerAlarmTitle"
-        style="@style/Theme.MyPet.Care.HeaderTitle"
-        android:text="@string/care_alarm_title"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerAlarmIcon"
-        app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerAlarmIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerAlarmIcon" />
-
-    <Button
-        android:id="@+id/buttonCareRecyclerAlarmAdd"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutCareRecyclerAlarmHeader"
+        style="@style/Theme.MyPet.Care.Container.Clickable"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/offset_16"
-        android:text="@string/food_add_alarm_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewCareRecyclerAlarmIcon"
+            style="@style/Theme.MyPet.Care.HeaderIcon"
+            android:contentDescription="@string/care_alarm_title"
+            android:src="@drawable/baseline_notifications_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewCareRecyclerAlarmTitle"
+            style="@style/Theme.MyPet.Care.HeaderTitle"
+            android:text="@string/care_alarm_title"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerAlarmIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerAlarmIcon"
+            app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerAlarmIcon" />
+
+        <Button
+            android:id="@+id/buttonCareRecyclerAlarmAdd"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:icon="@drawable/baseline_add_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCareRecyclerAlarmRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_8"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCareRecyclerAlarmAdd"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareRecyclerAlarmHeader"
         tools:listitem="@layout/fragment_care_recycler_alarm_recycler_main">
 
     </androidx.recyclerview.widget.RecyclerView>
