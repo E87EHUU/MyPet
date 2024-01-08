@@ -36,7 +36,7 @@ class AlarmCalculator(
 
             localEndEntity?.let {
                 if (isEnd(nowCalendar, localEndEntity))
-                    return localAlarmEntity.copy(beforeStart = null, nextStart = null)
+                    return localAlarmEntity.copy(intervalStart = null, nextStart = null)
             }
 
             calendarBefore.timeInMillis = calendarNext.timeInMillis
@@ -48,7 +48,7 @@ class AlarmCalculator(
         println("Next alarm ${calendarNext.time}")
 
         return localAlarmEntity.copy(
-            beforeStart = calendarNext.timeInMillis - nowCalendar.timeInMillis,
+            intervalStart = calendarNext.timeInMillis - calendarBefore.timeInMillis,
             nextStart = calendarNext.timeInMillis
         )
     }

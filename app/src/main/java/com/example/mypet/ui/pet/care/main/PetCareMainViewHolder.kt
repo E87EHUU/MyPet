@@ -36,9 +36,9 @@ class PetCareMainViewHolder(
 
         binding.progressBarPetCareRecyclerMain.progress =
             petCareModel.nextStart?.let {
-                petCareModel.beforeStart?.let {
+                petCareModel.intervalStart?.let {
                     val calendar = Calendar.getInstance()
-                    ((petCareModel.nextStart - calendar.timeInMillis) * 100 / petCareModel.beforeStart).toInt()
+                    ((petCareModel.nextStart - calendar.timeInMillis) * 100 / petCareModel.intervalStart).toInt()
                 } ?: run { 0 }
             } ?: run { 0 }
     }

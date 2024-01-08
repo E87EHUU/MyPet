@@ -238,7 +238,7 @@ class CareRepositoryImpl @Inject constructor(
         LocalAlarmEntity(
             id = id,
             careId = careId,
-            beforeStart = null,
+            intervalStart = null,
             nextStart = null,
             description = description,
             hour = hour,
