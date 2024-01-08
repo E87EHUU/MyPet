@@ -16,20 +16,20 @@ class AlarmCalculator(
     fun calculate(
         localAlarmEntity: LocalAlarmEntity,
     ): LocalAlarmEntity {
-        val calendar = Calendar.getInstance()
+        val calendarNext = Calendar.getInstance()
         val nowCalendar = Calendar.getInstance()
-        val beforeCalendar = Calendar.getInstance()
+        val calendarBefore = Calendar.getInstance()
 
         if (isNotStart(nowCalendar, localStartEntity))
-            localStartEntity?.let { calendar.timeInMillis = it.timeInMillis }
+            localStartEntity?.let { calendarNext.timeInMillis = it.timeInMillis }
 
-        calendar[Calendar.HOUR_OF_DAY] = localAlarmEntity.hour
-        calendar[Calendar.MINUTE] = localAlarmEntity.minute
-        calendar[Calendar.SECOND] = 0
-        calendar[Calendar.MILLISECOND] = 0
+        calendarNext[Calendar.HOUR_OF_DAY] = localAlarmEntity.hour
+        calendarNext[Calendar.MINUTE] = localAlarmEntity.minute
+        calendarNext[Calendar.SECOND] = 0
+        calendarNext[Calendar.MILLISECOND] = 0
 
         localRepeatEntity?.let {
-            calendar.calculateAndUpdateRepeatTimeInMillis(
+            calendarNext.updateNext(
                 localAlarmEntity,
                 nowCalendar
             )
@@ -39,17 +39,17 @@ class AlarmCalculator(
                     return localAlarmEntity.copy(beforeStart = null, nextStart = null)
             }
 
-            beforeCalendar.timeInMillis = calendar.timeInMillis
-            beforeCalendar.getBeforeTimeInMillis(localRepeatEntity)
+            calendarBefore.timeInMillis = calendarNext.timeInMillis
+            calendarBefore.updateBefore(localRepeatEntity)
         }
 
         println("AlarmCalculator calculate()")
-        println("Before alarm ${beforeCalendar.time}")
-        println("Next alarm ${calendar.time}")
+        println("Before alarm ${calendarBefore.time}")
+        println("Next alarm ${calendarNext.time}")
 
         return localAlarmEntity.copy(
-            beforeStart = calendar.timeInMillis - nowCalendar.timeInMillis,
-            nextStart = calendar.timeInMillis
+            beforeStart = calendarNext.timeInMillis - nowCalendar.timeInMillis,
+            nextStart = calendarNext.timeInMillis
         )
     }
 
@@ -76,7 +76,7 @@ class AlarmCalculator(
             else -> false
         }
 
-    private fun Calendar.calculateAndUpdateRepeatTimeInMillis(
+    private fun Calendar.updateNext(
         localAlarmEntity: LocalAlarmEntity,
         nowCalendar: Calendar
     ) {
@@ -99,7 +99,7 @@ class AlarmCalculator(
         }
     }
 
-    private fun Calendar.getBeforeTimeInMillis(
+    private fun Calendar.updateBefore(
         localRepeatEntity: LocalRepeatEntity
     ) {
         val amount = (localRepeatEntity.intervalTimes ?: 1) * -1
