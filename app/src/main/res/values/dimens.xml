@@ -70,11 +70,10 @@
     <dimen name="pet_creation_list_drop_down_height">215dp</dimen>
     <dimen name="pet_creation_drop_down_item_height">40dp</dimen>
 
-    <dimen name="login_fragment_email_layout_margin_top">32dp</dimen>
+    <dimen name="login_fragment_email_layout_margin_top">16dp</dimen>
     <dimen name="login_fragment_password_layout_margin_top">16dp</dimen>
-    <dimen name="login_fragment_button_sigh_in_margin_top">32dp</dimen>
+    <dimen name="login_fragment_button_sigh_in_margin_top">16dp</dimen>
     <dimen name="login_fragment_button_create_user_margin_top">16dp</dimen>
-    <dimen name="login_button_sign_out_icon_size">48dp</dimen>
 
     <dimen name="text_input_layout_spinner_icon_size">44dp</dimen>
     <dimen name="care_recycler_alarm_recycler_offset_start">64dp</dimen>

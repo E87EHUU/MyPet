@@ -28,7 +28,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onStart() {
         super.onStart()
+
         initToolbar()
+
+        checkIfUserIsSignedIn()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +63,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 is AuthResult.Error -> {
                     binding.loading.visibility = View.GONE
+
                     Toast.makeText(
                         requireContext(),
                         it.exception.message.toString(),
@@ -70,30 +74,29 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 is AuthResult.Success -> {
                     binding.loading.visibility = View.GONE
-                    Toast.makeText(requireContext(), R.string.login_welcome, Toast.LENGTH_LONG)
+
+                    Toast.makeText(
+                        requireContext(),
+                        (getString(R.string.login_welcome) + it.user.email),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
-                    with(binding) {
-                        buttonSignIn.visibility = View.GONE
-                        buttonCreateUser.visibility = View.GONE
-                        emailLayout.visibility = View.GONE
-                        passwordLayout.visibility = View.GONE
-                        buttonSignOut.visibility = View.VISIBLE
-                    }
+
+                    updateUIWithUser()
                 }
 
                 is AuthResult.SuccessOut -> {
                     binding.loading.visibility = View.GONE
-                    Toast.makeText(requireContext(), R.string.login_signed_out, Toast.LENGTH_LONG)
-                        .show()
-                    with(binding) {
-                        buttonSignIn.visibility = View.VISIBLE
-                        buttonCreateUser.visibility = View.VISIBLE
-                        emailLayout.visibility = View.VISIBLE
-                        passwordLayout.visibility = View.VISIBLE
-                        buttonSignOut.visibility = View.GONE
-                    }
-                }
 
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.login_signed_out),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+
+                    updateUIWithSignedOutUser()
+                }
             }
         }
     }
@@ -149,6 +152,34 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             ?.let { toolbar ->
                 toolbar.title = getString(R.string.login_toolbar_title)
             }
+    }
+
+    private fun updateUIWithUser() {
+        with(binding) {
+            buttonSignIn.visibility = View.GONE
+            buttonCreateUser.visibility = View.GONE
+            emailLayout.visibility = View.GONE
+            passwordLayout.visibility = View.GONE
+            buttonSignOut.visibility = View.VISIBLE
+        }
+    }
+
+    private fun updateUIWithSignedOutUser() {
+        with(binding) {
+            buttonSignIn.visibility = View.VISIBLE
+            buttonCreateUser.visibility = View.VISIBLE
+            emailLayout.visibility = View.VISIBLE
+            email.text?.clear()
+            passwordLayout.visibility = View.VISIBLE
+            password.text?.clear()
+            buttonSignOut.visibility = View.GONE
+        }
+    }
+
+    private fun checkIfUserIsSignedIn() {
+        if (loginViewModel.isLoggedIn()) {
+            updateUIWithUser()
+        }
     }
 
 }

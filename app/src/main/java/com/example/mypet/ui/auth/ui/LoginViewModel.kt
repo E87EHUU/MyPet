@@ -48,6 +48,10 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         }
     }
 
+    fun isLoggedIn(): Boolean {
+        return authRepository.isLoggedIn()
+    }
+
     fun loginDataChanged(email: String, password: String) {
         if (!isEmailValid(email)) {
             _loginForm.value = LoginFormState(emailError = R.string.login_invalid_email)

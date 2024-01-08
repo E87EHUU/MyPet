@@ -78,11 +78,10 @@
         style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/login_fragment_button_sigh_in_margin_top"
+        android:layout_marginTop="@dimen/login_fragment_email_layout_margin_top"
         android:text="@string/login_button_sign_out_label"
         android:visibility="gone"
-        app:icon="@drawable/icon_sign_out"
-        app:iconSize="@dimen/login_button_sign_out_icon_size"
+        app:icon="@drawable/icon_log_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

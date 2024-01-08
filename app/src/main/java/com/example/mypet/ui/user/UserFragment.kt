@@ -29,7 +29,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         appPrivacyPolicy()
         appFeedBack()
         appAbout()
-        navigateToAuth()
+        appLogIn()
     }
 
     private fun appPreferences() {
@@ -102,9 +102,14 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
     }
 
-    private fun navigateToAuth() {
-        binding.userAuthButton.setOnClickListener {
-            findNavController().navigate(UserFragmentDirections.actionUserFragmentToLoginFragment())
+    private fun appLogIn() {
+        with(binding) {
+            profileLogIn.lineImage.setImageResource(R.drawable.icon_log_in)
+            profileLogIn.lineText.text = getString(R.string.user_log_in)
+
+            profileLogIn.lineBlock.setOnClickListener {
+                findNavController().navigate(UserFragmentDirections.actionUserFragmentToLoginFragment())
+            }
         }
     }
 

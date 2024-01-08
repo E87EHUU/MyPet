@@ -28,17 +28,11 @@
             <include
                 android:id="@+id/profileAbout"
                 layout="@layout/line_with_image" />
+
+            <include
+                android:id="@+id/profileLogIn"
+                layout="@layout/line_with_image" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/userAuthButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/user_margin"
-        android:layout_marginEnd="@dimen/user_margin"
-        android:layout_marginBottom="@dimen/user_margin"
-        android:text="@string/user_auth_button" />
 
 </FrameLayout>

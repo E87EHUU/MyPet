@@ -143,10 +143,10 @@
     <string name="user_feedback_email_recipient" translatable="false">mypetappfeedback@gmail.com</string>
     <string name="user_feedback_email_error">Unable to send an email</string>
     <string name="user_button">Button</string>
-    <string name="user_auth_button">Log in</string>
+    <string name="user_log_in">Account settings</string>
 
-    <string name="login_prompt_email">Enter email</string>
-    <string name="login_prompt_password">Enter password</string>
+    <string name="login_prompt_email">Email</string>
+    <string name="login_prompt_password">Password</string>
     <string name="login_action_sign_in">Sign in or sign up</string>
     <string name="login_welcome">Welcome!</string>
     <string name="login_invalid_email">Not a valid email</string>

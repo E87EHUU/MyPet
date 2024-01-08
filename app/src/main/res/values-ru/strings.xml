@@ -131,10 +131,10 @@
     <string name="user_feedback_choose_app">Выберите приложение для отправки email разработчику</string>
     <string name="user_feedback_email_error">Невозможно отправить email</string>
     <string name="user_button">Кнопка</string>
-    <string name="user_auth_button">Войти</string>
+    <string name="user_log_in">Управление аккаунтом</string>
 
-    <string name="login_prompt_email">Введите email</string>
-    <string name="login_prompt_password">Введите пароль</string>
+    <string name="login_prompt_email">Email</string>
+    <string name="login_prompt_password">Пароль</string>
     <string name="login_action_sign_in">Войдите или зарегистрируйтесь</string>
     <string name="login_welcome">Вход выполнен успешно!</string>
     <string name="login_invalid_email">Недействительный адрес электронной почты</string>
