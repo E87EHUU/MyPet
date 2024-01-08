@@ -36,16 +36,17 @@ class CareEndViewHolder(
         careEndModel?.let { careEndModel ->
             binding.textViewCareRecyclerEndDescription.text =
                 when (careEndModel.typeOrdinal) {
-                    CareEndTypes.AFTER_TIMES.ordinal -> context.getString(
-                        R.string.care_repeat_end_after_times,
-                        careEndModel.afterTimes.toString()
-                    )
+                    CareEndTypes.AFTER_TIMES.ordinal ->
+                        context.getString(
+                            R.string.care_repeat_end_after_times,
+                            careEndModel.afterTimes.toString()
+                        )
 
-                    CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal -> toAppDate(
-                        careEndModel.afterDate
-                    )
+                    CareEndTypes.AFTER_TIME_IN_MILLIS.ordinal ->
+                        toAppDate(careEndModel.afterDate)
 
-                    else -> context.getString(R.string.care_repeat_end_none)
+                    else ->
+                        context.getString(R.string.care_end_none)
                 }
         }
     }

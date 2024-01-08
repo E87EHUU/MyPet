@@ -13,4 +13,16 @@ data class CareRepeatModel(
     var isFriday: Boolean,
     var isSaturday: Boolean,
     var isSunday: Boolean,
-) : CareModel(CARE_ADAPTER_REPEAT_KEY)
+) : CareModel(CARE_ADAPTER_REPEAT_KEY) {
+    fun reset() {
+        intervalTimes = null
+        intervalOrdinal = null
+        isMonday = false
+        isTuesday = false
+        isWednesday = false
+        isThursday = false
+        isFriday = false
+        isSaturday = false
+        isSunday = false
+    }
+}

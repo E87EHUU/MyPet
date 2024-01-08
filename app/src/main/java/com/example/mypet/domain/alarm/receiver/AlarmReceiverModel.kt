@@ -8,7 +8,8 @@ data class AlarmReceiverModel(
     val petBreedOrdinal: Int?,
 
     val careTypeOrdinal: Int,
+    val careTitle: String?,
+    val careDose: String?,
 
     val alarmId: Int,
-    val alarmDescription: String?,
 )

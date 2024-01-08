@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer"
+    style="@style/Theme.MyPet.Care.Container"
     android:visibility="gone"
     tools:visibility="visible">
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerEndIcon"
-        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+        style="@style/Theme.MyPet.Care.HeaderIcon"
         android:contentDescription="@string/care_repeat_title"
         android:src="@drawable/baseline_timer_off_24"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,18 +16,16 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewCareRecyclerEndTitle"
-        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+        style="@style/Theme.MyPet.Care.HeaderTitle"
         android:text="@string/care_end_title"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerEndIcon"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerEndIcon"
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerEndIcon" />
 
     <TextView
         android:id="@+id/textViewCareRecyclerEndDescription"
-        style="@style/Theme.MyPet.CareTextView"
-        android:text="@string/care_repeat_end_none"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        style="@style/Theme.MyPet.Care.Description"
+        android:text="@string/care_end_none"
         app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerEndTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerEndTitle" />
 

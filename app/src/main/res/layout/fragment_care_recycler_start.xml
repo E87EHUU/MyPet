@@ -2,13 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Theme.MyPet.ViewHolderContainer"
-    android:visibility="gone"
-    tools:visibility="visible">
+    style="@style/Theme.MyPet.Care.Container.Clickable">
 
     <ImageView
         android:id="@+id/imageViewCareRecyclerStartIcon"
-        style="@style/Theme.MyPet.ViewHolderHeaderIcon"
+        style="@style/Theme.MyPet.Care.HeaderIcon"
         android:contentDescription="@string/care_start_title"
         android:src="@drawable/baseline_update_24"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,33 +14,17 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewCareRecyclerStartTitle"
-        style="@style/Theme.MyPet.ViewHolderHeaderTitle"
+        style="@style/Theme.MyPet.Care.HeaderTitle"
         android:text="@string/care_start_title"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewCareRecyclerStartIcon"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewCareRecyclerStartIcon"
         app:layout_constraintTop_toTopOf="@+id/imageViewCareRecyclerStartIcon" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCareRecyclerStart"
-        style="@style/Theme.MyPet.CareItemContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewCareRecyclerStartIcon">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textViewCareRecyclerStartDate"
-            style="@style/Theme.MyPet.CareTextView.Date"
-            android:text="@string/care_date_default"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.divider.MaterialDivider
-        style="@style/Theme.MyPet.CareBottomDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareRecyclerStart" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/textViewCareRecyclerStartDate"
+        style="@style/Theme.MyPet.Care.Description.Date"
+        app:layout_constraintStart_toStartOf="@+id/textViewCareRecyclerStartTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCareRecyclerStartTitle"
+        tools:text="@string/care_date_default" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

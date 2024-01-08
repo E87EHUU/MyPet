@@ -41,6 +41,9 @@ class AlarmCalculator(
 
             calendarBefore.timeInMillis = calendarNext.timeInMillis
             calendarBefore.updateBefore(localRepeatEntity)
+        } ?: run {
+            if (calendarNext.timeInMillis <= nowCalendar.timeInMillis)
+                calendarNext.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         println("AlarmCalculator calculate()")
@@ -95,6 +98,10 @@ class AlarmCalculator(
 
                 CareRepeatInterval.YEAR.ordinal ->
                     updateWithIntervalYear(localAlarmEntity, amount, nowCalendar)
+
+                else ->
+                    if (timeInMillis <= nowCalendar.timeInMillis)
+                        add(Calendar.DAY_OF_MONTH, 1)
             }
         }
     }

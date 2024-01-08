@@ -1,12 +1,13 @@
 package com.example.mypet.data.local.room.model.alarm
 
 import androidx.room.ColumnInfo
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.NAME
 import com.example.mypet.data.local.room.entity.ALARM_TABLE
 import com.example.mypet.data.local.room.entity.CARE_TABLE
 import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.DOSE
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.TITLE
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.KIND_ORDINAL
@@ -26,9 +27,11 @@ data class LocalAlarmReceiverModel(
 
     @ColumnInfo(name = "${CARE_TABLE}_$CARE_TYPE_ORDINAL")
     val careTypeOrdinal: Int,
+    @ColumnInfo(name = "${CARE_TABLE}_$TITLE")
+    val careTitle: String?,
+    @ColumnInfo(name = "${CARE_TABLE}_$DOSE")
+    val careDose: String?,
 
     @ColumnInfo(name = "${ALARM_TABLE}_$ID")
     val alarmId: Int,
-    @ColumnInfo(name = "${ALARM_TABLE}_$DESCRIPTION")
-    val alarmDescription: String?,
 )

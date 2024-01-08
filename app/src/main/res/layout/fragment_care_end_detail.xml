@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/offset_16">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutCareEndDetailEndNone"
-            style="@style/Theme.MyPet.CareItemContainer"
+            android:id="@+id/constraintLayoutCareEndDetailNone"
+            style="@style/Theme.MyPet.Care.ItemContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/radioButtonCareEndDetailEndNone"
+                android:id="@+id/radioButtonCareEndDetailNone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -25,25 +23,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewCareEndDetailEndNone"
+                android:id="@+id/textViewCareEndDetailNone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_8"
-                android:text="@string/care_repeat_end_none"
-                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailEndNone"
-                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailEndNone"
-                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailEndNone" />
+                android:text="@string/care_end_none"
+                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailNone"
+                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailNone"
+                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailNone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutCareEndDetailEndAfterTimes"
-            style="@style/Theme.MyPet.CareItemContainer"
+            android:id="@+id/constraintLayoutCareEndDetailAfterTimes"
+            style="@style/Theme.MyPet.Care.ItemContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareEndDetailEndNone">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareEndDetailNone">
 
             <RadioButton
-                android:id="@+id/radioButtonCareEndDetailEndAfterTimes"
+                android:id="@+id/radioButtonCareEndDetailAfterTimes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -51,26 +49,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewCareEndDetailEndAfterTimesTitle1"
+                android:id="@+id/textViewCareEndDetailAfterTimesTitleAfter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_8"
-                android:text="@string/care_repeat_end_times_title_1"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareEndDetailEndAfterTimes"
-                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailEndAfterTimes"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareEndDetailEndAfterTimes" />
+                android:text="@string/care_end_after"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutsCareEndDetailAfterTimes"
+                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailAfterTimes"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareEndDetailAfterTimes" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutsCareEndDetailEndAfterTimes"
-                style="@style/Theme.MyPet.TextInputLayoutWrap"
+                android:id="@+id/textInputLayoutsCareEndDetailAfterTimes"
+                style="@style/Theme.MyPet.Care.TextInputLayoutWrap"
                 android:layout_marginStart="@dimen/offset_8"
                 android:maxEms="3"
-                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailEndAfterTimes"
-                app:layout_constraintStart_toEndOf="@+id/textViewCareEndDetailEndAfterTimesTitle1"
-                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailEndAfterTimes">
+                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailAfterTimes"
+                app:layout_constraintStart_toEndOf="@+id/textViewCareEndDetailAfterTimesTitleAfter"
+                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailAfterTimes">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextCareEndDetailEndAfterTimes"
+                    android:id="@+id/textInputEditTextCareEndDetailAfterTimes"
                     style="@style/Theme.MyPet.TextInputEditText"
                     android:inputType="numberSigned"
                     android:text="@string/care_repeat_end_times_default" />
@@ -78,41 +76,41 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textViewCareEndDetailEndAfterTimesTitle2"
+                android:id="@+id/textViewCareEndDetailAfterTimesTitleTimes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/offset_8"
-                android:text="@string/care_repeat_end_times_title_2"
+                android:text="@string/care_end_times"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareEndDetailEndAfterTimes"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareEndDetailEndAfterTimes" />
+                app:layout_constraintStart_toEndOf="@+id/textInputLayoutsCareEndDetailAfterTimes"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayoutsCareEndDetailAfterTimes" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutCareEndDetailEndAfterDate"
-            style="@style/Theme.MyPet.CareItemContainer"
+            android:id="@+id/constraintLayoutCareEndDetailAfterDate"
+            style="@style/Theme.MyPet.Care.ItemContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareEndDetailEndAfterTimes">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutCareEndDetailAfterTimes">
 
             <RadioButton
-                android:id="@+id/radioButtonCareEndDetailEndAfterDate"
+                android:id="@+id/radioButtonCareEndDetailAfterDate"
                 android:layout_width="wrap_content"
-                android:clickable="false"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutsCareEndDetailEndAfterDate"
-                style="@style/Theme.MyPet.TextInputLayoutWrap"
+                android:id="@+id/textInputLayoutCareEndDetailAfterDate"
+                style="@style/Theme.MyPet.Care.TextInputLayoutWrap"
                 android:layout_marginStart="@dimen/offset_8"
-                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailEndAfterDate"
-                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailEndAfterDate"
-                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailEndAfterDate">
+                app:layout_constraintBottom_toBottomOf="@+id/radioButtonCareEndDetailAfterDate"
+                app:layout_constraintStart_toEndOf="@+id/radioButtonCareEndDetailAfterDate"
+                app:layout_constraintTop_toTopOf="@+id/radioButtonCareEndDetailAfterDate">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextCareEndDetailEndAfterDate"
+                    android:id="@+id/textInputEditTextCareEndDetailAfterDate"
                     style="@style/Theme.MyPet.TextInputEditTextPicker"
                     android:text="@string/care_date_default" />
 

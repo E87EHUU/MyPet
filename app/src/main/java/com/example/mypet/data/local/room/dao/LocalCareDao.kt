@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity
 import com.example.mypet.data.local.room.entity.LocalCareEntity
 import com.example.mypet.data.local.room.entity.LocalEndEntity
+import com.example.mypet.data.local.room.entity.LocalNoteEntity
 import com.example.mypet.data.local.room.entity.LocalRepeatEntity
 import com.example.mypet.data.local.room.entity.LocalStartEntity
 
@@ -28,6 +29,9 @@ interface LocalCareDao {
     @Query("SELECT * FROM alarm WHERE care_id = :careId")
     fun getLocalAlarmEntities(careId: Int): List<LocalAlarmEntity>
 
+    @Query("SELECT * FROM note WHERE care_id = :careId LIMIT 1")
+    fun getLocalNoteEntity(careId: Int): LocalNoteEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLocalCareEntity(localCareEntity: LocalCareEntity): Long
 
@@ -42,6 +46,9 @@ interface LocalCareDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveLocalAlarmEntity(localAlarmEntity: LocalAlarmEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveLocalNoteEntity(localNoteEntity: LocalNoteEntity): Long
 
     @Query("DELETE FROM alarm WHERE id IN(:deletedAlarmIds)")
     fun deleteLocalAlarmEntities(deletedAlarmIds: List<Int>)

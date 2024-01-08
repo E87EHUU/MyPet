@@ -88,6 +88,15 @@
 
     <string name="care_repeat_title">Repeat</string>
     <string name="care_repeat_description_none">Does not repeat</string>
+
+
+    <string name="care_end_title">Ending</string>
+    <string name="care_end_none">Never</string>
+    <string name="care_end_after">After</string>
+    <string name="care_end_times">times</string>
+
+
+
     <string name="care_food_title">Feeding</string>
     <string name="care_food_times">time(s)</string>
     <string name="care_bath_title">Bathing</string>
@@ -104,10 +113,6 @@
     <string name="care_against_fleas_and_ticks_title">Against fleas and ticks</string>
     <string name="care_against_worms_title">Against worms</string>
     <string name="care_walk_title">Walk</string>
-    <string name="care_end_title">Ending</string>
-    <string name="care_end_in">At</string>
-    <string name="care_end_after">After</string>
-    <string name="care_end_none">Never</string>
     <string name="care_start_title">Start</string>
     <string name="care_time_default" translatable="false">10:10</string>
     <string name="care_date_default" translatable="false">10.10.2020</string>
@@ -186,9 +191,7 @@
 
 
 
-    <string name="care_repeat_interval_description_none">Без повтора</string>
 
-    <string name="care_repeat_end_none">Никогда</string>
 
     <string name="time_picker_title">Установите время</string>
     <string name="care_repeat_times_default">1</string>
@@ -198,8 +201,6 @@
     <string name="month">месяц</string>
     <string name="week">неделя</string>
     <string name="year">год</string>
-    <string name="care_repeat_end_times_title_2">раза</string>
-    <string name="care_repeat_end_times_title_1">После</string>
     <string name="care_recycler_alarm_recycler_add">Добавить напоминание</string>
     <string name="care_repeat_end_after_times">после %1$s раз(а)</string>
     <string name="care_repeat_interval_description_day">Каждый %1$s день</string>

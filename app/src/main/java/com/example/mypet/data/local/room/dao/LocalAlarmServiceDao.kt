@@ -3,7 +3,6 @@ package com.example.mypet.data.local.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
-import com.example.mypet.data.local.room.LocalDatabase.Companion.DESCRIPTION
 import com.example.mypet.data.local.room.LocalDatabase.Companion.HOUR
 import com.example.mypet.data.local.room.LocalDatabase.Companion.ID
 import com.example.mypet.data.local.room.LocalDatabase.Companion.MINUTE
@@ -16,6 +15,8 @@ import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_DE
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.IS_VIBRATION
 import com.example.mypet.data.local.room.entity.LocalAlarmEntity.Companion.RINGTONE_PATH
 import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.CARE_TYPE_ORDINAL
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.DOSE
+import com.example.mypet.data.local.room.entity.LocalCareEntity.Companion.TITLE
 import com.example.mypet.data.local.room.entity.LocalEndEntity
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.AVATAR_PATH
 import com.example.mypet.data.local.room.entity.LocalPetEntity.Companion.BREED_ORDINAL
@@ -36,8 +37,9 @@ interface LocalAlarmServiceDao {
                 "p.kind_ordinal ${PET_TABLE}_$KIND_ORDINAL, " +
                 "p.breed_ordinal ${PET_TABLE}_$BREED_ORDINAL, " +
                 "c.care_type_ordinal ${CARE_TABLE}_$CARE_TYPE_ORDINAL, " +
+                "c.title ${CARE_TABLE}_$TITLE, " +
+                "c.dose ${CARE_TABLE}_$DOSE, " +
                 "a.id ${ALARM_TABLE}_$ID, " +
-                "a.description ${ALARM_TABLE}_$DESCRIPTION, " +
                 "a.hour ${ALARM_TABLE}_$HOUR, " +
                 "a.minute ${ALARM_TABLE}_$MINUTE, " +
                 "a.ringtone_path ${ALARM_TABLE}_$RINGTONE_PATH, " +

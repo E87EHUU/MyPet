@@ -13,7 +13,7 @@ class CareStartViewHolder(
     private lateinit var careStartModel: CareStartModel
 
     init {
-        binding.constraintLayoutCareRecyclerStart.setOnClickListener {
+        binding.root.setOnClickListener {
             callback.showDatePicker()
         }
     }

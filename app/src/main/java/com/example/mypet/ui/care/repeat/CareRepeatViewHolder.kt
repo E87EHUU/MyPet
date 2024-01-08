@@ -16,8 +16,12 @@ class CareRepeatViewHolder(
 
     init {
         with(binding) {
-            constraintLayoutCareRecyclerRepeat.setOnClickListener {
+            root.setOnClickListener {
                 callback.onClickRepeat()
+            }
+
+            buttonCareRecyclerRepeatReset.setOnClickListener {
+                callback.onClickReset()
             }
         }
     }
@@ -33,66 +37,56 @@ class CareRepeatViewHolder(
         }
     }
 
-    private fun updateUI() {
+    fun updateUI() {
         careRepeatModel?.let { careRepeatModel ->
-            binding.textViewCareRecyclerRepeatDescription.text =
-                when (careRepeatModel.intervalOrdinal) {
-                    CareRepeatInterval.DAY.ordinal -> {
-                        //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = true
-                        //generateAlarmWithDayTimes()
+            binding.buttonCareRecyclerRepeatReset.isVisible = true
 
+            when (careRepeatModel.intervalOrdinal) {
+                CareRepeatInterval.DAY.ordinal -> {
+                    binding.textViewCareRecyclerRepeatDescription.text =
                         context.getString(
                             R.string.care_repeat_interval_description_day,
                             getIntervalTimes()
                         )
-                    }
+                }
 
-                    CareRepeatInterval.WEEK.ordinal -> {
-                        //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
-
+                CareRepeatInterval.WEEK.ordinal -> {
+                    binding.textViewCareRecyclerRepeatDescription.text =
                         context.getString(
                             R.string.care_repeat_interval_description_week,
                             getIntervalTimes(),
                             getCheckedDay()
                         )
-                    }
+                }
 
-                    CareRepeatInterval.MONTH.ordinal -> {
-                        //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
-
+                CareRepeatInterval.MONTH.ordinal -> {
+                    binding.textViewCareRecyclerRepeatDescription.text =
                         context.getString(
                             R.string.care_repeat_interval_description_month,
                             getIntervalTimes()
                         )
-                    }
+                }
 
-                    CareRepeatInterval.YEAR.ordinal -> {
-                        //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
-
+                CareRepeatInterval.YEAR.ordinal -> {
+                    binding.textViewCareRecyclerRepeatDescription.text =
                         context.getString(
                             R.string.care_repeat_interval_description_year,
                             getIntervalTimes()
                         )
-                    }
-
-                    else -> {
-                        //binding.constraintLayoutCareRecyclerRepeatDayTimes.isVisible = false
-
-                        context.getString(R.string.care_repeat_interval_description_none)
-                    }
                 }
-        }
+
+                else -> updateUIWhenRepeatNotSet()
+            }
+        } ?: updateUIWhenRepeatNotSet()
     }
 
-/*    private fun generateAlarmWithDayTimes() {
-        try {
-            val dayTimes =
-                binding.textInputEditTextCareRecyclerRepeatDayTimes.text.toString().toInt()
-            callback.generateDayAlarm(dayTimes)
-        } catch (_: Exception) {
-
+    private fun updateUIWhenRepeatNotSet() {
+        with(binding) {
+            textViewCareRecyclerRepeatDescription.text =
+                context.getString(R.string.care_repeat_description_none)
+            buttonCareRecyclerRepeatReset.isVisible = false
         }
-    }*/
+    }
 
     private fun getIntervalTimes() =
         careRepeatModel?.let { careRepeatModel ->

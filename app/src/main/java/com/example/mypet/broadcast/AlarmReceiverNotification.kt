@@ -30,8 +30,8 @@ class AlarmReceiverNotification(
 
     fun getNotification(): Notification {
         with(alarmReceiverModel) {
-            val text = alarmDescription
-                ?: context.getString(CareTypes.values()[careTypeOrdinal].titleResId)
+            val text = careTitle ?: careDose
+            ?: context.getString(CareTypes.entries[careTypeOrdinal].titleResId)
 
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setAutoCancel(true)
