@@ -273,6 +273,7 @@ class PetCreationAndUpdateFragment : Fragment(R.layout.fragment_pet_creation) {
                     viewModel.dateOfBirth = calendar.timeInMillis
                 }, year, month, day
             )
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
             datePickerDialog.show()
         }
     }
