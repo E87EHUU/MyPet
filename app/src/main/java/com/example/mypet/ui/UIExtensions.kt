@@ -60,6 +60,7 @@ private fun getAgeString(years: Int, months: Int): String {
     }
 
     val monthsString = when {
+        months == 0 -> ""
         months % 10 == 1 && months != 11 -> "$months месяц"
         months % 10 in 2..4 && (months % 100 < 10 || months % 100 >= 20) -> "$months месяца"
         else -> "$months месяцев"
