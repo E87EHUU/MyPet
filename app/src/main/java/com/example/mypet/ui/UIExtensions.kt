@@ -15,38 +15,40 @@ import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.Period
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
 }
 
 fun getPetsAge(timeMillis: Long): String {
-    val birthDate = Calendar.getInstance()
-    birthDate.timeInMillis = timeMillis
+    val birthDate =
+        LocalDate.ofEpochDay(timeMillis / (24 * 60 * 60 * 1000)).atStartOfDay().toLocalDate()
+    val currentDate = LocalDate.now()
 
-    val currentDate = Calendar.getInstance()
+    val period = Period.between(birthDate, currentDate)
 
-    val years = currentDate.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
-    val months = currentDate.get(Calendar.MONTH) - birthDate.get(Calendar.MONTH)
-    val days = currentDate.get(Calendar.DAY_OF_MONTH) - birthDate.get(Calendar.DAY_OF_MONTH)
+    val years = period.years
+    val months = period.months
+    val days = period.days
 
-    return if (years == 0 && months == 0) {
-        getDaysString(days)
-    } else if (months < 0) {
-        val correctedYears = years - 1
-        val correctedMonths = months + 12
-        getAgeString(correctedYears, correctedMonths)
-    } else {
-        getAgeString(years, months)
+    return when {
+        years == 0 && months == 0 -> getDaysString(days)
+        months < 0 -> {
+            val correctedYears = years - 1
+            val correctedMonths = months + 12
+            getAgeString(correctedYears, correctedMonths)
+        }
+        else -> getAgeString(years, months)
     }
 }
 
 private fun getDaysString(days: Int): String {
-    return when (days) {
-        0 -> "Сегодня родился"
-        1 -> "$days день"
-        in 2..4 -> "$days дня"
+    return when {
+        days == 0 -> "Сегодня родился"
+        days % 10 == 1 && days % 100 != 11 -> "$days день"
+        days % 10 in 2..4 && days % 100 !in 12..14 -> "$days дня"
         else -> "$days дней"
     }
 }
@@ -59,10 +61,10 @@ private fun getAgeString(years: Int, months: Int): String {
         else -> "$years лет "
     }
 
-    val monthsString = when {
-        months == 0 -> ""
-        months % 10 == 1 && months != 11 -> "$months месяц"
-        months % 10 in 2..4 && (months % 100 < 10 || months % 100 >= 20) -> "$months месяца"
+    val monthsString = when (months) {
+        0 -> ""
+        1 -> "$months месяц"
+        in 2..4 -> "$months месяца"
         else -> "$months месяцев"
     }
 
