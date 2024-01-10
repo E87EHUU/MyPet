@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/buttonCareRecyclerAlarmDelete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonCareRecyclerAlarmDelete"
-        tools:text="10:00" />
+        tools:text="@string/care_recycler_alarm_default" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonCareRecyclerAlarmDelete"

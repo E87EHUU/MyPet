@@ -59,43 +59,43 @@
                 android:id="@+id/chip6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Пн" />
+                android:text="@string/alarm_monday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вт" />
+                android:text="@string/alarm_tuesday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ср" />
+                android:text="@string/alarm_wednesday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Чт" />
+                android:text="@string/alarm_thursday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Пт" />
+                android:text="@string/alarm_friday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Сб" />
+                android:text="@string/alarm_saturday_short" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вс" />
+                android:text="@string/alarm_sunday_short" />
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.textfield.TextInputLayout

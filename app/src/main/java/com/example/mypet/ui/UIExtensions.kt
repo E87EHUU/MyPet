@@ -15,60 +15,9 @@ import com.example.mypet.domain.pet.breed.PetBreedSpider
 import com.example.mypet.domain.pet.kind.PetKind
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import java.time.LocalDate
-import java.time.Period
 
 fun View.snackMessage(text: String, length: Int = Snackbar.LENGTH_SHORT) {
     Snackbar.make(this, text, length).show()
-}
-
-fun getPetsAge(timeMillis: Long): String {
-    val birthDate =
-        LocalDate.ofEpochDay(timeMillis / (24 * 60 * 60 * 1000)).atStartOfDay().toLocalDate()
-    val currentDate = LocalDate.now()
-
-    val period = Period.between(birthDate, currentDate)
-
-    val years = period.years
-    val months = period.months
-    val days = period.days
-
-    return when {
-        years == 0 && months == 0 -> getDaysString(days)
-        months < 0 -> {
-            val correctedYears = years - 1
-            val correctedMonths = months + 12
-            getAgeString(correctedYears, correctedMonths)
-        }
-        else -> getAgeString(years, months)
-    }
-}
-
-private fun getDaysString(days: Int): String {
-    return when {
-        days == 0 -> "Сегодня родился"
-        days % 10 == 1 && days % 100 != 11 -> "$days день"
-        days % 10 in 2..4 && days % 100 !in 12..14 -> "$days дня"
-        else -> "$days дней"
-    }
-}
-
-private fun getAgeString(years: Int, months: Int): String {
-    val yearsString = when {
-        years == 0 -> ""
-        years % 10 == 1 && years != 11 -> "$years год "
-        years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years года "
-        else -> "$years лет "
-    }
-
-    val monthsString = when (months) {
-        0 -> ""
-        1 -> "$months месяц"
-        in 2..4 -> "$months месяца"
-        else -> "$months месяцев"
-    }
-
-    return "$yearsString$monthsString"
 }
 
 fun Activity.showToast(text: String, length: Int = Toast.LENGTH_SHORT) {

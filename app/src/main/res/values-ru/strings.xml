@@ -25,6 +25,16 @@
     <string name="pet_food_forward_title">все</string>
     <string name="pet_care_title">Уход</string>
     <string name="pet_care_forward_title">все</string>
+    <string name="pet_age_today">Сегодня родился</string>
+    <string name="pet_age_day">день</string>
+    <string name="pet_age_days_dnya">дня</string>
+    <string name="pet_age_days_dney">дней</string>
+    <string name="pet_age_year">год</string>
+    <string name="pet_age_years_goda">года</string>
+    <string name="pet_age_years_let">лет</string>
+    <string name="pet_age_month">месяц</string>
+    <string name="pet_age_months_mesyaca">месяца</string>
+    <string name="pet_age_months_mesyacev">месяцев</string>
 
     <string name="pet_creation_pet_name">Имя питомца*</string>
     <string name="pet_creation_date_of_birth">Дата рождения</string>
@@ -85,24 +95,47 @@
     <string name="alarm_friday_short">Пт</string>
     <string name="alarm_saturday_short">Сб</string>
     <string name="alarm_sunday_short">Вс</string>
+    <string name="alarm_recycler_default">Будильник 10:00</string>
 
     <string name="care_repeat_title">Повторяется</string>
     <string name="care_repeat_description_none">Без повтора</string>
+    <string name="care_end_title">Окончание</string>
+    <string name="care_end_none">Никогда</string>
+    <string name="care_end_after">После</string>
+    <string name="care_end_times">раз(а)</string>
     <string name="care_food_title">Кормление</string>
     <string name="care_food_times">раз(а)</string>
     <string name="care_bath_title">Ванна</string>
+    <string name="care_medicine_title">Лечение</string>
+    <string name="care_grooming_title">Уход</string>
+    <string name="care_training_title">Дрессировка</string>
+    <string name="care_vaccination_title">Вакцинация</string>
+    <string name="care_vitamin_title">Витамины</string>
+    <string name="care_checkup_title">Проверка</string>
+    <string name="care_toothbrushing_title">Чистка зубов</string>
     <string name="care_combing_the_wool_title">Вычесывание шерсти</string>
     <string name="care_against_fleas_and_ticks_title">Против блох и клещей</string>
     <string name="care_against_worms_title">Против глистов</string>
     <string name="care_walk_title">Прогулка</string>
-    <string name="care_end_title">Окончание</string>
-    <string name="care_end_in">В</string>
-    <string name="care_end_after">После</string>
-    <string name="care_end_none">Никогда</string>
     <string name="care_start_title">Начало</string>
+    <string name="care_time_default" translatable="false">10:10</string>
+    <string name="care_date_default" translatable="false">10.10.2020</string>
     <string name="care_alarm_title">Уведомления</string>
     <string name="care_date_picker_title">Установите дату</string>
     <string name="care_time_picker_title">Установите время</string>
+    <string name="care_recycler_alarm_recycler_add">Добавить напоминание</string>
+    <string name="care_repeat_end_after_times">после раз(а)</string>
+    <string name="care_repeat_interval_description_day">Каждый день</string>
+    <string name="care_repeat_interval_description_week">Каждую неделю</string>
+    <string name="care_repeat_interval_description_month">Каждый месяц</string>
+    <string name="care_repeat_interval_description_year">Каждый год</string>
+    <string name="care_recycler_main_dose_hint">Дозировка</string>
+    <string name="care_recycler_main_note_hint">Заметки</string>
+    <string name="care_recycler_main_title_hint">Название</string>
+    <string name="care_recycler_repeat_day_text">раз в день</string>
+    <string name="day">день</string>
+    <string name="care_repeat_times">Повторяется раз в</string>
+    <string name="care_alarm_chooser">1 раз в день</string>
 
     <string-array name="care_repeats">
         <item>каждый день</item>
@@ -119,7 +152,7 @@
     <string-array name="food_interval">
         <item>раз(а) в день</item>
         <item>через день</item>
-        <item>раза в месяц</item>
+        <item>раз(а) в месяц</item>
     </string-array>
 
     <string name="user_about">О приложении</string>
@@ -133,7 +166,6 @@
     <string name="user_button">Кнопка</string>
     <string name="user_log_in">Управление аккаунтом</string>
 
-    <string name="login_prompt_email">Email</string>
     <string name="login_prompt_password">Пароль</string>
     <string name="login_action_sign_in">Войдите или зарегистрируйтесь</string>
     <string name="login_welcome">Вход выполнен успешно!</string>
@@ -171,5 +203,15 @@
     <string name="map_zoom_out">Уменьшить</string>
     <string name="map_zoom_in">Увеличить</string>
 
+    <string name="time_picker_title">Установите время</string>
+    <string name="month">месяц</string>
+    <string name="week">неделя</string>
+    <string name="year">год</string>
     <string name="tomorrow">завтра</string>
+    <string name="example_name">Бобик</string>
+    <string name="example_breed">Карликовая домашняя свинья</string>
+    <string name="example_weight">1 кг 100 г</string>
+    <string name="example_age">24 месяца</string>
+    <string name="example_feeding">Лолику пора кушать</string>
+
 </resources>

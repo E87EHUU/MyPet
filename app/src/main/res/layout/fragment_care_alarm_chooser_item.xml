@@ -6,4 +6,4 @@
     android:gravity="center_vertical"
     android:paddingHorizontal="@dimen/offset_24"
     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-    tools:text="1 раз в день" />
+    tools:text="@string/care_alarm_chooser" />
