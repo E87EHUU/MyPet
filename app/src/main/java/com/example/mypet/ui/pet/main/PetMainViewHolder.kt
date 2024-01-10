@@ -15,10 +15,12 @@ import com.example.mypet.domain.pet.list.PetListMainModel
 import com.example.mypet.domain.pet.list.PetListModel
 import com.example.mypet.ui.getPetIcon
 import com.example.mypet.ui.getPetName
-import com.example.mypet.ui.getPetsAge
 import com.example.mypet.ui.pet.main.list.PetListAdapter
 import com.example.mypet.ui.pet.main.list.PetListCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.time.LocalDate
+import java.time.Period
+import java.util.Locale
 
 
 class PetMainViewHolder(
@@ -208,5 +210,86 @@ class PetMainViewHolder(
             updatePet(petListMainModel)
             callback.onClickPet(petListMainModel)
         }
+    }
+
+    private fun getPetsAge(timeMillis: Long): String {
+        val birthDate =
+            LocalDate.ofEpochDay(timeMillis / (24 * 60 * 60 * 1000)).atStartOfDay().toLocalDate()
+        val currentDate = LocalDate.now()
+
+        val period = Period.between(birthDate, currentDate)
+
+        val years = period.years
+        val months = period.months
+        val days = period.days
+
+        return when {
+            years == 0 && months == 0 -> getDaysString(days)
+            months < 0 -> {
+                val correctedYears = years - 1
+                val correctedMonths = months + 12
+                getAgeString(correctedYears, correctedMonths)
+            }
+            else -> getAgeString(years, months)
+        }
+    }
+
+    private fun getDaysString(days: Int): String {
+        if (Locale.getDefault().displayLanguage.lowercase() == LOCALE_RU) {
+            return when {
+                days == 0 -> context.getString(R.string.pet_age_today)
+                days % 10 == 1 && days % 100 != 11 -> "$days ${context.getString(R.string.pet_age_day)}"
+                days % 10 in 2..4 && days % 100 !in 12..14 -> "$days ${context.getString(R.string.pet_age_days_dnya)}"
+                else -> "$days ${context.getString(R.string.pet_age_days_dney)}"
+            }
+        } else if (Locale.getDefault().displayLanguage.lowercase() == LOCALE_EN) {
+            return when (days) {
+                0 -> context.getString(R.string.pet_age_today)
+                1 -> "$days ${context.getString(R.string.pet_age_day)}"
+                else -> "$days ${context.getString(R.string.pet_age_days_dney)}"
+            }
+        } else {
+            return ""
+        }
+    }
+
+    private fun getAgeString(years: Int, months: Int): String {
+        var yearsString = ""
+        var monthsString =""
+
+        if (Locale.getDefault().displayLanguage.lowercase() == LOCALE_RU) {
+            yearsString = when {
+                years == 0 -> ""
+                years % 10 == 1 && years != 11 -> "$years ${context.getString(R.string.pet_age_year)}"
+                years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years ${context.getString(R.string.pet_age_years_goda)}"
+                else -> "$years ${context.getString(R.string.pet_age_years_let)}"
+            }
+
+            monthsString = when (months) {
+                0 -> ""
+                1 -> "$months ${context.getString(R.string.pet_age_month)}"
+                in 2..4 -> "$months ${context.getString(R.string.pet_age_months_mesyaca)}"
+                else -> "$months ${context.getString(R.string.pet_age_months_mesyacev)}"
+            }
+        } else if (Locale.getDefault().displayLanguage.lowercase() == LOCALE_EN) {
+            yearsString = when (years) {
+                0 -> ""
+                1 -> "$years ${context.getString(R.string.pet_age_year)}"
+                else -> "$years ${context.getString(R.string.pet_age_years_let)}"
+            }
+
+            monthsString = when (months) {
+                0 -> ""
+                1 -> "$months ${context.getString(R.string.pet_age_month)}"
+                else -> "$months ${context.getString(R.string.pet_age_months_mesyacev)}"
+            }
+        }
+
+        return "$yearsString$monthsString"
+    }
+
+    companion object {
+        const val LOCALE_RU = "русский"
+        const val LOCALE_EN = "english"
     }
 }
