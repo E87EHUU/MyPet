@@ -242,9 +242,34 @@
     <string name="pet_breed_dog_153">Japanese Akita Inu</string>
     <string name="pet_breed_dog_154">Japanese Chin</string>
 
-    <string name="pet_breed_chameleon_1">Lizard</string>
-    <string name="pet_breed_chameleon_2">Iguana</string>
-    <string name="pet_breed_chameleon_3">Chameleon</string>
+    <string name="pet_breed_chameleon_1">Bearded dragon</string>
+    <string name="pet_breed_chameleon_2">Water agama</string>
+    <string name="pet_breed_chameleon_3">Australian water agama</string>
+    <string name="pet_breed_chameleon_4">Anole brown</string>
+    <string name="pet_breed_chameleon_5">Anolis carolina</string>
+    <string name="pet_breed_chameleon_6">Argentine black and white tegu</string>
+    <string name="pet_breed_chameleon_7">Dumerils monitor lizard</string>
+    <string name="pet_breed_chameleon_8">African fat-tailed gecko</string>
+    <string name="pet_breed_chameleon_9">Fantastic flat-tailed gecko</string>
+    <string name="pet_breed_chameleon_10">Bibrons thick-toed gecko</string>
+    <string name="pet_breed_chameleon_11">Green iguana</string>
+    <string name="pet_breed_chameleon_12">Collared iguana</string>
+    <string name="pet_breed_chameleon_13">Desert iguana</string>
+    <string name="pet_breed_chameleon_14">Cape steppe monitor</string>
+    <string name="pet_breed_chameleon_15">Australian ring-tailed monitor lizard</string>
+    <string name="pet_breed_chameleon_16">Fire skink Fernandi</string>
+    <string name="pet_breed_chameleon_17">Frilled lizard</string>
+    <string name="pet_breed_chameleon_18">Striped monitor lizard</string>
+    <string name="pet_breed_chameleon_19">Spotted Leopard Gecko</string>
+    <string name="pet_breed_chameleon_20">Eyelash banana gecko</string>
+    <string name="pet_breed_chameleon_21">Blue tongue skink</string>
+    <string name="pet_breed_chameleon_22">Timor monitor lizard</string>
+    <string name="pet_breed_chameleon_23">Felsuma madagascarica</string>
+    <string name="pet_breed_chameleon_24">Jacksons Chameleon</string>
+    <string name="pet_breed_chameleon_25">Yemen chameleon</string>
+    <string name="pet_breed_chameleon_26">Panther chameleon</string>
+    <string name="pet_breed_chameleon_27">Spiketail</string>
+    <string name="pet_breed_chameleon_28">Helmeted Basilisk</string>
 
     <string name="pet_breed_snake_1">Maize Snake</string>
     <string name="pet_breed_snake_2">Common snake</string>

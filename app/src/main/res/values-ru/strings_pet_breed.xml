@@ -242,9 +242,34 @@
     <string name="pet_breed_dog_153">Японская акита-ину</string>
     <string name="pet_breed_dog_154">Японский хин</string>
 
-    <string name="pet_breed_chameleon_1">Варан</string>
-    <string name="pet_breed_chameleon_2">Игуана</string>
-    <string name="pet_breed_chameleon_3">Хамелеон</string>
+    <string name="pet_breed_chameleon_1">Агама бородатая</string>
+    <string name="pet_breed_chameleon_2">Агама водяная</string>
+    <string name="pet_breed_chameleon_3">Агама водяная австралийская</string>
+    <string name="pet_breed_chameleon_4">Анолис бурый</string>
+    <string name="pet_breed_chameleon_5">Анолис каролинский</string>
+    <string name="pet_breed_chameleon_6">Аргентинский черно-белый тегу</string>
+    <string name="pet_breed_chameleon_7">Варан Дюмериля</string>
+    <string name="pet_breed_chameleon_8">Геккон африканский толстохвостый</string>
+    <string name="pet_breed_chameleon_9">Геккон плоскохвостый фантастический</string>
+    <string name="pet_breed_chameleon_10">Геккон толстопалый Биброна</string>
+    <string name="pet_breed_chameleon_11">Игуана зеленая</string>
+    <string name="pet_breed_chameleon_12">Игуана ошейниковая</string>
+    <string name="pet_breed_chameleon_13">Игуана пустынная</string>
+    <string name="pet_breed_chameleon_14">Капский степной варан</string>
+    <string name="pet_breed_chameleon_15">Кольцехвостый австралийский варан</string>
+    <string name="pet_breed_chameleon_16">Огненный сцинк Фернанди</string>
+    <string name="pet_breed_chameleon_17">Плащеносная ящерица</string>
+    <string name="pet_breed_chameleon_18">Полосатый варан</string>
+    <string name="pet_breed_chameleon_19">Пятнистый леопардовый эублефар</string>
+    <string name="pet_breed_chameleon_20">Ресничный геккон-бананоед</string>
+    <string name="pet_breed_chameleon_21">Синеязыкий сцинк</string>
+    <string name="pet_breed_chameleon_22">Тиморский варан</string>
+    <string name="pet_breed_chameleon_23">Фельзума мадагаскарская</string>
+    <string name="pet_breed_chameleon_24">Хамелеон Джексона</string>
+    <string name="pet_breed_chameleon_25">Хамелеон йеменский</string>
+    <string name="pet_breed_chameleon_26">Хамелеон пантеровый</string>
+    <string name="pet_breed_chameleon_27">Шипохвост</string>
+    <string name="pet_breed_chameleon_28">Шлемоносный василиск</string>
 
     <string name="pet_breed_snake_1">Маисовый полоз</string>
     <string name="pet_breed_snake_2">Уж обыкновенный</string>
