@@ -2,6 +2,7 @@ package com.example.mypet.ui.pet.main
 
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -70,6 +71,19 @@ class PetMainViewHolder(
         activePetListMainModel?.let { petListModel ->
             val deletePetAlertDialog =
                 LayoutInflater.from(context).inflate(R.layout.alert_dialog_delete_pet, null)
+
+            val petImageView =
+                deletePetAlertDialog.findViewById<ImageView>(R.id.imageViewDeletePetDialog)
+            petListModel.avatarUri?.let {
+                Glide.with(itemView)
+                    .load(it)
+                    .into(petImageView)
+            } ?: run {
+                val icon = getPetIcon(petListModel.kindOrdinal, petListModel.breedOrdinal)
+                Glide.with(context)
+                    .load(icon)
+                    .into(petImageView)
+            }
 
             val alertDialog = MaterialAlertDialogBuilder(context)
                 .setView(deletePetAlertDialog)
@@ -230,6 +244,7 @@ class PetMainViewHolder(
                 val correctedMonths = months + 12
                 getAgeString(correctedYears, correctedMonths)
             }
+
             else -> getAgeString(years, months)
         }
     }
@@ -255,13 +270,18 @@ class PetMainViewHolder(
 
     private fun getAgeString(years: Int, months: Int): String {
         var yearsString = ""
-        var monthsString =""
+        var monthsString = ""
 
         if (Locale.getDefault().displayLanguage.lowercase() == LOCALE_RU) {
             yearsString = when {
                 years == 0 -> ""
                 years % 10 == 1 && years != 11 -> "$years ${context.getString(R.string.pet_age_year)}"
-                years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years ${context.getString(R.string.pet_age_years_goda)}"
+                years % 10 in 2..4 && (years % 100 < 10 || years % 100 >= 20) -> "$years ${
+                    context.getString(
+                        R.string.pet_age_years_goda
+                    )
+                }"
+
                 else -> "$years ${context.getString(R.string.pet_age_years_let)}"
             }
 
